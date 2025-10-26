@@ -1,0 +1,63 @@
+{
+  "model": "phi:2.7b",
+  "timestamp": "2025-10-26T02:39:27.931Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": " ```zig\n#include <iostream>\nusing namespace std;\n\nint sum(int a, int b) {\n  return a + b;\n}\n```\n",
+      "duration": 5134,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": " To allocate memory in Zig, you can use an allocator which will allocate some memory for you. Here is an example of how to create a memory block with the given size and store an integer value inside it:\n\n```zig\nlocal mem_block = allocator.allocate(4) // Allocates 4 bytes of memory\nlocal int_value = 2\nmem_block.store(int_value, 0) // Stores the integer value at offset 0 in the allocated block\n```\nTo free the memory block once you're done with it, you can use the `free()` method:\n\n```zig\nallocator",
+      "duration": 68118,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": " Sure, here's how you could implement this:\n```\n// Define the Zig class\ninterface Zig { \n    Result f(int n) throws Exception; \n}\n\n// Implement a simple example of a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.\nclass Zig { \n  Result f(int n) throws Exception {\n    if (n < 0) throw new NegativeNumberException(); // Check if number is negative\n    return (n % 2 == 0) ? Result.Success : Result.Error; // If it's even, return s",
+      "duration": 46284,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": " As a language model AI, I don't have access to C# or any programming tools. However, here is an example of a Zig struct in Swift that represents a point with x and y coordinates:\n\n```swift\nstruct Point {\n    var x: Double\n    var y: Double\n\n    func distanceFromOrigin() -> Double {\n        return sqrt(pow(x, 2) + pow(y, 2))\n    }\n}\n```\n\nThis `Point` struct has two properties - x and y. The method `distanceFromOrigin` calculates the distance from this point to the origin using the Pythagorean th",
+      "duration": 60056,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": " function max(a, b) {\n  return Math.max(a, b);\n}\n",
+      "duration": 1734,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": " Sure, I can help you with that! In order to compute a factorial at compile time using comptime in Zig, you will need to define your own built-in function for this purpose. Here is an example code snippet on how to do that:\n```\nfunction myFactorial(int x) {\n    if (x < 0) return -1; // Error handling for negative inputs\n    if (x == 0 || x == 1) return 1; // Base case\n\n    int result = 1;\n    for (var i=2; i <= x; ++i) {\n        result *= i;\n    }\n    return result;\n}\n```\nIn this example, we def",
+      "duration": 88941,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 45044.5
+}

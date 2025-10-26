@@ -4,6 +4,8 @@
 
 MODELS=(
   "phi:2.7b"
+  "mistral"
+  "codeqwen:latest"
 )
 
 RESULTS_DIR="test-results"
