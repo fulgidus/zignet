@@ -30,7 +30,7 @@ function createServer() {
     const server = new Server(
         {
             name: 'zignet',
-            version: '0.15.2-e',
+            version: '0.15.2-f',
         },
         {
             capabilities: {
@@ -241,15 +241,47 @@ function createServer() {
  * Main entry point
  */
 async function main() {
+    console.error('🚀 ZigNet MCP Server starting...');
+
+    // Log configuration
+    console.error(`📋 Configuration:`);
+    console.error(`   - Zig versions: ${SUPPORTED_ZIG_VERSIONS.join(', ')}`);
+    console.error(`   - Default version: ${DEFAULT_ZIG_VERSION}`);
+
+    // Check and download model if needed
+    const { modelDownloader } = await import('./llm/model-downloader.js');
+    const modelAvailable = modelDownloader.isModelAvailable();
+
+    console.error(`🤖 Model status:`);
+    if (modelAvailable) {
+        console.error(`   ✅ Model ready: ${modelDownloader.getModelPath()}`);
+    } else {
+        console.error(`   📥 Model not found - downloading now...`);
+        console.error(`   📍 Target: ${modelDownloader.getModelPath()}`);
+
+        try {
+            await modelDownloader.ensureModel((progress) => {
+                // Log progress every 5%
+                if (progress.percent % 5 < 0.5) {
+                    console.error(`   📦 Download progress: ${progress.percent.toFixed(1)}% (${(progress.downloaded / 1024 / 1024).toFixed(0)}MB / ${(progress.total / 1024 / 1024).toFixed(0)}MB)`);
+                }
+            });
+            console.error(`   ✅ Model downloaded successfully!`);
+        } catch (error) {
+            console.error(`   ⚠️  Model download failed: ${error}`);
+            console.error(`   ℹ️  LLM tools (get_zig_docs, suggest_fix) will not be available`);
+            console.error(`   ℹ️  Deterministic tools (analyze_zig, compile_zig) will still work`);
+        }
+    }
+
     const server = createServer();
     const transport = new StdioServerTransport();
 
     await server.connect(transport);
 
-    console.error('ZigNet MCP Server running on stdio');
-}
-
-main().catch((error) => {
+    console.error('✅ ZigNet MCP Server running on stdio');
+    console.error('📡 Available tools: analyze_zig, compile_zig, get_zig_docs, suggest_fix');
+} main().catch((error) => {
     console.error('Fatal error:', error);
     process.exit(1);
 });
