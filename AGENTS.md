@@ -1,7 +1,7 @@
 # AGENTS.md - ZigNet Project Specification
 
-**Last Updated**: 2025-10-26 02:50:06 UTC  
-**Status**: Active Development - Phase 3.1 (Parser Implementation)  
+**Last Updated**: 2025-10-26 14:30:00 UTC  
+**Status**: Active Development - Phase 3 (MCP Integration + LLM Selection)  
 **Owner**: fulgidus  
 **Repository**: https://github.com/fulgidus/zignet
 
@@ -260,22 +260,37 @@ server.setRequestHandler(CallToolRequestSchema, handleToolCall);
 
 ### Core Technologies
 
-| Layer | Technology | Reason |
-|-------|-----------|--------|
-| Runtime | Node.js 20+ | MCP works with Node.js |
-| Language | TypeScript | Type safety, better DX |
-| Build | tsc | Fast compilation |
-| Testing | Vitest + Jest | Fast, parallel tests |
-| Linting | ESLint | Code quality |
-| MCP Protocol | @modelcontextprotocol/sdk | Official MCP library |
+| Layer        | Technology                | Reason                 |
+| ------------ | ------------------------- | ---------------------- |
+| Runtime      | Node.js 20+               | MCP works with Node.js |
+| Language     | TypeScript                | Type safety, better DX |
+| Build        | tsc                       | Fast compilation       |
+| Testing      | Vitest + Jest             | Fast, parallel tests   |
+| Linting      | ESLint                    | Code quality           |
+| MCP Protocol | @modelcontextprotocol/sdk | Official MCP library   |
+| LLM Engine   | node-llama-cpp            | Local Zig expert model |
 
-### No External Dependencies (Deliberate)
-- ❌ NO Ollama in production (LLM runs in Claude)
-- ❌ NO HTTP calls (self-contained)
+### LLM Role & Model Selection
+
+**Purpose of LLM in ZigNet**:
+- 🎯 **Documentation lookup**: Retrieve Zig language docs (via `get_zig_docs` tool)
+- 🎯 **Intelligent fixes**: Suggest code corrections (via `suggest_fix` tool)
+- ❌ **NOT used for parsing/validation**: Parser + Type Checker handle this (deterministic, fast)
+
+**Model Benchmarking** (Phase 1):
+Tested models: Phi-2.7b, DeepSeek, Mistral-7b, CodeLlama-7b, Llama3.2-3b, more...
+- Results in `scripts/test-results/`
+- Selection criteria: Zig knowledge, inference speed, memory footprint
+- Integration: `node-llama-cpp` (local, no API calls)
+
+### No External Dependencies (For Core Analysis)
+- ✅ **Local LLM** via node-llama-cpp (for `get_zig_docs` and `suggest_fix` tools)
+- ❌ NO Ollama in production (development testing only)
+- ❌ NO HTTP calls for core validation (self-contained parser/type-checker)
 - ❌ NO database (stateless)
 - ❌ NO file I/O (pure computation)
 
-**Why**: Simplicity, speed, reliability, deployability.
+**Why**: Parser/Type-Checker are deterministic and fast. LLM is ONLY for documentation lookups and intelligent suggestions.
 
 ---
 
@@ -286,11 +301,11 @@ server.setRequestHandler(CallToolRequestSchema, handleToolCall);
 - ✅ Model benchmarking (Phi, DeepSeek, Mistral)
 - ✅ TypeScript + Linting + Testing infrastructure
 
-### Phase 2: Core Compiler (IN PROGRESS)
+### Phase 2: Core Compiler ✅ COMPLETE
 - ✅ **Lexer** (src/lexer.ts) - DONE
-- 🔄 **Parser** (src/parser.ts) - IN PROGRESS (User implementing)
-- ⏳ **Type Checker** (src/type-checker.ts) - TODO
-- ⏳ **Code Generator** (src/codegen.ts) - TODO
+- ✅ **Parser** (src/parser.ts) - DONE
+- ✅ **Type Checker** (src/type-checker.ts) - DONE
+- ✅ **Code Generator** (src/codegen.ts) - DONE
 
 ### Phase 3: MCP Integration (AFTER Parser)
 - ⏳ **MCP Server** (src/mcp-server.ts)

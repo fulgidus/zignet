@@ -1,0 +1,63 @@
+{
+  "model": "llama3.2:3b",
+  "timestamp": "2025-10-26T11:37:38.772Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": "```zig\npub fn add(a: i32, b: i32) i32 {\n    return a + b;\n}\n```\n\nThis is a simple function in Zig that takes two `i32` integers as arguments and returns their sum. The `return` keyword is used to specify the value of the function call.",
+      "duration": 6006,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": "Here's a simple example of how you can use the Zig standard library's built-in allocator to allocate memory for storing an integer.\n\n```zig\nconst std = @import(\"std\");\n\npub fn main() anyerror!void {\n    // Create an arena allocator.\n    var allocator = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n    defer allocator.deinit();\n\n    // Allocate memory for a single int.\n    var handle = allocator.alloc(u32, 1);\n    defer allocator.free(handle);\n\n    // Store an integer in the allocated me",
+      "duration": 12429,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": "Here's an example of how you can define a Zig function using the `Result` type and handle errors in the caller:\n\n```zig\nconst std = @import(\"std\");\n\npub fn divide(a: i32, b: i32) !i32 {\n    if (b == 0) {\n        return error.DivisionByZero;\n    }\n\n    return a / b;\n}\n\ntest \"divide function\" {\n    try divide(10, 2);\n    try divide(-10, -2);\n\n    try divide(10, 0) catch |err| std.debug.print(\"Error: {s}\\n\", .{err});\n\n    try divide(5.0, 3.0) catch |err| std.debug.print(\"Error: {s}\\n\", .{err});\n}\n`",
+      "duration": 13194,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": "Here's an example of how you can create a `Point` struct in Zig:\n\n```zig\nconst std = @import(\"std\");\n\npub const Point = struct {\n    x: f64,\n    y: f64,\n\n    fn init(x: f64, y: f64) !Point {\n        return Point{x: x, y: y};\n    }\n\n    fn distanceFromOrigin(self: Point) f64 {\n        return @sqrt(@floatToIntF64Fn(f64)(self.x) * self.x + @floatToIntF64Fn(f64)(self.y) * self.y);\n    }\n};\n\ntest \"Point.distanceFromOrigin\" {\n    var p = try Point.init(3, 4);\n    try std.testing.expect(p.distanceFromO",
+      "duration": 15098,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": "Here is a simple function in Zig that takes two arguments and returns their maximum value:\n```zig\nconst std = @import(\"std\");\n\npub fn max(comptime T: type, a: T, b: T) T {\n    if (a > b) return a;\n    else return b;\n}\n```\nThis function uses a simple comparison to determine the maximum of the two values. It will work for any numeric type that supports comparison, such as `i32`, `u32`, `f32`, etc.\n\nYou can use it like this:\n```zig\ntest \"max\" {\n    try std.testing.expectEqual(@intCast(i32, max(i32,",
+      "duration": 9909,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": "## Using `comptime` in Zig to Compute Factorial\n\nIn this example, we'll demonstrate how to use `comptime` in Zig to compute the factorial of a number at compile-time.\n\n### The Code\n```zig\nconst std = @import(\"std\");\n\npub fn factorial(comptime n: u32) !u64 {\n    if (n == 0) return 1;\n    const result = comptime @intToPtr(u64, @as(u32, n)) * factorial(comptime n - 1);\n    return result;\n}\n\ntest \"factorial\" {\n    try std.testing.expectEqual(@intCast(i32, factorial(5)), i32(@intToFloat(f64, @as(f64,",
+      "duration": 16978,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 12269
+}

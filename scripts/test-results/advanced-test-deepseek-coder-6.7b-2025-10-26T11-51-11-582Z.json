@@ -1,0 +1,63 @@
+{
+  "model": "deepseek-coder:6.7b",
+  "timestamp": "2025-10-26T11:47:57.958Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": "Here is a simple example of a Zig function named \"add\" that adds two integer numbers:\n\n```zig\nfn add(a: i32, b: i32) i32 {\n    return a + b;\n}\n```\nThis `add` function takes in two parameters (both are integers), and returns the sum of these two integers. The \"i32\" refers to an integer type with a width of 32 bits, which is one of Zig's few built-in integer types. You can replace it with other data types as per your requirement.\n",
+      "duration": 18359,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": "In Zig, we can use `allocator.create` for allocation of memory and `allocator.destroy` for deallocation or memory freeing. Here is a simple example:\n\n```zig\nconst std = @import(\"std\");\n\npub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}){};\n    defer _ = gpa.deinit();\n\n    const allocator = gpa.allocator();\n    \n    // Allocate memory for an integer and store a value\n    var number = try allocator.create(i32);\n    errdefer allocator.destroy(number); // clean up if allocatio",
+      "duration": 23625,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": "In Zig programming language, we can return a `Result` from a function which is an enumeration of two possibilities: `Ok(T)` and `Err(E)` where T represents the successful result and E represents some error condition that happened during execution.\n\nHere's a simple example:\n\n```zig\nconst std = @import(\"std\");\n\n// Define an enum for errors\nerror FileNotFoundError = error{FileNotFound};\n\npub fn readFile(allocator: *std.mem.Allocator, path: []const u8) ![]u8 {\n    // Open the file and return Err if ",
+      "duration": 45516,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": "Here is how you can define it in Zig programming language:\n\n```zig\nconst std = @import(\"std\");\nconst math = std.math;\n\npub const Point = struct {\n    x: f64,\n    y: f64,\n\n    pub fn distanceFromOrigin(self: Point) f64 {\n        return math.sqrt((self.x * self.x) + (self.y * self.y));\n    }\n};\n```\n\nThis code defines a struct `Point` with two fields `x` and `y` of type `f64` to store the coordinates. It also includes a method named `distanceFromOrigin()` which calculates and returns the distance f",
+      "duration": 21509,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": "Below is an example of how you can create such a function in Zig programming language. This function is named `max` and it accepts 2 parameters, both are instances of `anytype` which represents any possible value. The body of the function checks if first parameter is greater than second one then returns first otherwise return second.\n\n```zig\nfn max(comptime T: type, a: T, b: T) T {\n    return if (a > b) a else b;\n}\n```\nNote that to use this function you must specify the numeric type `T` at compi",
+      "duration": 30026,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": "In Zig, `comptime` is used for computations that need to be done during compilation, as opposed to runtime where they are executed post-compilation. Below is an example of how you can use it to compute a factorial at compile time.\n\n```zig\nfn Factorial(comptime n: usize) usize {\n    if (n == 0 or n == 1) return 1;\n    return n * comptime Factorial(n - 1);\n}\n```\n\nThe above function `Factorial` is a recursive one which multiplies the current number with the factorial of the previous number until it",
+      "duration": 28120,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 27859.166666666668
+}

@@ -1,0 +1,63 @@
+{
+  "model": "codellama:7b",
+  "timestamp": "2025-10-26T11:44:33.757Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": "```\nfn add(a: i32, b: i32) -> i32 {\n    return a + b;\n}\n```",
+      "duration": 9537,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": "\nHere's some sample Zig code that allocates memory using an allocator and stores an integer, and then frees the memory:\n```\nconst allocator = std.heap.page_allocator;\n\nvar num: i32 = 42;\nvar ptr = try allocator.alloc(i32, 1);\nptr.* = num;\ndefer allocator.free(ptr);\n```\nIn this code, we first define an allocator using the `std.heap.page_allocator` module. We then define an integer variable `num` and initialize it to the value `42`.\n\nNext, we use the allocator to allocate memory for a single `i32`",
+      "duration": 20764,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": "\nHere's an example of a `Zig` function that returns a `Result` type with either a success value or an error, and includes error handling in the caller:\n```zig\nconst std = @import(\"std\");\n\npub fn zigFunction(input: i32) Result(i32, Error) {\n    if (input < 0) return error.NegativeInput;\n    var result: i32 = input * input;\n    return result;\n}\n```\nIn this example, the `zigFunction` function takes an `i32` input and returns a `Result` type that either contains the square of the input or an error. ",
+      "duration": 28605,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": "\nHere is an example of how you can define a `Point` struct in Zig:\n```\nconst Point = struct {\n    x: f32,\n    y: f32,\n\n    fn distanceFromOrigin(self: Point) f32 {\n        return sqrtf(self.x * self.x + self.y * self.y);\n    }\n};\n```\nThis struct has two fields `x` and `y`, which are both of type `f32`. The `distanceFromOrigin` method calculates the distance from the origin (0, 0) to the point represented by the struct instance. It uses the Pythagorean theorem to calculate the distance.\n\nNote tha",
+      "duration": 27749,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": "\nHere is a generic Zig function that works with any numeric type and returns the maximum of two values:\n```\nfn max<T: Ord>(a: T, b: T) -> T {\n    if a > b {\n        a\n    } else {\n        b\n    }\n}\n```\nThis function takes two generic type parameters `a` and `b`, both of which must implement the `Ord` trait. The `Ord` trait provides the comparison operators (`<`, `<=`, `==`, `>=`, and `>`) that are needed to compare the values.\n\nThe function then uses a conditional expression to return either `a`",
+      "duration": 25780,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": "\nHere's an example of how you can use the `comptime` keyword in Zig to compute a factorial at compile time:\n```\nfn factorial(n: usize) comptime_int {\n    var result: usize = 1;\n    for (0..n) |i| {\n        result *= i + 1;\n    }\n    return result;\n}\n\n// Usage example\nconst n = 5;\ncomptime {\n    const fact = factorial(n);\n    println(\"The factorial of {} is {}\", n, fact);\n}\n```\nIn this example, the `factorial` function takes an integer argument `n` and computes its factorial using a for loop. The",
+      "duration": 35229,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 24610.666666666668
+}

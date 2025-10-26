@@ -1,0 +1,63 @@
+{
+  "model": "mistral:7b",
+  "timestamp": "2025-10-26T11:39:49.957Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": " Here is a simple Zig function in Zig that returns the sum of two integers:\n\n```zig\nconst std = @import(\"std\");\n\npub fn main() !void {\n    const a = 5;\n    const b = 10;\n\n    const sum = _sum(a, b);\n    std.io.putln!(\"The sum of {} and {} is {}\", a, b, sum);\n}\n\npub fn _sum(x: i32, y: i32) i32 {\n    return x + y;\n}\n```\n\nIn this example, the function `_sum` takes two `i32` integers as arguments and returns an `i32` result. The main function demonstrates how to use this sum function with some sampl",
+      "duration": 21027,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": " In Zig, you can create an allocator for custom data types. Here's a simple example of an allocator for integers:\n\n```zig\nconst std = @import(\"std\");\nconst stdio = @import(\"std/stdio\");\n\npub const MyIntAllocator = struct {\n    .data: *u8,\n    .capacity: u64,\n    .size: u64,\n};\n\nfn initMyIntAllocator(alloc: *std.system.Allocator) MyIntAllocator {\n    var result = undefined;\n\n    try @alloc.alloc(szOf<MyIntAllocator>()) with drop(result) {\n        result.data = alloc.asPtr();\n        result.capaci",
+      "duration": 69878,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": " In Zig, the `Result` type is not built-in but can be easily defined using enums and tuples. Here's an example of a custom Result type implementation:\n\n```zig\nconst std = @import(\"std\");\n\nenum Error {\n    Success,\n    CustomError = i32, // You can define your own custom error codes here\n}\n\npub struct Result {\n    kind: Error,\n    value: anyptr,\n}\n\nfn newResult(kind: Error, value: anyptr) Result {\n    var _res = try alloc(Result);\n    _res.kind = kind;\n    _res.value = value;\n    return _res;\n}\n\n",
+      "duration": 44836,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": " In Zig language, here's a simple struct for a Point with `x` and `y` coordinates, and a method to calculate the distance from the origin (0, 0).\n\n```zig\nconst Point = struct {\n    x: u64,\n    y: u64,\n};\n\nfn Point_distanceFromOrigin(point: const Point) u64 {\n    return point.x.squared() + point.y.squared();\n}\n```\n\nThis struct `Point` has two fields `x` and `y` of type `u64`. The function `Point_distanceFromOrigin` takes a constant Point as an argument and returns the square of the distance from ",
+      "duration": 24036,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": " In Zig, you can create a generic function to find the maximum of two values for various numeric types by using templates. Here's an example of how you might implement it:\n\n```zig\npub const std = _builtin;\n\npub fn max(a: T, b: T) !T {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\n\ntemplate <ty T>\nstruct MaxConstraint {\n    static constexpr bool check(type-param T) = a.compare(b) >= 0;\n}\n\npub const fn maxTwoValues<T: MaxConstraint>(a: T, b: T) !T {\n    return max(a, b);\n}\n```\n\nThis cod",
+      "duration": 31720,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": " In Zig, `comptime` is used for performing computations at compile-time. However, Zig currently doesn't support recursion at compile-time due to its design philosophy of simplicity and performance. To calculate a factorial at compile-time without recursion, we can use loops and bit manipulation techniques.\n\nHere's an example of how you might implement a factorial function using `comptime`:\n\n```zig\nconst fn comptime_factorial(n: u64) !comptime(builtin) {\n    if (n == 0) {\n        return 1;\n    }\n",
+      "duration": 34173,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 37611.666666666664
+}
