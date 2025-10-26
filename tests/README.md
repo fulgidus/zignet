@@ -21,8 +21,11 @@ pnpm run test:unit
 Integration tests that verify end-to-end workflows.
 
 ```bash
-# Run E2E tests (no Zig installation)
+# Run E2E tests (no Zig installation, LLM tests skipped)
 pnpm run test:e2e
+
+# Run E2E tests with LLM tests enabled (requires model downloaded, SLOW ~10-15 min)
+ZIGNET_TEST_LLM=1 pnpm run test:e2e
 
 # Run E2E tests with Zig installation (slow)
 pnpm run test:e2e:install
@@ -33,7 +36,16 @@ pnpm run test:e2e:install
 - Multi-version Zig management
 - analyze_zig tool with real Zig compiler
 - compile_zig tool with real formatter
+- get_zig_docs tool (LLM-powered, only if ZIGNET_TEST_LLM=1)
+- suggest_fix tool (LLM-powered, only if ZIGNET_TEST_LLM=1)
 - Cross-tool integration
+
+**Note on LLM Tests:**
+- LLM tests are **disabled by default** (too slow, require GPU)
+- Enable with `ZIGNET_TEST_LLM=1` environment variable
+- Requires 4.4GB model downloaded (~/.zignet/models/zignet-qwen-7b-q4km.gguf)
+- Requires CUDA/Vulkan GPU for reasonable performance
+- Expected runtime: 10-15 minutes on RTX 3090
 
 ### 3. CI/CD Tests (GitHub Actions)
 Automated tests on every push/PR to `main` or `develop`.

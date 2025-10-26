@@ -21,6 +21,18 @@ export default tseslint.config(
         },
     },
     {
-        ignores: ['dist/', 'node_modules/', 'coverage/', 'scripts/**/*.cjs', '*.js', '!eslint.config.js'],
+        ignores: [
+            'dist/',
+            'node_modules/',
+            'coverage/',
+            'data/',
+            'models/',
+            'scripts/**/*.js',
+            'scripts/**/*.cjs',
+            'tests/',
+            '*.config.js',
+            '*.config.cjs',
+            '!eslint.config.js',
+        ],
     }
 );

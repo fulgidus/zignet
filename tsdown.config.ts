@@ -5,6 +5,9 @@ export default defineConfig({
         // MCP Server entry point
         "mcp-server": "src/mcp-server.ts",
 
+        // Configuration (for testing and programmatic use)
+        config: "src/config.ts",
+
         // MCP Tools (exported for programmatic use)
         "tools/analyze": "src/tools/analyze.ts",
         "tools/compile": "src/tools/compile.ts",

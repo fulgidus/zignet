@@ -1,7 +1,7 @@
 {
     "name": "zignet",
-    "version": "0.1.0",
-    "description": "MCP server for Zig — AI-powered code generation, debugging, and documentation",
+    "version": "0.15.2-h",
+    "description": "MCP server for Zig — AI-powered code analysis, validation, and documentation with fine-tuned LLM",
     "type": "module",
     "main": "./dist/mcp-server.js",
     "types": "./dist/mcp-server.d.ts",
@@ -50,27 +50,39 @@
         "prepare-dataset": "node scripts/prepare-training-dataset.js",
         "compare-models": "node scripts/compare-models.js",
         "monitor-training": "watch -n 1 ./scripts/monitor-training.sh",
+        "upload-hf": "bash scripts/upload-to-hf.sh",
+        "upload-gguf": "bash -c 'source venv-train/bin/activate && bash scripts/upload-gguf-to-hf.sh'",
+        "merge-lora": "bash -c 'source venv-train/bin/activate && python3 scripts/merge-lora.py'",
+        "convert-to-gguf": "bash scripts/convert-to-gguf.sh",
+        "import-to-ollama": "bash scripts/import-to-ollama.sh",
         "test-config": "node scripts/test-config.cjs",
         "install-zig": "node scripts/install-zig.js",
         "build": "tsdown",
         "build:watch": "tsdown --watch",
         "build:prod": "NODE_ENV=production tsdown",
-        "test": "jest",
-        "test:unit": "jest --testPathIgnorePatterns=e2e",
-        "test:e2e": "jest tests/e2e",
-        "test:e2e:install": "ZIGNET_TEST_INSTALL=1 jest tests/e2e",
-        "test:watch": "jest --watch",
-        "test:coverage": "jest --coverage",
+        "test": "vitest run",
+        "test:unit": "vitest run --exclude tests/e2e/**",
+        "test:e2e": "vitest run tests/e2e",
+        "test:e2e:install": "ZIGNET_TEST_INSTALL=1 vitest run tests/e2e",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
         "test:all": "pnpm run test:unit && pnpm run test:e2e",
+        "test:ui": "vitest --ui",
         "lint": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
         "format": "prettier --write \"src/**/*.ts\"",
         "format:check": "prettier --check \"src/**/*.ts\"",
         "typecheck": "tsc --noEmit",
         "clean": "rm -rf dist",
+        "ollama": "bash scripts/start-ollama.sh",
+        "ollama:stop": "bash scripts/stop-ollama.sh",
         "docker:build": "docker build -t zignet:latest .",
         "docker:run": "docker run --rm -it zignet:latest",
-        "prepublishOnly": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test"
+        "prepublishOnly": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test",
+        "publishNpm": "pnpm publish --access public --tag latest",
+        "tagPush": "bash scripts/tag-and-push.sh",
+        "package:vscode": "bash scripts/package-vscode-extension.sh",
+        "setup:vscode-publisher": "bash scripts/setup-vscode-publisher.sh"
     },
     "keywords": [
         "mcp",
@@ -113,7 +125,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/fulgidus/zignet.git"
+        "url": "git+https://github.com/fulgidus/zignet.git"
     },
     "bugs": {
         "url": "https://github.com/fulgidus/zignet/issues"
@@ -125,27 +137,25 @@
         "axios": "^1.12.2",
         "dotenv": "^17.2.3",
         "http": "0.0.1-security",
-        "node-llama-cpp": "^3.1.1"
+        "node-llama-cpp": "^3.14.0"
     },
     "engines": {
         "node": ">=18.0.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.38.0",
-        "@jest/globals": "^30.2.0",
-        "@types/jest": "^30.0.0",
         "@types/node": "^24.9.1",
         "@typescript-eslint/eslint-plugin": "^8.46.2",
         "@typescript-eslint/parser": "^8.46.2",
+        "@vitest/ui": "^4.0.3",
         "eslint": "^9.38.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-prettier": "^5.5.4",
-        "jest": "^30.2.0",
         "prettier": "^3.6.2",
-        "ts-jest": "^29.4.5",
         "ts-node": "^10.9.2",
         "tsdown": "^0.15.10",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.46.2"
+        "typescript-eslint": "^8.46.2",
+        "vitest": "^4.0.3"
     }
 }

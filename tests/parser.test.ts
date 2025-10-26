@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 import { Lexer } from '../src/lexer.js';
 import { Parser, ParseError } from '../src/parser.js';
 import type {
@@ -325,7 +325,9 @@ describe('Parser', () => {
 
             const fnDecl = ast.body[0] as FunctionDeclaration;
             const exprStmt = fnDecl.body.statements[0];
-            expect('expression' in exprStmt && exprStmt.expression.type).toBe('AssignmentExpression');
+            expect('expression' in exprStmt && exprStmt.expression.type).toBe(
+                'AssignmentExpression'
+            );
         });
 
         it('should parse compound assignment', () => {

@@ -3,7 +3,11 @@
  *
  * Centralized configuration management based on environment variables.
  * Controls Zig versions for documentation scraping, compilation, and defaults.
+ * Also manages LLM model settings for ZigNet's intelligent features.
  */
+
+import { homedir } from "node:os";
+import { join } from "node:path";
 
 /**
  * Parse comma-separated Zig versions from environment variable
@@ -14,7 +18,7 @@ function parseZigVersions(envVar: string | undefined, fallback: string[]): strin
     }
 
     return envVar
-        .split(",")
+        .split(',')
         .map((v) => v.trim())
         .filter((v) => v.length > 0);
 }
@@ -26,10 +30,11 @@ function parseZigVersions(envVar: string | undefined, fallback: string[]): strin
  * Example:
  *   export ZIG_SUPPORTED="0.13.0,0.14.0,0.15.2"
  */
-export const SUPPORTED_ZIG_VERSIONS = parseZigVersions(
-    process.env.ZIG_SUPPORTED,
-    ["0.13.0", "0.14.0", "0.15.2"]
-) as readonly string[];
+export const SUPPORTED_ZIG_VERSIONS = parseZigVersions(process.env.ZIG_SUPPORTED, [
+    '0.13.0',
+    '0.14.0',
+    '0.15.2',
+]) as readonly string[];
 
 export type ZigVersion = (typeof SUPPORTED_ZIG_VERSIONS)[number];
 
@@ -40,14 +45,14 @@ export type ZigVersion = (typeof SUPPORTED_ZIG_VERSIONS)[number];
  * Example:
  *   export ZIG_DEFAULT="0.15.2"
  */
-export const DEFAULT_ZIG_VERSION = (process.env.ZIG_DEFAULT || "0.15.2") as ZigVersion;
+export const DEFAULT_ZIG_VERSION = (process.env.ZIG_DEFAULT || '0.15.2') as ZigVersion;
 
 /**
  * Validate that default version is in supported versions
  */
 if (!SUPPORTED_ZIG_VERSIONS.includes(DEFAULT_ZIG_VERSION)) {
     throw new Error(
-        `ZIG_DEFAULT (${DEFAULT_ZIG_VERSION}) is not in ZIG_SUPPORTED (${SUPPORTED_ZIG_VERSIONS.join(", ")})`
+        `ZIG_DEFAULT (${DEFAULT_ZIG_VERSION}) is not in ZIG_SUPPORTED (${SUPPORTED_ZIG_VERSIONS.join(', ')})`
     );
 }
 
@@ -57,8 +62,17 @@ if (!SUPPORTED_ZIG_VERSIONS.includes(DEFAULT_ZIG_VERSION)) {
 export function getConfigSummary(): string {
     return `
 ZigNet Configuration:
-  ZIG_SUPPORTED: ${SUPPORTED_ZIG_VERSIONS.join(", ")}
-  ZIG_DEFAULT: ${DEFAULT_ZIG_VERSION}
+  Zig Versions:
+    ZIG_SUPPORTED: ${SUPPORTED_ZIG_VERSIONS.join(", ")}
+    ZIG_DEFAULT: ${DEFAULT_ZIG_VERSION}
+  
+  LLM Model:
+    MODEL_PATH: ${MODEL_PATH}
+    MODEL_AUTO_DOWNLOAD: ${MODEL_AUTO_DOWNLOAD}
+    GPU_LAYERS: ${GPU_LAYERS}
+    CONTEXT_SIZE: ${CONTEXT_SIZE}
+    TEMPERATURE: ${TEMPERATURE}
+    TOP_P: ${TOP_P}
 `.trim();
 }
 
@@ -81,8 +95,69 @@ export function getZigVersionOrDefault(version?: string): ZigVersion {
         return version;
     }
 
-    console.warn(
-        `Invalid Zig version "${version}", falling back to ${DEFAULT_ZIG_VERSION}`
-    );
+    console.warn(`Invalid Zig version "${version}", falling back to ${DEFAULT_ZIG_VERSION}`);
     return DEFAULT_ZIG_VERSION;
 }
+
+// ============================================================================
+// LLM Configuration
+// ============================================================================
+
+/**
+ * Path to the GGUF model file
+ * Default: ~/.zignet/models/zignet-qwen-7b-q4km.gguf
+ *
+ * Example:
+ *   export ZIGNET_MODEL_PATH="/path/to/custom/model.gguf"
+ */
+export const MODEL_PATH =
+    process.env.ZIGNET_MODEL_PATH ||
+    join(homedir(), ".zignet", "models", "zignet-qwen-7b-q4km.gguf");
+
+/**
+ * Auto-download model from HuggingFace if not found
+ * Default: true
+ *
+ * Example:
+ *   export ZIGNET_MODEL_AUTO_DOWNLOAD="false"
+ */
+export const MODEL_AUTO_DOWNLOAD = process.env.ZIGNET_MODEL_AUTO_DOWNLOAD !== "false";
+
+/**
+ * Number of layers to offload to GPU
+ * Default: 35 (all layers for RTX 3090)
+ * Set to 0 for CPU-only inference
+ *
+ * Example:
+ *   export ZIGNET_GPU_LAYERS="0"  # CPU only
+ *   export ZIGNET_GPU_LAYERS="20" # Partial GPU
+ *   export ZIGNET_GPU_LAYERS="35" # Full GPU (RTX 3090)
+ */
+export const GPU_LAYERS = parseInt(process.env.ZIGNET_GPU_LAYERS || "35", 10);
+
+/**
+ * LLM context size (max tokens)
+ * Default: 4096
+ *
+ * Example:
+ *   export ZIGNET_CONTEXT_SIZE="8192"
+ */
+export const CONTEXT_SIZE = parseInt(process.env.ZIGNET_CONTEXT_SIZE || "4096", 10);
+
+/**
+ * LLM temperature (creativity)
+ * Default: 0.7
+ *
+ * Example:
+ *   export ZIGNET_TEMPERATURE="0.5"
+ */
+export const TEMPERATURE = parseFloat(process.env.ZIGNET_TEMPERATURE || "0.7");
+
+/**
+ * LLM top-p sampling
+ * Default: 0.9
+ *
+ * Example:
+ *   export ZIGNET_TOP_P="0.8"
+ */
+export const TOP_P = parseFloat(process.env.ZIGNET_TOP_P || "0.9");
