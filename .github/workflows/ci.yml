@@ -54,8 +54,14 @@ jobs:
             - name: Build
               run: pnpm run build
 
-            - name: Run tests
-              run: pnpm test
+            - name: Install Zig 0.15.2
+              run: node scripts/install-zig.js 0.15.2
+
+            - name: Run unit tests
+              run: pnpm run test:unit
+
+            - name: Run E2E tests
+              run: pnpm run test:e2e
 
             - name: Test config system
               run: pnpm run test-config
@@ -144,6 +150,9 @@ jobs:
 
             - name: Test system Zig detection
               run: pnpm run test tests/e2e/zig-manager.test.ts
+
+            - name: Test E2E with system Zig
+              run: pnpm run test tests/e2e/zig-tools.test.ts tests/e2e/mcp-integration.test.ts
 
     docker-build:
         name: Docker Build Test
