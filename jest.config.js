@@ -9,6 +9,7 @@ export default {
     '!src/**/*.test.ts',
     '!src/**/*.spec.ts',
     '!src/example.ts',
+    '!src/parser-demo.ts',
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
