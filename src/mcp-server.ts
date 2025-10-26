@@ -15,8 +15,10 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 // Import tool implementations
-import { analyzeZig, formatAnalyzeResult } from './tools/analyze.js';
-import { compileZig, formatCompileResult } from './tools/compile.js';
+import { analyzeZig, formatAnalyzeResult } from "./tools/analyze.js";
+import { compileZig, formatCompileResult } from "./tools/compile.js";
+import { getZigDocs } from "./tools/docs.js";
+import { suggestFix } from "./tools/suggest.js";
 
 // Import configuration
 import { SUPPORTED_ZIG_VERSIONS, DEFAULT_ZIG_VERSION } from './config.js';
@@ -169,27 +171,63 @@ function createServer() {
                 };
             }
 
-            case 'get_zig_docs':
-                // TODO: Implement using fine-tuned LLM
-                return {
-                    content: [
-                        {
-                            type: 'text',
-                            text: '⚠️ get_zig_docs tool not yet implemented\nWaiting for fine-tuned model!',
-                        },
-                    ],
+            case "get_zig_docs": {
+                const docsArgs = args as {
+                    topic?: string;
+                    detail_level?: "basic" | "intermediate" | "advanced";
                 };
+                if (!docsArgs.topic) {
+                    throw new Error("Missing required argument: topic");
+                }
 
-            case 'suggest_fix':
-                // TODO: Implement using fine-tuned LLM
+                const result = await getZigDocs({
+                    topic: docsArgs.topic,
+                    detail_level: docsArgs.detail_level,
+                });
+
                 return {
                     content: [
                         {
-                            type: 'text',
-                            text: '⚠️ suggest_fix tool not yet implemented\nWaiting for fine-tuned model!',
+                            type: "text",
+                            text: `# Zig Documentation: ${result.topic}\n\n${result.documentation}`,
                         },
                     ],
                 };
+            }
+
+            case "suggest_fix": {
+                const fixArgs = args as {
+                    error_message?: string;
+                    code_context?: string;
+                    error_type?: "syntax" | "type" | "semantic" | "runtime";
+                };
+                if (!fixArgs.error_message) {
+                    throw new Error("Missing required argument: error_message");
+                }
+
+                const result = await suggestFix({
+                    error_message: fixArgs.error_message,
+                    code_context: fixArgs.code_context,
+                    error_type: fixArgs.error_type,
+                });
+
+                // Format fixes
+                const fixesText = result.suggested_fixes
+                    .map(
+                        (fix, i) =>
+                            `## Fix ${i + 1}: ${fix.description}\n\n\`\`\`zig\n${fix.code_after}\n\`\`\`\n\n**Rationale**: ${fix.rationale}`,
+                    )
+                    .join("\n\n");
+
+                return {
+                    content: [
+                        {
+                            type: "text",
+                            text: `# Error Fix Suggestions\n\n**Error**: ${result.error_summary}\n\n${fixesText}\n\n## Full Analysis\n\n${result.explanation}`,
+                        },
+                    ],
+                };
+            }
 
             default:
                 throw new Error(`Unknown tool: ${name}`);

@@ -9,6 +9,9 @@ export default {
         '/models/',
         '/data/',
     ],
+    transformIgnorePatterns: [
+        'node_modules/(?!(node-llama-cpp|lifecycle-utils)/)',
+    ],
     collectCoverageFrom: [
         'src/**/*.ts',
         '!src/**/*.d.ts',
