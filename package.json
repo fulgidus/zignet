@@ -50,6 +50,7 @@
         "prepare-dataset": "node scripts/prepare-training-dataset.js",
         "compare-models": "node scripts/compare-models.js",
         "monitor-training": "watch -n 1 ./scripts/monitor-training.sh",
+        "upload-hf": "bash scripts/upload-to-hf.sh",
         "test-config": "node scripts/test-config.cjs",
         "install-zig": "node scripts/install-zig.js",
         "build": "tsdown",
