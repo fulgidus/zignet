@@ -46,7 +46,7 @@ console.log('\n' + '='.repeat(60) + '\n');
 console.log('AST Analysis:');
 ast.body.forEach((decl, index) => {
   console.log(`\n${index + 1}. ${decl.type}: ${decl.name}`);
-  
+
   if (decl.type === 'FunctionDeclaration') {
     console.log(`   Parameters: ${decl.parameters.length}`);
     const returnTypeName =

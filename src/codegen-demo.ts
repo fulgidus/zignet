@@ -70,7 +70,6 @@ try {
   });
   const altCode = codegen2.generate(ast);
   console.log(altCode);
-
 } catch (error) {
   if (error instanceof Error) {
     console.error('Error:', error.message);

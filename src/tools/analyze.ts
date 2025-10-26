@@ -49,8 +49,8 @@ export async function analyzeZig(input: AnalyzeZigInput): Promise<AnalyzeZigResu
     }
 
     try {
-        // Run Zig ast-check
-        const result = await zigAstCheck(code, zig_version);
+        // Run Zig ast-check (wrap sync call for consistent async API)
+        const result = await Promise.resolve(zigAstCheck(code, zig_version));
 
         // Separate errors and warnings
         const errors = result.diagnostics

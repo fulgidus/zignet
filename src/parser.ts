@@ -89,7 +89,7 @@ export class Parser {
 
     if (this.check(TokenType.CONST) || this.check(TokenType.VAR)) {
       const decl = this.parseVariableDeclaration();
-      
+
       // Check if this is a struct/union/enum declaration
       if (
         decl.initializer &&
@@ -111,10 +111,7 @@ export class Parser {
   /**
    * Parse function declaration
    */
-  private parseFunctionDeclaration(
-    isInline = false,
-    isComptime = false
-  ): FunctionDeclaration {
+  private parseFunctionDeclaration(isInline = false, isComptime = false): FunctionDeclaration {
     const fnToken = this.consume(TokenType.FN, "Expected 'fn'");
     const name = this.consume(TokenType.IDENT, 'Expected function name').value;
 

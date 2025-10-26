@@ -741,10 +741,7 @@ export class TypeChecker {
    * Check if type is numeric
    */
   private isNumericType(type: Type): boolean {
-    return (
-      type.kind === 'primitive' &&
-      ['i32', 'i64', 'u32', 'f32', 'f64'].includes(type.name)
-    );
+    return type.kind === 'primitive' && ['i32', 'i64', 'u32', 'f32', 'f64'].includes(type.name);
   }
 
   /**

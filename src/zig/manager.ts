@@ -115,9 +115,10 @@ function getZigDownloadUrl(version: ZigVersion): string {
     // - 0.13.0, 0.14.0: zig-{platform}-{arch}-{version}  (e.g., zig-linux-x86_64-0.13.0)
     // - 0.15.0+:        zig-{arch}-{platform}-{version}  (e.g., zig-x86_64-linux-0.15.0)
     const versionNum = parseFloat(version);
-    const filename = versionNum >= 0.15
-        ? `zig-${arch}-${zigPlatform}-${version}${ext}`  // New format (0.15.0+)
-        : `zig-${zigPlatform}-${arch}-${version}${ext}`;  // Old format (0.13.0, 0.14.0)
+    const filename =
+        versionNum >= 0.15
+            ? `zig-${arch}-${zigPlatform}-${version}${ext}` // New format (0.15.0+)
+            : `zig-${zigPlatform}-${arch}-${version}${ext}`; // Old format (0.13.0, 0.14.0)
 
     return `https://ziglang.org/download/${version}/${filename}`;
 }
@@ -157,9 +158,10 @@ export function getZigBinaryPath(version: ZigVersion): string {
 
     // Match the extraction directory format with download filename format
     const versionNum = parseFloat(version);
-    const extractDir = versionNum >= 0.15
-        ? `zig-${arch}-${zigPlatform}-${version}`  // New format (0.15.0+)
-        : `zig-${zigPlatform}-${arch}-${version}`;  // Old format (0.13.0, 0.14.0)
+    const extractDir =
+        versionNum >= 0.15
+            ? `zig-${arch}-${zigPlatform}-${version}` // New format (0.15.0+)
+            : `zig-${zigPlatform}-${arch}-${version}`; // Old format (0.13.0, 0.14.0)
 
     return join(installPath, extractDir, binaryName);
 }
@@ -193,19 +195,25 @@ export function installZig(version: ZigVersion): void {
 
     try {
         // Download and extract using platform-appropriate tools
-        const { platform, ext } = detectPlatform();
+        const { platform } = detectPlatform();
 
         if (platform === 'windows') {
             // Windows: Download .zip and extract with PowerShell
             const tempFile = join(installPath, `zig-${version}.zip`);
-            
+
             // Download using PowerShell (more reliable than curl on Windows)
             console.log(`📥 Downloading ${url}...`);
-            execSync(`powershell -Command "(New-Object System.Net.WebClient).DownloadFile('${url}', '${tempFile}')"`, { stdio: 'inherit' });
+            execSync(
+                `powershell -Command "(New-Object System.Net.WebClient).DownloadFile('${url}', '${tempFile}')"`,
+                { stdio: 'inherit' }
+            );
 
             // Extract using PowerShell
             console.log(`📦 Extracting Zig ${version}...`);
-            execSync(`powershell -Command "Expand-Archive -Path '${tempFile}' -DestinationPath '${installPath}' -Force"`, { stdio: 'inherit' });
+            execSync(
+                `powershell -Command "Expand-Archive -Path '${tempFile}' -DestinationPath '${installPath}' -Force"`,
+                { stdio: 'inherit' }
+            );
 
             // Remove temp file
             execSync(`del "${tempFile}"`, { stdio: 'inherit' });
