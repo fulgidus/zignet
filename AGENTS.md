@@ -1,7 +1,7 @@
 # AGENTS.md - ZigNet Project Specification
 
-**Last Updated**: 2025-10-26 14:30:00 UTC  
-**Status**: Active Development - Phase 3 (MCP Integration + LLM Selection)  
+**Last Updated**: 2025-10-26 15:45:00 UTC  
+**Status**: Active Development - Phase 2.5 (Fine-Tuning IN PROGRESS)  
 **Owner**: fulgidus  
 **Repository**: https://github.com/fulgidus/zignet
 
@@ -347,14 +347,26 @@ Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, 
 - ✅ **Type Checker** (src/type-checker.ts) - DONE
 - ✅ **Code Generator** (src/codegen.ts) - DONE
 
-### Phase 2.5: Model Fine-Tuning ⏳ IN PROGRESS
+### Phase 2.5: Model Fine-Tuning 🔄 IN PROGRESS (TRAINING ACTIVE)
 - ✅ **Select base model** → **Qwen2.5-Coder-7B** (best quality, idiomatica Zig)
-- ⏳ **Prepare training data** (1,787 examples ready, target 10k+)
-- ⏳ **Fine-tune model** (QLoRA on Google Colab Pro, ~4-6h, ~$15)
-- ⏳ **Validate model** (test on Zig-specific benchmarks)
-- ⏳ **Upload to HuggingFace** → `fulgidus/zignet-qwen2.5-coder-7b`
-- ⏳ **Convert to GGUF** (Q4_K_M quantization for node-llama-cpp)
-- ⏳ **Integrate with ZigNet** (MCP tools: get_zig_docs, suggest_fix)
+- ✅ **Prepare training data** → **13,756 examples** (9,629 train, 2,063 val, 2,064 test)
+- 🔄 **Fine-tune model** → **RUNNING NOW** (QLoRA on RTX 3090, ETA: Oct 26 23:30 CET)
+  - Hardware: RTX 3090 (24GB VRAM, 100% util, 75°C, 351W)
+  - Method: QLoRA (4-bit) without Unsloth (compatibility issues)
+  - Training: 3 epochs, 1,806 steps, batch 16, lr 2e-4
+  - Script: `scripts/train-qwen-standard.py`
+  - Log: `training.log` (monitor: `tail -f training.log`)
+  - PID: 922643 (started Oct 26 15:43:30 CET)
+- ⏳ **Validate model** (test on Zig-specific benchmarks) - AFTER TRAINING
+- ⏳ **Upload to HuggingFace** → `fulgidus/zignet-qwen2.5-coder-7b` - AFTER TRAINING
+- ⏳ **Convert to GGUF** (Q4_K_M quantization for node-llama-cpp) - AFTER TRAINING
+- ⏳ **Integrate with ZigNet** (MCP tools: get_zig_docs, suggest_fix) - PHASE 3
+
+**Training Status (Real-time)**:
+- Started: Oct 26 15:43:30 CET 2025
+- Expected completion: Oct 26 23:30 CET 2025 (~8 hours)
+- Current: Loading first batch (GPU at 100%)
+- Output: `models/zignet-qwen-7b/final/`
 
 **Selected Model Details**:
 - **Base**: Qwen/Qwen2.5-Coder-7B-Instruct

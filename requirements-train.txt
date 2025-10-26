@@ -1,0 +1,46 @@
+# ZigNet Training Dependencies
+# For RTX 3090 with CUDA 12.7
+# Tested compatible versions (October 2025)
+
+# Core dependencies - PINNED versions for compatibility
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+
+# Transformers & Training - Compatible versions
+transformers==4.45.2
+datasets==2.21.0
+peft==0.13.2  # LoRA implementation
+trl==0.11.4  # Supervised Fine-Tuning Trainer
+accelerate==0.34.2
+
+# Optimization
+bitsandbytes==0.44.1  # 4-bit/8-bit quantization
+scipy==1.14.1
+
+# Utilities
+sentencepiece==0.2.0  # Tokenizer
+protobuf==3.20.3
+psutil==6.1.1
+
+# Unsloth - install last
+unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git
+
+# HuggingFace Hub (optional)
+huggingface-hub==0.26.5
+
+# Optimization
+bitsandbytes>=0.44.0  # 4-bit/8-bit quantization
+scipy>=1.11.0
+
+# Utilities
+sentencepiece>=0.2.0  # Tokenizer
+protobuf>=3.20.0
+psutil>=5.9.0
+
+# HuggingFace Hub (optional)
+huggingface-hub>=0.24.0
+
+# Monitoring (optional)
+# wandb>=0.17.0  # Uncomment for experiment tracking
+# tensorboard>=2.14.0  # Uncomment for TensorBoard logging

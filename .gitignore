@@ -12,3 +12,5 @@ coverage/
 
 .env*
 !.env.example
+
+venv*
