@@ -1,0 +1,63 @@
+{
+  "model": "codeqwen:latest",
+  "timestamp": "2025-10-26T02:54:04.745Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": "Here's a simple Zig function that returns the sum of two integers:\n\n```zig\npub fn addTwoIntegers(a: i32, B: i32) i32 {\n    return A + B;\n}\n```",
+      "duration": 15058,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": "Sure, here's an example of how you can use the `std.mem.Allocator` interface in Zig to allocate memory for an integer and then free it:\n\n```zig\nconst std = @import(\"std\");\n\npub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}){};\n    defer gpa.deinit();\n\n    // Allocate memory for an integer using the allocator\n    var myInteger: *i32 = try gpa.allocator.create(i32);\n\n    // Store a value in the integer\n    MyInteger.* = 42;\n\n    // Print the stored value\n    std.debug.print(",
+      "duration": 54563,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": "Here's an example of a Zig function that returns a Result type with either a success value or an error:\n\n```zig\npub fn doSomething() !i32 {\n    // Simulate some error condition for demonstration purposes\n    if (true) {\n        return error.SomeError;\n    } else {\n        return 42;\n    }\n}\n```\n\nThis function uses the `!` syntax to indicate that it returns a Result type. If the function succeeds, it returns an integer value wrapped in a `Success` variant of the Result type. If the function fails",
+      "duration": 76778,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": "Here's an example of how you could create a Zig struct for a point with `x` and `y` coordinates, along with a method to calculate the distance from the origin (which is the point at `(0, 0)` in 2D space):\n\n```zig\nconst Point = struct {\n    x: f64,\n    y: f64,\n\n    // Method to calculate distance from origin\n    pub fn distanceFromOrigin(self: *const Point) f64 {\n        return @sqrt((self.x * self.x) + (self.y * self.y));\n    }\n};\n\nfn main() {\n    var p = Point{ .x = 3, .y = 4 };\n    var distanc",
+      "duration": 74129,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": "Here's an example Zig function that takes any numeric type (integer or float) as input and returns the maximum of two values:\n\n```zig\nfn max(comptime T: type, a: T, B: T) T {\n    return if(T == f64 || T == f32).ifTrue(A > B else B);\n}\n```\n\nThis function uses the `If` type provided by Zig's standard library to conditionally return one of the input values based on a comparison between them. In this case, it compares the two values using `>`, and returns the first value if it is greater than the se",
+      "duration": 49198,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": "Zig has built-in support for compile-time computation using `comptime` keyword. Here is an example on computing the factorial of a number at compile time:\n\n```zig\nconst std = @import(\"std\");\n\n// Factorial function implemented at compile time\nfn comptimeFactorial(n: u32) u32 {\n    var result: u32 = 1;\n    comptime var i = n;\n    while (i > 1) : (i -= 1) {\n        result *= i;\n    }\n    return result;\n}\n\nfn main() !void {\n    const factorial_of_10 = comptimeFactorial(10);\n    std.debug.print(\"The ",
+      "duration": 59156,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 54813.666666666664
+}

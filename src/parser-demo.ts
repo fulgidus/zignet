@@ -49,7 +49,11 @@ ast.body.forEach((decl, index) => {
   
   if (decl.type === 'FunctionDeclaration') {
     console.log(`   Parameters: ${decl.parameters.length}`);
-    console.log(`   Return Type: ${decl.returnType.type} (${decl.returnType.name || 'N/A'})`);
+    const returnTypeName =
+      decl.returnType.type === 'PrimitiveType' || decl.returnType.type === 'IdentifierType'
+        ? (decl.returnType as any).name
+        : 'complex';
+    console.log(`   Return Type: ${decl.returnType.type} (${returnTypeName})`);
     console.log(`   Statements: ${decl.body.statements.length}`);
     if (decl.isInline) console.log('   Modifier: inline');
     if (decl.isComptime) console.log('   Modifier: comptime');
@@ -57,7 +61,12 @@ ast.body.forEach((decl, index) => {
   } else if (decl.type === 'VariableDeclaration') {
     console.log(`   Kind: ${decl.isConst ? 'const' : 'var'}`);
     if (decl.typeAnnotation) {
-      console.log(`   Type: ${decl.typeAnnotation.type} (${decl.typeAnnotation.name || 'N/A'})`);
+      const typeName =
+        decl.typeAnnotation.type === 'PrimitiveType' ||
+        decl.typeAnnotation.type === 'IdentifierType'
+          ? (decl.typeAnnotation as any).name
+          : 'complex';
+      console.log(`   Type: ${decl.typeAnnotation.type} (${typeName})`);
     }
     if (decl.initializer) {
       console.log(`   Initializer: ${decl.initializer.type}`);
