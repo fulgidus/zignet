@@ -5,6 +5,24 @@ All notable changes to ZigNet will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) aligned with Zig releases.
 
+## [0.15.2-g] - 2025-10-26
+
+### 🚀 Features
+- **Model Auto-Download at Startup** - Server now downloads the LLM model during initialization instead of on first use, preventing user wait times
+- **Enhanced Startup Logging** - Added detailed server status messages including:
+  - Zig version configuration (supported versions + default)
+  - Model availability status and download path
+  - Clear indication when model download is in progress
+  - Success/failure notifications for model operations
+
+### 🐛 Bug Fixes
+- **Fixed Download Progress Spam** - Corrected progress logging to show only 5% increments (5%, 10%, 15%, etc.) using milestone tracking instead of imprecise float modulo operations
+- **Fixed Test Script** - Improved `test-mcp-connection.js` to properly wait for server readiness (including model download) before running tests, with 5-minute timeout support
+
+### 🔧 Improvements
+- **Better Error Handling** - Server continues to operate even if model download fails, with clear messaging that only LLM tools will be unavailable
+- **Graceful Degradation** - Deterministic tools (`analyze_zig`, `compile_zig`) remain functional without the LLM model
+
 ## [0.15.2-f] - 2025-10-26
 
 ### Features

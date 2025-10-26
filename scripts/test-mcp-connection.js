@@ -12,17 +12,38 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const serverPath = join(__dirname, 'dist', 'mcp-server.js');
+const serverPath = join(__dirname, '..', 'dist', 'mcp-server.js');
 
 console.log('🧪 Testing ZigNet MCP Server...\n');
 
 // Start the MCP server
 const server = spawn('node', [serverPath], {
-    stdio: ['pipe', 'pipe', 'inherit'], // stdin, stdout, stderr
+    stdio: ['pipe', 'pipe', 'pipe'], // stdin, stdout, stderr - capture stderr to detect ready state
 });
 
 let responseBuffer = '';
 let requestId = 1;
+let serverReady = false;
+let pendingTests = null;
+
+// Listen to server stderr for startup messages
+server.stderr.on('data', (data) => {
+    const output = data.toString();
+    process.stderr.write(output); // Pass through to console
+
+    // Detect when server is ready (after model check/download)
+    if (output.includes('✅ ZigNet MCP Server running on stdio') ||
+        output.includes('📡 Available tools:')) {
+        if (!serverReady) {
+            serverReady = true;
+            console.log('\n🎯 Server ready! Starting tests...\n');
+            if (pendingTests) {
+                pendingTests();
+                pendingTests = null;
+            }
+        }
+    }
+});
 
 // Listen to server output
 server.stdout.on('data', (data) => {
@@ -67,10 +88,8 @@ function sendRequest(method, params = {}) {
     server.stdin.write(JSON.stringify(request) + '\n');
 }
 
-// Wait a bit for server to start, then send test requests
-setTimeout(() => {
-    console.log('');
-
+// Function to run tests once server is ready
+function runTests() {
     // 1. Initialize
     sendRequest('initialize', {
         protocolVersion: '2024-11-05',
@@ -100,10 +119,25 @@ setTimeout(() => {
             }, 2000);
         }, 1000);
     }, 1000);
-}, 1000);
+}
 
-// Timeout safety
-setTimeout(() => {
-    console.error('\n⏱️  Test timeout - killing server');
-    server.kill();
-}, 15000);
+// Wait for server to be ready (or timeout after 5 minutes for large downloads)
+const startTime = Date.now();
+const maxWaitTime = 5 * 60 * 1000; // 5 minutes
+
+const checkReady = setInterval(() => {
+    if (serverReady) {
+        clearInterval(checkReady);
+        runTests();
+    } else if (Date.now() - startTime > maxWaitTime) {
+        clearInterval(checkReady);
+        console.error('\n⏱️  Server startup timeout (5 minutes) - killing server');
+        server.kill();
+    }
+}, 100);
+
+// Store the test function to run when server signals ready
+pendingTests = () => {
+    clearInterval(checkReady);
+    runTests();
+};

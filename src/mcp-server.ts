@@ -30,7 +30,7 @@ function createServer() {
     const server = new Server(
         {
             name: 'zignet',
-            version: '0.15.2-f',
+            version: '0.15.2-g',
         },
         {
             capabilities: {
@@ -260,10 +260,13 @@ async function main() {
         console.error(`   📍 Target: ${modelDownloader.getModelPath()}`);
 
         try {
+            let lastLoggedPercent = -1;
             await modelDownloader.ensureModel((progress) => {
-                // Log progress every 5%
-                if (progress.percent % 5 < 0.5) {
-                    console.error(`   📦 Download progress: ${progress.percent.toFixed(1)}% (${(progress.downloaded / 1024 / 1024).toFixed(0)}MB / ${(progress.total / 1024 / 1024).toFixed(0)}MB)`);
+                // Log progress every 5% (only when crossing the threshold)
+                const currentMilestone = Math.floor(progress.percent / 5) * 5;
+                if (currentMilestone > lastLoggedPercent && currentMilestone % 5 === 0) {
+                    console.error(`   📦 Download progress: ${currentMilestone}% (${(progress.downloaded / 1024 / 1024).toFixed(0)}MB / ${(progress.total / 1024 / 1024).toFixed(0)}MB)`);
+                    lastLoggedPercent = currentMilestone;
                 }
             });
             console.error(`   ✅ Model downloaded successfully!`);
