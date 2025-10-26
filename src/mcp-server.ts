@@ -136,7 +136,7 @@ function createServer() {
                 if (!compileArgs.code) {
                     throw new Error("Missing required argument: code");
                 }
-                const result = compileZig({ 
+                const result = compileZig({
                     code: compileArgs.code,
                     output_format: compileArgs.output_format || "zig"
                 });
