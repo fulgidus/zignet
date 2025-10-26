@@ -198,7 +198,7 @@ export function installZig(version: ZigVersion): void {
         if (platform === 'windows') {
             // Windows: Download .zip and extract with PowerShell
             const tempFile = join(installPath, `zig-${version}.zip`);
-            
+
             // Download using PowerShell (more reliable than curl on Windows)
             console.log(`📥 Downloading ${url}...`);
             execSync(`powershell -Command "(New-Object System.Net.WebClient).DownloadFile('${url}', '${tempFile}')"`, { stdio: 'inherit' });
