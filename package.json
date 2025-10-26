@@ -3,9 +3,44 @@
     "version": "0.1.0",
     "description": "MCP server for Zig — AI-powered code generation, debugging, and documentation",
     "type": "module",
+    "main": "./dist/mcp-server.js",
+    "types": "./dist/mcp-server.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/mcp-server.js",
+            "require": "./dist/mcp-server.cjs",
+            "types": "./dist/mcp-server.d.ts"
+        },
+        "./tools/analyze": {
+            "import": "./dist/tools/analyze.js",
+            "require": "./dist/tools/analyze.cjs",
+            "types": "./dist/tools/analyze.d.ts"
+        },
+        "./tools/compile": {
+            "import": "./dist/tools/compile.js",
+            "require": "./dist/tools/compile.cjs",
+            "types": "./dist/tools/compile.d.ts"
+        }
+    },
     "bin": {
         "zignet": "./bin/cli.js"
     },
+    "files": [
+        "dist",
+        "bin",
+        "scripts/install-zig.js",
+        "README.md",
+        "LICENSE"
+    ],
+    "os": [
+        "darwin",
+        "linux",
+        "win32"
+    ],
+    "cpu": [
+        "x64",
+        "arm64"
+    ],
     "scripts": {
         "start": "node bin/cli.js",
         "download-model": "node scripts/download-model.js",
@@ -38,13 +73,27 @@
     },
     "keywords": [
         "mcp",
+        "model-context-protocol",
         "zig",
+        "ziglang",
         "ai",
         "code-generation",
-        "llm"
+        "llm",
+        "code-analysis",
+        "linter",
+        "formatter",
+        "claude"
     ],
-    "author": "",
+    "author": "fulgidus",
     "license": "WTFPL",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fulgidus/zignet.git"
+    },
+    "bugs": {
+        "url": "https://github.com/fulgidus/zignet/issues"
+    },
+    "homepage": "https://github.com/fulgidus/zignet#readme",
     "dependencies": {
         "@huggingface/hub": "^0.15.2",
         "@modelcontextprotocol/sdk": "^1.0.4",

@@ -2,10 +2,14 @@ import { defineConfig } from "tsdown";
 
 export default defineConfig({
     entry: {
-        // MCP Server entry point (future)
+        // MCP Server entry point
         "mcp-server": "src/mcp-server.ts",
 
-        // Core analysis components
+        // MCP Tools (exported for programmatic use)
+        "tools/analyze": "src/tools/analyze.ts",
+        "tools/compile": "src/tools/compile.ts",
+
+        // Core analysis components (legacy, may be removed)
         lexer: "src/lexer.ts",
         parser: "src/parser.ts",
         "type-checker": "src/type-checker.ts",
