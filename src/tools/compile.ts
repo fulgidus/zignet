@@ -30,7 +30,7 @@ export interface CompileResult {
 /**
  * Format Zig code using official Zig formatter
  */
-export function compileZig(input: CompileInput): CompileResult {
+export async function compileZig(input: CompileInput): Promise<CompileResult> {
     const { code, zig_version = DEFAULT_ZIG_VERSION } = input;
 
     // Validate input
@@ -44,8 +44,8 @@ export function compileZig(input: CompileInput): CompileResult {
     }
 
     try {
-        // Run Zig fmt
-        const result = zigFormat(code, zig_version);
+        // Run Zig fmt (wrapped in Promise for consistent async API)
+        const result = await Promise.resolve(zigFormat(code, zig_version));
 
         if (result.success) {
             return {

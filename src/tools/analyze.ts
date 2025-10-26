@@ -34,7 +34,7 @@ export interface AnalyzeZigResult {
 /**
  * Analyze Zig code using official Zig compiler
  */
-export function analyzeZig(input: AnalyzeZigInput): AnalyzeZigResult {
+export async function analyzeZig(input: AnalyzeZigInput): Promise<AnalyzeZigResult> {
   const { code, zig_version = DEFAULT_ZIG_VERSION } = input;
 
   // Validate input
@@ -50,7 +50,7 @@ export function analyzeZig(input: AnalyzeZigInput): AnalyzeZigResult {
 
   try {
     // Run Zig ast-check
-    const result = zigAstCheck(code, zig_version);
+    const result = await zigAstCheck(code, zig_version);
 
     // Separate errors and warnings
     const errors = result.diagnostics
