@@ -1,12 +1,6 @@
 #!/bin/bash
 
-# Script per testare tutti i modelli in sequenza
-
-MODELS=(
-  "phi:2.7b"
-  "mistral"
-  "codeqwen:latest"
-)
+# Script per testare tutti i modelli disponibili in Ollama
 
 RESULTS_DIR="test-results"
 mkdir -p $RESULTS_DIR
@@ -15,6 +9,30 @@ echo "════════════════════════�
 echo "🚀 SEQUENTIAL MODEL TESTING SUITE"
 echo "📅 $(date '+%Y-%m-%d %H:%M:%S')"
 echo "═══════════════════════════════════════════════════════════════"
+echo ""
+
+# Rileva tutti i modelli disponibili in Ollama
+echo "🔍 Detecting available models in Ollama..."
+MODELS_RAW=$(ollama list | tail -n +2 | awk '{print $1}' | grep -v "^$")
+
+if [ -z "$MODELS_RAW" ]; then
+  echo "❌ No models found in Ollama. Please pull some models first:"
+  echo "   ollama pull phi:2.7b"  
+  echo "   ollama pull mistral"
+  echo "   ollama pull codeqwen:latest"
+  exit 1
+fi
+
+# Converti in array
+declare -a MODELS
+while IFS= read -r line; do
+    MODELS+=("$line")
+done <<< "$MODELS_RAW"
+
+echo "📋 Found ${#MODELS[@]} models:"
+for model in "${MODELS[@]}"; do
+  echo "   • $model"
+done
 echo ""
 
 # Array per tracciare risultati
@@ -31,16 +49,7 @@ for i in "${!MODELS[@]}"; do
   echo "└─────────────────────────────────────────────────────────────┘"
   echo ""
   
-  # Controlla se il modello esiste in Ollama
-  if ! ollama list | grep -q "^${MODEL}"; then
-    echo "⚠️  Model not found, pulling: $MODEL"
-    ollama pull "$MODEL"
-    if [ $? -ne 0 ]; then
-      echo "❌ Failed to pull $MODEL"
-      TEST_RESULTS+=("❌ $MODEL - PULL FAILED")
-      continue
-    fi
-  fi
+  # Il modello è già disponibile (rilevato da ollama list)
   
   # Esegui test avanzato
   echo ""
