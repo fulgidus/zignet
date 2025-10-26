@@ -159,24 +159,30 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Install Zig 0.15.0 in system PATH
+      - name: Install Zig in system PATH
+        env:
+          ZIG_VERSION: '0.15.1'
         run: |
-          wget https://ziglang.org/download/0.15.0/zig-linux-x86_64-0.15.0.tar.xz
-          tar -xf zig-linux-x86_64-0.15.0.tar.xz
-          echo "$PWD/zig-linux-x86_64-0.15.0" >> $GITHUB_PATH
+          wget https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz
+          tar -xf zig-x86_64-linux-${ZIG_VERSION}.tar.xz
+          echo "$PWD/zig-x86_64-linux-${ZIG_VERSION}" >> $GITHUB_PATH
 
       - name: Verify system Zig
         run: zig version
 
       - name: Test system Zig detection
+        env:
+          ZIG_VERSION: '0.15.1'
         run: |
           node -e "
           const { detectSystemZig, getSystemZigPath } = require('./dist/compile-C1_SCOrq.cjs');
           const version = detectSystemZig();
           const path = getSystemZigPath();
+          const expectedVersion = process.env.ZIG_VERSION;
           console.log('Detected version:', version);
           console.log('Detected path:', path);
-          if (!version || !version.includes('0.15.0')) {
+          console.log('Expected version:', expectedVersion);
+          if (!version || !version.includes(expectedVersion)) {
             console.error('Failed to detect system Zig');
             process.exit(1);
           }
