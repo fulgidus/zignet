@@ -10,6 +10,9 @@ export default defineConfig({
     parser: "src/parser.ts",
     "type-checker": "src/type-checker.ts",
     codegen: "src/codegen.ts",
+    
+    // Test tools (manual testing)
+    "test-tools": "src/test-tools.ts",
   },
   
   // Output formats

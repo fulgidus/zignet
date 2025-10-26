@@ -17,11 +17,9 @@ import {
     ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 
-// TODO: Import analysis components when ready
-// import { Lexer } from "./lexer.js";
-// import { Parser } from "./parser.js";
-// import { TypeChecker } from "./type-checker.js";
-// import { CodeGenerator } from "./codegen.js";
+// Import tool implementations
+import { analyzeZig, formatAnalyzeResult } from "./tools/analyze.js";
+import { compileZig, formatCompileResult } from "./tools/compile.js";
 
 /**
  * Create and configure the MCP server
@@ -114,30 +112,43 @@ function createServer() {
      * Handler for tool execution
      */
     server.setRequestHandler(CallToolRequestSchema, async (request) => {
-        const { name, arguments: args } = request.params;
+        const { name, arguments: args = {} } = request.params;
 
         switch (name) {
-            case "analyze_zig":
-                // TODO: Implement using Lexer + Parser + TypeChecker
+            case "analyze_zig": {
+                const code = (args as { code?: string }).code;
+                if (!code) {
+                    throw new Error("Missing required argument: code");
+                }
+                const result = analyzeZig({ code });
                 return {
                     content: [
                         {
                             type: "text",
-                            text: "⚠️ analyze_zig tool not yet implemented\nComing in Phase 3!",
+                            text: formatAnalyzeResult(result),
                         },
                     ],
                 };
+            }
 
-            case "compile_zig":
-                // TODO: Implement using Parser + CodeGenerator
+            case "compile_zig": {
+                const compileArgs = args as { code?: string; output_format?: "zig" | "json" };
+                if (!compileArgs.code) {
+                    throw new Error("Missing required argument: code");
+                }
+                const result = compileZig({ 
+                    code: compileArgs.code,
+                    output_format: compileArgs.output_format || "zig"
+                });
                 return {
                     content: [
                         {
                             type: "text",
-                            text: "⚠️ compile_zig tool not yet implemented\nComing in Phase 3!",
+                            text: formatCompileResult(result),
                         },
                     ],
                 };
+            }
 
             case "get_zig_docs":
                 // TODO: Implement using fine-tuned LLM

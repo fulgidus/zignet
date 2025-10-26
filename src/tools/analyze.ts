@@ -34,7 +34,7 @@ export interface AnalyzeZigResult {
 /**
  * Analyze Zig code for syntax and type errors
  */
-export async function analyzeZig(input: AnalyzeZigInput): Promise<AnalyzeZigResult> {
+export function analyzeZig(input: AnalyzeZigInput): AnalyzeZigResult {
     const { code } = input;
 
     const result: AnalyzeZigResult = {
