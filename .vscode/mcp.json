@@ -1,0 +1,12 @@
+{
+    "servers": {
+        "ZigNet": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "-y",
+                "zignet"
+            ]
+        }
+    }
+}

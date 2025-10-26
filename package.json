@@ -1,6 +1,6 @@
 {
     "name": "zignet",
-    "version": "0.15.2",
+    "version": "0.15.2.1",
     "description": "MCP server for Zig — AI-powered code analysis, validation, and documentation with fine-tuned LLM",
     "type": "module",
     "main": "./dist/mcp-server.js",
@@ -22,12 +22,8 @@
             "types": "./dist/tools/compile.d.ts"
         }
     },
-    "bin": {
-        "zignet": "bin/cli.js"
-    },
     "files": [
         "dist",
-        "bin",
         "scripts/install-zig.js",
         "icon.svg",
         "README.md",
