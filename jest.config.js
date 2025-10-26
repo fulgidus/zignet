@@ -10,7 +10,7 @@ export default {
         '/data/',
     ],
     transformIgnorePatterns: [
-        'node_modules/(?!(node-llama-cpp|lifecycle-utils)/)',
+        'node_modules/(?!(node-llama-cpp|lifecycle-utils|@llama-node)/)',
     ],
     collectCoverageFrom: [
         'src/**/*.ts',
@@ -28,12 +28,13 @@ export default {
     extensionsToTreatAsEsm: ['.ts'],
     moduleNameMapper: {
         '^(\\.{1,2}/.*)\\.js$': '$1',
+        '^node-llama-cpp$': '<rootDir>/tests/__mocks__/node-llama-cpp.ts',
     },
     transform: {
         '^.+\\.ts$': [
             'ts-jest',
             {
-                useESM: false,
+                useESM: true,
                 tsconfig: './tsconfig.test.json',
             },
         ],

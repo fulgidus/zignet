@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, test } from 'vitest';
 import { CodeGenerator } from '../src/codegen.js';
 import type { Program, FunctionDeclaration, Parameter, StructField } from '../src/ast.js';
 
@@ -8,7 +9,7 @@ describe('CodeGenerator', () => {
         codegen = new CodeGenerator();
     });
 
-    test('should generate simple function', () => {
+    it('should generate simple function', () => {
         const params: Parameter[] = [
             {
                 type: 'Parameter',
@@ -49,7 +50,7 @@ describe('CodeGenerator', () => {
         expect(code).toContain('return a + b;');
     });
 
-    test('should generate const variable', () => {
+    it('should generate const variable', () => {
         const program: Program = {
             type: 'Program',
             body: [
@@ -67,7 +68,7 @@ describe('CodeGenerator', () => {
         expect(code).toBe('const x: i32 = 42;');
     });
 
-    test('should generate var variable', () => {
+    it('should generate var variable', () => {
         const program: Program = {
             type: 'Program',
             body: [
@@ -85,7 +86,7 @@ describe('CodeGenerator', () => {
         expect(code).toBe('var count: u32 = 0;');
     });
 
-    test('should generate struct', () => {
+    it('should generate struct', () => {
         const fields: StructField[] = [
             {
                 type: 'StructField',
@@ -116,7 +117,7 @@ describe('CodeGenerator', () => {
         expect(code).toContain('y: f32,');
     });
 
-    test('should generate error union function', () => {
+    it('should generate error union function', () => {
         const fn: FunctionDeclaration = {
             type: 'FunctionDeclaration',
             name: 'divide',
@@ -131,7 +132,7 @@ describe('CodeGenerator', () => {
         expect(code).toContain('fn divide() !i32');
     });
 
-    test('should generate if statement', () => {
+    it('should generate if statement', () => {
         const fn: FunctionDeclaration = {
             type: 'FunctionDeclaration',
             name: 'test',
@@ -157,7 +158,7 @@ describe('CodeGenerator', () => {
         expect(code).toContain('if (true) {');
     });
 
-    test('should generate while loop', () => {
+    it('should generate while loop', () => {
         const fn: FunctionDeclaration = {
             type: 'FunctionDeclaration',
             name: 'test',
@@ -184,7 +185,7 @@ describe('CodeGenerator', () => {
         expect(code).toContain('break;');
     });
 
-    test('should generate string literals with escaping', () => {
+    it('should generate string literals with escaping', () => {
         const program: Program = {
             type: 'Program',
             body: [
@@ -201,7 +202,7 @@ describe('CodeGenerator', () => {
         expect(code).toBe('const str = "Hello\\n\\"World\\"";');
     });
 
-    test('should generate pointer type', () => {
+    it('should generate pointer type', () => {
         const program: Program = {
             type: 'Program',
             body: [
@@ -221,7 +222,7 @@ describe('CodeGenerator', () => {
         expect(code).toBe('const ptr: *i32;');
     });
 
-    test('should generate array type', () => {
+    it('should generate array type', () => {
         const program: Program = {
             type: 'Program',
             body: [
@@ -242,7 +243,7 @@ describe('CodeGenerator', () => {
         expect(code).toBe('const arr: [10]i32;');
     });
 
-    test('should generate optional type', () => {
+    it('should generate optional type', () => {
         const program: Program = {
             type: 'Program',
             body: [
@@ -262,7 +263,7 @@ describe('CodeGenerator', () => {
         expect(code).toBe('const opt: ?i32;');
     });
 
-    test('should respect indent size option', () => {
+    it('should respect indent size option', () => {
         const codegen2 = new CodeGenerator({ indentSize: 2 });
         const fn: FunctionDeclaration = {
             type: 'FunctionDeclaration',

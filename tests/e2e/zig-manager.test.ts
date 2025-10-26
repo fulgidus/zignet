@@ -4,7 +4,7 @@
  * Tests multi-version support, system detection, and download functionality
  */
 
-import { describe, it, expect, beforeAll } from '@jest/globals';
+import { describe, it, expect, beforeAll } from 'vitest';
 import {
     detectSystemZig,
     getSystemZigPath,

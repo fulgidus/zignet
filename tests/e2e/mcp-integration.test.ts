@@ -8,7 +8,7 @@
  * 4. suggest_fix - LLM-powered error fix suggestions
  */
 
-import { describe, it, expect, beforeAll, afterAll } from '@jest/globals';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { analyzeZig } from '../../src/tools/analyze.js';
 import { compileZig } from '../../src/tools/compile.js';
 import { MODEL_AUTO_DOWNLOAD, MODEL_PATH } from '../../src/config.js';
@@ -25,15 +25,24 @@ let hasLLM = false;
 
 describe('ZigNet MCP E2E Integration Tests', () => {
     const TEST_TIMEOUT = 120000; // 2 minutes for LLM operations
+    const ENABLE_LLM_TESTS = process.env.ZIGNET_TEST_LLM === '1' || process.env.ZIGNET_TEST_LLM === 'true';
 
     beforeAll(async () => {
-        // Check if model is available
+        // Check if LLM tests are enabled AND model is available
         const modelPath = MODEL_PATH || join(homedir(), '.zignet', 'models', 'zignet-qwen-7b-q4km.gguf');
-        hasLLM = existsSync(modelPath);
+        const modelExists = existsSync(modelPath);
 
-        if (hasLLM) {
-            console.log('✅ LLM model found, running full test suite');
-            // Dynamically import LLM modules only if model is present
+        hasLLM = ENABLE_LLM_TESTS && modelExists;
+
+        if (ENABLE_LLM_TESTS && !modelExists) {
+            console.log('⚠️  ZIGNET_TEST_LLM enabled but model not found');
+            console.log(`   Expected at: ${modelPath}`);
+            console.log('   LLM tests will be skipped');
+        } else if (!ENABLE_LLM_TESTS) {
+            console.log('⏭️  LLM tests skipped (set ZIGNET_TEST_LLM=1 to enable)');
+        } else {
+            console.log('✅ LLM model found, running LLM tests');
+            // Dynamically import LLM modules only if enabled and model is present
             const docsModule = await import('../../src/tools/docs.js');
             const suggestModule = await import('../../src/tools/suggest.js');
             const sessionModule = await import('../../src/llm/session.js');
@@ -42,12 +51,6 @@ describe('ZigNet MCP E2E Integration Tests', () => {
             suggestFix = suggestModule.suggestFix;
             getLLM = sessionModule.getLLM;
             disposeLLM = sessionModule.disposeLLM;
-        } else {
-            console.log('⚠️  LLM model not found, skipping LLM tests');
-            console.log(`   Expected at: ${modelPath}`);
-            if (MODEL_AUTO_DOWNLOAD) {
-                console.log('   Set ZIGNET_MODEL_AUTO_DOWNLOAD=false to skip auto-download');
-            }
         }
     }, TEST_TIMEOUT);
 

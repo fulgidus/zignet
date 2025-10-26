@@ -4,7 +4,7 @@
  * Tests actual Zig compiler integration without LLM
  */
 
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 import { analyzeZig } from '../../src/tools/analyze.js';
 import { compileZig } from '../../src/tools/compile.js';
 

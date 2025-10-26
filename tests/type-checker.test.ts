@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 import { Lexer } from '../src/lexer.js';
 import { Parser } from '../src/parser.js';
 import { TypeChecker, TypeError as TypeCheckError } from '../src/type-checker.js';

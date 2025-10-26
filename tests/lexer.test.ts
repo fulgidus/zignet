@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 import { Lexer, Token, TokenType } from '../src/lexer';
 
 describe('Lexer', () => {
