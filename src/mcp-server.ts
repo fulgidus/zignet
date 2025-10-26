@@ -30,7 +30,7 @@ function createServer() {
     const server = new Server(
         {
             name: 'zignet',
-            version: '0.15.2a',
+            version: '0.15.2-b',
         },
         {
             capabilities: {
