@@ -243,14 +243,14 @@ pnpm test:watch tests/e2e
 
 ### Environment Variables
 
-| Variable                    | Default                                    | Description                      |
-| --------------------------- | ------------------------------------------ | -------------------------------- |
-| `ZIGNET_MODEL_PATH`         | `~/.zignet/models/zignet-qwen-7b-q4km.gguf` | Path to GGUF model               |
-| `ZIGNET_MODEL_AUTO_DOWNLOAD`| `false`                                    | Auto-download model if missing   |
-| `ZIGNET_GPU_LAYERS`         | `35`                                       | GPU offload layers (0 = CPU only)|
-| `ZIG_SUPPORTED`             | `0.13.0,0.14.1,0.15.2`                     | Supported Zig versions           |
-| `ZIG_DEFAULT`               | `0.15.2`                                   | Default Zig version              |
-| `SKIP_LLM_TESTS`            | `false`                                    | Force skip LLM tests             |
+| Variable                     | Default                                     | Description                       |
+| ---------------------------- | ------------------------------------------- | --------------------------------- |
+| `ZIGNET_MODEL_PATH`          | `~/.zignet/models/zignet-qwen-7b-q4km.gguf` | Path to GGUF model                |
+| `ZIGNET_MODEL_AUTO_DOWNLOAD` | `false`                                     | Auto-download model if missing    |
+| `ZIGNET_GPU_LAYERS`          | `35`                                        | GPU offload layers (0 = CPU only) |
+| `ZIG_SUPPORTED`              | `0.13.0,0.14.1,0.15.2`                      | Supported Zig versions            |
+| `ZIG_DEFAULT`                | `0.15.2`                                    | Default Zig version               |
+| `SKIP_LLM_TESTS`             | `false`                                     | Force skip LLM tests              |
 
 ### Test Categories Breakdown
 
@@ -459,16 +459,16 @@ ZIG_DEFAULT=0.15.2 pnpm test tests/e2e
 
 ### Performance Benchmarks
 
-| Test Category  | Tests | Avg Time | Notes                     |
-| -------------- | ----- | -------- | ------------------------- |
-| analyze_zig    | 4     | 400ms    | Deterministic, fast       |
-| compile_zig    | 3     | 550ms    | Deterministic, fast       |
-| get_zig_docs   | 5     | 8s       | LLM-powered, model-dependent |
-| suggest_fix    | 5     | 10s      | LLM-powered, model-dependent |
-| Integration    | 3     | 5s       | Mixed (LLM + deterministic) |
-| Performance    | 3     | 2s       | Concurrent operations     |
-| Edge Cases     | 4     | 580ms    | Error handling paths      |
-| **TOTAL**      | **27**| **323ms**| **8.7s (without LLM)**    |
+| Test Category | Tests  | Avg Time  | Notes                        |
+| ------------- | ------ | --------- | ---------------------------- |
+| analyze_zig   | 4      | 400ms     | Deterministic, fast          |
+| compile_zig   | 3      | 550ms     | Deterministic, fast          |
+| get_zig_docs  | 5      | 8s        | LLM-powered, model-dependent |
+| suggest_fix   | 5      | 10s       | LLM-powered, model-dependent |
+| Integration   | 3      | 5s        | Mixed (LLM + deterministic)  |
+| Performance   | 3      | 2s        | Concurrent operations        |
+| Edge Cases    | 4      | 580ms     | Error handling paths         |
+| **TOTAL**     | **27** | **323ms** | **8.7s (without LLM)**       |
 
 **With LLM model (GPU-accelerated):**
 - First run: ~60s (model loading + inference)
