@@ -14,8 +14,9 @@
         "prepare-dataset": "node scripts/prepare-training-dataset.js",
         "compare-models": "node scripts/compare-models.js",
         "monitor-training": "watch -n 1 ./scripts/monitor-training.sh",
-        "build": "tsc",
-        "build:watch": "tsc --watch",
+        "build": "tsdown",
+        "build:watch": "tsdown --watch",
+        "build:prod": "NODE_ENV=production tsdown",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
@@ -60,6 +61,7 @@
         "prettier": "^3.6.2",
         "ts-jest": "^29.4.5",
         "ts-node": "^10.9.2",
+        "tsdown": "^0.15.10",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.46.2"
     }
