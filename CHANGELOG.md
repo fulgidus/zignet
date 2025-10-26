@@ -5,6 +5,18 @@ All notable changes to ZigNet will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) aligned with Zig releases.
 
+## [0.15.2-h] - 2025-10-27
+
+### 🔄 Changed
+- **Migrated test suite from Jest to Vitest** - Better ESM support, faster execution (~5.4s), improved developer experience
+
+### 🎯 Added
+- **LLM tests now opt-in via `ZIGNET_TEST_LLM=1`** - Disabled by default to prevent CI/CD hangs and improve speed
+- **New test command**: `pnpm test:ui` for visual test debugging
+
+### � Fixed
+- Resolved `node-llama-cpp` ESM import issues in test suite
+
 ## [0.15.2-g] - 2025-10-26
 
 ### 🚀 Features
