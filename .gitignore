@@ -14,3 +14,5 @@ coverage/
 !.env.example
 
 venv*
+
+llama.cpp
