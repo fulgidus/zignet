@@ -42,9 +42,6 @@ export default defineConfig({
         "node-llama-cpp",
     ],
 
-    // Splitting for better tree-shaking
-    splitting: true,
-
     // Show bundle analysis
     bundle: true,
 
