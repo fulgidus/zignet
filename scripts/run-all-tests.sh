@@ -3,9 +3,7 @@
 # Script per testare tutti i modelli in sequenza
 
 MODELS=(
-  "deepseek-coder:6.7b-instruct-q4_K_M"
-  "codellama:7b-instruct-q4_K_M"
-  "mistral:7b-instruct-q4_K_M"
+  "phi:2.7b"
 )
 
 RESULTS_DIR="test-results"

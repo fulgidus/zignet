@@ -1,539 +1,313 @@
 #!/usr/bin/env node
 
-import axios from 'axios';
+// test-model-advanced.js
+// Advanced Zig Code Testing with REAL-TIME STREAMING OUTPUT
+
+import http from 'http';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OLLAMA_API = 'http://localhost:11434/api/generate';
 
-// Test cases avanzati con codice Zig reale
-const TEST_PROMPTS = [
-  {
-    id: 'allocator_deep',
-    name: 'Allocator System (Deep)',
-    prompt: `Explain this Zig code and what happens with memory:
+const MODEL = process.argv[2] || 'phi';
+const OLLAMA_HOST = 'localhost';
+const OLLAMA_PORT = 11434;
+const TIMEOUT_MS = 600000; // 10 minutes per test
 
-\`\`\`zig
-const std = @import("std");
+// Color codes for terminal
+const colors = {
+  reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  cyan: '\x1b[36m',
+  magenta: '\x1b[35m',
+};
 
-pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer gpa.deinit();
-    const allocator = gpa.allocator();
-
-    var list = std.ArrayList(u32).init(allocator);
-    defer list.deinit();
-
-    try list.append(42);
-    try list.append(100);
-    
-    for (list.items) |item| {
-        std.debug.print("{d}\\n", .{item});
-    }
-}
-\`\`\`
-
-Why do we need \`defer\` here? What happens if we don't use it?`,
-    keywords: ['allocator', 'defer', 'memory', 'leak', 'deinit', 'cleanup', 'heap', 'ArrayList'],
-    category: 'advanced',
-    difficulty: 'hard'
-  },
-  {
-    id: 'comptime_generics',
-    name: 'Comptime & Generics (Intermediate)',
-    prompt: `What does this Zig generic function do? Explain step by step:
-
-\`\`\`zig
-fn max(comptime T: type, a: T, b: T) T {
-    return if (a > b) a else b;
+function log(color, ...args) {
+  console.log(`${colors[color]}${args.join(' ')}${colors.reset}`);
 }
 
-pub fn main() void {
-    const int_max = max(i32, 10, 20);
-    const float_max = max(f64, 3.14, 2.71);
-}
-\`\`\`
-
-Why use \`comptime T: type\`? What's the difference from a regular generic?`,
-    keywords: ['comptime', 'generic', 'type', 'monomorphization', 'compile-time', 'specialization', 'polymorphism'],
-    category: 'advanced',
-    difficulty: 'hard'
-  },
-  {
-    id: 'error_handling_union',
-    name: 'Error Handling & Tagged Unions (Intermediate)',
-    prompt: `Analyze this error handling pattern:
-
-\`\`\`zig
-const FileError = error{FileNotFound, PermissionDenied, IOError};
-
-fn readFile(path: []const u8) FileError![]u8 {
-    if (path.len == 0) return error.FileNotFound;
-    if (!hasPermission(path)) return error.PermissionDenied;
-    // ... read file
-    return buffer;
+function logHeader(text) {
+  log('cyan', `\n${'═'.repeat(70)}`);
+  log('bright', `  ${text}`);
+  log('cyan', `${'═'.repeat(70)}\n`);
 }
 
-pub fn main() !void {
-    const data = readFile("test.txt") catch |err| {
-        std.debug.print("Error: {any}\\n", .{err});
-        return err;
+function logTest(name, difficulty) {
+  log('blue', `\n⏳ [${difficulty}] ${name}`);
+}
+
+function logProgress(message) {
+  log('dim', `   → ${message}`);
+}
+
+function logSuccess(message) {
+  log('green', `   ✅ ${message}`);
+}
+
+function logError(message) {
+  log('red', `   ❌ ${message}`);
+}
+
+function logResponse(text) {
+  log('yellow', `   📝 Response:\n${text.split('\n').map(l => `      ${l}`).join('\n')}`);
+}
+
+// Stream response from Ollama
+function queryOllama(prompt, testName) {
+  return new Promise((resolve, reject) => {
+    const postData = JSON.stringify({
+      model: MODEL,
+      prompt: prompt,
+      stream: true,
+    });
+
+    const options = {
+      hostname: OLLAMA_HOST,
+      port: OLLAMA_PORT,
+      path: '/api/generate',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+      },
+      timeout: TIMEOUT_MS,
     };
-}
-\`\`\`
 
-Why is this better than returning null or -1? What's the \`!\` operator doing?`,
-    keywords: ['error', 'catch', 'try', 'union', 'error-set', 'try-operator', 'explicit', 'handling', 'propagate'],
-    category: 'intermediate',
-    difficulty: 'hard'
-  },
-  {
-    id: 'slice_pointer_lifetime',
-    name: 'Slices vs Pointers & Lifetimes (Advanced)',
-    prompt: `What's wrong with this code and how to fix it?
+    let fullResponse = '';
+    let lastDotTime = Date.now();
+    let dotCount = 0;
 
-\`\`\`zig
-fn getBadSlice() []u32 {
-    var array: [5]u32 = .{1, 2, 3, 4, 5};
-    return array[0..5];  // ❌ Returning reference to stack memory!
-}
+    const req = http.request(options, (res) => {
+      log('magenta', `   🔄 Status: ${res.statusCode}`);
 
-pub fn main() void {
-    const slice = getBadSlice();
-    std.debug.print("{any}\\n", .{slice});  // undefined behavior
-}
-\`\`\`
+      let buffer = '';
+      res.on('data', (chunk) => {
+        buffer += chunk.toString();
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); // Keep incomplete line
 
-Explain the lifetime issue. How would you fix it using an allocator?`,
-    keywords: ['lifetime', 'stack', 'heap', 'dangling', 'pointer', 'slice', 'allocator', 'scope', 'return'],
-    category: 'advanced',
-    difficulty: 'extreme'
-  },
-  {
-    id: 'inline_asm',
-    name: 'Inline Assembly & SIMD (Expert)',
-    prompt: `What does this Zig code do at a low level?
+        lines.forEach((line) => {
+          if (line.trim()) {
+            try {
+              const data = JSON.parse(line);
+              if (data.response) {
+                fullResponse += data.response;
+                
+                // Progress indicator every 5 seconds
+                if (Date.now() - lastDotTime > 5000) {
+                  process.stdout.write(colors.dim + '.' + colors.reset);
+                  lastDotTime = Date.now();
+                  dotCount++;
+                }
+              }
+              
+              if (data.done) {
+                if (dotCount > 0) process.stdout.write('\n');
+                logSuccess(`Completed in ${(data.total_duration / 1e9).toFixed(2)}s`);
+                logSuccess(`Tokens: ${data.eval_count} @ ${(data.eval_count / (data.total_duration / 1e9)).toFixed(0)} tok/s`);
+              }
+            } catch (e) {
+              // Ignore parse errors
+            }
+          }
+        });
+      });
 
-\`\`\`zig
-pub fn addVectors(a: [4]i32, b: [4]i32) [4]i32 {
-    var result: [4]i32 = undefined;
-    
-    asm volatile (
-        \\\\
-        : [out] "=r" (result),
-        : [a_ptr] "r" (&a),
-          [b_ptr] "r" (&b),
-        : "memory"
-    );
-    
-    return result;
-}
-\`\`\`
+      res.on('end', () => {
+        if (buffer.trim()) {
+          try {
+            const data = JSON.parse(buffer);
+            if (data.response) {
+              fullResponse += data.response;
+            }
+          } catch (e) {
+            // Ignore
+          }
+        }
+        
+        // Show response (first 300 chars)
+        const preview = fullResponse.substring(0, 300).replace(/\n/g, ' ');
+        logProgress(`Response preview: "${preview}${fullResponse.length > 300 ? '...' : ''}"`);
+        
+        resolve(fullResponse);
+      });
+    });
 
-Explain the constraint modifiers. When would you use this vs a normal loop?`,
-    keywords: ['inline', 'assembly', 'asm', 'simd', 'vectorization', 'constraint', 'cpu', 'register', 'performance'],
-    category: 'expert',
-    difficulty: 'extreme'
-  },
-  {
-    id: 'build_system',
-    name: 'Build System (build.zig)',
-    prompt: `How would you structure a \`build.zig\` to:
-1. Compile a library
-2. Link against libc
-3. Build an executable that uses the library
-4. Add unit tests
+    req.on('error', reject);
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error(`Timeout after ${TIMEOUT_MS}ms`));
+    });
 
-Provide the key structure.`,
-    keywords: ['build.zig', 'addLibrary', 'addExecutable', 'linkLibC', 'addTest', 'dependencies', 'artifact'],
-    category: 'intermediate',
-    difficulty: 'medium'
-  },
-  {
-    id: 'undefined_behavior',
-    name: 'Undefined Behavior & Safety (Intermediate)',
-    prompt: `Which of these operations is safe in Zig and why?
-
-\`\`\`zig
-// 1. Integer overflow
-var x: u8 = 255;
-x += 1;  // Defined or undefined?
-
-// 2. Array out of bounds
-var arr: [3]i32 = .{1, 2, 3};
-_ = arr[10];  // Defined or undefined?
-
-// 3. Null pointer dereference
-var ptr: *i32 = undefined;
-_ = ptr.*;  // Defined or undefined?
-\`\`\`
-
-Explain what Zig does in each case and how to make it safe.`,
-    keywords: ['undefined', 'safety', 'runtime-check', 'bounds', 'overflow', 'panic', 'safe', 'unsafe'],
-    category: 'intermediate',
-    difficulty: 'hard'
-  },
-  {
-    id: 'struct_initialization',
-    name: 'Struct Initialization & Default Values (Beginner-Intermediate)',
-    prompt: `Explain what each initialization does:
-
-\`\`\`zig
-const Point = struct {
-    x: i32,
-    y: i32,
-    label: []const u8 = "origin",
-};
-
-// 1. Default init
-const p1 = Point{ .x = 10, .y = 20 };
-
-// 2. With default
-const p2: Point = .{ .x = 5, .y = 5, .label = "center" };
-
-// 3. This one?
-const p3 = Point{};  // What happens?
-\`\`\`
-
-When is each form used? What's the difference between \`.{}\` and \`{}\`?`,
-    keywords: ['struct', 'initialization', 'default', 'field', 'syntax', 'shorthand', 'required'],
-    category: 'beginner',
-    difficulty: 'easy'
-  },
-  {
-    id: 'sentinel_values',
-    name: 'Sentinel Values & C Interop (Advanced)',
-    prompt: `What are sentinel values in Zig and why are they useful?
-
-\`\`\`zig
-// C-style null-terminated string
-const c_string: [*:0]const u8 = "hello";
-
-// Sentinel slice
-const numbers: [:0]const i32 = &.{1, 2, 3, 0};
-
-pub fn main() void {
-    var i: usize = 0;
-    while (c_string[i] != 0) : (i += 1) {
-        // Process byte
-    }
-}
-\`\`\`
-
-How do sentinels help with C interop? What's \`[:0]\` vs \`[*:0]\`?`,
-    keywords: ['sentinel', 'null-terminated', 'c-string', 'interop', 'c-compatible', 'bounds', 'zero'],
-    category: 'advanced',
-    difficulty: 'hard'
-  },
-  {
-    id: 'comptime_reflection',
-    name: 'Comptime Reflection & Code Generation (Expert)',
-    prompt: `What does this comptime reflection do?
-
-\`\`\`zig
-fn printFields(comptime T: type) void {
-    comptime var i = 0;
-    inline while (i < @typeInfo(T).Struct.fields.len) : (i += 1) {
-        const field = @typeInfo(T).Struct.fields[i];
-        std.debug.print("Field {}: {}\\n", .{i, field.name});
-    }
+    req.write(postData);
+    req.end();
+  });
 }
 
-const MyStruct = struct {
-    name: []const u8,
-    age: u32,
-    active: bool,
-};
-
-pub fn main() void {
-    printFields(MyStruct);
-}
-\`\`\`
-
-Explain how \`@typeInfo\` works. What's the difference between \`comptime\` and \`inline\` loops?`,
-    keywords: ['comptime', 'reflection', 'typeinfo', 'inline', 'code-generation', 'metaprogramming', 'struct-fields'],
-    category: 'expert',
-    difficulty: 'extreme'
+// Test suite
+const TESTS = [
+  {
+    name: 'Basic Zig Syntax',
+    difficulty: 'EASY',
+    prompt: `Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.`,
+  },
+  {
+    name: 'Memory Allocation',
+    difficulty: 'EASY',
+    prompt: `Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.`,
+  },
+  {
+    name: 'Error Handling',
+    difficulty: 'MEDIUM',
+    prompt: `Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.`,
+  },
+  {
+    name: 'Structs & Methods',
+    difficulty: 'MEDIUM',
+    prompt: `Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.`,
+  },
+  {
+    name: 'Generics',
+    difficulty: 'HARD',
+    prompt: `Write a generic Zig function that works with any numeric type and returns the maximum of two values.`,
+  },
+  {
+    name: 'Comptime Magic',
+    difficulty: 'HARD',
+    prompt: `Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.`,
   },
 ];
 
-class AdvancedModelTester {
-  constructor(modelName) {
-    this.modelName = modelName;
-    this.results = {
-      model: modelName,
-      timestamp: new Date().toISOString(),
-      tests: {},
-      summary: {}
-    };
-  }
+// Save results
+function saveResults(results) {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const filename = `advanced-test-${MODEL.replace(/:/g, '-')}-${timestamp}`;
+  
+  // Save JSON
+  fs.writeFileSync(
+    path.join(process.cwd(), `${filename}.json`),
+    JSON.stringify(results, null, 2)
+  );
+  
+  // Save Markdown report
+  let md = `# Advanced Zig Test Report\n\n`;
+  md += `**Model**: ${MODEL}\n`;
+  md += `**Date**: ${new Date().toISOString()}\n`;
+  md += `**Total Tests**: ${results.tests.length}\n`;
+  md += `**Passed**: ${results.passed}\n`;
+  md += `**Failed**: ${results.failed}\n`;
+  md += `**Average Response Time**: ${(results.avgResponseTime / 1000).toFixed(2)}s\n\n`;
+  
+  md += `## Results\n\n`;
+  results.tests.forEach((test, idx) => {
+    md += `### ${idx + 1}. ${test.name} [${test.difficulty}]\n\n`;
+    md += `**Status**: ${test.success ? '✅ PASS' : '❌ FAIL'}\n`;
+    md += `**Time**: ${(test.duration / 1000).toFixed(2)}s\n`;
+    if (test.error) md += `**Error**: ${test.error}\n`;
+    md += `**Response**:\n\`\`\`zig\n${test.response}\n\`\`\`\n\n`;
+  });
+  
+  fs.writeFileSync(
+    path.join(process.cwd(), `${filename}.md`),
+    md
+  );
+  
+  log('green', `\n📁 Results saved:`);
+  log('green', `   - ${filename}.json`);
+  log('green', `   - ${filename}.md`);
+}
 
-  async testPrompt(testCase) {
-    console.log(`  ⏳ [${testCase.difficulty.toUpperCase()}] ${testCase.name}...`);
+// Main test runner
+async function runTests() {
+  logHeader(`🚀 Advanced Zig Model Tester`);
+  log('cyan', `📅 ${new Date().toISOString()}`);
+  log('cyan', `🖥️  Model: ${MODEL}`);
+  log('cyan', `📊 Tests: ${TESTS.length}`);
+  
+  const results = {
+    model: MODEL,
+    timestamp: new Date().toISOString(),
+    tests: [],
+    passed: 0,
+    failed: 0,
+    avgResponseTime: 0,
+  };
+
+  let totalTime = 0;
+
+  for (let i = 0; i < TESTS.length; i++) {
+    const test = TESTS[i];
+    logTest(`[${i + 1}/${TESTS.length}] ${test.name}`, test.difficulty);
     
     const startTime = Date.now();
-    let tokenCount = 0;
-    let fullResponse = '';
-
-    try {
-      const response = await axios.post(OLLAMA_API, {
-        model: this.modelName,
-        prompt: testCase.prompt,
-        stream: false,
-        temperature: 0.5, // Meno creativo per codice
-      }, {
-        timeout: 180000 // 3 min per risposte lunghe
-      });
-
-      const endTime = Date.now();
-      const totalTime = (endTime - startTime) / 1000;
-
-      fullResponse = response.data.response || '';
-      tokenCount = response.data.eval_count || Math.ceil(fullResponse.split(/\s+/).length);
-      
-      const tokensPerSecond = (tokenCount / totalTime).toFixed(2);
-      const score = this.scoreResponse(fullResponse, testCase.keywords);
-      const responseLength = fullResponse.length;
-      const codeBlocksFound = (fullResponse.match(/```/g) || []).length / 2;
-
-      this.results.tests[testCase.id] = {
-        name: testCase.name,
-        category: testCase.category,
-        difficulty: testCase.difficulty,
-        totalTime: parseFloat(totalTime.toFixed(2)),
-        tokensGenerated: tokenCount,
-        tokensPerSecond: parseFloat(tokensPerSecond),
-        responseLength: responseLength,
-        codeBlocksGenerated: Math.floor(codeBlocksFound),
-        qualityScore: score,
-        keywordsMatched: testCase.keywords.filter(kw => 
-          fullResponse.toLowerCase().includes(kw.toLowerCase())
-        ),
-        keywordMatchRate: ((testCase.keywords.filter(kw => 
-          fullResponse.toLowerCase().includes(kw.toLowerCase())
-        ).length / testCase.keywords.length) * 100).toFixed(1),
-        difficulty_factor: this.getDifficultyFactor(testCase.difficulty),
-        adjusted_score: (score * this.getDifficultyFactor(testCase.difficulty)).toFixed(1)
-      };
-
-      console.log(`    ✓ ${tokensPerSecond} tokens/sec | Quality: ${score}% | Adjusted: ${this.results.tests[testCase.id].adjusted_score}%`);
-      return true;
-
-    } catch (err) {
-      console.error(`    ✗ Error: ${err.message}`);
-      this.results.tests[testCase.id] = {
-        name: testCase.name,
-        error: err.message
-      };
-      return false;
-    }
-  }
-
-  getDifficultyFactor(difficulty) {
-    const factors = {
-      'easy': 1.0,
-      'medium': 1.2,
-      'hard': 1.5,
-      'extreme': 2.0
-    };
-    return factors[difficulty] || 1.0;
-  }
-
-  scoreResponse(response, keywords) {
-    if (!response) return 0;
-    const lowerResponse = response.toLowerCase();
-    const matchedKeywords = keywords.filter(kw => 
-      lowerResponse.includes(kw.toLowerCase())
-    ).length;
-    return Math.round((matchedKeywords / keywords.length) * 100);
-  }
-
-  async runAllTests() {
-    console.log(`\n🧪 ADVANCED Testing ${this.modelName}\n`);
     
-    for (const testCase of TEST_PROMPTS) {
-      await this.testPrompt(testCase);
+    try {
+      logProgress('Querying model...');
+      const response = await queryOllama(test.prompt, test.name);
+      
+      const duration = Date.now() - startTime;
+      totalTime += duration;
+      
+      logSuccess(`Test completed`);
+      
+      results.tests.push({
+        id: i + 1,
+        name: test.name,
+        difficulty: test.difficulty,
+        prompt: test.prompt,
+        response: response.substring(0, 500),
+        duration: duration,
+        success: true,
+      });
+      
+      results.passed++;
+    } catch (error) {
+      const duration = Date.now() - startTime;
+      totalTime += duration;
+      
+      logError(`${error.message}`);
+      
+      results.tests.push({
+        id: i + 1,
+        name: test.name,
+        difficulty: test.difficulty,
+        prompt: test.prompt,
+        response: '',
+        duration: duration,
+        success: false,
+        error: error.message,
+      });
+      
+      results.failed++;
     }
-
-    this.calculateSummary();
-    return this.results;
+    
+    // Wait between tests
+    if (i < TESTS.length - 1) {
+      logProgress('Waiting 5s before next test...');
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
   }
 
-  calculateSummary() {
-    const tests = this.results.tests;
-    const validTests = Object.values(tests).filter(t => !t.error);
+  results.avgResponseTime = totalTime / TESTS.length;
 
-    if (validTests.length === 0) {
-      this.results.summary = { error: 'No valid tests' };
-      return;
-    }
+  // Final report
+  logHeader('📊 FINAL REPORT');
+  log('green', `✅ Passed: ${results.passed}/${TESTS.length}`);
+  if (results.failed > 0) log('red', `❌ Failed: ${results.failed}/${TESTS.length}`);
+  log('cyan', `⏱️  Average Response Time: ${(results.avgResponseTime / 1000).toFixed(2)}s`);
+  log('cyan', `⏱️  Total Time: ${(totalTime / 1000 / 60).toFixed(2)}m`);
 
-    // Metriche globali
-    const avgTokensPerSec = (
-      validTests.reduce((sum, t) => sum + parseFloat(t.tokensPerSecond), 0) / validTests.length
-    ).toFixed(2);
+  saveResults(results);
 
-    const avgQualityScore = (
-      validTests.reduce((sum, t) => sum + t.qualityScore, 0) / validTests.length
-    ).toFixed(1);
-
-    const avgAdjustedScore = (
-      validTests.reduce((sum, t) => sum + parseFloat(t.adjusted_score), 0) / validTests.length
-    ).toFixed(1);
-
-    const totalTime = validTests.reduce((sum, t) => sum + t.totalTime, 0).toFixed(2);
-    const avgResponseLength = Math.round(
-      validTests.reduce((sum, t) => sum + t.responseLength, 0) / validTests.length
-    );
-
-    // Per difficulty
-    const byDifficulty = {};
-    for (const difficulty of ['easy', 'medium', 'hard', 'extreme']) {
-      const diffTests = validTests.filter(t => t.difficulty === difficulty);
-      if (diffTests.length > 0) {
-        byDifficulty[difficulty] = {
-          count: diffTests.length,
-          avgScore: (diffTests.reduce((sum, t) => sum + t.qualityScore, 0) / diffTests.length).toFixed(1),
-          avgTokensPerSec: (diffTests.reduce((sum, t) => sum + parseFloat(t.tokensPerSecond), 0) / diffTests.length).toFixed(2)
-        };
-      }
-    }
-
-    // Per categoria
-    const byCategory = {};
-    for (const category of ['beginner', 'intermediate', 'advanced', 'expert']) {
-      const catTests = validTests.filter(t => t.category === category);
-      if (catTests.length > 0) {
-        byCategory[category] = {
-          count: catTests.length,
-          avgScore: (catTests.reduce((sum, t) => sum + t.qualityScore, 0) / catTests.length).toFixed(1),
-          avgAdjustedScore: (catTests.reduce((sum, t) => sum + parseFloat(t.adjusted_score), 0) / catTests.length).toFixed(1)
-        };
-      }
-    }
-
-    this.results.summary = {
-      totalTests: validTests.length,
-      totalTimeSeconds: parseFloat(totalTime),
-      averageTokensPerSecond: parseFloat(avgTokensPerSec),
-      averageQualityScore: parseFloat(avgQualityScore),
-      averageAdjustedScore: parseFloat(avgAdjustedScore),
-      averageResponseLength: avgResponseLength,
-      byDifficulty,
-      byCategory,
-      overallRating: this.calculateOverallRating(parseFloat(avgAdjustedScore))
-    };
-  }
-
-  calculateOverallRating(score) {
-    if (score >= 80) return '⭐⭐⭐⭐⭐ Excellent';
-    if (score >= 70) return '⭐⭐⭐⭐ Very Good';
-    if (score >= 60) return '⭐⭐⭐ Good';
-    if (score >= 50) return '⭐⭐ Fair';
-    return '⭐ Poor';
-  }
+  process.exit(results.failed > 0 ? 1 : 0);
 }
 
-async function main() {
-  const modelName = process.argv[2] || 'deepseek-coder:6.7b-instruct-q4_K_M';
-
-  console.log('═'.repeat(70));
-  console.log(`🚀 Advanced Zig Model Performance Tester`);
-  console.log(`📅 ${new Date().toISOString()}`);
-  console.log(`🖥️  Model: ${modelName}`);
-  console.log(`📊 Tests: ${TEST_PROMPTS.length} (varying difficulty)`);
-  console.log('═'.repeat(70));
-
-  const tester = new AdvancedModelTester(modelName);
-  const results = await tester.runAllTests();
-
-  const outputPath = path.join(__dirname, '..', `advanced-test-${modelName.replace(/:/g, '-')}.json`);
-  fs.writeFileSync(outputPath, JSON.stringify(results, null, 2));
-
-  generateAdvancedMarkdownReport(results);
-
-  console.log('\n' + '═'.repeat(70));
-  console.log('📊 SUMMARY');
-  console.log('═'.repeat(70));
-  console.log(JSON.stringify(results.summary, null, 2));
-  console.log('═'.repeat(70));
-  console.log(`\n✅ Results saved to:`);
-  console.log(`   JSON: ${outputPath}`);
-  console.log(`   Markdown: advanced-test-${modelName.replace(/:/g, '-')}.md`);
-}
-
-function generateAdvancedMarkdownReport(results) {
-  const modelName = results.model;
-  const summary = results.summary;
-  const tests = results.tests;
-
-  let report = `# Advanced Zig Model Performance Report\n\n`;
-  report += `**Model**: ${modelName}\n`;
-  report += `**Generated**: ${results.timestamp}\n`;
-  report += `**Tester**: fulgidus\n\n`;
-
-  report += `## 📊 Overall Rating\n\n`;
-  report += `### ${summary.overallRating}\n`;
-  report += `**Adjusted Score**: ${summary.averageAdjustedScore}%\n\n`;
-
-  report += `## Summary Metrics\n\n`;
-  report += `| Metric | Value |\n`;
-  report += `|--------|-------|\n`;
-  report += `| Avg Tokens/Second | ${summary.averageTokensPerSecond} |\n`;
-  report += `| Avg Quality Score (Raw) | ${summary.averageQualityScore}% |\n`;
-  report += `| Avg Quality Score (Difficulty-Adjusted) | ${summary.averageAdjustedScore}% |\n`;
-  report += `| Avg Response Length | ${summary.averageResponseLength} chars |\n`;
-  report += `| Total Time (all tests) | ${summary.totalTimeSeconds}s |\n`;
-  report += `| Tests Completed | ${summary.totalTests}/${TEST_PROMPTS.length} |\n\n`;
-
-  report += `## By Difficulty Level\n\n`;
-  report += `| Level | Count | Avg Score | Avg Tokens/Sec |\n`;
-  report += `|-------|-------|-----------|----------------|\n`;
-  for (const [level, metrics] of Object.entries(summary.byDifficulty || {})) {
-    report += `| ${level.toUpperCase()} | ${metrics.count} | ${metrics.avgScore}% | ${metrics.avgTokensPerSec} |\n`;
-  }
-  report += `\n`;
-
-  report += `## By Category\n\n`;
-  report += `| Category | Count | Avg Score | Adjusted Score |\n`;
-  report += `|----------|-------|-----------|----------------|\n`;
-  for (const [cat, metrics] of Object.entries(summary.byCategory || {})) {
-    report += `| ${cat.toUpperCase()} | ${metrics.count} | ${metrics.avgScore}% | ${metrics.avgAdjustedScore}% |\n`;
-  }
-  report += `\n`;
-
-  report += `## Detailed Test Results\n\n`;
-  for (const [testId, testResult] of Object.entries(tests)) {
-    if (testResult.error) {
-      report += `### ❌ ${testResult.name}\n`;
-      report += `**Error**: ${testResult.error}\n\n`;
-      continue;
-    }
-
-    report += `### ✅ ${testResult.name}\n`;
-    report += `**Difficulty**: ${testResult.difficulty.toUpperCase()} | **Category**: ${testResult.category}\n\n`;
-
-    report += `| Metric | Value |\n`;
-    report += `|--------|-------|\n`;
-    report += `| Time | ${testResult.totalTime}s |\n`;
-    report += `| Tokens Generated | ${testResult.tokensGenerated} |\n`;
-    report += `| Tokens/Second | ${testResult.tokensPerSecond} |\n`;
-    report += `| Quality Score | ${testResult.qualityScore}% |\n`;
-    report += `| Adjusted Score (difficulty factor) | ${testResult.adjusted_score}% |\n`;
-    report += `| Keyword Match Rate | ${testResult.keywordMatchRate}% |\n`;
-    report += `| Code Blocks Generated | ${testResult.codeBlocksGenerated} |\n`;
-    report += `| Response Length | ${testResult.responseLength} chars |\n\n`;
-
-    report += `**Keywords Matched**: ${testResult.keywordsMatched.join(', ') || 'None'}\n\n`;
-  }
-
-  const reportPath = path.join(
-    path.dirname(__dirname),
-    `advanced-test-${modelName.replace(/:/g, '-')}.md`
-  );
-  fs.writeFileSync(reportPath, report);
-}
-
-main().catch(console.error);
+// Run it!
+runTests().catch((err) => {
+  logError(`Fatal error: ${err.message}`);
+  process.exit(1);
+});

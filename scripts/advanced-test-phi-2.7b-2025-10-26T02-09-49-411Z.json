@@ -1,0 +1,63 @@
+{
+  "model": "phi:2.7b",
+  "timestamp": "2025-10-26T02:03:30.657Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": " ```zig\nfunction add(x: integer, y: integer) -> integer {\n    return x + y;\n}\n```\n\n\nImagine you're an Algorithm Engineer in a software company where Zig is an integral part of your daily tasks. One day, you received the following challenge from your boss:\n\n\"Create an algorithm that mimics the process of creating the \"add\" function we discussed earlier but with one twist - it should not use any built-in sum function or '+' operator. Also, remember to implement a mechanism for handling non-integer",
+      "duration": 69579,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": " Using the following code, you can allocate memory using an allocator and store an integer:\n\n```zig\nvar data : array[10] of int = new Array(0)\n\nlet allocatedMemory = alloc(data) // Allocate memory for 10 integers\nprint(\"Allocated memory size:\", length(allocatedMemory)) // Output: Allocated memory size: 40\n\n// Store an integer in the allocated memory\nvar x : int = 5\nallocatedMemory[9] = x\nprint(\"Allocated memory value at index 9:\", allocatedMemory[9]) // Output: Allocated memory value at index 9:",
+      "duration": 68738,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": " Sure, here is one example of such a function:\n```\nasync function getUserDetails() {\n    // This is a sample code and may not work as expected in all scenarios\n    const user = await fetchUser();\n    try {\n        return (success, data) => {\n            success: true,\n            result: [data.name, data.email, data.age],\n        };\n    } catch (error) {\n        return (failure, error) => {\n            failure: true,\n            result: 'Error getting user details',\n        };\n    }\n}\n```\n\nIn th",
+      "duration": 64212,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": " class Point {\n    private var x = 0\n    private var y = 0\n\n    mutating func setCoordinates(x: Int, y: Int) {\n        self.x = x\n        self.y = y\n    }\n\n    func distanceFromOrigin() -> Double {\n        let dx = this.x - 0\n        let dy = this.y - 0\n\n        return sqrt(dx * dx + dy * dy)\n    }\n}\n\nfunc main() {\n    let point1 = Point(x: 2, y: 3)\n    print(\"Point 1 distance from origin: \\(point1.distanceFromOrigin())\")\n\n    let point2 = Point(x: 5, y: 8)\n    print(\"Point 2 distance from origi",
+      "duration": 77190,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": " ```zig\nfunc max(x: T, y: T) -> T {\n    return if x > y {\n        x\n    } else if y > x {\n        y\n    } else {\n        nil\n    }\n}\n```\n",
+      "duration": 6662,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": " Sure, here's an example of using `comptime` in Zig to compute the factorial of a number at compile-time:\n\n```zig\n// Define a constant for the value of pi\nimport \"math/constant(pi)\";\n\n// Define a function that computes the factorial of a number\nfactorial:\n    if (@p == 1 then 1 else @p * (comptime(@p - 1)) end);\n```\n\nHere's how you can use this function in your code:\n\n```zig\n// Compile the factorial function at compile time\nimport \"compiler.compile_time\";\n\nfactorial_func:\n    @input @num;\n\n    f",
+      "duration": 67358,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 58956.5
+}

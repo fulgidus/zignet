@@ -6,3 +6,6 @@ models/
 .cache/
 dist/
 build/
+coverage/
+*.tsbuildinfo
+.eslintcache
