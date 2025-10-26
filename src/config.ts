@@ -21,26 +21,26 @@ function parseZigVersions(envVar: string | undefined, fallback: string[]): strin
 
 /**
  * Supported Zig versions (from ZIG_SUPPORTED env var)
- * Default: "0.13.0,0.14.0,0.15.0"
+ * Default: "0.13.0,0.14.0,0.15.1"
  *
  * Example:
- *   export ZIG_SUPPORTED="0.13.0,0.14.0,0.15.0"
+ *   export ZIG_SUPPORTED="0.13.0,0.14.0,0.15.1"
  */
 export const SUPPORTED_ZIG_VERSIONS = parseZigVersions(
     process.env.ZIG_SUPPORTED,
-    ["0.13.0", "0.14.0", "0.15.0"]
+    ["0.13.0", "0.14.0", "0.15.1"]
 ) as readonly string[];
 
 export type ZigVersion = (typeof SUPPORTED_ZIG_VERSIONS)[number];
 
 /**
  * Default Zig version (from ZIG_DEFAULT env var)
- * Default: "0.15.0"
+ * Default: "0.15.1"
  *
  * Example:
- *   export ZIG_DEFAULT="0.15.0"
+ *   export ZIG_DEFAULT="0.15.1"
  */
-export const DEFAULT_ZIG_VERSION = (process.env.ZIG_DEFAULT || "0.15.0") as ZigVersion;
+export const DEFAULT_ZIG_VERSION = (process.env.ZIG_DEFAULT || "0.15.1") as ZigVersion;
 
 /**
  * Validate that default version is in supported versions

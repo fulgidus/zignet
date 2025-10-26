@@ -15,6 +15,7 @@ describe('Zig Tools E2E', () => {
 fn main() void {
     const x: i32 = 42;
     const y: i32 = x + 10;
+    _ = y; // Use variable to avoid unused error in Zig 0.15.1+
 }
             `.trim();
 
@@ -98,7 +99,7 @@ fn add(a: i32, b: i32) i32 {
             const result = await compileZig({ code: '' });
 
             expect(result.success).toBe(false);
-            expect(result.summary).toContain('Empty code');
+            expect(result.summary).toContain('Empty input');
         });
 
         it('should preserve semantics while formatting', async () => {
@@ -119,7 +120,7 @@ fn factorial(n: u32) u32 {
 
     describe('Cross-tool Integration', () => {
         it('should analyze then compile valid code', async () => {
-            const code = 'fn test() void { const x: i32 = 42; }';
+            const code = 'fn myFunc() void { const x: i32 = 42; _ = x; }';
 
             // First analyze
             const analyzeResult = await analyzeZig({ code });
