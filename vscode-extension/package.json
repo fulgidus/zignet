@@ -1,0 +1,114 @@
+{
+    "name": "zignet",
+    "displayName": "ZigNet - AI-Powered Zig Assistant",
+    "description": "MCP server for Zig code analysis, validation, and documentation with fine-tuned LLM",
+    "version": "0.15.2",
+    "publisher": "fulgidus",
+    "icon": "icon.png",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Linters",
+        "Formatters",
+        "AI"
+    ],
+    "keywords": [
+        "zig",
+        "mcp",
+        "ai",
+        "code-analysis",
+        "llm",
+        "copilot"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "configuration": {
+            "title": "ZigNet",
+            "properties": {
+                "zignet.enable": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable ZigNet MCP server"
+                },
+                "zignet.zigVersion": {
+                    "type": "string",
+                    "enum": [
+                        "0.13.0",
+                        "0.14.0",
+                        "0.15.2"
+                    ],
+                    "default": "0.15.2",
+                    "description": "Default Zig version for analysis"
+                },
+                "zignet.autoDownloadModel": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Automatically download the AI model on first startup"
+                },
+                "zignet.modelPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Custom path to the LLM model (leave empty for default)"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "zignet.analyzeCurrentFile",
+                "title": "ZigNet: Analyze Current File"
+            },
+            {
+                "command": "zignet.formatCurrentFile",
+                "title": "ZigNet: Format Current File"
+            },
+            {
+                "command": "zignet.getDocs",
+                "title": "ZigNet: Get Documentation"
+            },
+            {
+                "command": "zignet.restart",
+                "title": "ZigNet: Restart Server"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "when": "resourceLangId == zig",
+                    "command": "zignet.analyzeCurrentFile",
+                    "group": "zignet@1"
+                },
+                {
+                    "when": "resourceLangId == zig",
+                    "command": "zignet.formatCurrentFile",
+                    "group": "zignet@2"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "package": "vsce package",
+        "publish": "vsce publish"
+    },
+    "dependencies": {
+        "zignet": "^0.15.2-g"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.80.0",
+        "@vscode/vsce": "^3.2.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fulgidus/zignet.git",
+        "directory": "vscode-extension"
+    },
+    "bugs": {
+        "url": "https://github.com/fulgidus/zignet/issues"
+    },
+    "homepage": "https://github.com/fulgidus/zignet#readme",
+    "license": "MIT"
+}

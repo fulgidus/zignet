@@ -79,7 +79,9 @@
         "docker:run": "docker run --rm -it zignet:latest",
         "prepublishOnly": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test",
         "publishNpm": "pnpm publish --access public --tag latest",
-        "tagPush": "bash scripts/tag-and-push.sh"
+        "tagPush": "bash scripts/tag-and-push.sh",
+        "package:vscode": "bash scripts/package-vscode-extension.sh",
+        "setup:vscode-publisher": "bash scripts/setup-vscode-publisher.sh"
     },
     "keywords": [
         "mcp",
