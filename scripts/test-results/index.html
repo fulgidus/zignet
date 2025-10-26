@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZigNet Model Test Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #569cd6;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #252526;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #569cd6;
+        }
+        
+        .stat-card h3 {
+            font-size: 14px;
+            color: #858585;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ec9b0;
+        }
+        
+        .controls {
+            background: #252526;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .controls label {
+            color: #858585;
+        }
+        
+        .controls select {
+            background: #3c3c3c;
+            color: #d4d4d4;
+            border: 1px solid #555;
+            padding: 8px 12px;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .controls select:hover {
+            background: #464646;
+        }
+        
+        .model-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        
+        .model-tab {
+            background: #252526;
+            color: #858585;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        
+        .model-tab:hover {
+            background: #2d2d30;
+        }
+        
+        .model-tab.active {
+            background: #1e1e1e;
+            color: #569cd6;
+            border-bottom: 2px solid #569cd6;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .model-card {
+            background: #252526;
+            border-radius: 5px;
+            padding: 20px;
+            border: 1px solid #3c3c3c;
+        }
+        
+        .model-card h2 {
+            color: #4ec9b0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .model-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #3c3c3c;
+        }
+        
+        .meta-item {
+            font-size: 12px;
+        }
+        
+        .meta-item .label {
+            color: #858585;
+        }
+        
+        .meta-item .value {
+            color: #d4d4d4;
+            font-weight: bold;
+        }
+        
+        .test-item {
+            background: #1e1e1e;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            border-left: 3px solid transparent;
+        }
+        
+        .test-item.success {
+            border-left-color: #4ec9b0;
+        }
+        
+        .test-item.failure {
+            border-left-color: #f48771;
+        }
+        
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .test-name {
+            font-weight: bold;
+            color: #d7ba7d;
+        }
+        
+        .test-difficulty {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .test-difficulty.EASY {
+            background: #4ec9b044;
+            color: #4ec9b0;
+        }
+        
+        .test-difficulty.MEDIUM {
+            background: #ce912244;
+            color: #ce9178;
+        }
+        
+        .test-difficulty.HARD {
+            background: #f4877144;
+            color: #f48771;
+        }
+        
+        .test-duration {
+            color: #858585;
+            font-size: 12px;
+        }
+        
+        .test-response {
+            background: #2d2d30;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .summary-table {
+            width: 100%;
+            background: #252526;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .summary-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .summary-table th {
+            background: #1e1e1e;
+            color: #569cd6;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .summary-table td {
+            padding: 12px;
+            border-top: 1px solid #3c3c3c;
+        }
+        
+        .summary-table tr:hover {
+            background: #2d2d30;
+        }
+        
+        .score {
+            font-weight: bold;
+            color: #4ec9b0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #858585;
+        }
+        
+        .error {
+            background: #f4877144;
+            color: #f48771;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 ZigNet Model Test Results</h1>
+        <p style="color: #858585; margin-bottom: 30px;">Comparazione risultati test avanzati modelli LLM per analisi codice Zig</p>
+        
+        <div id="stats" class="stats"></div>
+        
+        <div class="controls">
+            <label for="viewMode">Visualizzazione:</label>
+            <select id="viewMode">
+                <option value="comparison">Comparazione Side-by-Side</option>
+                <option value="summary">Tabella Riepilogo</option>
+                <option value="detailed">Vista Dettagliata</option>
+            </select>
+            
+            <label for="filterDifficulty">Difficoltà:</label>
+            <select id="filterDifficulty">
+                <option value="all">Tutte</option>
+                <option value="EASY">Easy</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HARD">Hard</option>
+            </select>
+        </div>
+        
+        <div id="content">
+            <div class="loading">Caricamento dati...</div>
+        </div>
+    </div>
+
+    <script>
+        const testFiles = [
+            'advanced-test-codeqwen-latest-2025-10-26T02-59-58-648Z.json',
+            'advanced-test-mistral-2025-10-26T02-53-34-678Z.json',
+            'advanced-test-phi-2.7b-2025-10-26T02-09-49-411Z.json',
+            'advanced-test-phi-2.7b-2025-10-26T02-44-23-216Z.json'
+        ];
+        
+        let allData = [];
+        let currentView = 'comparison';
+        let currentFilter = 'all';
+        
+        async function loadAllData() {
+            try {
+                const promises = testFiles.map(file => 
+                    fetch(file).then(r => r.json())
+                );
+                allData = await Promise.all(promises);
+                updateStats();
+                renderView();
+            } catch (error) {
+                document.getElementById('content').innerHTML = 
+                    `<div class="error">Errore nel caricamento dei dati: ${error.message}</div>`;
+            }
+        }
+        
+        function updateStats() {
+            const totalTests = allData.reduce((sum, data) => sum + data.tests.length, 0);
+            const totalSuccess = allData.reduce((sum, data) => 
+                sum + data.tests.filter(t => t.success).length, 0);
+            const avgDuration = Math.round(
+                allData.reduce((sum, data) => 
+                    sum + data.tests.reduce((s, t) => s + t.duration, 0), 0) / totalTests
+            );
+            
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card">
+                    <h3>Modelli Testati</h3>
+                    <div class="value">${allData.length}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Test Totali</h3>
+                    <div class="value">${totalTests}</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Success Rate</h3>
+                    <div class="value">${Math.round(totalSuccess/totalTests*100)}%</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Durata Media</h3>
+                    <div class="value">${avgDuration}ms</div>
+                </div>
+            `;
+        }
+        
+        function renderView() {
+            const content = document.getElementById('content');
+            
+            switch(currentView) {
+                case 'comparison':
+                    content.innerHTML = renderComparison();
+                    break;
+                case 'summary':
+                    content.innerHTML = renderSummary();
+                    break;
+                case 'detailed':
+                    content.innerHTML = renderDetailed();
+                    break;
+            }
+        }
+        
+        function renderComparison() {
+            return `
+                <div class="comparison-grid">
+                    ${allData.map(data => renderModelCard(data)).join('')}
+                </div>
+            `;
+        }
+        
+        function renderModelCard(data) {
+            const filteredTests = currentFilter === 'all' 
+                ? data.tests 
+                : data.tests.filter(t => t.difficulty === currentFilter);
+            
+            const successRate = Math.round(
+                filteredTests.filter(t => t.success).length / filteredTests.length * 100
+            );
+            const avgDuration = Math.round(
+                filteredTests.reduce((sum, t) => sum + t.duration, 0) / filteredTests.length
+            );
+            
+            return `
+                <div class="model-card">
+                    <h2>${data.model}</h2>
+                    <div class="model-meta">
+                        <div class="meta-item">
+                            <div class="label">Success Rate</div>
+                            <div class="value">${successRate}%</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Avg Duration</div>
+                            <div class="value">${avgDuration}ms</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Total Tests</div>
+                            <div class="value">${filteredTests.length}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Timestamp</div>
+                            <div class="value">${new Date(data.timestamp).toLocaleString('it-IT')}</div>
+                        </div>
+                    </div>
+                    ${filteredTests.map(test => `
+                        <div class="test-item ${test.success ? 'success' : 'failure'}">
+                            <div class="test-header">
+                                <span class="test-name">${test.name}</span>
+                                <span class="test-difficulty ${test.difficulty}">${test.difficulty}</span>
+                            </div>
+                            <div class="test-duration">⏱️ ${test.duration}ms</div>
+                            <details style="margin-top: 10px;">
+                                <summary style="cursor: pointer; color: #569cd6;">Mostra risposta</summary>
+                                <div class="test-response">${escapeHtml(test.response)}</div>
+                            </details>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function renderSummary() {
+            return `
+                <div class="summary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Modello</th>
+                                <th>Test</th>
+                                <th>Success Rate</th>
+                                <th>Avg Duration</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${allData.map(data => {
+                                const successRate = Math.round(
+                                    data.tests.filter(t => t.success).length / data.tests.length * 100
+                                );
+                                const avgDuration = Math.round(
+                                    data.tests.reduce((sum, t) => sum + t.duration, 0) / data.tests.length
+                                );
+                                const score = Math.round(successRate * (10000 / avgDuration));
+                                
+                                return `
+                                    <tr>
+                                        <td><strong>${data.model}</strong></td>
+                                        <td>${data.tests.length}</td>
+                                        <td>${successRate}%</td>
+                                        <td>${avgDuration}ms</td>
+                                        <td class="score">${score}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                <p style="color: #858585; font-size: 12px;">Score = Success Rate × (10000 / Avg Duration)</p>
+            `;
+        }
+        
+        function renderDetailed() {
+            let html = '';
+            
+            allData.forEach((data, idx) => {
+                const filteredTests = currentFilter === 'all' 
+                    ? data.tests 
+                    : data.tests.filter(t => t.difficulty === currentFilter);
+                
+                html += `
+                    <div class="model-card" style="max-width: 100%; margin-bottom: 30px;">
+                        <h2>${data.model}</h2>
+                        <div class="model-meta">
+                            <div class="meta-item">
+                                <div class="label">Timestamp</div>
+                                <div class="value">${new Date(data.timestamp).toLocaleString('it-IT')}</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="label">Tests</div>
+                                <div class="value">${filteredTests.length}</div>
+                            </div>
+                        </div>
+                        ${filteredTests.map(test => `
+                            <div class="test-item ${test.success ? 'success' : 'failure'}">
+                                <div class="test-header">
+                                    <span class="test-name">${test.name}</span>
+                                    <span class="test-difficulty ${test.difficulty}">${test.difficulty}</span>
+                                </div>
+                                <div class="test-duration">⏱️ ${test.duration}ms</div>
+                                <div style="margin: 10px 0; color: #858585; font-size: 12px;">
+                                    <strong>Prompt:</strong><br>
+                                    ${escapeHtml(test.prompt)}
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <strong style="color: #569cd6;">Risposta:</strong>
+                                    <div class="test-response">${escapeHtml(test.response)}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            });
+            
+            return html;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        document.getElementById('viewMode').addEventListener('change', (e) => {
+            currentView = e.target.value;
+            renderView();
+        });
+        
+        document.getElementById('filterDifficulty').addEventListener('change', (e) => {
+            currentFilter = e.target.value;
+            renderView();
+        });
+        
+        loadAllData();
+    </script>
+</body>
+</html>
