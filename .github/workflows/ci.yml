@@ -105,7 +105,7 @@ jobs:
         run: |
           export ZIG_DEFAULT="${{ matrix.zig-version }}"
           node -e "
-          const { analyzeZig } = require('./dist/compile-C1_SCOrq.cjs');
+          const { analyzeZig } = require('./dist/tools/analyze.cjs');
           const code = 'fn main() void { const x: i32 = 42; }';
           analyzeZig({ code, zig_version: '${{ matrix.zig-version }}' })
             .then(result => {
@@ -122,7 +122,7 @@ jobs:
         run: |
           export ZIG_DEFAULT="${{ matrix.zig-version }}"
           node -e "
-          const { compileZig } = require('./dist/compile-C1_SCOrq.cjs');
+          const { compileZig } = require('./dist/tools/compile.cjs');
           const code = 'fn add(a:i32,b:i32)i32{return a+b;}';
           compileZig({ code, zig_version: '${{ matrix.zig-version }}' })
             .then(result => {
@@ -171,22 +171,7 @@ jobs:
         run: zig version
 
       - name: Test system Zig detection
-        env:
-          ZIG_VERSION: '0.15.1'
-        run: |
-          node -e "
-          const { detectSystemZig, getSystemZigPath } = require('./dist/compile-C1_SCOrq.cjs');
-          const version = detectSystemZig();
-          const path = getSystemZigPath();
-          const expectedVersion = process.env.ZIG_VERSION;
-          console.log('Detected version:', version);
-          console.log('Detected path:', path);
-          console.log('Expected version:', expectedVersion);
-          if (!version || !version.includes(expectedVersion)) {
-            console.error('Failed to detect system Zig');
-            process.exit(1);
-          }
-          "
+        run: pnpm run test tests/e2e/zig-manager.test.ts
 
   docker-build:
     name: Docker Build Test
