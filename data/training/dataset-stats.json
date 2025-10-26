@@ -1,0 +1,18 @@
+{
+  "total": 13756,
+  "train": 9629,
+  "validation": 2063,
+  "test": 2064,
+  "byDifficulty": {
+    "easy": 10236,
+    "medium": 3416,
+    "hard": 69,
+    "unknown": 35
+  },
+  "bySource": {
+    "documentation": 418,
+    "repository": 13338
+  },
+  "avgCodeLength": 263,
+  "avgInstructionLength": 62
+}
