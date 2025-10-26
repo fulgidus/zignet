@@ -102,41 +102,10 @@ jobs:
         run: node scripts/install-zig.js ${{ matrix.zig-version }}
 
       - name: Test analyze tool with Zig ${{ matrix.zig-version }}
-        run: |
-          export ZIG_DEFAULT="${{ matrix.zig-version }}"
-          node -e "
-          const { analyzeZig } = require('./dist/tools/analyze.cjs');
-          const code = 'fn add(a: i32, b: i32) i32 { return a + b; }';
-          analyzeZig({ code, zig_version: '${{ matrix.zig-version }}' })
-            .then(result => {
-              console.log('Result:', result);
-              if (!result.success) {
-                console.error('Analysis failed:', result.errors);
-                process.exit(1);
-              }
-            })
-            .catch(err => {
-              console.error('Error:', err);
-              process.exit(1);
-            });
-          "
+        run: node scripts/ci-test-analyze.cjs ${{ matrix.zig-version }}
 
       - name: Test compile tool with Zig ${{ matrix.zig-version }}
-        run: |
-          export ZIG_DEFAULT="${{ matrix.zig-version }}"
-          node -e "
-          const { compileZig } = require('./dist/tools/compile.cjs');
-          const code = 'fn add(a:i32,b:i32)i32{return a+b;}';
-          compileZig({ code, zig_version: '${{ matrix.zig-version }}' })
-            .then(result => {
-              console.log('Result:', result);
-              if (!result.success) process.exit(1);
-            })
-            .catch(err => {
-              console.error('Error:', err);
-              process.exit(1);
-            });
-          "
+        run: node scripts/ci-test-compile.cjs ${{ matrix.zig-version }}
 
   test-system-zig-detection:
     name: Test System Zig Detection
