@@ -1,7 +1,7 @@
 {
     "name": "zignet",
-    "version": "0.1.0",
-    "description": "MCP server for Zig — AI-powered code generation, debugging, and documentation",
+    "version": "0.15.2",
+    "description": "MCP server for Zig — AI-powered code analysis, validation, and documentation with fine-tuned LLM",
     "type": "module",
     "main": "./dist/mcp-server.js",
     "types": "./dist/mcp-server.d.ts",
@@ -23,7 +23,7 @@
         }
     },
     "bin": {
-        "zignet": "./bin/cli.js"
+        "zignet": "bin/cli.js"
     },
     "files": [
         "dist",
@@ -120,7 +120,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/fulgidus/zignet.git"
+        "url": "git+https://github.com/fulgidus/zignet.git"
     },
     "bugs": {
         "url": "https://github.com/fulgidus/zignet/issues"

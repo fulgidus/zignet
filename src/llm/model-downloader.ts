@@ -1,12 +1,12 @@
-import { mkdir, unlink } from "node:fs/promises";
-import { createWriteStream } from "node:fs";
-import { existsSync } from "node:fs";
-import { join, dirname } from "node:path";
-import { Readable } from "node:stream";
-import { MODEL_PATH } from "../config.js";
+import { mkdir, unlink } from 'node:fs/promises';
+import { createWriteStream } from 'node:fs';
+import { existsSync } from 'node:fs';
+import { dirname } from 'node:path';
+import { Readable } from 'node:stream';
+import { MODEL_PATH } from '../config.js';
 
-const MODEL_REPO = "fulgidus/zignet-qwen2.5-coder-7b";
-const MODEL_FILE = "gguf/zignet-qwen-7b-q4km.gguf";
+const MODEL_REPO = 'fulgidus/zignet-qwen2.5-coder-7b';
+const MODEL_FILE = 'gguf/zignet-qwen-7b-q4km.gguf';
 const MODEL_SIZE_MB = 4400; // 4.4GB
 
 export interface DownloadProgress {
@@ -32,22 +32,20 @@ export class ModelDownloader {
     /**
      * Check if model is already downloaded
      */
-    async isModelAvailable(): Promise<boolean> {
+    isModelAvailable(): boolean {
         return existsSync(this.modelPath);
     }
 
     /**
      * Download the GGUF model from HuggingFace
      */
-    async downloadModel(
-        onProgress?: (progress: DownloadProgress) => void,
-    ): Promise<void> {
-        if (await this.isModelAvailable()) {
-            console.log("✅ Model already downloaded:", this.modelPath);
+    async downloadModel(onProgress?: (progress: DownloadProgress) => void): Promise<void> {
+        if (this.isModelAvailable()) {
+            console.log('✅ Model already downloaded:', this.modelPath);
             return;
         }
 
-        console.log("📥 Downloading ZigNet model from HuggingFace...");
+        console.log('📥 Downloading ZigNet model from HuggingFace...');
         console.log(`📦 Size: ${MODEL_SIZE_MB}MB`);
         console.log(`📍 Repo: ${MODEL_REPO}`);
 
@@ -62,28 +60,23 @@ export class ModelDownloader {
             const response = await fetch(url);
 
             if (!response.ok) {
-                throw new Error(
-                    `Failed to download model: ${response.statusText}`,
-                );
+                throw new Error(`Failed to download model: ${response.statusText}`);
             }
 
-            const totalBytes = parseInt(
-                response.headers.get("content-length") || "0",
-                10,
-            );
+            const totalBytes = parseInt(response.headers.get('content-length') || '0', 10);
 
             if (!response.body) {
-                throw new Error("Response body is null");
+                throw new Error('Response body is null');
             }
 
             const fileStream = createWriteStream(this.modelPath);
             let downloadedBytes = 0;
 
             // Convert Web ReadableStream to Node Readable
-            const nodeStream = Readable.fromWeb(response.body as any);
+            const nodeStream = Readable.fromWeb(response.body as ReadableStream<Uint8Array>);
 
             // Track progress
-            nodeStream.on("data", (chunk: Buffer) => {
+            nodeStream.on('data', (chunk: Buffer) => {
                 downloadedBytes += chunk.length;
 
                 if (onProgress && totalBytes > 0) {
@@ -98,12 +91,12 @@ export class ModelDownloader {
             // Pipe to file
             await new Promise<void>((resolve, reject) => {
                 nodeStream.pipe(fileStream);
-                nodeStream.on("error", reject);
-                fileStream.on("error", reject);
-                fileStream.on("finish", resolve);
+                nodeStream.on('error', reject);
+                fileStream.on('error', reject);
+                fileStream.on('finish', resolve);
             });
 
-            console.log("✅ Model downloaded successfully!");
+            console.log('✅ Model downloaded successfully!');
             console.log(`📁 Location: ${this.modelPath}`);
         } catch (error) {
             // Clean up partial download
@@ -112,18 +105,16 @@ export class ModelDownloader {
             }
 
             throw new Error(
-                `Failed to download model: ${error instanceof Error ? error.message : String(error)}`,
+                `Failed to download model: ${error instanceof Error ? error.message : String(error)}`
             );
         }
     }
 
     /**
-     * Ensure model is available (download if needed)
+     * Ensure model is downloaded, download if needed
      */
-    async ensureModel(
-        onProgress?: (progress: DownloadProgress) => void,
-    ): Promise<string> {
-        if (!(await this.isModelAvailable())) {
+    async ensureModel(onProgress?: (progress: DownloadProgress) => void): Promise<string> {
+        if (!this.isModelAvailable()) {
             await this.downloadModel(onProgress);
         }
 

@@ -2,11 +2,11 @@
  * get_zig_docs tool - Query Zig documentation using LLM
  */
 
-import { getLLM } from "../llm/session.js";
+import { getLLM } from '../llm/session.js';
 
 export interface GetZigDocsArgs {
     topic: string;
-    detail_level?: "basic" | "intermediate" | "advanced";
+    detail_level?: 'basic' | 'intermediate' | 'advanced';
 }
 
 export interface GetZigDocsResult {
@@ -18,20 +18,17 @@ export interface GetZigDocsResult {
 /**
  * Get Zig documentation for a specific topic
  */
-export async function getZigDocs(
-    args: GetZigDocsArgs,
-): Promise<GetZigDocsResult> {
-    const { topic, detail_level = "intermediate" } = args;
+export async function getZigDocs(args: GetZigDocsArgs): Promise<GetZigDocsResult> {
+    const { topic, detail_level = 'intermediate' } = args;
 
     console.log(`📚 Getting Zig docs for: ${topic} (${detail_level})`);
 
     // Construct prompt based on detail level
     const detailInstructions = {
-        basic: "Provide a brief, beginner-friendly explanation.",
-        intermediate:
-            "Provide a detailed explanation with practical examples.",
+        basic: 'Provide a brief, beginner-friendly explanation.',
+        intermediate: 'Provide a detailed explanation with practical examples.',
         advanced:
-            "Provide an in-depth explanation covering edge cases, best practices, and advanced patterns.",
+            'Provide an in-depth explanation covering edge cases, best practices, and advanced patterns.',
     };
 
     const prompt = `Explain the following Zig programming concept: "${topic}"
@@ -59,7 +56,7 @@ Be specific to Zig versions 0.13-0.15.`;
         };
     } catch (error) {
         throw new Error(
-            `Failed to get Zig docs: ${error instanceof Error ? error.message : String(error)}`,
+            `Failed to get Zig docs: ${error instanceof Error ? error.message : String(error)}`
         );
     }
 }

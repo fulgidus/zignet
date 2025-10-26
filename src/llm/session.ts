@@ -1,10 +1,5 @@
-import {
-    getLlama,
-    LlamaModel,
-    LlamaContext,
-    LlamaChatSession,
-} from "node-llama-cpp";
-import { modelDownloader } from "./model-downloader.js";
+import { getLlama, LlamaModel, LlamaContext, LlamaChatSession } from 'node-llama-cpp';
+import { modelDownloader } from './model-downloader.js';
 
 export interface LLMConfig {
     modelPath?: string;
@@ -22,7 +17,7 @@ export class ZigNetLLM {
 
     constructor(config: LLMConfig = {}) {
         this.config = {
-            modelPath: config.modelPath || "",
+            modelPath: config.modelPath || '',
             gpuLayers: config.gpuLayers ?? 35, // RTX 3090 can handle all layers
             contextSize: config.contextSize ?? 4096,
             temperature: config.temperature ?? 0.7,
@@ -35,11 +30,11 @@ export class ZigNetLLM {
      */
     async initialize(): Promise<void> {
         if (this.session) {
-            console.log("ℹ️  LLM already initialized");
+            console.log('ℹ️  LLM already initialized');
             return;
         }
 
-        console.log("🚀 Initializing ZigNet LLM...");
+        console.log('🚀 Initializing ZigNet LLM...');
 
         // Get model path (download if needed)
         const modelPath =
@@ -47,9 +42,7 @@ export class ZigNetLLM {
             (await modelDownloader.ensureModel((progress) => {
                 if (progress.percent % 10 < 1) {
                     // Log every 10%
-                    console.log(
-                        `📥 Downloading model: ${progress.percent.toFixed(1)}%`,
-                    );
+                    console.log(`📥 Downloading model: ${progress.percent.toFixed(1)}%`);
                 }
             }));
 
@@ -90,7 +83,7 @@ Always:
 When unsure, reference official Zig docs or suggest using 'zig ast-check'.`,
         });
 
-        console.log("✅ LLM initialized successfully!");
+        console.log('✅ LLM initialized successfully!');
     }
 
     /**
@@ -102,7 +95,7 @@ When unsure, reference official Zig docs or suggest using 'zig ast-check'.`,
         }
 
         if (!this.session) {
-            throw new Error("Failed to initialize LLM session");
+            throw new Error('Failed to initialize LLM session');
         }
 
         console.log(`🤔 Querying LLM: ${prompt.substring(0, 50)}...`);
@@ -118,17 +111,17 @@ When unsure, reference official Zig docs or suggest using 'zig ast-check'.`,
     /**
      * Dispose resources
      */
-    async dispose(): Promise<void> {
+    dispose(): void {
         if (this.context) {
-            this.context.dispose();
+            void this.context.dispose();
             this.context = null;
         }
         if (this.model) {
-            this.model.dispose();
+            void this.model.dispose();
             this.model = null;
         }
         this.session = null;
-        console.log("🗑️  LLM resources disposed");
+        console.log('🗑️  LLM resources disposed');
     }
 }
 
@@ -151,9 +144,9 @@ export async function getLLM(config?: LLMConfig): Promise<ZigNetLLM> {
 /**
  * Dispose the global LLM instance
  */
-export async function disposeLLM(): Promise<void> {
+export function disposeLLM(): void {
     if (globalLLM) {
-        await globalLLM.dispose();
+        globalLLM.dispose();
         globalLLM = null;
     }
 }
