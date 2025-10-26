@@ -1,0 +1,9 @@
+{
+  "name": "river",
+  "fullName": "riverwm/river",
+  "owner": "riverwm",
+  "stars": 3752,
+  "description": "[mirror] A dynamic tiling Wayland compositor",
+  "url": "https://github.com/riverwm/river",
+  "defaultBranch": "master"
+}

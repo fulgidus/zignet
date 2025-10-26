@@ -1,0 +1,3642 @@
+[
+  {
+    "instruction": "Write a Zig function similar to enabled from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "pub fn enabled(self: AccesskitOptions) bool {\n        return self != .off;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "enabled",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildBackend from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "pub fn buildBackend(backend: enums_backend.Backend, test_dvui_and_app: bool, dvui_opts: DvuiModuleOptions) void {\n    const b = dvui_opts.b;\n    const target = dvui_opts.target;\n    const optimize = dvui_opts.optimize;\n    switch (backend) {\n        .custom => {\n            // For export to users who are bringing their own backend.  Use in your build.zig:\n            // const dvui_mod = dvui_dep.module(\"dvui\");\n            // @import(\"dvui\").linkBackend(dvui_mod, your_backend_module);\n            _ = addDvuiModule(\"dvui\", dvui_opts);\n            // does not need to be tested as only dependent would hit this path and test themselves\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildBackend",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to linkBackend from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "pub fn linkBackend(dvui_mod: *std.Build.Module, backend_mod: *std.Build.Module) void {\n    backend_mod.addImport(\"dvui\", dvui_mod);\n    dvui_mod.addImport(\"backend\", backend_mod);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "linkBackend",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addChecks from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn addChecks(self: *const @This(), mod: *std.Build.Module, name: []const u8) void {\n        const tests = self.b.addTest(.{ .root_module = mod, .name = self.b.fmt(\"{s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addChecks",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addTests from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn addTests(self: *const @This(), mod: *std.Build.Module, name: []const u8) void {\n        if (self.test_step) |step| {\n            const tests = self.b.addTest(.{\n                .root_module = mod,\n                .name = self.b.fmt(\"{s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addTests",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to accessKitSupported from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn accessKitSupported(target: std.Build.ResolvedTarget) bool {\n    if (target.result.os.tag != .windows and !target.result.os.tag.isDarwin()) return false;\n    if (!target.result.cpu.arch.isAARCH64() and !target.result.cpu.arch.isX86()) return false;\n    return true;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "accessKitSupported",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to accessKitPath from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn accessKitPath(b: *std.Build, target: std.Build.ResolvedTarget, ak_dep: *std.Build.Dependency, opt: AccesskitOptions, full_lib_path: bool) std.Build.LazyPath {\n    const os_path = if (target.result.os.tag == .windows) \"windows\" //\n        else if (target.result.os.tag.isDarwin()) \"macos\" //\n        else \"unsupported\";\n    const arch_path = if (target.result.cpu.arch.isAARCH64()) \"arm64\" //\n        else if (target.result.cpu.arch == .x86) \"x86\" //\n        else if (target.result.cpu.arch == .x86_64) \"x86_64\" //\n        else \"unsupported\";\n\n    const abi_path = if (target.result.os.tag == .windows) \"msvc\" //\n        else if (target.result.os.tag.isDarwin()) \"\" //\n        else \"\";\n\n    const linkage_path = @tagName(opt);\n\n    if (full_lib_path) {\n        return ak_dep.path(b.pathJoin(&.{ \"lib\", os_path, arch_path, abi_path, linkage_path, accessKitLibName(target) }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "accessKitPath",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to accessKitLibName from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn accessKitLibName(target: std.Build.ResolvedTarget) []const u8 {\n    return if (target.result.os.tag == .windows) \"accesskit.dll\" //\n    else if (target.result.os.tag.isDarwin()) \"libaccesskit.dylib\" //\n    else \"unsupported\";\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "accessKitLibName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addDvuiModule from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn addDvuiModule(\n    comptime name: []const u8,\n    opts: DvuiModuleOptions,\n) *std.Build.Module {\n    const b = opts.b;\n    const target = opts.target;\n    const optimize = opts.optimize;\n\n    const dvui_mod = b.addModule(name, .{\n        .root_source_file = b.path(\"src/dvui.zig\"),\n        .target = target,\n        .optimize = optimize,\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addDvuiModule",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addExample from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn addExample(\n    comptime name: []const u8,\n    file: std.Build.LazyPath,\n    add_tests: bool,\n    example_opts: ExampleOptions,\n    opts: DvuiModuleOptions,\n) void {\n    const b = opts.b;\n\n    const mod = b.createModule(.{\n        .root_source_file = file,\n        .target = opts.target,\n        .optimize = opts.optimize,\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addExample",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addWebExample from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "fn addWebExample(\n    comptime name: []const u8,\n    file: std.Build.LazyPath,\n    example_opts: ExampleOptions,\n    opts: DvuiModuleOptions,\n) void {\n    const b = opts.b;\n\n    const exeOptions: std.Build.ExecutableOptions = .{\n        .name = \"web\",\n        .root_module = b.createModule(.{\n            .root_source_file = file,\n            .target = opts.target,\n            .optimize = opts.optimize,\n            .link_libc = false,\n            .strip = if (opts.optimize == .ReleaseFast or opts.optimize == .ReleaseSmall) true else false,\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addWebExample",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DvuiModuleOptions from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const DvuiModuleOptions = struct {\n    b: *std.Build,\n    target: std.Build.ResolvedTarget,\n    optimize: std.builtin.OptimizeMode,\n    check_step: ?*std.Build.Step = null,\n    test_step: ?*std.Build.Step = null,\n    test_filters: []const []const u8,\n    add_stb_image: bool = true,\n    use_lld: ?bool = null,\n    accesskit: AccesskitOptions = .off,\n    build_options: *std.Build.Step.Options,\n\n    fn addChecks(self: *const @This(), mod: *std.Build.Module, name: []const u8) void {\n        const tests = self.b.addTest(.{ .root_module = mod, .name = self.b.fmt(\"{s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "DvuiModuleOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ExampleOptions from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const ExampleOptions = struct {\n    dvui_mod: *std.Build.Module,\n    backend_name: []const u8,\n    backend_mod: *std.Build.Module,\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "ExampleOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to example_opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const example_opts: ExampleOptions = .{\n                .dvui_mod = dvui_testing,\n                .backend_name = \"testing-backend\",\n                .backend_mod = testing_mod,\n            };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "example_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to example_opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const example_opts: ExampleOptions = .{\n                .dvui_mod = dvui_sdl,\n                .backend_name = \"sdl-backend\",\n                .backend_mod = sdl_mod,\n            };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "example_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to example_opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const example_opts: ExampleOptions = .{\n                .dvui_mod = dvui_sdl,\n                .backend_name = \"sdl-backend\",\n                .backend_mod = sdl_mod,\n            };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "example_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to linux_display_backend from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const linux_display_backend: LinuxDisplayBackend = b.option(LinuxDisplayBackend, \"linux_display_backend\", \"If using raylib, which linux display?\") orelse blk: {\n                _ = std.process.getEnvVarOwned(b.allocator, \"WAYLAND_DISPLAY\") catch |err| switch (err) {\n                    error.EnvironmentVariableNotFound => break :blk .X11,\n                    else => @panic(\"Unknown error checking for WAYLAND_DISPLAY environment variable\"),\n                };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "linux_display_backend",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to example_opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const example_opts: ExampleOptions = .{\n                .dvui_mod = dvui_raylib,\n                .backend_name = \"raylib-backend\",\n                .backend_mod = raylib_mod,\n            };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "example_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to example_opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const example_opts: ExampleOptions = .{\n                    .dvui_mod = dvui_dx11,\n                    .backend_name = \"dx11-backend\",\n                    .backend_mod = dx11_mod,\n                };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "example_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to example_opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const example_opts: ExampleOptions = .{\n                    .dvui_mod = dvui_web_wasm,\n                    .backend_name = \"web-backend\",\n                    .backend_mod = web_mod_wasm,\n                };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "example_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to exeOptions from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const exeOptions: std.Build.ExecutableOptions = .{\n        .name = \"web\",\n        .root_module = b.createModule(.{\n            .root_source_file = file,\n            .target = opts.target,\n            .optimize = opts.optimize,\n            .link_libc = false,\n            .strip = if (opts.optimize == .ReleaseFast or opts.optimize == .ReleaseSmall) true else false,\n        }),\n    };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "exeOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to install_dir from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: build.zig",
+    "response": "const install_dir: std.Build.InstallDir = .{ .custom = \"bin/\" ++ name };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "build.zig",
+      "type": "const",
+      "name": "install_dir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: docs/add_doc_logo.zig",
+    "response": "pub fn main() !void {\n    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n    defer arena.deinit();\n    const allocator = arena.allocator();\n\n    // Get files via arguments (passed by build system)\n    const args = try std.process.argsAlloc(allocator);\n\n    // Open and read the files\n    var html_file = try std.fs.openFileAbsolute(args[1], .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "docs/add_doc_logo.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AppInit from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/app.zig",
+    "response": "pub fn AppInit(win: *dvui.Window) !void {\n    orig_content_scale = win.content_scale;\n    //try dvui.addFont(\"NOTO\", @embedFile(\"../src/fonts/NotoSansKR-Regular.ttf\"), null);\n\n    if (false) {\n        // If you need to set a theme based on the users preferred color scheme, do it here\n        win.theme = switch (win.backend.preferredColorScheme() orelse .light) {\n            .light => dvui.Theme.builtin.adwaita_light,\n            .dark => dvui.Theme.builtin.adwaita_dark,\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/app.zig",
+      "type": "function",
+      "name": "AppInit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AppFrame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/app.zig",
+    "response": "pub fn AppFrame() !dvui.App.Result {\n    return frame();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/app.zig",
+      "type": "function",
+      "name": "AppFrame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/app.zig",
+    "response": "pub fn frame() !dvui.App.Result {\n    var scaler = dvui.scale(@src(), .{ .scale = &dvui.currentWindow().content_scale, .pinch_zoom = .global }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/app.zig",
+      "type": "function",
+      "name": "frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to std_options from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/app.zig",
+    "response": "pub const std_options: std.Options = .{\n    .logFn = dvui.App.logFn,\n};",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/app.zig",
+      "type": "const",
+      "name": "std_options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "pub fn main() !void {\n    if (@import(\"builtin\").os.tag == .windows) { // optional\n        // on windows graphical apps have no console, so output goes to nowhere - attach it manually. related: https://github.com/ziglang/zig/issues/4196\n        dvui.Backend.Common.windowsAttachConsole() catch {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowProc from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "fn windowProc(\n    hwnd: win32.HWND,\n    umsg: u32,\n    wparam: win32.WPARAM,\n    lparam: win32.LPARAM,\n) callconv(.winapi) win32.LRESULT {\n    switch (umsg) {\n        win32.WM_KEYDOWN, win32.WM_SYSKEYDOWN => {\n            switch (wparam) {\n                @intFromEnum(win32.VK_ESCAPE) => { //SHIFT+ESC = EXIT\n                    if (win32.GetAsyncKeyState(@intFromEnum(win32.VK_LSHIFT)) & 0x01 == 1) {\n                        win32.PostQuitMessage(0);\n                        return 0;\n                    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "function",
+      "name": "windowProc",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createWindow from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "fn createWindow() win32.HWND {\n    const class_name = win32.L(\"Dx11OntopMain\");\n\n    {\n        const opt: win32.WNDCLASSEXW = .{\n            .cbSize = @sizeOf(win32.WNDCLASSEXW),\n            .style = .{ .DBLCLKS = 1, .OWNDC = 1 }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "function",
+      "name": "createWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createDeviceD3D from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "fn createDeviceD3D(hwnd: win32.HWND) ?Backend.Directx11Options {\n    const client_size = win32.getClientSize(hwnd);\n\n    var sd = std.mem.zeroes(win32.DXGI_SWAP_CHAIN_DESC);\n    sd.BufferCount = 6;\n    sd.BufferDesc.Width = @intCast(client_size.cx);\n    sd.BufferDesc.Height = @intCast(client_size.cy);\n    sd.BufferDesc.Format = win32.DXGI_FORMAT_R8G8B8A8_UNORM;\n    sd.BufferDesc.RefreshRate.Numerator = 60;\n    sd.BufferDesc.RefreshRate.Denominator = 1;\n    sd.Flags = @intFromEnum(win32.DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH);\n    sd.BufferUsage = win32.DXGI_USAGE_RENDER_TARGET_OUTPUT;\n    @setRuntimeSafety(false);\n    sd.OutputWindow = hwnd;\n    @setRuntimeSafety(true);\n    sd.SampleDesc.Count = 1;\n    sd.SampleDesc.Quality = 0;\n    sd.Windowed = 1;\n    sd.SwapEffect = win32.DXGI_SWAP_EFFECT_DISCARD;\n\n    const createDeviceFlags: win32.D3D11_CREATE_DEVICE_FLAG = .{\n        .DEBUG = 0,\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "function",
+      "name": "createDeviceD3D",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dvui_floating_stuff from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "fn dvui_floating_stuff() void {\n    var float = dvui.floatingWindow(@src(), .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "function",
+      "name": "dvui_floating_stuff",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to win from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "const win: *dvui.Window = backend.getWindow();",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "const",
+      "name": "win",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to style_ex from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "const style_ex: win32.WINDOW_EX_STYLE = .{ .APPWINDOW = 1, .WINDOWEDGE = 1 };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "const",
+      "name": "style_ex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to createDeviceFlags from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-ontop.zig",
+    "response": "const createDeviceFlags: win32.D3D11_CREATE_DEVICE_FLAG = .{\n        .DEBUG = 0,\n    };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-ontop.zig",
+      "type": "const",
+      "name": "createDeviceFlags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-standalone.zig",
+    "response": "fn deinit(self: ExtraWindow) void {\n        self.backend.deinit();\n        gpa.destroy(self.state);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-standalone.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-standalone.zig",
+    "response": "pub fn main() !void {\n    if (@import(\"builtin\").os.tag == .windows) { // optional\n        // on windows graphical apps have no console, so output goes to nowhere - attach it manually. related: https://github.com/ziglang/zig/issues/4196\n        dvui.Backend.Common.windowsAttachConsole() catch {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-standalone.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gui_frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-standalone.zig",
+    "response": "fn gui_frame() !void {\n    {\n        var hbox = dvui.box(@src(), .{ .dir = .horizontal }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-standalone.zig",
+      "type": "function",
+      "name": "gui_frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ExtraWindow from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-standalone.zig",
+    "response": "const ExtraWindow = struct {\n    state: *Backend.WindowState,\n    backend: Backend.Context,\n    fn deinit(self: ExtraWindow) void {\n        self.backend.deinit();\n        gpa.destroy(self.state);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-standalone.zig",
+      "type": "struct",
+      "name": "ExtraWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to index from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/dx11-standalone.zig",
+    "response": "const index: usize = blk: {\n                    for (extra_windows.items, 0..) |window, i| {\n                        if (window.backend.receivedClose()) break :blk i;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/dx11-standalone.zig",
+      "type": "const",
+      "name": "index",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/raylib-ontop.zig",
+    "response": "pub fn main() !void {\n    if (@import(\"builtin\").os.tag == .windows) { // optional\n        // on windows graphical apps have no console, so output goes to nowhere - attach it manually. related: https://github.com/ziglang/zig/issues/4196\n        try dvui.Backend.Common.windowsAttachConsole();\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/raylib-ontop.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to colorPicker from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/raylib-ontop.zig",
+    "response": "fn colorPicker(result: *dvui.Color) void {\n    _ = dvui.spacer(@src(), .{ .min_size_content = .all(10) }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/raylib-ontop.zig",
+      "type": "function",
+      "name": "colorPicker",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dvuiStuff from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/raylib-ontop.zig",
+    "response": "fn dvuiStuff() void {\n    var float = dvui.floatingWindow(@src(), .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/raylib-ontop.zig",
+      "type": "function",
+      "name": "dvuiStuff",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/raylib-standalone.zig",
+    "response": "pub fn main() !void {\n    if (@import(\"builtin\").os.tag == .windows) { // optional\n        // on windows graphical apps have no console, so output goes to nowhere - attach it manually. related: https://github.com/ziglang/zig/issues/4196\n        dvui.Backend.Common.windowsAttachConsole() catch {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/raylib-standalone.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dvui_frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/raylib-standalone.zig",
+    "response": "fn dvui_frame() bool {\n    {\n        var hbox = dvui.box(@src(), .{ .dir = .horizontal }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/raylib-standalone.zig",
+      "type": "function",
+      "name": "dvui_frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/sdl-ontop.zig",
+    "response": "pub fn main() !void {\n    if (@import(\"builtin\").os.tag == .windows) { // optional\n        // on windows graphical apps have no console, so output goes to nowhere - attach it manually. related: https://github.com/ziglang/zig/issues/4196\n        dvui.Backend.Common.windowsAttachConsole() catch {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/sdl-ontop.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dvui_floating_stuff from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/sdl-ontop.zig",
+    "response": "fn dvui_floating_stuff() void {\n    var float = dvui.floatingWindow(@src(), .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/sdl-ontop.zig",
+      "type": "function",
+      "name": "dvui_floating_stuff",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to app_init from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/sdl-ontop.zig",
+    "response": "fn app_init() !void {\n    if (c.SDL_Init(c.SDL_INIT_VIDEO) != if (SDLBackend.sdl3) true else 0) {\n        std.debug.print(\"Couldn't initialize SDL: {s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/sdl-ontop.zig",
+      "type": "function",
+      "name": "app_init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to rect from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/sdl-ontop.zig",
+    "response": "const rect: if (SDLBackend.sdl3) c.SDL_FRect else c.SDL_Rect = .{ .x = 10, .y = 10, .w = 20, .h = 20 };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/sdl-ontop.zig",
+      "type": "const",
+      "name": "rect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/sdl-standalone.zig",
+    "response": "pub fn main() !void {\n    if (@import(\"builtin\").os.tag == .windows) { // optional\n        // on windows graphical apps have no console, so output goes to nowhere - attach it manually. related: https://github.com/ziglang/zig/issues/4196\n        dvui.Backend.Common.windowsAttachConsole() catch {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/sdl-standalone.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gui_frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: examples/sdl-standalone.zig",
+    "response": "fn gui_frame() bool {\n    const backend = g_backend orelse return false;\n\n    {\n        var hbox = dvui.box(@src(), .{ .dir = .horizontal }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "examples/sdl-standalone.zig",
+      "type": "function",
+      "name": "gui_frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AdapterType from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "fn AdapterType() type {\n    if (dvui.accesskit_enabled and builtin.os.tag == .windows) {\n        if (dvui.backend.kind == .dx11) {\n            return *c.accesskit_windows_adapter;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "AdapterType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initialize from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn initialize(self: *AccessKit) void {\n    const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));\n\n    if (builtin.os.tag == .windows) {\n        if (dvui.backend.kind == .dx11) {\n            self.adapter = c.accesskit_windows_adapter_new(\n                windowsHWND(window),\n                // If the window currently has focus.\n                // TODO: We currently assume we always have focus as this initialization is performed\n                //       at program startup so we are most likely focused. This should be verified in some way\n                true,\n                doAction,\n                self,\n            ) orelse @panic(\"null\");\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "initialize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowsHWND from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "fn windowsHWND(window: *dvui.Window) c.HWND {\n    switch (dvui.backend.kind) {\n        .sdl3 => {\n            const SDLBackend = dvui.backend;\n            const properties: SDLBackend.c.SDL_PropertiesID = SDLBackend.c.SDL_GetWindowProperties(window.backend.impl.window);\n            const hwnd = SDLBackend.c.SDL_GetPointerProperty(\n                properties,\n                SDLBackend.c.SDL_PROP_WINDOW_WIN32_HWND_POINTER,\n                null,\n            ) orelse @panic(\"No HWND\");\n            return @intFromPtr(hwnd);\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "windowsHWND",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to macOSWinPtr from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "fn macOSWinPtr(window: *dvui.Window) *anyopaque {\n    const SDLBackend = dvui.backend;\n\n    switch (dvui.backend.kind) {\n        .sdl2 => {\n            var wmInfo: SDLBackend.c.SDL_SysWMinfo = undefined;\n            SDLBackend.c.SDL_GetVersion(&wmInfo.version);\n            _ = SDLBackend.c.SDL_GetWindowWMInfo(window.backend.impl.window, &wmInfo);\n            return wmInfo.info.cocoa.window orelse @panic(\"No HWND\");\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "macOSWinPtr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nodeCreateFake from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "fn nodeCreateFake(_: *AccessKit, _: *dvui.WidgetData, _: Role) ?*Node {\n    return null;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "nodeCreateFake",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nodeCreateReal from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn nodeCreateReal(self: *AccessKit, wd: *dvui.WidgetData, role: Role) ?*Node {\n    if (!wd.visible() and wd.id != dvui.focusedWidgetId()) return null;\n    if (wd.options.role == .none) return null;\n\n    {\n        self.mutex.lock();\n        defer self.mutex.unlock();\n\n        switch (self.status) {\n            .off => return null,\n            .starting => {\n                if (wd.isRoot()) {\n                    self.status = .on;\n                }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "nodeCreateReal",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nodeParent from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn nodeParent(wd_in: *dvui.WidgetData) *Node {\n    var iter = wd_in.parent.data().iterator();\n    while (iter.next()) |wd| {\n        if (wd.accesskit_node()) |ak_node| {\n            if (debug_node_tree)\n                std.debug.print(\"parent node is {x}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "nodeParent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to processActions from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "fn processActions(self: *AccessKit) void {\n    const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));\n    for (self.action_requests.items) |request| {\n        switch (request.action) {\n            Action.click => {\n                const ak_node = self.nodes.get(@enumFromInt(request.target)) orelse {\n                    log.debug(\"Action {d}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "processActions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to logEventAddError from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "fn logEventAddError(src: std.builtin.SourceLocation, err: anyerror) void {\n    dvui.logError(src, err, \"Accesskit: Event for action has not been added\", .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "logEventAddError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pushUpdates from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn pushUpdates(self: *AccessKit) void {\n    self.mutex.lock();\n    defer self.mutex.unlock();\n\n    if (self.status != .on) {\n        return;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "pushUpdates",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn deinit(self: *AccessKit) void {\n    if (!dvui.accesskit_enabled) return;\n\n    self.mutex.lock();\n    defer self.mutex.unlock();\n\n    if (self.adapter == null) return;\n\n    const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));\n\n    self.action_requests.clearAndFree(window.gpa);\n    self.nodes.clearAndFree(window.gpa);\n    if (builtin.os.tag == .windows)\n        if (dvui.backend.kind == .dx11) {\n            c.accesskit_windows_adapter_free(self.adapter.?);\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to frameTreeUpdate from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn frameTreeUpdate(instance: ?*anyopaque) callconv(.c) ?*TreeUpdate {\n    var self: *AccessKit = @ptrCast(@alignCast(instance));\n    const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));\n\n    const tree = treeNew(window.wd.id.asU64()) orelse @panic(\"null\");\n    if (self.focused_id == 0) self.focused_id = window.data().id.asU64();\n    const result = treeUpdateWithCapacityAndFocus(self.nodes.count(), self.focused_id);\n    treeUpdateSetTree(result, tree);\n    var itr = self.nodes.iterator();\n    while (itr.next()) |item| {\n        treeUpdatePushNode(result, item.key_ptr.asU64(), item.value_ptr.*);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "frameTreeUpdate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initialTreeUpdate from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn initialTreeUpdate(instance: ?*anyopaque) callconv(.c) ?*TreeUpdate {\n    var self: *AccessKit = @ptrCast(@alignCast(instance));\n    self.mutex.lock();\n    defer self.mutex.unlock();\n\n    const root = nodeNew(Role.window.asU8()) orelse @panic(\"null\");\n    const tree = treeNew(0) orelse @panic(\"null\");\n    const result = treeUpdateWithCapacityAndFocus(1, 0);\n    treeUpdateSetTree(result, tree);\n    treeUpdatePushNode(result, 0, root);\n    self.status = .starting;\n\n    // Refresh so that the full tree is sent next frame.\n    const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));\n    dvui.refresh(window, @src(), null);\n    return result;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "initialTreeUpdate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doAction from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "fn doAction(request: [*c]c.accesskit_action_request, userdata: ?*anyopaque) callconv(.c) void {\n    defer actionRequestFree(request);\n\n    var self: *AccessKit = @ptrCast(@alignCast(userdata));\n\n    self.mutex.lock();\n    defer self.mutex.unlock();\n\n    const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));\n    self.action_requests.append(window.gpa, request.?.*) catch |err| {\n        dvui.logError(@src(), err, \"AccessKit: Unable to add action request\", .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "doAction",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to asU8 from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub fn asU8(self: RoleAccessKit) u8 {\n        return @intFromEnum(self);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "function",
+      "name": "asU8",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Action from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const Action = struct {\n    pub const click = c.ACCESSKIT_ACTION_CLICK;\n    pub const focus = c.ACCESSKIT_ACTION_FOCUS;\n    pub const blur = c.ACCESSKIT_ACTION_BLUR;\n    pub const collapse = c.ACCESSKIT_ACTION_COLLAPSE;\n    pub const expand = c.ACCESSKIT_ACTION_EXPAND;\n    pub const custom_action = c.ACCESSKIT_ACTION_CUSTOM_ACTION;\n    pub const decrement = c.ACCESSKIT_ACTION_DECREMENT;\n    pub const increment = c.ACCESSKIT_ACTION_INCREMENT;\n    pub const hide_tooltip = c.ACCESSKIT_ACTION_HIDE_TOOLTIP;\n    pub const show_tooltip = c.ACCESSKIT_ACTION_SHOW_TOOLTIP;\n    pub const replace_selected_text = c.ACCESSKIT_ACTION_REPLACE_SELECTED_TEXT;\n    pub const scroll_down = c.ACCESSKIT_ACTION_SCROLL_DOWN;\n    pub const scroll_left = c.ACCESSKIT_ACTION_SCROLL_LEFT;\n    pub const scroll_right = c.ACCESSKIT_ACTION_SCROLL_RIGHT;\n    pub const scroll_up = c.ACCESSKIT_ACTION_SCROLL_UP;\n    pub const scroll_into_view = c.ACCESSKIT_ACTION_SCROLL_INTO_VIEW;\n    pub const scroll_to_point = c.ACCESSKIT_ACTION_SCROLL_TO_POINT;\n    pub const set_scroll_offset = c.ACCESSKIT_ACTION_SET_SCROLL_OFFSET;\n    pub const set_text_selection = c.ACCESSKIT_ACTION_SET_TEXT_SELECTION;\n    pub const set_sequential_focus_navigation_starting_point = c.ACCESSKIT_ACTION_SET_SEQUENTIAL_FOCUS_NAVIGATION_STARTING_POINT;\n    pub const set_value = c.ACCESSKIT_ACTION_SET_VALUE;\n    pub const show_context_menu = c.ACCESSKIT_ACTION_SHOW_CONTEXT_MENU;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "Action",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AriaCurrent from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const AriaCurrent = struct {\n    pub const ak_false = c.ACCESSKIT_ARIA_CURRENT_FALSE;\n    pub const ak_true = c.ACCESSKIT_ARIA_CURRENT_TRUE;\n    pub const page = c.ACCESSKIT_ARIA_CURRENT_PAGE;\n    pub const step = c.ACCESSKIT_ARIA_CURRENT_STEP;\n    pub const location = c.ACCESSKIT_ARIA_CURRENT_LOCATION;\n    pub const date = c.ACCESSKIT_ARIA_CURRENT_DATE;\n    pub const time = c.ACCESSKIT_ARIA_CURRENT_TIME;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "AriaCurrent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AutoComplete from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const AutoComplete = struct {\n    pub const ak_inline = c.ACCESSKIT_AUTO_COMPLETE_INLINE;\n    pub const list = c.ACCESSKIT_AUTO_COMPLETE_LIST;\n    pub const both = c.ACCESSKIT_AUTO_COMPLETE_BOTH;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "AutoComplete",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to HasPopup from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const HasPopup = struct {\n    pub const menu = c.ACCESSKIT_HAS_POPUP_MENU;\n    pub const listbox = c.ACCESSKIT_HAS_POPUP_LISTBOX;\n    pub const tree = c.ACCESSKIT_HAS_POPUP_TREE;\n    pub const grid = c.ACCESSKIT_HAS_POPUP_GRID;\n    pub const dialog = c.ACCESSKIT_HAS_POPUP_DIALOG;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "HasPopup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Invalid from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const Invalid = struct {\n    pub const ak_true = c.ACCESSKIT_INVALID_TRUE;\n    pub const grammar = c.ACCESSKIT_INVALID_GRAMMAR;\n    pub const spelling = c.ACCESSKIT_INVALID_SPELLING;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "Invalid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ListStyle from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const ListStyle = struct {\n    pub const circle = c.ACCESSKIT_LIST_STYLE_CIRCLE;\n    pub const disc = c.ACCESSKIT_LIST_STYLE_DISC;\n    pub const image = c.ACCESSKIT_LIST_STYLE_IMAGE;\n    pub const numeric = c.ACCESSKIT_LIST_STYLE_NUMERIC;\n    pub const square = c.ACCESSKIT_LIST_STYLE_SQUARE;\n    pub const other = c.ACCESSKIT_LIST_STYLE_OTHER;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "ListStyle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Live from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const Live = struct {\n    pub const off = c.ACCESSKIT_LIVE_OFF;\n    pub const polite = c.ACCESSKIT_LIVE_POLITE;\n    pub const assertive = c.ACCESSKIT_LIVE_ASSERTIVE;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "Live",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Orientation from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const Orientation = struct {\n    pub const horizontal = c.ACCESSKIT_ORIENTATION_HORIZONTAL;\n    pub const vertical = c.ACCESSKIT_ORIENTATION_VERTICAL;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "Orientation",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ScrollHint from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const ScrollHint = struct {\n    pub const top_left = c.ACCESSKIT_SCROLL_HINT_TOP_LEFT;\n    pub const bottom_right = c.ACCESSKIT_SCROLL_HINT_BOTTOM_RIGHT;\n    pub const top_edge = c.ACCESSKIT_SCROLL_HINT_TOP_EDGE;\n    pub const bottom_edge = c.ACCESSKIT_SCROLL_HINT_BOTTOM_EDGE;\n    pub const left_edge = c.ACCESSKIT_SCROLL_HINT_LEFT_EDGE;\n    pub const right_edge = c.ACCESSKIT_SCROLL_HINT_RIGHT_EDGE;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "ScrollHint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ScrollUnit from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const ScrollUnit = struct {\n    pub const item = c.ACCESSKIT_SCROLL_UNIT_ITEM;\n    pub const page = c.ACCESSKIT_SCROLL_UNIT_PAGE;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "ScrollUnit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SortDirection from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const SortDirection = struct {\n    pub const ascending = c.ACCESSKIT_SORT_DIRECTION_ASCENDING;\n    pub const descending = c.ACCESSKIT_SORT_DIRECTION_DESCENDING;\n    pub const other = c.ACCESSKIT_SORT_DIRECTION_OTHER;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "SortDirection",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TextAlign from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const TextAlign = struct {\n    pub const left = c.ACCESSKIT_TEXT_ALIGN_LEFT;\n    pub const right = c.ACCESSKIT_TEXT_ALIGN_RIGHT;\n    pub const center = c.ACCESSKIT_TEXT_ALIGN_CENTER;\n    pub const justify = c.ACCESSKIT_TEXT_ALIGN_JUSTIFY;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "TextAlign",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TextDecoration from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const TextDecoration = struct {\n    pub const solid = c.ACCESSKIT_TEXT_DECORATION_SOLID;\n    pub const dotted = c.ACCESSKIT_TEXT_DECORATION_DOTTED;\n    pub const dashed = c.ACCESSKIT_TEXT_DECORATION_DASHED;\n    pub const double = c.ACCESSKIT_TEXT_DECORATION_DOUBLE;\n    pub const wavy = c.ACCESSKIT_TEXT_DECORATION_WAVY;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "TextDecoration",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TextDirection from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const TextDirection = struct {\n    pub const left_to_right = c.ACCESSKIT_TEXT_DIRECTION_LEFT_TO_RIGHT;\n    pub const right_to_left = c.ACCESSKIT_TEXT_DIRECTION_RIGHT_TO_LEFT;\n    pub const top_to_bottom = c.ACCESSKIT_TEXT_DIRECTION_TOP_TO_BOTTOM;\n    pub const bottom_to_top = c.ACCESSKIT_TEXT_DIRECTION_BOTTOM_TO_TOP;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "TextDirection",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Toggled from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const Toggled = struct {\n    pub const ak_false = c.ACCESSKIT_TOGGLED_FALSE;\n    pub const ak_true = c.ACCESSKIT_TOGGLED_TRUE;\n    pub const mixed = c.ACCESSKIT_TOGGLED_MIXED;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "Toggled",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to VerticalOffset from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const VerticalOffset = struct {\n    pub const subscript = c.ACCESSKIT_VERTICAL_OFFSET_SUBSCRIPT;\n    pub const superscript = c.ACCESSKIT_VERTICAL_OFFSET_SUPERSCRIPT;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "VerticalOffset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ActionData from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "pub const ActionData = struct {\n    pub const custom_action = c.ACCESSKIT_ACTION_DATA_CUSTOM_ACTION;\n    pub const value = c.ACCESSKIT_ACTION_DATA_VALUE;\n    pub const numeric_value = c.ACCESSKIT_ACTION_DATA_NUMERIC_VALUE;\n    pub const scroll_unit = c.ACCESSKIT_ACTION_DATA_SCROLL_UNIT;\n    pub const scroll_hint = c.ACCESSKIT_ACTION_DATA_SCROLL_HINT;\n    pub const scroll_to_point = c.ACCESSKIT_ACTION_DATA_SCROLL_TO_POINT;\n    pub const set_scroll_offset = c.ACCESSKIT_ACTION_DATA_SET_SCROLL_OFFSET;\n    pub const set_text_selection = c.ACCESSKIT_ACTION_DATA_SET_TEXT_SELECTION;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "struct",
+      "name": "ActionData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to properties from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const properties: SDLBackend.c.SDL_PropertiesID = SDLBackend.c.SDL_GetWindowProperties(window.backend.impl.window);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "properties",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to properties from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const properties: SDLBackend.c.SDL_PropertiesID = SDLBackend.c.SDL_GetWindowProperties(window.backend.impl.window);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "properties",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to parent_node from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const parent_node: *Node = nodeParent(wd);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "parent_node",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to click_point from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const click_point: dvui.Point.Physical = .{ .x = @floatCast((bounds.x0 + bounds.x1) / 2), .y = @floatCast((bounds.y0 + bounds.y1) / 2) };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "click_point",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mid_point from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const mid_point: dvui.Point.Physical = .{ .x = @floatCast((bounds.x0 + bounds.x1) / 2), .y = @floatCast((bounds.y0 + bounds.y1) / 2) };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "mid_point",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to text_value from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const text_value: []const u8 = value: {\n                        switch (request.data.value.tag) {\n                            ActionData.value => break :value std.mem.span(request.data.value.unnamed_0.unnamed_1.value),\n                            ActionData.numeric_value => {\n                                var writer: std.io.Writer.Allocating = .init(window.arena());",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "text_value",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/AccessKit.zig",
+    "response": "const window: *dvui.Window = @alignCast(@fieldParentPtr(\"accesskit\", self));",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/AccessKit.zig",
+      "type": "const",
+      "name": "window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/App.zig",
+    "response": "pub fn get(self: AppConfig) StartOptions {\n        switch (self) {\n            .options => |opts| return opts,\n            .startFn => |startFn| return startFn(),\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/App.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/App.zig",
+    "response": "pub fn get() ?App {\n    const root = @import(\"root\");\n    // return error instead of failing compile to allow for reference in tests without dvui_app defined\n    if (!@hasDecl(root, \"dvui_app\")) return null;\n\n    if (!@hasDecl(root, \"main\") or @field(root, \"main\") != main) {\n        @compileError(\n            \\\\Using the App interface requires using the App main function\n            \\\\\n            \\\\Add the following line to your root file:\n            \\\\pub const main = dvui.App.main;\n        );\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/App.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to StartOptions from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/App.zig",
+    "response": "pub const StartOptions = struct {\n    /// The initial size of the application window\n    size: dvui.Size,\n    /// Set the minimum size of the window\n    min_size: ?dvui.Size = null,\n    /// Set the maximum size of the window\n    max_size: ?dvui.Size = null,\n    vsync: bool = true,\n    /// The application title to display\n    title: [:0]const u8,\n    /// content of a PNG image (or any other format stb_image can load)\n    /// tip: use @embedFile\n    icon: ?[]const u8 = null,\n    /// use when running tests\n    hidden: bool = false,\n    /// Will be passed to `dvui.Window.init`\n    ///\n    /// Options like `keybinds` should be used with care as it will\n    /// be used for all backends and platforms, meaning the platform\n    /// defaults will be overrulled.\n    window_init_options: dvui.Window.InitOptions = .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/App.zig",
+      "type": "struct",
+      "name": "StartOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dvui_app from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/App.zig",
+    "response": "pub const dvui_app: dvui.App = .{ .initFn = AppInit, ...};",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/App.zig",
+      "type": "const",
+      "name": "dvui_app",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to std_options from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/App.zig",
+    "response": "pub const std_options: std.Options = .{\n//!     .logFn = dvui.App.logFn,\n//! };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/App.zig",
+      "type": "const",
+      "name": "std_options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to std_options from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/App.zig",
+    "response": "pub const std_options: std.Options = .{\n///     .logFn = dvui.App.logFn,\n/// };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/App.zig",
+      "type": "const",
+      "name": "std_options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to logFn from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/App.zig",
+    "response": "pub const logFn: @FieldType(std.Options, \"logFn\") = if (@hasDecl(dvui.backend, \"logFn\")) dvui.backend.logFn else std.log.defaultLog;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/App.zig",
+      "type": "const",
+      "name": "logFn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn init(impl: *Implementation) Backend {\n    return .{ .impl = impl }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nanoTime from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn nanoTime(self: Backend) i128 {\n    return self.impl.nanoTime();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "nanoTime",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sleep from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn sleep(self: Backend, ns: u64) void {\n    return self.impl.sleep(ns);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "sleep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to begin from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn begin(self: Backend, arena: std.mem.Allocator) GenericError!void {\n    return self.impl.begin(arena);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "begin",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to end from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn end(self: Backend) GenericError!void {\n    return self.impl.end();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "end",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pixelSize from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn pixelSize(self: Backend) dvui.Size.Physical {\n    return self.impl.pixelSize();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "pixelSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowSize from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn windowSize(self: Backend) dvui.Size.Natural {\n    return self.impl.windowSize();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "windowSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to contentScale from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn contentScale(self: Backend) f32 {\n    return self.impl.contentScale();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "contentScale",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawClippedTriangles from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn drawClippedTriangles(self: Backend, texture: ?dvui.Texture, vtx: []const dvui.Vertex, idx: []const u16, clipr: ?dvui.Rect.Physical) GenericError!void {\n    return self.impl.drawClippedTriangles(texture, vtx, idx, clipr);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "drawClippedTriangles",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to textureCreate from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn textureCreate(self: Backend, pixels: [*]const u8, width: u32, height: u32, interpolation: dvui.enums.TextureInterpolation) TextureError!dvui.Texture {\n    return self.impl.textureCreate(pixels, width, height, interpolation);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "textureCreate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to textureUpdate from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn textureUpdate(self: Backend, texture: dvui.Texture, pixels: [*]const u8) TextureError!void {\n    // we can handle backends that dont support textureUpdate by using destroy and create again!\n    if (comptime !@hasDecl(Implementation, \"textureUpdate\")) return TextureError.NotImplemented else {\n        return self.impl.textureUpdate(texture, pixels);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "textureUpdate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to textureDestroy from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn textureDestroy(self: Backend, texture: dvui.Texture) void {\n    // std.debug.print(\"destroy ptr {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "textureDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to textureCreateTarget from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn textureCreateTarget(self: Backend, width: u32, height: u32, interpolation: dvui.enums.TextureInterpolation) TextureError!dvui.TextureTarget {\n    return self.impl.textureCreateTarget(width, height, interpolation);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "textureCreateTarget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to textureReadTarget from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn textureReadTarget(self: Backend, texture: dvui.TextureTarget, pixels_out: [*]u8) TextureError!void {\n    return self.impl.textureReadTarget(texture, pixels_out);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "textureReadTarget",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to textureFromTarget from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn textureFromTarget(self: Backend, texture: dvui.TextureTarget) TextureError!dvui.Texture {\n    return self.impl.textureFromTarget(texture);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "textureFromTarget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderTarget from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn renderTarget(self: Backend, texture: ?dvui.TextureTarget) GenericError!void {\n    return self.impl.renderTarget(texture);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "renderTarget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clipboardText from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn clipboardText(self: Backend) GenericError![]const u8 {\n    return try self.impl.clipboardText();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "clipboardText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clipboardTextSet from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn clipboardTextSet(self: Backend, text: []const u8) GenericError!void {\n    return self.impl.clipboardTextSet(text);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "clipboardTextSet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to openURL from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn openURL(self: Backend, url: []const u8, new_window: bool) GenericError!void {\n    return self.impl.openURL(url, new_window);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "openURL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to preferredColorScheme from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn preferredColorScheme(self: Backend) ?dvui.enums.ColorScheme {\n    return self.impl.preferredColorScheme();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "preferredColorScheme",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to refresh from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn refresh(self: Backend) void {\n    return self.impl.refresh();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "refresh",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to accessKitShouldInitialize from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Backend.zig",
+    "response": "pub fn accessKitShouldInitialize(self) bool` to be implemented\npub fn accessKitInitInBegin(self: Backend, accessKit: *dvui.AccessKit) GenericError!void {\n    if (!dvui.accesskit_enabled or !@hasDecl(Implementation, \"accessKitShouldInitialize\")) return;\n    if (self.impl.accessKitShouldInitialize()) {\n        accessKit.initialize();\n        try self.impl.accessKitInitInBegin();\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Backend.zig",
+      "type": "function",
+      "name": "accessKitShouldInitialize",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to brightness from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn brightness(self: @This()) f32 {\n    const r: f32 = @as(f32, @floatFromInt(self.r)) / 255.0;\n    const g: f32 = @as(f32, @floatFromInt(self.g)) / 255.0;\n    const b: f32 = @as(f32, @floatFromInt(self.b)) / 255.0;\n\n    return 0.2126 * r + 0.7152 * g + 0.0722 * b;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "brightness",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toRGBA from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn toRGBA(self: @This()) [4]u8 {\n    return .{ self.r, self.g, self.b, self.a }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "toRGBA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lighten from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn lighten(self: Color, deltal: f32) Color {\n    return HSLuv.fromColor(self).lighten(deltal).color();\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "lighten",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromColor from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn fromColor(color: Color) HSV {\n        const r: f32 = @as(f32, @floatFromInt(color.r)) / 255.0;\n        const g: f32 = @as(f32, @floatFromInt(color.g)) / 255.0;\n        const b: f32 = @as(f32, @floatFromInt(color.b)) / 255.0;\n        const a: f32 = @as(f32, @floatFromInt(color.a)) / 255.0;\n\n        const max = @max(r, g, b);\n        const min = @min(r, g, b);\n        const delta = max - min;\n\n        const h = 60 * (if (delta == 0)\n            0\n        else if (max == r)\n            @mod((g - b) / delta, 6)\n        else if (max == g)\n            (b - r) / delta + 2\n        else if (max == b)\n            (r - g) / delta + 4\n        else\n            unreachable);\n\n        const s = if (max == 0) 0 else delta / max;\n\n        return .{ .h = h, .s = s, .v = max, .a = a }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "fromColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toColor from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn toColor(self: HSV) Color {\n        const c = self.v * self.s;\n        const x = c * (1 - @abs(@mod(self.h / 60, 2) - 1));\n        const m = self.v - c;\n\n        const step: i8 = @intFromFloat(self.h / 60);\n\n        const r, const g, const b = switch (step) {\n            0 => .{ c, x, 0 }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "toColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to color from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn color(self: HSLuv) Color {\n        return Color.fromHSLuv(self.h, self.s, self.l, self.a);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "color",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromColor from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn fromColor(c: Color) HSLuv {\n        var ret: HSLuv = undefined;\n        hsluv.rgb2hsluv(\n            @as(f32, @floatFromInt(c.r)) / 255.0,\n            @as(f32, @floatFromInt(c.g)) / 255.0,\n            @as(f32, @floatFromInt(c.b)) / 255.0,\n            &ret.h,\n            &ret.s,\n            &ret.l,\n        );\n        ret.a = @as(f32, @floatFromInt(c.a)) * 100.0 / 255.0;\n        return ret;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "fromColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lighten from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn lighten(self: HSLuv, deltal: f32) HSLuv {\n        return .{\n            .h = self.h,\n            .s = self.s,\n            .l = std.math.clamp(self.l + deltal, 0, 100),\n            .a = self.a,\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "lighten",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromHSLuv from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn fromHSLuv(h: f32, s: f32, l: f32, a: f32) Color {\n    var r: f32 = undefined;\n    var g: f32 = undefined;\n    var b: f32 = undefined;\n    hsluv.hsluv2rgb(h, s, l, &r, &g, &b);\n    return Color{\n        .r = @intFromFloat(r * 255.99),\n        .g = @intFromFloat(g * 255.99),\n        .b = @intFromFloat(b * 255.99),\n        .a = @intFromFloat(a / 100.0 * 255.99),\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "fromHSLuv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to opacity from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn opacity(self: Color, mult: f32) Color {\n    if (mult > 1) return self;\n    return Color{\n        .r = self.r,\n        .g = self.g,\n        .b = self.b,\n        .a = @intFromFloat(std.math.clamp(@as(f32, @floatFromInt(self.a)) * mult, 0, 255)),\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "opacity",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn format(self: *const Color, writer: *std.Io.Writer) !void {\n    try writer.print(\"Color{{ {x}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lerp from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn lerp(self: Color, other: Color, t: f32) Color {\n    if (t <= 0) return self;\n    if (t >= 1) return other;\n    const r: f32 = std.math.lerp(@as(f32, @floatFromInt(self.r)) / 255, @as(f32, @floatFromInt(other.r)) / 255, t);\n    const g: f32 = std.math.lerp(@as(f32, @floatFromInt(self.g)) / 255, @as(f32, @floatFromInt(other.g)) / 255, t);\n    const b: f32 = std.math.lerp(@as(f32, @floatFromInt(self.b)) / 255, @as(f32, @floatFromInt(other.b)) / 255, t);\n    const a: f32 = std.math.lerp(@as(f32, @floatFromInt(self.a)) / 255, @as(f32, @floatFromInt(other.a)) / 255, t);\n    return Color{\n        .r = @intFromFloat(r * 255.99),\n        .g = @intFromFloat(g * 255.99),\n        .b = @intFromFloat(b * 255.99),\n        .a = @intFromFloat(a * 255.99),\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "lerp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to average from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn average(self: Color, other: Color) Color {\n    return Color{\n        .r = @intCast((@as(u9, @intCast(self.r)) + other.r) / 2),\n        .g = @intCast((@as(u9, @intCast(self.g)) + other.g) / 2),\n        .b = @intCast((@as(u9, @intCast(self.b)) + other.b) / 2),\n        .a = @intCast((@as(u9, @intCast(self.a)) + other.a) / 2),\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "average",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toColor from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn toColor(self: PMA) Color {\n        if (self.a == 0xFF or self.a == 0) return self.castToColor();\n        return .{\n            .r = @intCast(@divTrunc(@as(u16, self.r) * 255, self.a)),\n            .g = @intCast(@divTrunc(@as(u16, self.g) * 255, self.a)),\n            .b = @intCast(@divTrunc(@as(u16, self.b) * 255, self.a)),\n            .a = self.a,\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "toColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromColor from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn fromColor(color: Color) PMA {\n        if (color.a == 0xFF) return .cast(color);\n        if (color.a == 0) return .transparent;\n        return .{\n            .r = @intCast(@divTrunc(@as(u16, color.r) * color.a, 255)),\n            .g = @intCast(@divTrunc(@as(u16, color.g) * color.a, 255)),\n            .b = @intCast(@divTrunc(@as(u16, color.b) * color.a, 255)),\n            .a = color.a,\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "fromColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to multiply from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn multiply(self: PMA, other: PMA) PMA {\n        return .{\n            .r = @intCast(@divTrunc(@as(u16, self.r) * other.r, 255)),\n            .g = @intCast(@divTrunc(@as(u16, self.g) * other.g, 255)),\n            .b = @intCast(@divTrunc(@as(u16, self.b) * other.b, 255)),\n            .a = @intCast(@divTrunc(@as(u16, self.a) * other.a, 255)),\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "multiply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cast from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn cast(color: Color) PMA {\n        return .{ .r = color.r, .g = color.g, .b = color.b, .a = color.a }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "cast",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to castToColor from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn castToColor(self: PMA) Color {\n        return .{ .r = self.r, .g = self.g, .b = self.b, .a = self.a }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "castToColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sliceFromRGBA from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn sliceFromRGBA(pixels: []u8) []Color.PMA {\n        for (0..pixels.len / 4) |ii| {\n            const i = ii * 4;\n            const a = pixels[i + 3];\n            pixels[i + 0] = @intCast(@divTrunc(@as(u16, pixels[i + 0]) * a, 255));\n            pixels[i + 1] = @intCast(@divTrunc(@as(u16, pixels[i + 1]) * a, 255));\n            pixels[i + 2] = @intCast(@divTrunc(@as(u16, pixels[i + 2]) * a, 255));\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "sliceFromRGBA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sliceToRGBA from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn sliceToRGBA(pma_pixels: []Color.PMA) []u8 {\n        var pixels: []u8 = @ptrCast(pma_pixels);\n        for (0..pixels.len / 4) |ii| {\n            const i = ii * 4;\n            const a = pixels[i + 3];\n            if (a == 0) continue;\n            pixels[i + 0] = @intCast(@divTrunc(@as(u16, pixels[i + 0]) * 255, a));\n            pixels[i + 1] = @intCast(@divTrunc(@as(u16, pixels[i + 1]) * 255, a));\n            pixels[i + 2] = @intCast(@divTrunc(@as(u16, pixels[i + 2]) * 255, a));\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "sliceToRGBA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromImageFile from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn fromImageFile(dbg_name: []const u8, alloc: std.mem.Allocator, image_bytes: []const u8) !PMAImage {\n        var w: c_int = undefined;\n        var h: c_int = undefined;\n        var channels_in_file: c_int = undefined;\n        const data = dvui.c.stbi_load_from_memory(image_bytes.ptr, @as(c_int, @intCast(image_bytes.len)), &w, &h, &channels_in_file, 4);\n        if (data == null) {\n            dvui.log.warn(\"imageTexture stbi_load error on image \\\"{s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "fromImageFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromTvgFile from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn fromTvgFile(dbg_name: []const u8, alloc: std.mem.Allocator, render_alloc: std.mem.Allocator, tvg_bytes: []const u8, height: u32, icon_opts: dvui.IconRenderOptions) !PMAImage {\n        const ImageAdapter = struct {\n            pixels: []u8,\n            width: u32,\n            height: u32,\n            pub fn setPixel(self: *@This(), x: usize, y: usize, col: [4]u8) void {\n                const idx = (y * self.height + x) * 4;\n                for (0..4) |i| self.pixels[idx + i] = col[i];\n            }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "fromTvgFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPixel from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn getPixel(self: *@This(), x: usize, y: usize) [4]u8 {\n                const idx = y * self.height + x;\n                const slice = self.pixels[idx * 4 .. (idx + 1) * 4];\n                var col: [4]u8 = undefined;\n                for (&col, slice) |*a, s| a.* = s;\n            }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "getPixel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to conv from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "fn conv(dcol: dvui.Color) tvg.Color {\n                return tvg.Color{\n                    .r = @as(f32, @floatFromInt(dcol.r)) / 255.0,\n                    .g = @as(f32, @floatFromInt(dcol.g)) / 255.0,\n                    .b = @as(f32, @floatFromInt(dcol.b)) / 255.0,\n                    .a = @as(f32, @floatFromInt(dcol.a)) / 255.0,\n                }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "conv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toHexString from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn toHexString(self: Color) HexString {\n    var result: HexString = undefined;\n    _ = std.fmt.bufPrint(&result, \"#{x:0>2}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "toHexString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromHex from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn fromHex(hex_color: []const u8) Color {\n    return tryFromHex(hex_color) catch |err| if (@inComptime()) {\n        @compileError(std.fmt.comptimePrint(\"Failed to parse hex color string: {any}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "fromHex",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tryFromHex from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub fn tryFromHex(hex_color: []const u8) FromHexError!Color {\n    if (hex_color.len == 0) return error.InvalidHexStringLength;\n    const hex = if (hex_color[0] == '#') hex_color[1..] else hex_color;\n\n    const is_nibble_size, const has_alpha = switch (hex.len) {\n        3 => .{ true, false }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "function",
+      "name": "tryFromHex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to HSV from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const HSV = struct {\n    /// Hue 0-360 (degrees)\n    h: f32 = 0.0,\n\n    /// Saturation 0-1 (%)\n    s: f32 = 1.0,\n\n    /// Value 0-1 (%)\n    v: f32 = 1.0,\n\n    /// Alpha 0-1 (%)\n    a: f32 = 1.0,\n\n    pub fn fromColor(color: Color) HSV {\n        const r: f32 = @as(f32, @floatFromInt(color.r)) / 255.0;\n        const g: f32 = @as(f32, @floatFromInt(color.g)) / 255.0;\n        const b: f32 = @as(f32, @floatFromInt(color.b)) / 255.0;\n        const a: f32 = @as(f32, @floatFromInt(color.a)) / 255.0;\n\n        const max = @max(r, g, b);\n        const min = @min(r, g, b);\n        const delta = max - min;\n\n        const h = 60 * (if (delta == 0)\n            0\n        else if (max == r)\n            @mod((g - b) / delta, 6)\n        else if (max == g)\n            (b - r) / delta + 2\n        else if (max == b)\n            (r - g) / delta + 4\n        else\n            unreachable);\n\n        const s = if (max == 0) 0 else delta / max;\n\n        return .{ .h = h, .s = s, .v = max, .a = a }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "struct",
+      "name": "HSV",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to HSLuv from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const HSLuv = struct {\n    /// Hue 0-360\n    h: f32 = 0.0,\n\n    /// Saturation 0-100\n    s: f32 = 100.0,\n\n    /// Lightness 0-100\n    l: f32 = 100.0,\n\n    /// Alpha 0-100\n    a: f32 = 100.0,\n\n    pub fn color(self: HSLuv) Color {\n        return Color.fromHSLuv(self.h, self.s, self.l, self.a);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "struct",
+      "name": "HSLuv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to PMAImage from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const PMAImage = struct {\n    pma: []PMA,\n    width: u32,\n    height: u32,\n\n    /// the returned []PMA inside PMAImage is allocated with alloc\n    pub fn fromImageFile(dbg_name: []const u8, alloc: std.mem.Allocator, image_bytes: []const u8) !PMAImage {\n        var w: c_int = undefined;\n        var h: c_int = undefined;\n        var channels_in_file: c_int = undefined;\n        const data = dvui.c.stbi_load_from_memory(image_bytes.ptr, @as(c_int, @intCast(image_bytes.len)), &w, &h, &channels_in_file, 4);\n        if (data == null) {\n            dvui.log.warn(\"imageTexture stbi_load error on image \\\"{s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "struct",
+      "name": "PMAImage",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ImageAdapter from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const ImageAdapter = struct {\n            pixels: []u8,\n            width: u32,\n            height: u32,\n            pub fn setPixel(self: *@This(), x: usize, y: usize, col: [4]u8) void {\n                const idx = (y * self.height + x) * 4;\n                for (0..4) |i| self.pixels[idx + i] = col[i];\n            }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "struct",
+      "name": "ImageAdapter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to r from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const r: f32 = @as(f32, @floatFromInt(self.r)) / 255.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "r",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to g from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const g: f32 = @as(f32, @floatFromInt(self.g)) / 255.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "g",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to b from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const b: f32 = @as(f32, @floatFromInt(self.b)) / 255.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "b",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to r from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const r: f32 = @as(f32, @floatFromInt(color.r)) / 255.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "r",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to g from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const g: f32 = @as(f32, @floatFromInt(color.g)) / 255.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "g",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to b from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const b: f32 = @as(f32, @floatFromInt(color.b)) / 255.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "b",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to a from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const a: f32 = @as(f32, @floatFromInt(color.a)) / 255.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "a",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const step: i8 = @intFromFloat(self.h / 60);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to r from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const r: f32 = std.math.lerp(@as(f32, @floatFromInt(self.r)) / 255, @as(f32, @floatFromInt(other.r)) / 255, t);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "r",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to g from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const g: f32 = std.math.lerp(@as(f32, @floatFromInt(self.g)) / 255, @as(f32, @floatFromInt(other.g)) / 255, t);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "g",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to b from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const b: f32 = std.math.lerp(@as(f32, @floatFromInt(self.b)) / 255, @as(f32, @floatFromInt(other.b)) / 255, t);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "b",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to a from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const a: f32 = std.math.lerp(@as(f32, @floatFromInt(self.a)) / 255, @as(f32, @floatFromInt(other.a)) / 255, t);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "a",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to white from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const white: PMA = .fromColor(.white);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "white",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to silver from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const silver: PMA = .fromColor(.silver);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "silver",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to gray from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const gray: PMA = .fromColor(.gray);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "gray",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to black from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const black: PMA = .fromColor(.black);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "black",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to red from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const red: PMA = .fromColor(.red);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "red",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to maroon from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const maroon: PMA = .fromColor(.maroon);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "maroon",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to yellow from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const yellow: PMA = .fromColor(.yellow);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "yellow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to olive from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const olive: PMA = .fromColor(.olive);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "olive",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lime from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const lime: PMA = .fromColor(.lime);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "lime",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to green from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const green: PMA = .fromColor(.green);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "green",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to aqua from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const aqua: PMA = .fromColor(.aqua);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "aqua",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to teal from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const teal: PMA = .fromColor(.teal);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "teal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to blue from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const blue: PMA = .fromColor(.blue);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "blue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to navy from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const navy: PMA = .fromColor(.navy);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "navy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fuchsia from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const fuchsia: PMA = .fromColor(.fuchsia);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "fuchsia",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to purple from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "pub const purple: PMA = .fromColor(.purple);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "purple",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to size from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const size: usize = @intCast(w * h * 4);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mult from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const mult: u32 = if (is_nibble_size) 0x10 else 1;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "mult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mask from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const mask: u32 = if (is_nibble_size) 0xf else 0xff;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "mask",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const step: u5 = if (is_nibble_size) 4 else 8;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to offset from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Color.zig",
+    "response": "const offset: u5 = @intFromBool(has_alpha);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Color.zig",
+      "type": "const",
+      "name": "offset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eq from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "fn eq(self: DebugInfo, other: DebugInfo) bool {\n            return std.mem.eql(u8, self.name, other.name) and self.kind == other.kind;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "eq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn format(self: DebugInfo, writer: *std.Io.Writer) !void {\n            try writer.print(\"{[name]s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to free from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn free(self: *const SavedData, gpa: std.mem.Allocator) void {\n        if (self.data.len != 0) {\n            gpa.rawFree(\n                self.data,\n                std.mem.Alignment.fromByteUnits(self.alignment),\n                @returnAddress(),\n            );\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "free",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Slice from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "fn Slice(S: type) type {\n    const dt = @typeInfo(S);\n    return if (dt == .pointer and dt.pointer.size == .slice)\n        if (dt.pointer.sentinel()) |s|\n            [:s]dt.pointer.child\n        else\n            []dt.pointer.child\n    else if (dt == .pointer and dt.pointer.size == .one and @typeInfo(dt.pointer.child) == .array)\n        if (@typeInfo(dt.pointer.child).array.sentinel()) |s|\n            [:s]@typeInfo(dt.pointer.child).array.child\n        else\n            []@typeInfo(dt.pointer.child).array.child\n    else\n        @compileError(\"Data.Slice needs a slice or pointer to array, given \" ++ @typeName(S));\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "Slice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to set from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn set(self: *Data, gpa: std.mem.Allocator, key: Key, data: anytype) std.mem.Allocator.Error!void {\n    const value, _ = try self.getOrPutT(gpa, key, @TypeOf(data));\n    value.* = data;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "set",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setSlice from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn setSlice(self: *Data, gpa: std.mem.Allocator, key: Key, data: anytype) std.mem.Allocator.Error!void {\n    return setSliceCopies(self, gpa, key, data, 1);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "setSlice",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setSliceCopies from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn setSliceCopies(self: *Data, gpa: std.mem.Allocator, key: Key, data: anytype, num_copies: usize) std.mem.Allocator.Error!void {\n    const S = @TypeOf(data);\n    const sentinel = @typeInfo(Slice(S)).pointer.sentinel();\n    const slice, _ = try self.getOrPutSliceT(gpa, key, Slice(S), data.len * num_copies + @intFromBool(sentinel != null), true);\n    for (0..num_copies) |i| {\n        @memcpy(slice[i * data.len ..][0..data.len], data);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "setSliceCopies",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPtr from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn getPtr(self: *Data, key: Key, comptime T: type) ?*T {\n    return @ptrCast(@alignCast(self.get(key, if (SavedData.DebugInfo == void) {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "getPtr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPtrDefault from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn getPtrDefault(self: *Data, gpa: std.mem.Allocator, key: Key, comptime T: type, default: T) std.mem.Allocator.Error!*T {\n    const value, const existing = try self.getOrPutT(gpa, key, T);\n    if (!existing) value.* = default;\n    return value;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "getPtrDefault",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSlice from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn getSlice(self: *Data, key: Key, comptime S: type) ?Slice(S) {\n    return @ptrCast(@alignCast(self.get(key, if (SavedData.DebugInfo == void) {}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "getSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSliceDefault from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn getSliceDefault(self: *Data, gpa: std.mem.Allocator, key: Key, comptime S: type, default: []const @typeInfo(S).pointer.child) std.mem.Allocator.Error!Slice(S) {\n    const sentinel = @typeInfo(Slice(S)).pointer.sentinel();\n    const slice, const existing = try self.getOrPutSliceT(gpa, key, Slice(S), default.len, false);\n    if (!existing) {\n        @memcpy(slice, default);\n        if (sentinel) |s| slice[default.len] = s;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "getSliceDefault",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOrPutT from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "fn getOrPutT(self: *Data, gpa: std.mem.Allocator, key: Key, comptime T: type) std.mem.Allocator.Error!struct { *T, bool }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "getOrPutT",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOrPutSliceT from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "fn getOrPutSliceT(self: *Data, gpa: std.mem.Allocator, key: Key, comptime S: type, len: usize, replace_existing: bool) std.mem.Allocator.Error!struct { S, bool }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "getOrPutSliceT",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOrPut from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn getOrPut(self: *Data, gpa: std.mem.Allocator, key: Key, len: usize, alignment: u8, replace_existing: bool, debug: SavedData.DebugInfo) std.mem.Allocator.Error!struct { []u8, bool }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "getOrPut",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn get(self: *Data, key: Key, debug: SavedData.DebugInfo) ?[]u8 {\n    self.mutex.lock();\n    defer self.mutex.unlock();\n\n    if (self.storage.getPtr(key)) |sd| {\n        if (@TypeOf(debug) != void) {\n            if (!debug.eq(sd.debug)) {\n                std.debug.panic(\"Data.get: stored type {f}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn remove(self: *Data, gpa: std.mem.Allocator, key: Key) std.mem.Allocator.Error!void {\n    self.mutex.lock();\n    defer self.mutex.unlock();\n    try self.trash.ensureUnusedCapacity(gpa, 1);\n\n    if (self.storage.fetchRemove(key)) |dd| {\n        self.trash.appendAssumeCapacity(dd.value);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn reset(self: *Data, gpa: std.mem.Allocator) void {\n    self.mutex.lock();\n    defer self.mutex.unlock();\n    var it = self.storage.iterator();\n    while (it.next_resetting()) |kv| {\n        kv.value.free(gpa);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "pub fn deinit(self: *Data, gpa: std.mem.Allocator) void {\n    defer self.* = undefined;\n    var it = self.storage.iterator();\n    while (it.next()) |entry| {\n        entry.value_ptr.free(gpa);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SavedData from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Data.zig",
+    "response": "const SavedData = struct {\n    alignment: u8,\n    data: []u8,\n\n    debug: DebugInfo,\n\n    pub const Kind = enum(u1) {\n        /// Store the data pointer to by the slice\n        single_item,\n        /// Store the slice as ptr and len (not copying the data)\n        slice,\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Data.zig",
+      "type": "struct",
+      "name": "SavedData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mouse from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn mouse(self: DebugTarget) bool {\n        return self == .mouse_until_click or self == .mouse_until_esc or self == .mouse_quitting;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "mouse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn reset(self: *Debug, gpa: std.mem.Allocator) void {\n    if (self.target.mouse()) {\n        for (self.under_mouse_stack.items) |item| {\n            gpa.free(item.name);\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn deinit(self: *Debug, gpa: std.mem.Allocator) void {\n    for (self.under_mouse_stack.items) |item| {\n        gpa.free(item.name);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to logEvents from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn logEvents(self: *Debug, val: ?bool) bool {\n    self.toggle_mutex.lock();\n    defer self.toggle_mutex.unlock();\n\n    const previous = self.log_events;\n    if (val) |v| {\n        self.log_events = v;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "logEvents",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to logRefresh from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn logRefresh(self: *Debug, val: ?bool) bool {\n    self.toggle_mutex.lock();\n    defer self.toggle_mutex.unlock();\n\n    const previous = self.log_refresh;\n    if (val) |v| {\n        self.log_refresh = v;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "logRefresh",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to show from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn show(self: *Debug) void {\n    if (self.show_frame_times) {\n        self.showFrameTimes();\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "show",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to showFrameTimes from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "fn showFrameTimes(self: *Debug) void {\n    var float = dvui.floatingWindow(@src(), .{ .open_flag = &self.show_frame_times }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "showFrameTimes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to optionsEditor from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn optionsEditor(self: *Options, wd: *const dvui.WidgetData) bool {\n    var changed = false;\n\n    var vbox = dvui.box(@src(), .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "optionsEditor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to copyOptionsToClipboard from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "fn copyOptionsToClipboard(src: std.builtin.SourceLocation, id: dvui.Id, options: Options) void {\n    dvui.log.debug(\"Copied Options struct for {s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "copyOptionsToClipboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to layoutPage from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "fn layoutPage(self: *Options, id: dvui.Id) bool {\n    var changed = false;\n\n    const corner_radius_was_null = self.corner_radius == null;\n    self.corner_radius = self.corner_radiusGet();\n    defer if (corner_radius_was_null and !changed) {\n        self.corner_radius = null;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "layoutPage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stylePage from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "fn stylePage(self: *Options, id: dvui.Id) bool {\n    var changed = false;\n\n    var row = dvui.box(@src(), .{ .dir = .horizontal }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "stylePage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ZigCodeFormatter from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn ZigCodeFormatter(comptime T: type) type {\n    return struct {\n        value: T,\n        pub fn format(self: @This(), writer: *std.Io.Writer) std.Io.Writer.Error!void {\n            switch (@typeInfo(T)) {\n                .optional => if (self.value) |v|\n                    try writer.print(\"{f}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "ZigCodeFormatter",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to asZigCode from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "pub fn asZigCode(value: anytype) ZigCodeFormatter(@TypeOf(value)) {\n    return .{ .value = value }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "function",
+      "name": "asZigCode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to A from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "const A = struct {\n        a: bool,\n        b: u32 = 123,\n        c: ?[]const u8 = null,\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "struct",
+      "name": "A",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "const opts: Options = .{};",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "const",
+      "name": "opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to opts from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "const opts: Options = .{};",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "const",
+      "name": "opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_data from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "const new_data: f64 = @as(f64, @floatFromInt(so_far_micros)) / 1000.0;",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "const",
+      "name": "new_data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to field from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "const field: *?dvui.Color = switch (active_color.*) {\n            inline else => |c| &@field(self, \"color_\" ++ @tagName(c)),\n        };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "const",
+      "name": "field",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ptr_info from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Debug.zig",
+    "response": "const ptr_info: ?std.builtin.Type.Pointer = switch (ti) {\n                            .pointer => |ptr| ptr,\n                            .optional => |opt| if (@typeInfo(opt.child) == .pointer)\n                                @typeInfo(opt.child).pointer\n                            else\n                                null,\n                            else => null,\n                        };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Debug.zig",
+      "type": "const",
+      "name": "ptr_info",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub fn add(self: *Dialogs, gpa: std.mem.Allocator, dialog: Dialog) !*std.Thread.Mutex {\n    self.mutex.lock();\n    errdefer self.mutex.unlock();\n    for (self.stack.items) |*d| {\n        if (d.id == dialog.id) {\n            d.* = dialog;\n            break;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub fn remove(self: *Dialogs, id: Id) void {\n    self.mutex.lock();\n    defer self.mutex.unlock();\n\n    for (self.stack.items, 0..) |*d, i| {\n        if (d.id == id) {\n            _ = self.stack.orderedRemove(i);\n            return;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub fn next(self: *Iterator) ?Dialog {\n        self.dialogs.mutex.lock();\n        defer self.dialogs.mutex.unlock();\n\n        // have to deal with toasts possibly removing themselves inbetween\n        // calls to next()\n\n        const items = self.dialogs.stack.items;\n        if (self.i < items.len and self.last_id == items[self.i].id) {\n            // we already did this one, move to the next\n            self.i += 1;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to iterator from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub fn iterator(self: *Dialogs, subwindow_id: ?Id) Iterator {\n    return .{ .dialogs = self, .subwindow_id = subwindow_id }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "function",
+      "name": "iterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to indexOfSubwindow from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub fn indexOfSubwindow(self: *Dialogs, subwindow_id: ?Id) ?usize {\n    self.mutex.lock();\n    defer self.mutex.unlock();\n    for (self.stack.items, 0..) |dialog, i| {\n        if (dialog.subwindow_id == subwindow_id) return i;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "function",
+      "name": "indexOfSubwindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to show from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub fn show(self: *Dialogs) void {\n    var i: usize = 0;\n    var dia: ?Dialog = null;\n    while (true) {\n        self.mutex.lock();\n        if (i < self.stack.items.len and\n            dia != null and\n            dia.?.id == self.stack.items[i].id)\n        {\n            // we just did this one, move to the next\n            i += 1;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "function",
+      "name": "show",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub fn deinit(self: *Dialogs, gpa: std.mem.Allocator) void {\n    defer self.* = undefined;\n    self.stack.deinit(gpa);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Dialog from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub const Dialog = struct {\n    id: Id,\n    /// Used for subwindow filtering, null means the main window\n    subwindow_id: ?Id = null,\n    display: DisplayFn,\n\n    pub const DisplayFn = *const fn (Id) anyerror!void;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "struct",
+      "name": "Dialog",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IdMutex from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub const IdMutex = struct {\n    id: Id,\n    mutex: *std.Thread.Mutex,\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "struct",
+      "name": "IdMutex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Iterator from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dialogs.zig",
+    "response": "pub const Iterator = struct {\n    dialogs: *Dialogs,\n    subwindow_id: ?Id,\n    i: usize = 0,\n    last_id: Id = .zero,\n\n    pub fn next(self: *Iterator) ?Dialog {\n        self.dialogs.mutex.lock();\n        defer self.dialogs.mutex.unlock();\n\n        // have to deal with toasts possibly removing themselves inbetween\n        // calls to next()\n\n        const items = self.dialogs.stack.items;\n        if (self.i < items.len and self.last_id == items[self.i].id) {\n            // we already did this one, move to the next\n            self.i += 1;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dialogs.zig",
+      "type": "struct",
+      "name": "Iterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to preStart from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub fn preStart(self: *Dragging, p: Point.Physical, options: StartOptions) void {\n    self.state = .prestart;\n    self.pt = p;\n    self.offset = options.offset;\n    self.size = options.size;\n    self.cursor = options.cursor;\n    self.name = options.name;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "function",
+      "name": "preStart",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub fn start(self: *Dragging, p: Point.Physical, options: StartOptions) void {\n    self.state = .dragging;\n    self.pt = p;\n    self.offset = options.offset;\n    self.size = options.size;\n    self.cursor = options.cursor;\n    self.name = options.name;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOffset from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub fn getOffset(self: *Dragging) Point.Physical {\n    return self.offset;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "function",
+      "name": "getOffset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getRect from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub fn getRect(self: *Dragging) dvui.Rect.Physical {\n    const topleft = self.pt.plus(self.offset);\n    return dvui.Rect.Physical.fromPoint(topleft).toSize(self.size);\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "function",
+      "name": "getRect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub fn get(self: *Dragging, p: Point.Physical, opts: GetOptions) ?Point.Physical {\n    if (opts.name) |name| {\n        if (!std.mem.eql(u8, name, self.name orelse \"\")) return null;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchName from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub fn matchName(self: *Dragging, name: ?[]const u8) bool {\n    if (name) |n| {\n        return self.state == .dragging and self.name != null and std.mem.eql(u8, n, self.name.?);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "function",
+      "name": "matchName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to end from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub fn end(self: *Dragging) void {\n    self.state = .none;\n    self.name = null;\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "function",
+      "name": "end",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to StartOptions from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub const StartOptions = struct {\n    /// Use this cursor from when a drag starts to when it ends.\n    cursor: ?dvui.enums.Cursor = null,\n\n    /// Offset of point of interest from the mouse.  Useful during a drag to\n    /// locate where to move the point of interest.\n    offset: Point.Physical = .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "struct",
+      "name": "StartOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to GetOptions from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Dragging.zig",
+    "response": "pub const GetOptions = struct {\n    /// If a name is given, `get` returns null immediately if it doesn't match\n    /// the name given to `preStart` or `start`.  This is useful for widgets\n    /// that need multiple different kinds of drags.\n    name: ?[]const u8 = null,\n\n    /// Used to scale the `preStart` dragging to natural pixels on the screen.\n    /// This ensures that the amount of movement needed to start the drag is\n    /// consistent at different screen DPIs or OS scalings.\n    ///\n    /// Should be the value of `Window.natural_scale`\n    // TODO: This isn't the nicest api and there should probably be a nicer and\n    //       more consistent way to access the `Window` instance for this\n    window_natural_scale: f32,\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Dragging.zig",
+      "type": "struct",
+      "name": "GetOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Event.zig",
+    "response": "pub fn format(self: *const Event, writer: *std.Io.Writer) !void {\n    try writer.print(\"Event({d}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Event.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handle from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Event.zig",
+    "response": "pub fn handle(self: *Event, src: std.builtin.SourceLocation, wd: *const dvui.WidgetData) void {\n    if (dvui.currentWindow().debug.logEvents(null)) {\n        dvui.log.debug(\"{s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Event.zig",
+      "type": "function",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchBind from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Event.zig",
+    "response": "pub fn matchBind(self: Key, keybind_name: []const u8) bool {\n        const cw = dvui.currentWindow();\n\n        var name = keybind_name;\n        while (true) {\n            if (cw.keybinds.get(name)) |kb| {\n                if (self.matchKeyBind(kb)) {\n                    return true;\n                }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Event.zig",
+      "type": "function",
+      "name": "matchBind",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchKeyBind from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Event.zig",
+    "response": "pub fn matchKeyBind(self: Key, kb: enums.Keybind) bool {\n        return self.mod.matchKeyBind(kb) and (kb.key != null and kb.key.? == self.code);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Event.zig",
+      "type": "function",
+      "name": "matchKeyBind",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Text from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Event.zig",
+    "response": "pub const Text = struct {\n    txt: []u8,\n    selected: bool = false,\n    replace: bool = false,\n}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Event.zig",
+      "type": "struct",
+      "name": "Text",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Key from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Event.zig",
+    "response": "pub const Key = struct {\n    code: enums.Key,\n    action: enum {\n        down,\n        repeat,\n        up,\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Event.zig",
+      "type": "struct",
+      "name": "Key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Mouse from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Event.zig",
+    "response": "pub const Mouse = struct {\n    pub const Action = union(enum) {\n        // Focus events come right before their associated pointer event, usually\n        // leftdown/rightdown or motion. Separated to enable changing what\n        // causes focus changes.\n        focus,\n        press,\n        release,\n\n        wheel_x: f32,\n        wheel_y: f32,\n\n        // motion Point is the change in position\n        // if you just want to react to the current mouse position if it got\n        // moved at all, use the .position event with mouseTotalMotion()\n        motion: dvui.Point.Physical,\n\n        // always a single position event per frame, and it's always after all\n        // other events, used to change mouse cursor and do widget highlighting\n        // - also useful with mouseTotalMotion() to respond to mouse motion but\n        // only at the final location\n        // - generally you don't want to mark this as handled, the exception is\n        // if you are covering up child widgets and don't want them to react to\n        // the mouse hovering over them\n        // - instead, call dvui.cursorSet()\n        position,\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Event.zig",
+      "type": "struct",
+      "name": "Mouse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to name from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "pub fn name(self: demoKind) []const u8 {\n        return switch (self) {\n            .basic_widgets => \"Basic Widgets\",\n            .calculator => \"Calculator\",\n            .text_entry => \"Text Entry\",\n            .styling => \"Styling\",\n            .theming => \"Theming\",\n            .layout => \"Layout\",\n            .text_layout => \"Text Layout\",\n            .plots => \"Plots\",\n            .reorderable => \"Reorder / Tree\",\n            .menus => \"Menus / Focus\",\n            .scrolling => \"Scrolling\",\n            .scroll_canvas => \"Scroll Canvas\",\n            .dialogs => \"Dialogs / Toasts\",\n            .animations => \"Animations\",\n            .struct_ui => \"Struct UI\",\n            .debugging => \"Debugging\",\n            .grid => \"Grid\",\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "name",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scaleOffset from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "pub fn scaleOffset(self: demoKind) struct { scale: f32, offset: dvui.Point }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "scaleOffset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to demo from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "pub fn demo() void {\n    if (!show_demo_window) {\n        return;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "demo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dialogDirect from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "pub fn dialogDirect() void {\n    const data = struct {\n        var extra_stuff: bool = false;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "dialogDirect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to show_stroke_test_window from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "pub fn show_stroke_test_window() void {\n    var win = dvui.floatingWindow(@src(), .{ .rect = &StrokeTest.show_rect, .open_flag = &StrokeTest.show }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "show_stroke_test_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to grids from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "pub fn grids() void {\n    const GridType = enum {\n        styling,\n        layout,\n        scrolling,\n        row_heights,\n        selection,\n        navigation,\n        const num_grids = @typeInfo(@This()).@\"enum\".fields.len;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "grids",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tabSelected from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "fn tabSelected(grid_type: GridType) bool {\n            return active_grid == grid_type;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "tabSelected",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tabName from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "fn tabName(grid_type: GridType) []const u8 {\n            return switch (grid_type) {\n                .styling => \"Styling and\\nsorting\",\n                .layout => \"Layouts and\\ndata\",\n                .scrolling => \"Virtual\\nscrolling\",\n                .row_heights => \"Variable row\\nheights\",\n                .selection => \"Selection\\n \",\n                .navigation => \"Keyboard\\nnavigation\",\n            }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "tabName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "fn frame() !dvui.App.Result {\n            dvui.Examples.demo();\n            return .ok;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "function",
+      "name": "frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to data from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "const data = struct {\n        var extra_stuff: bool = false;\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "struct",
+      "name": "data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to local from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "const local = struct {\n        var active_grid: GridType = .styling;\n\n        fn tabSelected(grid_type: GridType) bool {\n            return active_grid == grid_type;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "struct",
+      "name": "local",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "const frame = struct {\n        fn frame() !dvui.App.Result {\n            dvui.Examples.demo();\n            return .ok;\n        }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "struct",
+      "name": "frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to gravx from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "const gravx: f32, const tindex: u16 = switch (dvui.currentWindow().button_order) {\n            .cancel_ok => .{ 1.0, 4 },\n            .ok_cancel => .{ 0.0, 2 },\n        };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "const",
+      "name": "gravx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to this_tab from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples.zig",
+    "response": "const this_tab: GridType = @enumFromInt(tab_num);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples.zig",
+      "type": "const",
+      "name": "this_tab",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to animations from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "pub fn animations() void {\n    const global = struct {\n        var animation_choice: usize = 0;\n        var round_corners: bool = false;\n        var center: bool = false;\n        var easing_choice: usize = 0;\n        var easing: *const dvui.easing.EasingFn = dvui.easing.linear;\n        var duration: i32 = 500_000;\n        var xs: [100]f64 = @splat(0);\n        var ys: [100]f64 = @splat(0);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "function",
+      "name": "animations",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to animatingWindowRect from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "pub fn animatingWindowRect(src: std.builtin.SourceLocation, rect: *Rect, show_flag: *bool, closing: *bool, opts: Options) FloatingWindowWidget {\n    const fwin_id = dvui.parentGet().extendId(src, opts.idExtra());\n\n    if (dvui.firstFrame(fwin_id)) {\n        dvui.animation(fwin_id, \"rect_percent\", .{ .start_val = 0, .end_val = 1.0, .start_time = 0, .end_time = 300_000 }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "function",
+      "name": "animatingWindowRect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dialogDisplay from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "pub fn dialogDisplay(id: dvui.Id) !void {\n        const modal = dvui.dataGet(null, id, \"_modal\", bool) orelse unreachable;\n        const title = dvui.dataGetSlice(null, id, \"_title\", []u8) orelse unreachable;\n        const message = dvui.dataGetSlice(null, id, \"_message\", []u8) orelse unreachable;\n        const callafter = dvui.dataGet(null, id, \"_callafter\", DialogCallAfterFn);\n        const duration = dvui.dataGet(null, id, \"duration\", i32) orelse unreachable;\n        const easing = dvui.dataGet(null, id, \"easing\", *const dvui.easing.EasingFn) orelse unreachable;\n\n        // once we record a response, refresh it until we close\n        _ = dvui.dataGet(null, id, \"response\", enums.DialogResponse);\n\n        var win = FloatingWindowWidget.init(@src(), .{ .modal = modal }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "function",
+      "name": "dialogDisplay",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to after from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "pub fn after(id: dvui.Id, response: enums.DialogResponse) !void {\n        _ = id;\n        std.log.debug(\"You clicked \\\"{s}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "function",
+      "name": "after",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "fn frame() !dvui.App.Result {\n            var box = dvui.box(@src(), .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "function",
+      "name": "frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to global from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "const global = struct {\n        var animation_choice: usize = 0;\n        var round_corners: bool = false;\n        var center: bool = false;\n        var easing_choice: usize = 0;\n        var easing: *const dvui.easing.EasingFn = dvui.easing.linear;\n        var duration: i32 = 500_000;\n        var xs: [100]f64 = @splat(0);\n        var ys: [100]f64 = @splat(0);\n    }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "struct",
+      "name": "global",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AnimatingDialog from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "const AnimatingDialog = struct {\n    pub fn dialogDisplay(id: dvui.Id) !void {\n        const modal = dvui.dataGet(null, id, \"_modal\", bool) orelse unreachable;\n        const title = dvui.dataGetSlice(null, id, \"_title\", []u8) orelse unreachable;\n        const message = dvui.dataGetSlice(null, id, \"_message\", []u8) orelse unreachable;\n        const callafter = dvui.dataGet(null, id, \"_callafter\", DialogCallAfterFn);\n        const duration = dvui.dataGet(null, id, \"duration\", i32) orelse unreachable;\n        const easing = dvui.dataGet(null, id, \"easing\", *const dvui.easing.EasingFn) orelse unreachable;\n\n        // once we record a response, refresh it until we close\n        _ = dvui.dataGet(null, id, \"response\", enums.DialogResponse);\n\n        var win = FloatingWindowWidget.init(@src(), .{ .modal = modal }",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "struct",
+      "name": "AnimatingDialog",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "const frame = struct {\n        fn frame() !dvui.App.Result {\n            var box = dvui.box(@src(), .{}",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "struct",
+      "name": "frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kind from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "const kind: dvui.AnimateWidget.Kind = switch (global.animation_choice) {\n                0 => .alpha,\n                1 => .horizontal,\n                2 => .vertical,\n                3 => .none,\n                else => unreachable,\n            };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "const",
+      "name": "kind",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to image_source from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "const image_source: dvui.ImageSource = .{ .pixelsPMA = .{ .rgba = pixels, .width = 2, .height = 2, .interpolation = .nearest } };",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "const",
+      "name": "image_source",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to frame from david-vanderson/dvui",
+    "context": "Repository: david-vanderson/dvui (960 ⭐)\nFile: src/Examples/animations.zig",
+    "response": "const frame: std.math.IntFittingRange(0, num_frames) = blk: {\n            const millis = @divFloor(dvui.frameTimeNS(), std.time.ns_per_ms);",
+    "metadata": {
+      "repo": "david-vanderson/dvui",
+      "stars": 960,
+      "file": "src/Examples/animations.zig",
+      "type": "const",
+      "name": "frame",
+      "difficulty": "easy"
+    }
+  }
+]

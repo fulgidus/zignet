@@ -1,0 +1,9 @@
+{
+  "name": "http.zig",
+  "fullName": "karlseguin/http.zig",
+  "owner": "karlseguin",
+  "stars": 1217,
+  "description": "An HTTP/1.1 server for zig",
+  "url": "https://github.com/karlseguin/http.zig",
+  "defaultBranch": "master"
+}

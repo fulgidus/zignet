@@ -1,0 +1,9 @@
+{
+  "name": "chinadns-ng",
+  "fullName": "zfl9/chinadns-ng",
+  "owner": "zfl9",
+  "stars": 1310,
+  "description": "chinadns 重构增强版，支持域名分流、ipset/nftset、UDP/TCP/DoT",
+  "url": "https://github.com/zfl9/chinadns-ng",
+  "defaultBranch": "master"
+}

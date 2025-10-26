@@ -1,0 +1,548 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const only_c = b.option(bool, \"only-c\", \"Translate the Zig compiler to C code, with only the C backend enabled\") orelse false;\n    const target = b.standardTargetOptions(.{\n        .default_target = .{\n            .ofmt = if (only_c) .c else null,\n        }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addWasiUpdateStep from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn addWasiUpdateStep(b: *std.Build, version: [:0]const u8) !void {\n    const semver = try std.SemanticVersion.parse(version);\n\n    const exe = addCompilerStep(b, .{\n        .optimize = .ReleaseSmall,\n        .target = b.resolveTargetQuery(std.Target.Query.parse(.{\n            .arch_os_abi = \"wasm32-wasi\",\n            // * `extended_const` is not supported by the `wasm-opt` version in CI.\n            // * `nontrapping_bulk_memory_len0` is supported by `wasm2c`.\n            .cpu_features = \"baseline-extended_const+nontrapping_bulk_memory_len0\",\n        }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addWasiUpdateStep",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addCompilerMod from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn addCompilerMod(b: *std.Build, options: AddCompilerModOptions) *std.Build.Module {\n    const compiler_mod = b.createModule(.{\n        .root_source_file = b.path(\"src/main.zig\"),\n        .target = options.target,\n        .optimize = options.optimize,\n        .strip = options.strip,\n        .sanitize_thread = options.sanitize_thread,\n        .single_threaded = options.single_threaded,\n        .valgrind = options.valgrind,\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addCompilerMod",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addCompilerStep from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn addCompilerStep(b: *std.Build, options: AddCompilerModOptions) *std.Build.Step.Compile {\n    const exe = b.addExecutable(.{\n        .name = \"zig\",\n        .max_rss = 7_800_000_000,\n        .root_module = addCompilerMod(b, options),\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addCompilerStep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addCmakeCfgOptionsToExe from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn addCmakeCfgOptionsToExe(\n    b: *std.Build,\n    cfg: CMakeConfig,\n    exe: *std.Build.Step.Compile,\n    use_zig_libcxx: bool,\n) !void {\n    const mod = exe.root_module;\n    const target = &mod.resolved_target.?.result;\n\n    if (target.os.tag.isDarwin()) {\n        // useful for package maintainers\n        exe.headerpad_max_install_names = true;\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addCmakeCfgOptionsToExe",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addStaticLlvmOptionsToModule from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn addStaticLlvmOptionsToModule(mod: *std.Build.Module, options: struct {\n    llvm_has_m68k: bool,\n    llvm_has_csky: bool,\n    llvm_has_arc: bool,\n    llvm_has_xtensa: bool,\n}) !void {\n    // Adds the Zig C++ sources which both stage1 and stage2 need.\n    //\n    // We need this because otherwise zig_clang_cc1_main.cpp ends up pulling\n    // in a dependency on llvm::cfg::Update<llvm::BasicBlock*>::dump() which is\n    // unavailable when LLVM is compiled in Release mode.\n    const zig_cpp_cflags = exe_cflags ++ [_][]const u8{\"-DNDEBUG=1\"}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addStaticLlvmOptionsToModule",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addCxxKnownPath from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn addCxxKnownPath(\n    b: *std.Build,\n    ctx: CMakeConfig,\n    exe: *std.Build.Step.Compile,\n    objname: []const u8,\n    errtxt: ?[]const u8,\n    need_cpp_includes: bool,\n) !void {\n    if (!std.process.can_spawn)\n        return error.RequiredLibraryNotFound;\n\n    const path_padded = run: {\n        var args = std.array_list.Managed([]const u8).init(b.allocator);\n        try args.append(ctx.cxx_compiler);\n        var it = std.mem.tokenizeAny(u8, ctx.cxx_compiler_arg1, &std.ascii.whitespace);\n        while (it.next()) |arg| try args.append(arg);\n        try args.append(b.fmt(\"-print-file-name={s}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addCxxKnownPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addCMakeLibraryList from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn addCMakeLibraryList(mod: *std.Build.Module, list: []const u8) void {\n    var it = mem.tokenizeScalar(u8, list, ';');\n    while (it.next()) |lib| {\n        if (mem.startsWith(u8, lib, \"-l\")) {\n            mod.linkSystemLibrary(lib[\"-l\".len..], .{}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addCMakeLibraryList",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findConfigH from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn findConfigH(b: *std.Build, config_h_path_option: ?[]const u8) ?[]const u8 {\n    if (config_h_path_option) |path| {\n        var config_h_or_err = fs.cwd().openFile(path, .{}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "findConfigH",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseConfigH from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn parseConfigH(b: *std.Build, config_h_text: []const u8) ?CMakeConfig {\n    var ctx: CMakeConfig = .{\n        .llvm_linkage = undefined,\n        .cmake_binary_dir = undefined,\n        .cmake_prefix_path = undefined,\n        .cmake_static_library_prefix = undefined,\n        .cmake_static_library_suffix = undefined,\n        .cxx_compiler = undefined,\n        .cxx_compiler_arg1 = \"\",\n        .lld_include_dir = undefined,\n        .lld_libraries = undefined,\n        .clang_libraries = undefined,\n        .llvm_lib_dir = undefined,\n        .llvm_include_dir = undefined,\n        .llvm_libraries = undefined,\n        .dia_guids_lib = undefined,\n        .system_libcxx = undefined,\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "parseConfigH",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toNativePathSep from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn toNativePathSep(b: *std.Build, s: []const u8) []u8 {\n    const duplicated = b.allocator.dupe(u8, s) catch unreachable;\n    for (duplicated) |*byte| switch (byte.*) {\n        '/' => byte.* = fs.path.sep,\n        else => {}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "toNativePathSep",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to generateLangRef from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn generateLangRef(b: *std.Build) std.Build.LazyPath {\n    const doctest_exe = b.addExecutable(.{\n        .name = \"doctest\",\n        .root_module = b.createModule(.{\n            .root_source_file = b.path(\"tools/doctest.zig\"),\n            .target = b.graph.host,\n            .optimize = .Debug,\n        }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "generateLangRef",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to superHtmlCheck from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "fn superHtmlCheck(b: *std.Build, html_file: std.Build.LazyPath) *std.Build.Step {\n    const run_superhtml = b.addSystemCommand(&.{\n        \"superhtml\", \"check\",\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "function",
+      "name": "superHtmlCheck",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AddCompilerModOptions from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "const AddCompilerModOptions = struct {\n    optimize: std.builtin.OptimizeMode,\n    target: std.Build.ResolvedTarget,\n    strip: ?bool = null,\n    valgrind: ?bool = null,\n    sanitize_thread: ?bool = null,\n    single_threaded: ?bool = null,\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "AddCompilerModOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CMakeConfig from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "const CMakeConfig = struct {\n    llvm_linkage: std.builtin.LinkMode,\n    cmake_binary_dir: []const u8,\n    cmake_prefix_path: []const u8,\n    cmake_static_library_prefix: []const u8,\n    cmake_static_library_suffix: []const u8,\n    cxx_compiler: []const u8,\n    cxx_compiler_arg1: []const u8,\n    lld_include_dir: []const u8,\n    lld_libraries: []const u8,\n    clang_libraries: []const u8,\n    llvm_lib_dir: []const u8,\n    llvm_include_dir: []const u8,\n    llvm_libraries: []const u8,\n    dia_guids_lib: []const u8,\n    system_libcxx: []const u8,\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "CMakeConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to zig_version from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "const zig_version: std.SemanticVersion = .{ .major = 0, .minor = 16, .patch = 0 };",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "const",
+      "name": "zig_version",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tracy_callstack_depth from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "const tracy_callstack_depth: u32 = b.option(u32, \"tracy-callstack-depth\", \"Declare callstack depth for Tracy data. Does nothing if -Dtracy_callstack is not provided\") orelse 10;",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "const",
+      "name": "tracy_callstack_depth",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mem_leak_frames from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "const mem_leak_frames: u32 = b.option(u32, \"mem-leak-frames\", \"How many stack frames to print when a memory leak occurs. Tests get 2x this amount.\") orelse blk: {\n        if (strip == true) break :blk @as(u32, 0);",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "const",
+      "name": "mem_leak_frames",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tracy_c_flags from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: build.zig",
+    "response": "const tracy_c_flags: []const []const u8 = &.{ \"-DTRACY_ENABLE=1\", \"-fno-sanitize=undefined\" };",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "build.zig",
+      "type": "const",
+      "name": "tracy_c_flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to syscall1 from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/Assembly Syntax Explained.zig",
+    "response": "pub fn syscall1(number: usize, arg1: usize) usize {\n    // Inline assembly is an expression which returns a value.\n    // the `asm` keyword begins the expression.\n    return asm\n    // `volatile` is an optional modifier that tells Zig this\n    // inline assembly expression has side-effects. Without\n    // `volatile`, Zig is allowed to delete the inline assembly\n    // code if the result is unused.\n    volatile (\n    // Next is a comptime string which is the assembly code.\n    // Inside this string one may use `%[ret]`, `%[number]`,\n    // or `%[arg1]` where a register is expected, to specify\n    // the register that Zig uses for the argument or return value,\n    // if the register constraint strings are used. However in\n    // the below code, this is not used. A literal `%` can be\n    // obtained by escaping it with a double percent: `%%`.\n    // Often multiline string syntax comes in handy here.\n        \\\\syscall\n        // Next is the output. It is possible in the future Zig will\n        // support multiple outputs, depending on how\n        // https://github.com/ziglang/zig/issues/215 is resolved.\n        // It is allowed for there to be no outputs, in which case\n        // this colon would be directly followed by the colon for the inputs.\n        :\n        // This specifies the name to be used in `%[ret]` syntax in\n        // the above assembly string. This example does not use it,\n        // but the syntax is mandatory.\n          [ret]\n          // Next is the output constraint string. This feature is still\n          // considered unstable in Zig, and so LLVM/GCC documentation\n          // must be used to understand the semantics.\n          // http://releases.llvm.org/10.0.0/docs/LangRef.html#inline-asm-constraint-string\n          // https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html\n          // In this example, the constraint string means \"the result value of\n          // this inline assembly instruction is whatever is in $rax\".\n          \"={rax}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/Assembly Syntax Explained.zig",
+      "type": "function",
+      "name": "syscall1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/TopLevelFields.zig",
+    "response": "pub fn init(val: u32) TopLevelFields {\n    return .{\n        .foo = val,\n        .bar = val * 10,\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/TopLevelFields.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/addWithOverflow_builtin.zig",
+    "response": "pub fn main() void {\n    const byte: u8 = 255;\n\n    const ov = @addWithOverflow(byte, 10);\n    if (ov[1] != 0) {\n        print(\"overflowed result: {}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/addWithOverflow_builtin.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to byte from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/addWithOverflow_builtin.zig",
+    "response": "const byte: u8 = 255;",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/addWithOverflow_builtin.zig",
+      "type": "const",
+      "name": "byte",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Node from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/anonymous_struct_name.zig",
+    "response": "const Node = struct {\n    next: ?*Node,\n    name: []const u8,\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/anonymous_struct_name.zig",
+      "type": "struct",
+      "name": "Node",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/assign_undefined.zig",
+    "response": "pub fn main() void {\n    var x: i32 = undefined;\n    x = 1;\n    print(\"{d}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/assign_undefined.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to categorize from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/bad_default_value.zig",
+    "response": "fn categorize(t: Threshold, value: f32) Category {\n        assert(t.maximum >= t.minimum);\n        if (value < t.minimum) return .low;\n        if (value > t.maximum) return .high;\n        return .medium;\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/bad_default_value.zig",
+      "type": "function",
+      "name": "categorize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/bad_default_value.zig",
+    "response": "pub fn main() !void {\n    var threshold: Threshold = .{\n        .maximum = 0.20,\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/bad_default_value.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Threshold from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/bad_default_value.zig",
+    "response": "const Threshold = struct {\n    minimum: f32 = 0.25,\n    maximum: f32 = 0.75,\n\n    const Category = enum { low, medium, high }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/bad_default_value.zig",
+      "type": "struct",
+      "name": "Threshold",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to decode_base_64 from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/base64.zig",
+    "response": "fn decode_base_64(\n    dest_ptr: [*]u8,\n    dest_len: usize,\n    source_ptr: [*]const u8,\n    source_len: usize,\n) usize {\n    const src = source_ptr[0..source_len];\n    const dest = dest_ptr[0..dest_len];\n    const base64_decoder = base64.standard.Decoder;\n    const decoded_size = base64_decoder.calcSizeForSlice(src) catch unreachable;\n    base64_decoder.decode(dest[0..decoded_size], src) catch unreachable;\n    return decoded_size;\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/base64.zig",
+      "type": "function",
+      "name": "decode_base_64",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const optimize = b.standardOptimizeOption(.{}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/cImport_builtin.zig",
+    "response": "pub fn main() void {\n    _ = c.printf(\"hello\\n\");\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/cImport_builtin.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doAThing from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/catch.zig",
+    "response": "fn doAThing(str: []u8) void {\n    const number = parseU64(str, 10) catch 13;\n    _ = number; // ...\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/catch.zig",
+      "type": "function",
+      "name": "doAThing",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doAThing from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/catch_err_return.zig",
+    "response": "fn doAThing(str: []u8) !void {\n    const number = parseU64(str, 10) catch |err| return err;\n    _ = number; // ...\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/catch_err_return.zig",
+      "type": "function",
+      "name": "doAThing",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bar from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/change_active_union_field.zig",
+    "response": "fn bar(f: *Foo) void {\n    f.* = Foo{ .float = 12.34 }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/change_active_union_field.zig",
+      "type": "function",
+      "name": "bar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doSomethingWithFoo from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/checking_null_in_zig.zig",
+    "response": "fn doSomethingWithFoo(foo: *Foo) void {\n    _ = foo;\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/checking_null_in_zig.zig",
+      "type": "function",
+      "name": "doSomethingWithFoo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doAThing from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/checking_null_in_zig.zig",
+    "response": "fn doAThing(optional_foo: ?*Foo) void {\n    // do some stuff\n\n    if (optional_foo) |foo| {\n        doSomethingWithFoo(foo);\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/checking_null_in_zig.zig",
+      "type": "function",
+      "name": "doAThing",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/cli_allocation.zig",
+    "response": "pub fn main() !void {\n    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n    defer arena.deinit();\n\n    const allocator = arena.allocator();\n\n    const ptr = try allocator.create(i32);\n    std.debug.print(\"ptr={*}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/cli_allocation.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/comments.zig",
+    "response": "pub fn main() void {\n    // Comments in Zig start with \"//\" and end at the next LF byte (end of line).\n    // The line below is a comment and won't be executed.\n\n    //print(\"Hello?\", .{}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/comments.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to max from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/compile-time_duck_typing.zig",
+    "response": "fn max(comptime T: type, a: T, b: T) T {\n    return if (a > b) a else b;\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/compile-time_duck_typing.zig",
+      "type": "function",
+      "name": "max",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gimmeTheBiggerFloat from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/compile-time_duck_typing.zig",
+    "response": "fn gimmeTheBiggerFloat(a: f32, b: f32) f32 {\n    return max(f32, a, b);\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/compile-time_duck_typing.zig",
+      "type": "function",
+      "name": "gimmeTheBiggerFloat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gimmeTheBiggerInteger from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/compile-time_duck_typing.zig",
+    "response": "fn gimmeTheBiggerInteger(a: u64, b: u64) u64 {\n    return max(u64, a, b);\n}",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/compile-time_duck_typing.zig",
+      "type": "function",
+      "name": "gimmeTheBiggerInteger",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to max from ziglang/zig",
+    "context": "Repository: ziglang/zig (41797 ⭐)\nFile: doc/langref/compiler_generated_function.zig",
+    "response": "fn max(a: bool, b: bool) bool {\n    {\n        return a or b;\n    }",
+    "metadata": {
+      "repo": "ziglang/zig",
+      "stars": 41797,
+      "file": "doc/langref/compiler_generated_function.zig",
+      "type": "function",
+      "name": "max",
+      "difficulty": "easy"
+    }
+  }
+]

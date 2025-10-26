@@ -1,0 +1,9 @@
+{
+  "name": "raylib-zig",
+  "fullName": "raylib-zig/raylib-zig",
+  "owner": "raylib-zig",
+  "stars": 1396,
+  "description": "Manually tweaked, auto-generated raylib bindings for zig. https://github.com/raysan5/raylib",
+  "url": "https://github.com/raylib-zig/raylib-zig",
+  "defaultBranch": "devel"
+}

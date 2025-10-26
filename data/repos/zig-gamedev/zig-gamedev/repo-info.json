@@ -1,0 +1,9 @@
+{
+  "name": "zig-gamedev",
+  "fullName": "zig-gamedev/zig-gamedev",
+  "owner": "zig-gamedev",
+  "stars": 2703,
+  "description": "Dev repo for @zig-gamedev libs and sample applications",
+  "url": "https://github.com/zig-gamedev/zig-gamedev",
+  "defaultBranch": "main"
+}

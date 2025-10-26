@@ -1,0 +1,9 @@
+{
+  "name": "pluto",
+  "fullName": "ZystemOS/pluto",
+  "owner": "ZystemOS",
+  "stars": 692,
+  "description": "An x86 kernel written in Zig",
+  "url": "https://github.com/ZystemOS/pluto",
+  "defaultBranch": "develop"
+}

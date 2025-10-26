@@ -1,0 +1,3317 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parser from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: common/flags.zig",
+    "response": "pub fn parser(comptime Arg: type, comptime flags: []const Flag) type {\n    switch (Arg) {\n        // TODO consider allowing []const u8\n        [:0]const u8, [*:0]const u8 => {}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "common/flags.zig",
+      "type": "function",
+      "name": "parser",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: common/flags.zig",
+    "response": "pub fn parse(args: []const Arg) !Result {\n            var result_flags: Result.Flags = .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "common/flags.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Flag from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: common/flags.zig",
+    "response": "pub const Flag = struct {\n    name: [:0]const u8,\n    kind: enum { boolean, arg }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "common/flags.zig",
+      "type": "struct",
+      "name": "Flag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Result from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: common/flags.zig",
+    "response": "pub const Result = struct {\n            /// Remaining args after the recognized flags\n            args: []const Arg,\n            /// Data obtained from parsed flags\n            flags: Flags,\n\n            pub const Flags = flags_type: {\n                var fields: []const std.builtin.Type.StructField = &.{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "common/flags.zig",
+      "type": "struct",
+      "name": "Result",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to validate from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: common/globber.zig",
+    "response": "pub fn validate(glob: []const u8) error{InvalidGlob}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "common/globber.zig",
+      "type": "function",
+      "name": "validate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to match from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: common/globber.zig",
+    "response": "pub fn match(s: []const u8, glob: []const u8) bool {\n    if (std.debug.runtime_safety) {\n        validate(glob) catch unreachable;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "common/globber.zig",
+      "type": "function",
+      "name": "match",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to order from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: common/globber.zig",
+    "response": "pub fn order(a: []const u8, b: []const u8) std.math.Order {\n    if (std.debug.runtime_safety) {\n        validate(a) catch unreachable;\n        validate(b) catch unreachable;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "common/globber.zig",
+      "type": "function",
+      "name": "order",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Config.zig",
+    "response": "pub fn init() !Config {\n    const xkb_context = xkb.Context.new(.no_flags) orelse return error.XkbContextFailed;\n    defer xkb_context.unref();\n\n    // Passing null here indicates that defaults from libxkbcommon and\n    // its XKB_DEFAULT_LAYOUT, XKB_DEFAULT_OPTIONS, etc. should be used.\n    const keymap = xkb.Keymap.newFromNames(xkb_context, null, .no_flags) orelse return error.XkbKeymapFailed;\n    defer keymap.unref();\n\n    var config = Config{\n        .mode_to_id = std.StringHashMap(u32).init(util.gpa),\n        .modes = try std.ArrayListUnmanaged(Mode).initCapacity(util.gpa, 2),\n        .xkb_context = xkb_context.ref(),\n        .keymap = keymap.ref(),\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Config.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Config.zig",
+    "response": "pub fn deinit(config: *Config) void {\n    config.mode_to_id.deinit();\n    for (config.modes.items) |*mode| mode.deinit();\n    config.modes.deinit(util.gpa);\n\n    config.rules.float.deinit();\n    config.rules.ssd.deinit();\n    config.rules.tags.deinit();\n    for (config.rules.output.rules.items) |rule| {\n        util.gpa.free(rule.value);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Config.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to outputRuleMatch from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Config.zig",
+    "response": "pub fn outputRuleMatch(config: *Config, view: *View) !?*Output {\n    const output_name = config.rules.output.match(view) orelse return null;\n    var it = server.root.active_outputs.iterator(.forward);\n    while (it.next()) |output| {\n        const wlr_output = output.wlr_output;\n        if (mem.eql(u8, output_name, mem.span(wlr_output.name))) return output;\n\n        // This allows matching with \"Maker Model Serial\" instead of \"Connector\"\n        const maker = wlr_output.make orelse \"Unknown\";\n        const model = wlr_output.model orelse \"Unknown\";\n        const serial = wlr_output.serial orelse \"Unknown\";\n        const identifier = try fmt.allocPrint(util.gpa, \"{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Config.zig",
+      "type": "function",
+      "name": "outputRuleMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Position from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Config.zig",
+    "response": "pub const Position = struct {\n    x: u31,\n    y: u31,\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Config.zig",
+      "type": "struct",
+      "name": "Position",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Dimensions from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Config.zig",
+    "response": "pub const Dimensions = struct {\n    width: u31,\n    height: u31,\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Config.zig",
+      "type": "struct",
+      "name": "Dimensions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Control.zig",
+    "response": "pub fn init(control: *Control) !void {\n    control.* = .{\n        .global = try wl.Global.create(server.wl_server, zriver.ControlV1, 1, *Control, control, bind),\n        .args_map = ArgMap.init(util.gpa),\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Control.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleServerDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Control.zig",
+    "response": "fn handleServerDestroy(listener: *wl.Listener(*wl.Server), _: *wl.Server) void {\n    const control: *Control = @fieldParentPtr(\"server_destroy\", listener);\n    control.global.destroy();\n    control.args_map.deinit();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Control.zig",
+      "type": "function",
+      "name": "handleServerDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bind from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Control.zig",
+    "response": "fn bind(client: *wl.Client, control: *Control, version: u32, id: u32) void {\n    const control_v1 = zriver.ControlV1.create(client, version, id) catch {\n        client.postNoMemory();\n        return;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Control.zig",
+      "type": "function",
+      "name": "bind",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequest from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Control.zig",
+    "response": "fn handleRequest(control_v1: *zriver.ControlV1, request: zriver.ControlV1.Request, control: *Control) void {\n    switch (request) {\n        .destroy => control_v1.destroy(),\n        .add_argument => |add_argument| {\n            const owned_slice = util.gpa.dupeZ(u8, mem.sliceTo(add_argument.argument, 0)) catch {\n                control_v1.getClient().postNoMemory();\n                return;\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Control.zig",
+      "type": "function",
+      "name": "handleRequest",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Control.zig",
+    "response": "fn handleDestroy(control_v1: *zriver.ControlV1, control: *Control) void {\n    var args = control.args_map.fetchRemove(\n        .{ .client = control_v1.getClient(), .id = control_v1.getId() }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Control.zig",
+      "type": "function",
+      "name": "handleDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to control from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Control.zig",
+    "response": "const control: *Control = @fieldParentPtr(\"server_destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Control.zig",
+      "type": "const",
+      "name": "control",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to seat from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Control.zig",
+    "response": "const seat: *Seat = @ptrFromInt(wlr.Seat.Client.fromWlSeat(run_command.seat).?.seat.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Control.zig",
+      "type": "const",
+      "name": "seat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn init(cursor: *Cursor, seat: *Seat) !void {\n    const wlr_cursor = try wlr.Cursor.create();\n    errdefer wlr_cursor.destroy();\n    wlr_cursor.attachOutputLayout(server.root.output_layout);\n\n    // This is here so that cursor.xcursor_manager doesn't need to be an\n    // optional pointer. This isn't optimal as it does a needless allocation,\n    // but this is not a hot path.\n    const xcursor_manager = try wlr.XcursorManager.create(null, default_size);\n    errdefer xcursor_manager.destroy();\n\n    const event_loop = server.wl_server.getEventLoop();\n    cursor.* = .{\n        .seat = seat,\n        .wlr_cursor = wlr_cursor,\n        .xcursor_manager = xcursor_manager,\n        .hide_cursor_timer = try event_loop.addTimer(*Cursor, handleHideCursorTimeout, cursor),\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn deinit(cursor: *Cursor) void {\n    cursor.hide_cursor_timer.remove();\n    cursor.xcursor_manager.destroy();\n    cursor.wlr_cursor.destroy();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTheme from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn setTheme(cursor: *Cursor, theme: ?[*:0]const u8, _size: ?u32) !void {\n    const size = _size orelse default_size;\n\n    const xcursor_manager = try wlr.XcursorManager.create(theme, size);\n    errdefer xcursor_manager.destroy();\n\n    // If this cursor belongs to the default seat, set the xcursor environment\n    // variables as well as the xwayland cursor theme.\n    if (cursor.seat == server.input_manager.defaultSeat()) {\n        const size_str = try std.fmt.allocPrintZ(util.gpa, \"{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "setTheme",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setImage from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn setImage(cursor: *Cursor, image: Image) void {\n    switch (cursor.image) {\n        .none, .xcursor => {}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "setImage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleImageSurfaceDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleImageSurfaceDestroy(listener: *wl.Listener(*wlr.Surface), _: *wlr.Surface) void {\n    const cursor: *Cursor = @fieldParentPtr(\"image_surface_destroy\", listener);\n    // wlroots calls wlr_cursor_unset_image() automatically\n    // when the cursor surface is destroyed.\n    cursor.image = .none;\n    cursor.image_surface_destroy.link.remove();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleImageSurfaceDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clearFocus from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn clearFocus(cursor: *Cursor) void {\n    cursor.setImage(.{ .xcursor = \"default\" }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "clearFocus",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleAxis from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleAxis(listener: *wl.Listener(*wlr.Pointer.event.Axis), event: *wlr.Pointer.event.Axis) void {\n    const cursor: *Cursor = @fieldParentPtr(\"axis\", listener);\n    const device: *InputDevice = @ptrFromInt(event.device.data);\n\n    cursor.seat.handleActivity();\n    cursor.unhide();\n\n    // Notify the client with pointer focus of the axis event.\n    cursor.seat.wlr_seat.pointerNotifyAxis(\n        event.time_msec,\n        event.orientation,\n        event.delta * device.config.scroll_factor,\n        @intFromFloat(math.clamp(\n            @round(@as(f32, @floatFromInt(event.delta_discrete)) * device.config.scroll_factor),\n            // It seems that clamping to exactly the bounds of an i32 is insufficient to make the\n            // @intFromFloat() call safe due to the max/min i32 not being exactly representable\n            // by an f32. Dividing by 2 is a low effort way to ensure the value is in bounds and\n            // allow users to set their scroll-factor to inf without crashing river.\n            math.minInt(i32) / 2,\n            math.maxInt(i32) / 2,\n        )),\n        event.source,\n        event.relative_direction,\n    );\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleAxis",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleButton from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleButton(listener: *wl.Listener(*wlr.Pointer.event.Button), event: *wlr.Pointer.event.Button) void {\n    const cursor: *Cursor = @fieldParentPtr(\"button\", listener);\n\n    cursor.seat.handleActivity();\n    cursor.unhide();\n\n    if (event.state == .released) {\n        assert(cursor.pressed_count > 0);\n        cursor.pressed_count -= 1;\n        if (cursor.pressed_count == 0 and cursor.mode != .passthrough) {\n            log.debug(\"leaving {s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleButton",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateKeyboardFocus from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn updateKeyboardFocus(cursor: Cursor, result: Root.AtResult) void {\n    switch (result.data) {\n        .view => |view| {\n            cursor.seat.focus(view);\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "updateKeyboardFocus",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateOutputFocus from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn updateOutputFocus(cursor: Cursor, lx: f64, ly: f64) void {\n    if (server.root.output_layout.outputAt(lx, ly)) |wlr_output| {\n        const output: *Output = @ptrFromInt(wlr_output.data);\n        cursor.seat.focusOutput(output);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "updateOutputFocus",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePinchBegin from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handlePinchBegin(\n    listener: *wl.Listener(*wlr.Pointer.event.PinchBegin),\n    event: *wlr.Pointer.event.PinchBegin,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"pinch_begin\", listener);\n    server.input_manager.pointer_gestures.sendPinchBegin(\n        cursor.seat.wlr_seat,\n        event.time_msec,\n        event.fingers,\n    );\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handlePinchBegin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePinchUpdate from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handlePinchUpdate(\n    listener: *wl.Listener(*wlr.Pointer.event.PinchUpdate),\n    event: *wlr.Pointer.event.PinchUpdate,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"pinch_update\", listener);\n    server.input_manager.pointer_gestures.sendPinchUpdate(\n        cursor.seat.wlr_seat,\n        event.time_msec,\n        event.dx,\n        event.dy,\n        event.scale,\n        event.rotation,\n    );\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handlePinchUpdate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePinchEnd from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handlePinchEnd(\n    listener: *wl.Listener(*wlr.Pointer.event.PinchEnd),\n    event: *wlr.Pointer.event.PinchEnd,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"pinch_end\", listener);\n    server.input_manager.pointer_gestures.sendPinchEnd(\n        cursor.seat.wlr_seat,\n        event.time_msec,\n        event.cancelled,\n    );\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handlePinchEnd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleSwipeBegin from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleSwipeBegin(\n    listener: *wl.Listener(*wlr.Pointer.event.SwipeBegin),\n    event: *wlr.Pointer.event.SwipeBegin,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"swipe_begin\", listener);\n    server.input_manager.pointer_gestures.sendSwipeBegin(\n        cursor.seat.wlr_seat,\n        event.time_msec,\n        event.fingers,\n    );\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleSwipeBegin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleSwipeUpdate from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleSwipeUpdate(\n    listener: *wl.Listener(*wlr.Pointer.event.SwipeUpdate),\n    event: *wlr.Pointer.event.SwipeUpdate,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"swipe_update\", listener);\n    server.input_manager.pointer_gestures.sendSwipeUpdate(\n        cursor.seat.wlr_seat,\n        event.time_msec,\n        event.dx,\n        event.dy,\n    );\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleSwipeUpdate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleSwipeEnd from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleSwipeEnd(\n    listener: *wl.Listener(*wlr.Pointer.event.SwipeEnd),\n    event: *wlr.Pointer.event.SwipeEnd,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"swipe_end\", listener);\n    server.input_manager.pointer_gestures.sendSwipeEnd(\n        cursor.seat.wlr_seat,\n        event.time_msec,\n        event.cancelled,\n    );\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleSwipeEnd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTouchDown from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTouchDown(\n    listener: *wl.Listener(*wlr.Touch.event.Down),\n    event: *wlr.Touch.event.Down,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"touch_down\", listener);\n\n    cursor.seat.handleActivity();\n\n    var lx: f64 = undefined;\n    var ly: f64 = undefined;\n    cursor.wlr_cursor.absoluteToLayoutCoords(event.device, event.x, event.y, &lx, &ly);\n\n    cursor.touch_points.putNoClobber(util.gpa, event.touch_id, .{ .lx = lx, .ly = ly }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTouchDown",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTouchMotion from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTouchMotion(\n    listener: *wl.Listener(*wlr.Touch.event.Motion),\n    event: *wlr.Touch.event.Motion,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"touch_motion\", listener);\n\n    cursor.seat.handleActivity();\n\n    if (cursor.touch_points.getPtr(event.touch_id)) |point| {\n        cursor.wlr_cursor.absoluteToLayoutCoords(event.device, event.x, event.y, &point.lx, &point.ly);\n\n        cursor.updateDragIcons();\n\n        if (server.root.at(point.lx, point.ly)) |result| {\n            cursor.seat.wlr_seat.touchNotifyMotion(event.time_msec, event.touch_id, result.sx, result.sy);\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTouchMotion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTouchUp from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTouchUp(\n    listener: *wl.Listener(*wlr.Touch.event.Up),\n    event: *wlr.Touch.event.Up,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"touch_up\", listener);\n\n    cursor.seat.handleActivity();\n\n    if (cursor.touch_points.remove(event.touch_id)) {\n        _ = cursor.seat.wlr_seat.touchNotifyUp(event.time_msec, event.touch_id);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTouchUp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTouchCancel from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTouchCancel(\n    listener: *wl.Listener(*wlr.Touch.event.Cancel),\n    _: *wlr.Touch.event.Cancel,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"touch_cancel\", listener);\n\n    cursor.seat.handleActivity();\n\n    cursor.touch_points.clearRetainingCapacity();\n\n    const wlr_seat = cursor.seat.wlr_seat;\n    while (wlr_seat.touch_state.touch_points.first()) |touch_point| {\n        wlr_seat.touchNotifyCancel(touch_point.client);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTouchCancel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTouchFrame from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTouchFrame(listener: *wl.Listener(void)) void {\n    const cursor: *Cursor = @fieldParentPtr(\"touch_frame\", listener);\n\n    cursor.seat.handleActivity();\n\n    cursor.seat.wlr_seat.touchNotifyFrame();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTouchFrame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTabletToolAxis from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTabletToolAxis(\n    _: *wl.Listener(*wlr.Tablet.event.Axis),\n    event: *wlr.Tablet.event.Axis,\n) void {\n    const device: *InputDevice = @ptrFromInt(event.device.data);\n    const tablet: *Tablet = @fieldParentPtr(\"device\", device);\n\n    device.seat.handleActivity();\n\n    const tool = TabletTool.get(device.seat.wlr_seat, event.tool) catch return;\n\n    tool.axis(tablet, event);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTabletToolAxis",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTabletToolProximity from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTabletToolProximity(\n    _: *wl.Listener(*wlr.Tablet.event.Proximity),\n    event: *wlr.Tablet.event.Proximity,\n) void {\n    const device: *InputDevice = @ptrFromInt(event.device.data);\n    const tablet: *Tablet = @fieldParentPtr(\"device\", device);\n\n    device.seat.handleActivity();\n\n    const tool = TabletTool.get(device.seat.wlr_seat, event.tool) catch return;\n\n    tool.proximity(tablet, event);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTabletToolProximity",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTabletToolTip from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTabletToolTip(\n    _: *wl.Listener(*wlr.Tablet.event.Tip),\n    event: *wlr.Tablet.event.Tip,\n) void {\n    const device: *InputDevice = @ptrFromInt(event.device.data);\n    const tablet: *Tablet = @fieldParentPtr(\"device\", device);\n\n    device.seat.handleActivity();\n\n    const tool = TabletTool.get(device.seat.wlr_seat, event.tool) catch return;\n\n    tool.tip(tablet, event);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTabletToolTip",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTabletToolButton from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleTabletToolButton(\n    _: *wl.Listener(*wlr.Tablet.event.Button),\n    event: *wlr.Tablet.event.Button,\n) void {\n    const device: *InputDevice = @ptrFromInt(event.device.data);\n    const tablet: *Tablet = @fieldParentPtr(\"device\", device);\n\n    device.seat.handleActivity();\n\n    const tool = TabletTool.get(device.seat.wlr_seat, event.tool) catch return;\n\n    tool.button(tablet, event);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleTabletToolButton",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerMapping from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handlePointerMapping(cursor: *Cursor, event: *wlr.Pointer.event.Button, view: *View) bool {\n    const wlr_keyboard = cursor.seat.wlr_seat.getKeyboard() orelse return false;\n    const modifiers = wlr_keyboard.getModifiers();\n\n    const fullscreen = view.current.fullscreen or view.pending.fullscreen;\n\n    return for (server.config.modes.items[cursor.seat.mode_id].pointer_mappings.items) |mapping| {\n        if (event.button == mapping.event_code and std.meta.eql(modifiers, mapping.modifiers)) {\n            switch (mapping.action) {\n                .move => if (!fullscreen) cursor.startMove(view),\n                .resize => if (!fullscreen) cursor.startResize(view, null),\n                .command => |args| {\n                    cursor.seat.focus(view);\n                    cursor.seat.runCommand(args);\n                    // This is mildly inefficient as running the command may have already\n                    // started a transaction. However we need to start one after the Seat.focus()\n                    // call in the case where it didn't.\n                    server.root.applyPending();\n                }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handlePointerMapping",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleFrame from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleFrame(listener: *wl.Listener(*wlr.Cursor), _: *wlr.Cursor) void {\n    const cursor: *Cursor = @fieldParentPtr(\"frame\", listener);\n    cursor.seat.wlr_seat.pointerNotifyFrame();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleFrame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleMotionAbsolute from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleMotionAbsolute(\n    listener: *wl.Listener(*wlr.Pointer.event.MotionAbsolute),\n    event: *wlr.Pointer.event.MotionAbsolute,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"motion_absolute\", listener);\n\n    cursor.seat.handleActivity();\n\n    var lx: f64 = undefined;\n    var ly: f64 = undefined;\n    cursor.wlr_cursor.absoluteToLayoutCoords(event.device, event.x, event.y, &lx, &ly);\n\n    const dx = lx - cursor.wlr_cursor.x;\n    const dy = ly - cursor.wlr_cursor.y;\n    cursor.processMotion(event.device, event.time_msec, dx, dy, dx, dy);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleMotionAbsolute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleMotion from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleMotion(\n    listener: *wl.Listener(*wlr.Pointer.event.Motion),\n    event: *wlr.Pointer.event.Motion,\n) void {\n    const cursor: *Cursor = @fieldParentPtr(\"motion\", listener);\n\n    cursor.seat.handleActivity();\n\n    cursor.processMotion(event.device, event.time_msec, event.delta_x, event.delta_y, event.unaccel_dx, event.unaccel_dy);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleMotion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequestSetCursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleRequestSetCursor(\n    listener: *wl.Listener(*wlr.Seat.event.RequestSetCursor),\n    event: *wlr.Seat.event.RequestSetCursor,\n) void {\n    // This event is rasied by the seat when a client provides a cursor image\n    const cursor: *Cursor = @fieldParentPtr(\"request_set_cursor\", listener);\n    const focused_client = cursor.seat.wlr_seat.pointer_state.focused_client;\n\n    // This can be sent by any client, so we check to make sure this one is\n    // actually has pointer focus first.\n    if (focused_client == event.seat_client) {\n        // Once we've vetted the client, we can tell the cursor to use the\n        // provided surface as the cursor image. It will set the hardware cursor\n        // on the output that it's currently on and continue to do so as the\n        // cursor moves between outputs.\n        log.debug(\"focused client set cursor\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleRequestSetCursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hide from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn hide(cursor: *Cursor) void {\n    if (cursor.pressed_count > 0) return;\n\n    // Hiding the cursor and sending wl_pointer.leave whlie a pointer constraint\n    // is active does not make much sense. In particular, doing so seems to interact\n    // poorly with Xwayland's pointer constraints implementation.\n    if (cursor.constraint) |constraint| {\n        if (constraint.state == .active) return;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "hide",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unhide from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn unhide(cursor: *Cursor) void {\n    cursor.hide_cursor_timer.timerUpdate(server.config.cursor_hide_timeout) catch {\n        log.err(\"failed to update cursor hide timeout\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "unhide",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleHideCursorTimeout from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn handleHideCursorTimeout(cursor: *Cursor) c_int {\n    log.debug(\"hide cursor timeout\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "handleHideCursorTimeout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startMove from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn startMove(cursor: *Cursor, view: *View) void {\n    // Guard against assertion in enterMode()\n    if (view.current.output == null) return;\n\n    if (cursor.constraint) |constraint| {\n        if (constraint.state == .active) constraint.deactivate();\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "startMove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startResize from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn startResize(cursor: *Cursor, view: *View, proposed_edges: ?wlr.Edges) void {\n    // Guard against assertions in computeEdges() and enterMode()\n    if (view.current.output == null) return;\n\n    if (cursor.constraint) |constraint| {\n        if (constraint.state == .active) constraint.deactivate();\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "startResize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to computeEdges from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn computeEdges(cursor: *const Cursor, view: *const View) wlr.Edges {\n    const min_handle_size = 20;\n    const box = &view.current.box;\n\n    var output_box: wlr.Box = undefined;\n    server.root.output_layout.getBox(view.current.output.?.wlr_output, &output_box);\n\n    const sx = @as(i32, @intFromFloat(cursor.wlr_cursor.x)) - output_box.x - box.x;\n    const sy = @as(i32, @intFromFloat(cursor.wlr_cursor.y)) - output_box.y - box.y;\n\n    var edges: wlr.Edges = .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "computeEdges",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enterMode from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn enterMode(cursor: *Cursor, mode: Mode, view: *View, xcursor: [*:0]const u8) void {\n    assert(cursor.mode == .passthrough or cursor.mode == .down);\n    assert(mode == .move or mode == .resize);\n\n    log.debug(\"enter {s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "enterMode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to processMotion from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn processMotion(cursor: *Cursor, device: *wlr.InputDevice, time: u32, delta_x: f64, delta_y: f64, unaccel_dx: f64, unaccel_dy: f64) void {\n    cursor.unhide();\n\n    server.input_manager.relative_pointer_manager.sendRelativeMotion(\n        cursor.seat.wlr_seat,\n        @as(u64, time) * 1000,\n        delta_x,\n        delta_y,\n        unaccel_dx,\n        unaccel_dy,\n    );\n\n    var dx: f64 = delta_x;\n    var dy: f64 = delta_y;\n\n    if (cursor.constraint) |constraint| {\n        if (constraint.state == .active) {\n            switch (constraint.wlr_constraint.type) {\n                .locked => return,\n                .confined => constraint.confine(&dx, &dy),\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "processMotion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkFocusFollowsCursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn checkFocusFollowsCursor(cursor: *Cursor) void {\n    // Don't do focus-follows-cursor if a pointer drag is in progress as focus\n    // change can't occur.\n    if (cursor.seat.drag == .pointer) return;\n    if (server.config.focus_follows_cursor == .disabled) return;\n\n    const last_target = cursor.focus_follows_cursor_target;\n    cursor.updateFocusFollowsCursorTarget();\n    if (cursor.focus_follows_cursor_target) |view| {\n        // In .normal mode, only entering a view changes focus\n        if (server.config.focus_follows_cursor == .normal and\n            last_target == view) return;\n        if (cursor.seat.focused != .view or cursor.seat.focused.view != view) {\n            if (view.current.output) |output| {\n                cursor.seat.focusOutput(output);\n                cursor.seat.focus(view);\n                server.root.applyPending();\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "checkFocusFollowsCursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateFocusFollowsCursorTarget from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn updateFocusFollowsCursorTarget(cursor: *Cursor) void {\n    if (server.root.at(cursor.wlr_cursor.x, cursor.wlr_cursor.y)) |result| {\n        switch (result.data) {\n            .view => |view| {\n                // Some windows have an input region bigger than their window\n                // geometry, we only want to update this when the cursor\n                // properly enters the window (the box that we draw borders around)\n                // in order to avoid clashes with cursor warping on focus change.\n                if (view.current.output) |output| {\n                    var output_layout_box: wlr.Box = undefined;\n                    server.root.output_layout.getBox(output.wlr_output, &output_layout_box);\n\n                    const cursor_ox = cursor.wlr_cursor.x - @as(f64, @floatFromInt(output_layout_box.x));\n                    const cursor_oy = cursor.wlr_cursor.y - @as(f64, @floatFromInt(output_layout_box.y));\n                    if (view.current.box.containsPoint(cursor_ox, cursor_oy)) {\n                        cursor.focus_follows_cursor_target = view;\n                    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "updateFocusFollowsCursorTarget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateState from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "pub fn updateState(cursor: *Cursor) void {\n    if (cursor.may_need_warp) {\n        cursor.warp();\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "updateState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to passthrough from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn passthrough(cursor: *Cursor, time: u32) void {\n    assert(cursor.mode == .passthrough);\n\n    if (server.root.at(cursor.wlr_cursor.x, cursor.wlr_cursor.y)) |result| {\n        if (result.data == .lock_surface) {\n            assert(server.lock_manager.state != .unlocked);\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "passthrough",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to warp from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn warp(cursor: *Cursor) void {\n    cursor.may_need_warp = false;\n\n    const focused_output = cursor.seat.focused_output orelse return;\n\n    // Warp pointer to center of the focused view/output (In layout coordinates) if enabled.\n    var output_layout_box: wlr.Box = undefined;\n    server.root.output_layout.getBox(focused_output.wlr_output, &output_layout_box);\n    const target_box = switch (server.config.warp_cursor) {\n        .disabled => return,\n        .@\"on-output-change\" => output_layout_box,\n        .@\"on-focus-change\" => switch (cursor.seat.focused) {\n            .layer, .lock_surface, .none => output_layout_box,\n            .view => |view| wlr.Box{\n                .x = output_layout_box.x + view.current.box.x,\n                .y = output_layout_box.y + view.current.box.y,\n                .width = view.current.box.width,\n                .height = view.current.box.height,\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "warp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateDragIcons from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "fn updateDragIcons(cursor: *Cursor) void {\n    var it = server.root.drag_icons.children.iterator(.forward);\n    while (it.next()) |node| {\n        const icon = @as(*DragIcon, @ptrFromInt(node.data));\n\n        if (icon.wlr_drag_icon.drag.seat == cursor.seat.wlr_seat) {\n            icon.updatePosition(cursor);\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "function",
+      "name": "updateDragIcons",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to LayoutPoint from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const LayoutPoint = struct {\n    lx: f64,\n    ly: f64,\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "struct",
+      "name": "LayoutPoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"image_surface_destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"axis\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const device: *InputDevice = @ptrFromInt(event.device.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"button\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to output from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const output: *Output = @ptrFromInt(wlr_output.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "output",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"pinch_begin\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"pinch_update\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"pinch_end\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"swipe_begin\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"swipe_update\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"swipe_end\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"touch_down\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"touch_motion\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"touch_up\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"touch_cancel\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"touch_frame\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const device: *InputDevice = @ptrFromInt(event.device.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tablet from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const tablet: *Tablet = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "tablet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const device: *InputDevice = @ptrFromInt(event.device.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tablet from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const tablet: *Tablet = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "tablet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const device: *InputDevice = @ptrFromInt(event.device.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tablet from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const tablet: *Tablet = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "tablet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const device: *InputDevice = @ptrFromInt(event.device.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tablet from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const tablet: *Tablet = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "tablet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"frame\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"motion_absolute\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"motion\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cursor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const cursor: *Cursor = @fieldParentPtr(\"request_set_cursor\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "cursor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_mode from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const new_mode: Mode = .{ .move = .{\n        .view = view,\n        .offset_x = @as(i32, @intFromFloat(cursor.wlr_cursor.x)) - view.current.box.x,\n        .offset_y = @as(i32, @intFromFloat(cursor.wlr_cursor.y)) - view.current.box.y,\n    } };",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "new_mode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lx from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const lx: i32 = @intFromFloat(cursor.wlr_cursor.x);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "lx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ly from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const ly: i32 = @intFromFloat(cursor.wlr_cursor.y);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "ly",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_mode from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const new_mode: Mode = .{ .resize = .{\n        .view = view,\n        .edges = edges,\n        .offset_x = offset_x,\n        .offset_y = offset_y,\n        .initial_width = @intCast(box.width),\n        .initial_height = @intCast(box.height),\n    } };",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "new_mode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to msec from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const msec: u32 = @intCast(@rem(\n                    now.tv_sec *% std.time.ms_per_s +% @divTrunc(now.tv_nsec, std.time.ns_per_ms),\n                    math.maxInt(u32),\n                ));",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "msec",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_x from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const new_x: f64 = blk: {\n                        if (mode == .move or data.edges.left) {\n                            break :blk @floatFromInt(data.offset_x + box.x);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "new_x",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_y from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const new_y: f64 = blk: {\n                        if (mode == .move or data.edges.top) {\n                            break :blk @floatFromInt(data.offset_y + box.y);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "new_y",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lx from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const lx: f64 = @floatFromInt(target_box.x + @divTrunc(target_box.width, 2));",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "lx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ly from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Cursor.zig",
+    "response": "const ly: f64 = @floatFromInt(target_box.y + @divTrunc(target_box.height, 2));",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Cursor.zig",
+      "type": "const",
+      "name": "ly",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/DragIcon.zig",
+    "response": "pub fn create(wlr_drag_icon: *wlr.Drag.Icon, cursor: *Cursor) error{OutOfMemory}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/DragIcon.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updatePosition from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/DragIcon.zig",
+    "response": "pub fn updatePosition(drag_icon: *DragIcon, cursor: *Cursor) void {\n    switch (drag_icon.wlr_drag_icon.drag.grab_type) {\n        .keyboard => unreachable,\n        .keyboard_pointer => {\n            drag_icon.scene_drag_icon.node.setPosition(\n                @intFromFloat(cursor.wlr_cursor.x),\n                @intFromFloat(cursor.wlr_cursor.y),\n            );\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/DragIcon.zig",
+      "type": "function",
+      "name": "updatePosition",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/DragIcon.zig",
+    "response": "fn handleDestroy(listener: *wl.Listener(*wlr.Drag.Icon), _: *wlr.Drag.Icon) void {\n    const drag_icon: *DragIcon = @fieldParentPtr(\"destroy\", listener);\n\n    drag_icon.destroy.link.remove();\n\n    util.gpa.destroy(drag_icon);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/DragIcon.zig",
+      "type": "function",
+      "name": "handleDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to drag_icon from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/DragIcon.zig",
+    "response": "const drag_icon: *DragIcon = @fieldParentPtr(\"destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/DragIcon.zig",
+      "type": "const",
+      "name": "drag_icon",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to map from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "pub fn map(handle: *ForeignToplevelHandle) void {\n    const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);\n\n    assert(handle.wlr_handle == null);\n\n    handle.wlr_handle = wlr.ForeignToplevelHandleV1.create(server.foreign_toplevel_manager) catch {\n        std.log.err(\"out of memory\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "function",
+      "name": "map",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unmap from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "pub fn unmap(handle: *ForeignToplevelHandle) void {\n    const wlr_handle = handle.wlr_handle orelse return;\n\n    handle.foreign_activate.link.remove();\n    handle.foreign_fullscreen.link.remove();\n    handle.foreign_close.link.remove();\n\n    wlr_handle.destroy();\n\n    handle.wlr_handle = null;\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "function",
+      "name": "unmap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to update from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "pub fn update(handle: *ForeignToplevelHandle) void {\n    const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);\n\n    const wlr_handle = handle.wlr_handle orelse return;\n\n    if (view.inflight.output != view.current.output) {\n        if (view.current.output) |output| wlr_handle.outputLeave(output.wlr_output);\n        if (view.inflight.output) |output| wlr_handle.outputEnter(output.wlr_output);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "function",
+      "name": "update",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleForeignActivate from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "fn handleForeignActivate(\n    listener: *wl.Listener(*wlr.ForeignToplevelHandleV1.event.Activated),\n    event: *wlr.ForeignToplevelHandleV1.event.Activated,\n) void {\n    const handle: *ForeignToplevelHandle = @fieldParentPtr(\"foreign_activate\", listener);\n    const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);\n    const seat: *Seat = @ptrFromInt(event.seat.data);\n\n    seat.focus(view);\n    server.root.applyPending();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "function",
+      "name": "handleForeignActivate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleForeignFullscreen from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "fn handleForeignFullscreen(\n    listener: *wl.Listener(*wlr.ForeignToplevelHandleV1.event.Fullscreen),\n    event: *wlr.ForeignToplevelHandleV1.event.Fullscreen,\n) void {\n    const handle: *ForeignToplevelHandle = @fieldParentPtr(\"foreign_fullscreen\", listener);\n    const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);\n\n    view.pending.fullscreen = event.fullscreen;\n    server.root.applyPending();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "function",
+      "name": "handleForeignFullscreen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleForeignClose from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "fn handleForeignClose(\n    listener: *wl.Listener(*wlr.ForeignToplevelHandleV1),\n    _: *wlr.ForeignToplevelHandleV1,\n) void {\n    const handle: *ForeignToplevelHandle = @fieldParentPtr(\"foreign_close\", listener);\n    const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);\n\n    view.close();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "function",
+      "name": "handleForeignClose",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to view from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "view",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to view from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "view",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to handle from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const handle: *ForeignToplevelHandle = @fieldParentPtr(\"foreign_activate\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to view from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "view",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to seat from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const seat: *Seat = @ptrFromInt(event.seat.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "seat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to handle from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const handle: *ForeignToplevelHandle = @fieldParentPtr(\"foreign_fullscreen\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to view from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "view",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to handle from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const handle: *ForeignToplevelHandle = @fieldParentPtr(\"foreign_close\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to view from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/ForeignToplevelHandle.zig",
+    "response": "const view: *View = @fieldParentPtr(\"foreign_toplevel_handle\", handle);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/ForeignToplevelHandle.zig",
+      "type": "const",
+      "name": "view",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitManager.zig",
+    "response": "pub fn init(inhibit_manager: *IdleInhibitManager) !void {\n    inhibit_manager.* = .{\n        .wlr_manager = try wlr.IdleInhibitManagerV1.create(server.wl_server),\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitManager.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitManager.zig",
+    "response": "pub fn deinit(inhibit_manager: *IdleInhibitManager) void {\n    while (inhibit_manager.inhibitors.pop()) |inhibitor| {\n        inhibitor.data.destroy.link.remove();\n        util.gpa.destroy(inhibitor);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitManager.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkActive from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitManager.zig",
+    "response": "pub fn checkActive(inhibit_manager: *IdleInhibitManager) void {\n    var inhibited = false;\n    var it = inhibit_manager.inhibitors.first;\n    while (it) |node| : (it = node.next) {\n        const node_data = SceneNodeData.fromSurface(node.data.wlr_inhibitor.surface) orelse continue;\n        switch (node_data.data) {\n            .view => |view| {\n                if (view.current.output != null and\n                    view.current.tags & view.current.output.?.current.tags != 0)\n                {\n                    inhibited = true;\n                    break;\n                }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitManager.zig",
+      "type": "function",
+      "name": "checkActive",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewIdleInhibitor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitManager.zig",
+    "response": "fn handleNewIdleInhibitor(listener: *wl.Listener(*wlr.IdleInhibitorV1), inhibitor: *wlr.IdleInhibitorV1) void {\n    const inhibit_manager: *IdleInhibitManager = @fieldParentPtr(\"new_idle_inhibitor\", listener);\n    const inhibitor_node = util.gpa.create(std.TailQueue(IdleInhibitor).Node) catch return;\n    inhibitor_node.data.init(inhibitor, inhibit_manager) catch {\n        util.gpa.destroy(inhibitor_node);\n        return;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitManager.zig",
+      "type": "function",
+      "name": "handleNewIdleInhibitor",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to inhibit_manager from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitManager.zig",
+    "response": "const inhibit_manager: *IdleInhibitManager = @fieldParentPtr(\"new_idle_inhibitor\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitManager.zig",
+      "type": "const",
+      "name": "inhibit_manager",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitor.zig",
+    "response": "pub fn init(\n    inhibitor: *IdleInhibitor,\n    wlr_inhibitor: *wlr.IdleInhibitorV1,\n    inhibit_manager: *IdleInhibitManager,\n) !void {\n    inhibitor.* = .{\n        .inhibit_manager = inhibit_manager,\n        .wlr_inhibitor = wlr_inhibitor,\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitor.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitor.zig",
+    "response": "fn handleDestroy(listener: *wl.Listener(*wlr.Surface), _: *wlr.Surface) void {\n    const inhibitor: *IdleInhibitor = @fieldParentPtr(\"destroy\", listener);\n\n    inhibitor.destroy.link.remove();\n\n    const node: *std.TailQueue(IdleInhibitor).Node = @fieldParentPtr(\"data\", inhibitor);\n    server.idle_inhibit_manager.inhibitors.remove(node);\n\n    inhibitor.inhibit_manager.checkActive();\n\n    util.gpa.destroy(node);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitor.zig",
+      "type": "function",
+      "name": "handleDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to inhibitor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitor.zig",
+    "response": "const inhibitor: *IdleInhibitor = @fieldParentPtr(\"destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitor.zig",
+      "type": "const",
+      "name": "inhibitor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to node from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/IdleInhibitor.zig",
+    "response": "const node: *std.TailQueue(IdleInhibitor).Node = @fieldParentPtr(\"data\", inhibitor);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/IdleInhibitor.zig",
+      "type": "const",
+      "name": "node",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(event_state: EventState, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_send_events_set_mode(device, switch (event_state) {\n            .enabled => c.LIBINPUT_CONFIG_SEND_EVENTS_ENABLED,\n            .disabled => c.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED,\n            .@\"disabled-on-external-mouse\" => c.LIBINPUT_CONFIG_SEND_EVENTS_DISABLED_ON_EXTERNAL_MOUSE,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(accel_profile: AccelProfile, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_accel_set_profile(device, switch (accel_profile) {\n            .none => c.LIBINPUT_CONFIG_ACCEL_PROFILE_NONE,\n            .flat => c.LIBINPUT_CONFIG_ACCEL_PROFILE_FLAT,\n            .adaptive => c.LIBINPUT_CONFIG_ACCEL_PROFILE_ADAPTIVE,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(click_method: ClickMethod, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_click_set_method(device, switch (click_method) {\n            .none => c.LIBINPUT_CONFIG_CLICK_METHOD_NONE,\n            .@\"button-areas\" => c.LIBINPUT_CONFIG_CLICK_METHOD_BUTTON_AREAS,\n            .clickfinger => c.LIBINPUT_CONFIG_CLICK_METHOD_CLICKFINGER,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(drag_state: DragState, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_tap_set_drag_enabled(device, switch (drag_state) {\n            .disabled => c.LIBINPUT_CONFIG_DRAG_DISABLED,\n            .enabled => c.LIBINPUT_CONFIG_DRAG_ENABLED,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(drag_lock: DragLock, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_tap_set_drag_lock_enabled(device, switch (drag_lock) {\n            .disabled => c.LIBINPUT_CONFIG_DRAG_LOCK_DISABLED,\n            .enabled => c.LIBINPUT_CONFIG_DRAG_LOCK_ENABLED,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(dwt_state: DwtState, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_dwt_set_enabled(device, switch (dwt_state) {\n            .disabled => c.LIBINPUT_CONFIG_DWT_DISABLED,\n            .enabled => c.LIBINPUT_CONFIG_DWT_ENABLED,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(dwtp_state: DwtpState, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_dwtp_set_enabled(device, switch (dwtp_state) {\n            .disabled => c.LIBINPUT_CONFIG_DWTP_DISABLED,\n            .enabled => c.LIBINPUT_CONFIG_DWTP_ENABLED,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(middle_emulation: MiddleEmulation, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_middle_emulation_set_enabled(device, switch (middle_emulation) {\n            .disabled => c.LIBINPUT_CONFIG_MIDDLE_EMULATION_DISABLED,\n            .enabled => c.LIBINPUT_CONFIG_MIDDLE_EMULATION_ENABLED,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(natural_scroll: NaturalScroll, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_scroll_set_natural_scroll_enabled(device, switch (natural_scroll) {\n            .disabled => 0,\n            .enabled => 1,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(left_handed: LeftHanded, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_left_handed_set(device, switch (left_handed) {\n            .disabled => 0,\n            .enabled => 1,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(tap_state: TapState, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_tap_set_enabled(device, switch (tap_state) {\n            .disabled => c.LIBINPUT_CONFIG_TAP_DISABLED,\n            .enabled => c.LIBINPUT_CONFIG_TAP_ENABLED,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(tap_button_map: TapButtonMap, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_tap_set_button_map(device, switch (tap_button_map) {\n            .@\"left-right-middle\" => c.LIBINPUT_CONFIG_TAP_MAP_LRM,\n            .@\"left-middle-right\" => c.LIBINPUT_CONFIG_TAP_MAP_LMR,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(pointer_accel: PointerAccel, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_accel_set_speed(device, pointer_accel.value);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(scroll_method: ScrollMethod, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_scroll_set_method(device, switch (scroll_method) {\n            .none => c.LIBINPUT_CONFIG_SCROLL_NO_SCROLL,\n            .@\"two-finger\" => c.LIBINPUT_CONFIG_SCROLL_2FG,\n            .edge => c.LIBINPUT_CONFIG_SCROLL_EDGE,\n            .button => c.LIBINPUT_CONFIG_SCROLL_ON_BUTTON_DOWN,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(scroll_button: ScrollButton, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_scroll_set_button(device, scroll_button.button);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(scroll_button_lock: ScrollButtonLock, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_scroll_set_button_lock(device, switch (scroll_button_lock) {\n            .enabled => c.LIBINPUT_CONFIG_SCROLL_BUTTON_LOCK_ENABLED,\n            .disabled => c.LIBINPUT_CONFIG_SCROLL_BUTTON_LOCK_DISABLED,\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(map_to_output: MapToOutput, device: *InputDevice) void {\n        const wlr_output = blk: {\n            if (map_to_output.output_name) |name| {\n                var it = server.root.active_outputs.iterator(.forward);\n                while (it.next()) |output| {\n                    if (mem.eql(u8, mem.span(output.wlr_output.name), name)) {\n                        break :blk output.wlr_output;\n                    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "fn apply(scroll_factor: ScrollFactor, device: *InputDevice) void {\n        device.config.scroll_factor = scroll_factor.value;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub fn deinit(config: *InputConfig) void {\n    util.gpa.free(config.glob);\n    if (config.@\"map-to-output\") |@\"map-to-output\"| {\n        if (@\"map-to-output\".output_name) |output_name| {\n            util.gpa.free(output_name);\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub fn apply(config: *const InputConfig, device: *InputDevice) void {\n    const libinput_device: *c.libinput_device = @ptrCast(device.wlr_device.getLibinputDevice() orelse return);\n    log.debug(\"applying input configuration '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub fn parse(config: *InputConfig, setting: []const u8, value: []const u8) !void {\n    inline for (@typeInfo(InputConfig).Struct.fields) |field| {\n        if (comptime mem.eql(u8, field.name, \"glob\")) continue;\n\n        if (mem.eql(u8, setting, field.name)) {\n            // Special-case the settings which are not enums.\n            if (comptime mem.eql(u8, field.name, \"pointer-accel\")) {\n                config.@\"pointer-accel\" = PointerAccel{\n                    .value = math.clamp(try std.fmt.parseFloat(f32, value), -1.0, 1.0),\n                }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub fn write(config: *InputConfig, writer: anytype) !void {\n    try writer.print(\"{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "function",
+      "name": "write",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to PointerAccel from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub const PointerAccel = struct {\n    value: f32,\n\n    fn apply(pointer_accel: PointerAccel, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_accel_set_speed(device, pointer_accel.value);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "struct",
+      "name": "PointerAccel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ScrollButton from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub const ScrollButton = struct {\n    button: u32,\n\n    fn apply(scroll_button: ScrollButton, device: *c.libinput_device) void {\n        _ = c.libinput_device_config_scroll_set_button(device, scroll_button.button);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "struct",
+      "name": "ScrollButton",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MapToOutput from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub const MapToOutput = struct {\n    output_name: ?[]const u8,\n\n    fn apply(map_to_output: MapToOutput, device: *InputDevice) void {\n        const wlr_output = blk: {\n            if (map_to_output.output_name) |name| {\n                var it = server.root.active_outputs.iterator(.forward);\n                while (it.next()) |output| {\n                    if (mem.eql(u8, mem.span(output.wlr_output.name), name)) {\n                        break :blk output.wlr_output;\n                    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "struct",
+      "name": "MapToOutput",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ScrollFactor from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "pub const ScrollFactor = struct {\n    value: f32,\n\n    fn apply(scroll_factor: ScrollFactor, device: *InputDevice) void {\n        device.config.scroll_factor = scroll_factor.value;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "struct",
+      "name": "ScrollFactor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tablet from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "const tablet: *Tablet = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "const",
+      "name": "tablet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to libinput_device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputConfig.zig",
+    "response": "const libinput_device: *c.libinput_device = @ptrCast(device.wlr_device.getLibinputDevice() orelse return);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputConfig.zig",
+      "type": "const",
+      "name": "libinput_device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "pub fn init(device: *InputDevice, seat: *Seat, wlr_device: *wlr.InputDevice) !void {\n    var vendor: c_uint = 0;\n    var product: c_uint = 0;\n\n    if (wlr_device.getLibinputDevice()) |d| {\n        vendor = c.libinput_device_get_id_vendor(@ptrCast(d));\n        product = c.libinput_device_get_id_product(@ptrCast(d));\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "pub fn deinit(device: *InputDevice) void {\n    device.destroy.link.remove();\n\n    util.gpa.free(device.identifier);\n\n    if (!isKeyboardGroup(device.wlr_device)) {\n        device.link.remove();\n        device.seat.updateCapabilities();\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isKeyboardGroup from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "fn isKeyboardGroup(wlr_device: *wlr.InputDevice) bool {\n    return wlr_device.type == .keyboard and\n        wlr.KeyboardGroup.fromKeyboard(wlr_device.toKeyboard()) != null;\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "function",
+      "name": "isKeyboardGroup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "fn handleDestroy(listener: *wl.Listener(*wlr.InputDevice), _: *wlr.InputDevice) void {\n    const device: *InputDevice = @fieldParentPtr(\"destroy\", listener);\n\n    log.debug(\"removed input device: {s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "function",
+      "name": "handleDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "const device: *InputDevice = @fieldParentPtr(\"destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "const",
+      "name": "device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to keyboard from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "const keyboard: *Keyboard = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "const",
+      "name": "keyboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tablet from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "const tablet: *Tablet = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "const",
+      "name": "tablet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to switch_device from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputDevice.zig",
+    "response": "const switch_device: *Switch = @fieldParentPtr(\"device\", device);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputDevice.zig",
+      "type": "const",
+      "name": "switch_device",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "pub fn init(input_manager: *InputManager) !void {\n    const seat_node = try util.gpa.create(std.TailQueue(Seat).Node);\n    errdefer util.gpa.destroy(seat_node);\n\n    input_manager.* = .{\n        // These are automatically freed when the display is destroyed\n        .idle_notifier = try wlr.IdleNotifierV1.create(server.wl_server),\n        .relative_pointer_manager = try wlr.RelativePointerManagerV1.create(server.wl_server),\n        .pointer_gestures = try wlr.PointerGesturesV1.create(server.wl_server),\n        .virtual_pointer_manager = try wlr.VirtualPointerManagerV1.create(server.wl_server),\n        .virtual_keyboard_manager = try wlr.VirtualKeyboardManagerV1.create(server.wl_server),\n        .pointer_constraints = try wlr.PointerConstraintsV1.create(server.wl_server),\n        .input_method_manager = try wlr.InputMethodManagerV2.create(server.wl_server),\n        .text_input_manager = try wlr.TextInputManagerV3.create(server.wl_server),\n        .tablet_manager = try wlr.TabletManagerV2.create(server.wl_server),\n        .configs = std.ArrayList(InputConfig).init(util.gpa),\n\n        .devices = undefined,\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "pub fn deinit(input_manager: *InputManager) void {\n    // This function must be called after the backend has been destroyed\n    assert(input_manager.devices.empty());\n\n    input_manager.new_virtual_pointer.link.remove();\n    input_manager.new_virtual_keyboard.link.remove();\n    input_manager.new_constraint.link.remove();\n    input_manager.new_input_method.link.remove();\n    input_manager.new_text_input.link.remove();\n\n    while (input_manager.seats.pop()) |seat_node| {\n        seat_node.data.deinit();\n        util.gpa.destroy(seat_node);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to defaultSeat from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "pub fn defaultSeat(input_manager: InputManager) *Seat {\n    return &input_manager.seats.first.?.data;\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "defaultSeat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to inputAllowed from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "pub fn inputAllowed(input_manager: InputManager, wlr_surface: *wlr.Surface) bool {\n    return if (input_manager.exclusive_client) |exclusive_client|\n        exclusive_client == wlr_surface.resource.getClient()\n    else\n        true;\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "inputAllowed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reconfigureDevices from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "pub fn reconfigureDevices(input_manager: *InputManager) void {\n    var it = input_manager.devices.iterator(.forward);\n    while (it.next()) |device| {\n        for (input_manager.configs.items) |config| {\n            if (globber.match(device.identifier, config.glob)) {\n                config.apply(device);\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "reconfigureDevices",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewInput from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "fn handleNewInput(listener: *wl.Listener(*wlr.InputDevice), wlr_device: *wlr.InputDevice) void {\n    const input_manager: *InputManager = @fieldParentPtr(\"new_input\", listener);\n\n    input_manager.defaultSeat().addDevice(wlr_device);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "handleNewInput",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewVirtualPointer from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "fn handleNewVirtualPointer(\n    listener: *wl.Listener(*wlr.VirtualPointerManagerV1.event.NewPointer),\n    event: *wlr.VirtualPointerManagerV1.event.NewPointer,\n) void {\n    const input_manager: *InputManager = @fieldParentPtr(\"new_virtual_pointer\", listener);\n\n    // TODO Support multiple seats and don't ignore\n    if (event.suggested_seat != null) {\n        log.debug(\"Ignoring seat suggestion from virtual pointer\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "handleNewVirtualPointer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewVirtualKeyboard from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "fn handleNewVirtualKeyboard(\n    _: *wl.Listener(*wlr.VirtualKeyboardV1),\n    virtual_keyboard: *wlr.VirtualKeyboardV1,\n) void {\n    const seat: *Seat = @ptrFromInt(virtual_keyboard.seat.data);\n    seat.addDevice(&virtual_keyboard.keyboard.base);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "handleNewVirtualKeyboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewConstraint from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "fn handleNewConstraint(\n    _: *wl.Listener(*wlr.PointerConstraintV1),\n    wlr_constraint: *wlr.PointerConstraintV1,\n) void {\n    PointerConstraint.create(wlr_constraint) catch {\n        log.err(\"out of memory\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "handleNewConstraint",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewInputMethod from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "fn handleNewInputMethod(_: *wl.Listener(*wlr.InputMethodV2), input_method: *wlr.InputMethodV2) void {\n    const seat: *Seat = @ptrFromInt(input_method.seat.data);\n\n    log.debug(\"new input method on seat {s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "handleNewInputMethod",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewTextInput from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "fn handleNewTextInput(_: *wl.Listener(*wlr.TextInputV3), wlr_text_input: *wlr.TextInputV3) void {\n    TextInput.create(wlr_text_input) catch {\n        log.err(\"out of memory\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "function",
+      "name": "handleNewTextInput",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to input_manager from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "const input_manager: *InputManager = @fieldParentPtr(\"new_input\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "const",
+      "name": "input_manager",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to input_manager from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "const input_manager: *InputManager = @fieldParentPtr(\"new_virtual_pointer\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "const",
+      "name": "input_manager",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to seat from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "const seat: *Seat = @ptrFromInt(virtual_keyboard.seat.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "const",
+      "name": "seat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to seat from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputManager.zig",
+    "response": "const seat: *Seat = @ptrFromInt(input_method.seat.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputManager.zig",
+      "type": "const",
+      "name": "seat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "pub fn create(wlr_popup: *wlr.InputPopupSurfaceV2, input_relay: *InputRelay) !void {\n    const input_popup = try util.gpa.create(InputPopup);\n    errdefer util.gpa.destroy(input_popup);\n\n    input_popup.* = .{\n        .link = undefined,\n        .input_relay = input_relay,\n        .wlr_popup = wlr_popup,\n        .surface_tree = try server.root.hidden.tree.createSceneSubsurfaceTree(wlr_popup.surface),\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "fn handleDestroy(listener: *wl.Listener(void)) void {\n    const input_popup: *InputPopup = @fieldParentPtr(\"destroy\", listener);\n\n    input_popup.destroy.link.remove();\n    input_popup.map.link.remove();\n    input_popup.unmap.link.remove();\n    input_popup.commit.link.remove();\n\n    input_popup.link.remove();\n\n    util.gpa.destroy(input_popup);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "function",
+      "name": "handleDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleMap from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "fn handleMap(listener: *wl.Listener(void)) void {\n    const input_popup: *InputPopup = @fieldParentPtr(\"map\", listener);\n\n    input_popup.update();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "function",
+      "name": "handleMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleUnmap from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "fn handleUnmap(listener: *wl.Listener(void)) void {\n    const input_popup: *InputPopup = @fieldParentPtr(\"unmap\", listener);\n\n    input_popup.surface_tree.node.reparent(server.root.hidden.tree);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "function",
+      "name": "handleUnmap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleCommit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "fn handleCommit(listener: *wl.Listener(*wlr.Surface), _: *wlr.Surface) void {\n    const input_popup: *InputPopup = @fieldParentPtr(\"commit\", listener);\n\n    input_popup.update();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "function",
+      "name": "handleCommit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to update from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "pub fn update(input_popup: *InputPopup) void {\n    const text_input = input_popup.input_relay.text_input orelse {\n        input_popup.surface_tree.node.reparent(server.root.hidden.tree);\n        return;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "function",
+      "name": "update",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to input_popup from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "const input_popup: *InputPopup = @fieldParentPtr(\"destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "const",
+      "name": "input_popup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to input_popup from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "const input_popup: *InputPopup = @fieldParentPtr(\"map\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "const",
+      "name": "input_popup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to input_popup from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "const input_popup: *InputPopup = @fieldParentPtr(\"unmap\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "const",
+      "name": "input_popup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to input_popup from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputPopup.zig",
+    "response": "const input_popup: *InputPopup = @fieldParentPtr(\"commit\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputPopup.zig",
+      "type": "const",
+      "name": "input_popup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "pub fn init(relay: *InputRelay) void {\n    relay.* = .{ .text_inputs = undefined, .input_popups = undefined }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newInputMethod from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "pub fn newInputMethod(relay: *InputRelay, input_method: *wlr.InputMethodV2) void {\n    const seat: *Seat = @fieldParentPtr(\"relay\", relay);\n\n    log.debug(\"new input method on seat {s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "newInputMethod",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleInputMethodCommit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "fn handleInputMethodCommit(\n    listener: *wl.Listener(*wlr.InputMethodV2),\n    input_method: *wlr.InputMethodV2,\n) void {\n    const relay: *InputRelay = @fieldParentPtr(\"input_method_commit\", listener);\n    assert(input_method == relay.input_method);\n\n    if (!input_method.client_active) return;\n    const text_input = relay.text_input orelse return;\n\n    if (input_method.current.preedit.text) |preedit_text| {\n        text_input.wlr_text_input.sendPreeditString(\n            preedit_text,\n            input_method.current.preedit.cursor_begin,\n            input_method.current.preedit.cursor_end,\n        );\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "handleInputMethodCommit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleInputMethodDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "fn handleInputMethodDestroy(\n    listener: *wl.Listener(*wlr.InputMethodV2),\n    input_method: *wlr.InputMethodV2,\n) void {\n    const relay: *InputRelay = @fieldParentPtr(\"input_method_destroy\", listener);\n    assert(input_method == relay.input_method);\n\n    relay.input_method_commit.link.remove();\n    relay.grab_keyboard.link.remove();\n    relay.input_method_destroy.link.remove();\n    relay.input_method_new_popup.link.remove();\n    relay.input_method = null;\n\n    relay.focus(null);\n\n    assert(relay.text_input == null);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "handleInputMethodDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleInputMethodGrabKeyboard from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "fn handleInputMethodGrabKeyboard(\n    listener: *wl.Listener(*wlr.InputMethodV2.KeyboardGrab),\n    keyboard_grab: *wlr.InputMethodV2.KeyboardGrab,\n) void {\n    const relay: *InputRelay = @fieldParentPtr(\"grab_keyboard\", listener);\n    const seat: *Seat = @fieldParentPtr(\"relay\", relay);\n\n    const active_keyboard = seat.wlr_seat.getKeyboard();\n    keyboard_grab.setKeyboard(active_keyboard);\n\n    keyboard_grab.events.destroy.add(&relay.grab_keyboard_destroy);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "handleInputMethodGrabKeyboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleInputMethodNewPopup from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "fn handleInputMethodNewPopup(\n    listener: *wl.Listener(*wlr.InputPopupSurfaceV2),\n    wlr_popup: *wlr.InputPopupSurfaceV2,\n) void {\n    const relay: *InputRelay = @fieldParentPtr(\"input_method_new_popup\", listener);\n\n    InputPopup.create(wlr_popup, relay) catch {\n        log.err(\"out of memory\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "handleInputMethodNewPopup",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleInputMethodGrabKeyboardDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "fn handleInputMethodGrabKeyboardDestroy(\n    listener: *wl.Listener(*wlr.InputMethodV2.KeyboardGrab),\n    keyboard_grab: *wlr.InputMethodV2.KeyboardGrab,\n) void {\n    const relay: *InputRelay = @fieldParentPtr(\"grab_keyboard_destroy\", listener);\n    relay.grab_keyboard_destroy.link.remove();\n\n    if (keyboard_grab.keyboard) |keyboard| {\n        keyboard_grab.input_method.seat.keyboardNotifyModifiers(&keyboard.modifiers);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "handleInputMethodGrabKeyboardDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to disableTextInput from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "pub fn disableTextInput(relay: *InputRelay) void {\n    assert(relay.text_input != null);\n    relay.text_input = null;\n\n    if (relay.input_method) |input_method| {\n        {\n            var it = relay.input_popups.iterator(.forward);\n            while (it.next()) |popup| popup.update();\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "disableTextInput",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendInputMethodState from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "pub fn sendInputMethodState(relay: *InputRelay) void {\n    const input_method = relay.input_method.?;\n    const wlr_text_input = relay.text_input.?.wlr_text_input;\n\n    // TODO Send these events only if something changed.\n    // On activation all events must be sent for all active features.\n\n    if (wlr_text_input.active_features.surrounding_text) {\n        if (wlr_text_input.current.surrounding.text) |text| {\n            input_method.sendSurroundingText(\n                text,\n                wlr_text_input.current.surrounding.cursor,\n                wlr_text_input.current.surrounding.anchor,\n            );\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "sendInputMethodState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to focus from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "pub fn focus(relay: *InputRelay, new_focus: ?*wlr.Surface) void {\n    // Send leave events\n    {\n        var it = relay.text_inputs.iterator(.forward);\n        while (it.next()) |text_input| {\n            if (text_input.wlr_text_input.focused_surface) |surface| {\n                // This function should not be called unless focus changes\n                assert(surface != new_focus);\n                text_input.wlr_text_input.sendLeave();\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "function",
+      "name": "focus",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to seat from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "const seat: *Seat = @fieldParentPtr(\"relay\", relay);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "const",
+      "name": "seat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to relay from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "const relay: *InputRelay = @fieldParentPtr(\"input_method_commit\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "const",
+      "name": "relay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to relay from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "const relay: *InputRelay = @fieldParentPtr(\"input_method_destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "const",
+      "name": "relay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to relay from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "const relay: *InputRelay = @fieldParentPtr(\"grab_keyboard\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "const",
+      "name": "relay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to seat from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "const seat: *Seat = @fieldParentPtr(\"relay\", relay);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "const",
+      "name": "seat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to relay from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "const relay: *InputRelay = @fieldParentPtr(\"input_method_new_popup\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "const",
+      "name": "relay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to relay from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/InputRelay.zig",
+    "response": "const relay: *InputRelay = @fieldParentPtr(\"grab_keyboard_destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/InputRelay.zig",
+      "type": "const",
+      "name": "relay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to contains from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn contains(pressed: *Pressed, code: u32) bool {\n        for (pressed.keys.constSlice()) |item| {\n            if (item.code == code) return true;\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "contains",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addAssumeCapacity from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn addAssumeCapacity(pressed: *Pressed, new: Key) void {\n        assert(!pressed.contains(new.code));\n        pressed.keys.appendAssumeCapacity(new);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "addAssumeCapacity",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn remove(pressed: *Pressed, code: u32) ?KeyConsumer {\n        for (pressed.keys.constSlice(), 0..) |item, idx| {\n            if (item.code == code) return pressed.keys.swapRemove(idx).consumer;\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "pub fn init(keyboard: *Keyboard, seat: *Seat, wlr_device: *wlr.InputDevice) !void {\n    keyboard.* = .{\n        .device = undefined,\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "pub fn deinit(keyboard: *Keyboard) void {\n    keyboard.key.link.remove();\n    keyboard.modifiers.link.remove();\n\n    const seat = keyboard.device.seat;\n    const wlr_keyboard = keyboard.device.wlr_device.toKeyboard();\n\n    keyboard.device.deinit();\n\n    // If the currently active keyboard of a seat is destroyed we need to set\n    // a new active keyboard. Otherwise wlroots may send an enter event without\n    // first having sent a keymap event if Seat.keyboardNotifyEnter() is called\n    // before a new active keyboard is set.\n    if (seat.wlr_seat.getKeyboard() == wlr_keyboard) {\n        var it = server.input_manager.devices.iterator(.forward);\n        while (it.next()) |device| {\n            if (device.seat == seat and device.wlr_device.type == .keyboard) {\n                seat.wlr_seat.setKeyboard(device.wlr_device.toKeyboard());\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleKey from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn handleKey(listener: *wl.Listener(*wlr.Keyboard.event.Key), event: *wlr.Keyboard.event.Key) void {\n    // This event is raised when a key is pressed or released.\n    const keyboard: *Keyboard = @fieldParentPtr(\"key\", listener);\n    const wlr_keyboard = keyboard.device.wlr_device.toKeyboard();\n\n    // If the keyboard is in a group, this event will be handled by the group's Keyboard instance.\n    if (wlr_keyboard.group != null) return;\n\n    keyboard.device.seat.handleActivity();\n\n    keyboard.device.seat.clearRepeatingMapping();\n\n    // Translate libinput keycode -> xkbcommon\n    const keycode = event.keycode + 8;\n\n    const modifiers = wlr_keyboard.getModifiers();\n    const released = event.state == .released;\n\n    // We must ref() the state here as a mapping could change the keyboard layout.\n    const xkb_state = (wlr_keyboard.xkb_state orelse return).ref();\n    defer xkb_state.unref();\n\n    const keysyms = xkb_state.keyGetSyms(keycode);\n\n    // Hide cursor when typing\n    for (keysyms) |sym| {\n        if (server.config.cursor_hide_when_typing == .enabled and\n            !released and\n            !isModifier(sym))\n        {\n            keyboard.device.seat.cursor.hide();\n            break;\n        }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "handleKey",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isModifier from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn isModifier(keysym: xkb.Keysym) bool {\n    return @intFromEnum(keysym) >= xkb.Keysym.Shift_L and @intFromEnum(keysym) <= xkb.Keysym.Hyper_R;\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "isModifier",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleModifiers from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn handleModifiers(listener: *wl.Listener(*wlr.Keyboard), _: *wlr.Keyboard) void {\n    const keyboard: *Keyboard = @fieldParentPtr(\"modifiers\", listener);\n    const wlr_keyboard = keyboard.device.wlr_device.toKeyboard();\n\n    // If the keyboard is in a group, this event will be handled by the group's Keyboard instance.\n    if (wlr_keyboard.group != null) return;\n\n    if (keyboard.getInputMethodGrab()) |keyboard_grab| {\n        keyboard_grab.setKeyboard(keyboard_grab.keyboard);\n        keyboard_grab.sendModifiers(&wlr_keyboard.modifiers);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "handleModifiers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleBuiltinMapping from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn handleBuiltinMapping(keysym: xkb.Keysym) bool {\n    switch (@intFromEnum(keysym)) {\n        xkb.Keysym.XF86Switch_VT_1...xkb.Keysym.XF86Switch_VT_12 => {\n            log.debug(\"switch VT keysym received\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "handleBuiltinMapping",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getInputMethodGrab from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "fn getInputMethodGrab(keyboard: Keyboard) ?*wlr.InputMethodV2.KeyboardGrab {\n    if (keyboard.device.seat.relay.input_method) |input_method| {\n        if (input_method.keyboard_grab) |keyboard_grab| {\n            if (keyboard.device.wlr_device.getVirtualKeyboard()) |virtual_keyboard| {\n                if (virtual_keyboard.resource.getClient() == keyboard_grab.resource.getClient()) {\n                    return null;\n                }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "function",
+      "name": "getInputMethodGrab",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Pressed from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "pub const Pressed = struct {\n    const Key = struct {\n        code: u32,\n        consumer: KeyConsumer,\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "struct",
+      "name": "Pressed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to keyboard from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "const keyboard: *Keyboard = @fieldParentPtr(\"key\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "const",
+      "name": "keyboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to consumer from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "const consumer: KeyConsumer = blk: {\n        // Decision is made on press;",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "const",
+      "name": "consumer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to keyboard from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Keyboard.zig",
+    "response": "const keyboard: *Keyboard = @fieldParentPtr(\"modifiers\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Keyboard.zig",
+      "type": "const",
+      "name": "keyboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "pub fn create(wlr_layer_surface: *wlr.LayerSurfaceV1) error{OutOfMemory}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroyPopups from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "pub fn destroyPopups(layer_surface: *LayerSurface) void {\n    var it = layer_surface.wlr_layer_surface.popups.safeIterator(.forward);\n    while (it.next()) |wlr_xdg_popup| wlr_xdg_popup.destroy();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "destroyPopups",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "fn handleDestroy(listener: *wl.Listener(*wlr.LayerSurfaceV1), _: *wlr.LayerSurfaceV1) void {\n    const layer_surface: *LayerSurface = @fieldParentPtr(\"destroy\", listener);\n\n    log.debug(\"layer surface '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "handleDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleMap from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "fn handleMap(listener: *wl.Listener(void)) void {\n    const layer_surface: *LayerSurface = @fieldParentPtr(\"map\", listener);\n    const wlr_surface = layer_surface.wlr_layer_surface;\n\n    log.debug(\"layer surface '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "handleMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleUnmap from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "fn handleUnmap(listener: *wl.Listener(void)) void {\n    const layer_surface: *LayerSurface = @fieldParentPtr(\"unmap\", listener);\n\n    log.debug(\"layer surface '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "handleUnmap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleCommit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "fn handleCommit(listener: *wl.Listener(*wlr.Surface), _: *wlr.Surface) void {\n    const layer_surface: *LayerSurface = @fieldParentPtr(\"commit\", listener);\n    const wlr_layer_surface = layer_surface.wlr_layer_surface;\n\n    assert(wlr_layer_surface.output != null);\n\n    // If the layer was changed, move the LayerSurface to the proper tree.\n    if (wlr_layer_surface.current.committed.layer) {\n        const tree = layer_surface.output.layerSurfaceTree(wlr_layer_surface.current.layer);\n        layer_surface.scene_layer_surface.tree.node.reparent(tree);\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "handleCommit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleKeyboardInteractiveExclusive from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "fn handleKeyboardInteractiveExclusive(output: *Output, consider: ?*LayerSurface) void {\n    if (server.lock_manager.state != .unlocked) return;\n\n    // Find the topmost layer surface (if any) in the top or overlay layers which\n    // requests exclusive keyboard interactivity.\n    const to_focus = outer: for ([_]zwlr.LayerShellV1.Layer{ .overlay, .top }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "handleKeyboardInteractiveExclusive",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleNewPopup from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "fn handleNewPopup(listener: *wl.Listener(*wlr.XdgPopup), wlr_xdg_popup: *wlr.XdgPopup) void {\n    const layer_surface: *LayerSurface = @fieldParentPtr(\"new_popup\", listener);\n\n    XdgPopup.create(\n        wlr_xdg_popup,\n        layer_surface.popup_tree,\n        layer_surface.popup_tree,\n    ) catch {\n        wlr_xdg_popup.resource.postNoMemory();\n        return;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "function",
+      "name": "handleNewPopup",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to output from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "const output: *Output = @ptrFromInt(wlr_layer_surface.output.?.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "const",
+      "name": "output",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to layer_surface from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "const layer_surface: *LayerSurface = @fieldParentPtr(\"destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "const",
+      "name": "layer_surface",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to layer_surface from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "const layer_surface: *LayerSurface = @fieldParentPtr(\"map\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "const",
+      "name": "layer_surface",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to layer_surface from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "const layer_surface: *LayerSurface = @fieldParentPtr(\"unmap\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "const",
+      "name": "layer_surface",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to layer_surface from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "const layer_surface: *LayerSurface = @fieldParentPtr(\"commit\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "const",
+      "name": "layer_surface",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to layer_surface from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayerSurface.zig",
+    "response": "const layer_surface: *LayerSurface = @fieldParentPtr(\"new_popup\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayerSurface.zig",
+      "type": "const",
+      "name": "layer_surface",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "pub fn create(client: *wl.Client, version: u32, id: u32, output: *Output, namespace: []const u8) !void {\n    const layout_v3 = try river.LayoutV3.create(client, version, id);\n\n    if (namespaceInUse(namespace, output, client)) {\n        layout_v3.sendNamespaceInUse();\n        layout_v3.setHandler(?*anyopaque, handleRequestInert, null, null);\n        return;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to namespaceInUse from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "fn namespaceInUse(namespace: []const u8, output: *Output, client: *wl.Client) bool {\n    var output_it = server.root.active_outputs.iterator(.forward);\n    while (output_it.next()) |o| {\n        var layout_it = output.layouts.first;\n        if (o == output) {\n            // On this output, no other layout can have our namespace.\n            while (layout_it) |layout_node| : (layout_it = layout_node.next) {\n                if (mem.eql(u8, namespace, layout_node.data.namespace)) return true;\n            }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "function",
+      "name": "namespaceInUse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequestInert from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "fn handleRequestInert(layout_v3: *river.LayoutV3, request: river.LayoutV3.Request, _: ?*anyopaque) void {\n    if (request == .destroy) layout_v3.destroy();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "function",
+      "name": "handleRequestInert",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startLayoutDemand from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "pub fn startLayoutDemand(layout: *Layout, views: u32) void {\n    log.debug(\n        \"starting layout demand '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "function",
+      "name": "startLayoutDemand",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequest from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "fn handleRequest(layout_v3: *river.LayoutV3, request: river.LayoutV3.Request, layout: *Layout) void {\n    switch (request) {\n        .destroy => layout_v3.destroy(),\n\n        // We receive this event when the client wants to push a view dimension proposal\n        // to the layout demand matching the serial.\n        .push_view_dimensions => |req| {\n            log.debug(\n                \"layout '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "function",
+      "name": "handleRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "fn handleDestroy(_: *river.LayoutV3, layout: *Layout) void {\n    layout.destroy();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "function",
+      "name": "handleDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "pub fn destroy(layout: *Layout) void {\n    log.debug(\n        \"destroying layout '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "function",
+      "name": "destroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to node from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/Layout.zig",
+    "response": "const node: *std.TailQueue(Layout).Node = @fieldParentPtr(\"data\", layout);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/Layout.zig",
+      "type": "const",
+      "name": "node",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutDemand.zig",
+    "response": "pub fn init(layout: *Layout, views: u32) !LayoutDemand {\n    const event_loop = server.wl_server.getEventLoop();\n    const timeout_timer = try event_loop.addTimer(*Layout, handleTimeout, layout);\n    errdefer timeout_timer.remove();\n    try timeout_timer.timerUpdate(timeout_ms);\n\n    return LayoutDemand{\n        .serial = server.wl_server.nextSerial(),\n        .views = @intCast(views),\n        .view_boxen = try util.gpa.alloc(wlr.Box, views),\n        .timeout_timer = timeout_timer,\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutDemand.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutDemand.zig",
+    "response": "pub fn deinit(demand: *const LayoutDemand) void {\n    demand.timeout_timer.remove();\n    util.gpa.free(demand.view_boxen);\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutDemand.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleTimeout from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutDemand.zig",
+    "response": "fn handleTimeout(layout: *Layout) c_int {\n    log.info(\n        \"layout demand for layout '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutDemand.zig",
+      "type": "function",
+      "name": "handleTimeout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pushViewDimensions from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutDemand.zig",
+    "response": "pub fn pushViewDimensions(demand: *LayoutDemand, x: i32, y: i32, width: u31, height: u31) void {\n    // The client pushed too many dimensions\n    if (demand.views <= 0) {\n        demand.views -= 1;\n        return;\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutDemand.zig",
+      "type": "function",
+      "name": "pushViewDimensions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to apply from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutDemand.zig",
+    "response": "pub fn apply(demand: *LayoutDemand, layout: *Layout) void {\n    // Note: output.layout may not be equal to layout here if the layout\n    // namespace changes while a transactions is inflight.\n    const output = layout.output;\n\n    // Whether the layout demand succeeds or fails, we are done with it and\n    // need to clean up\n    defer {\n        output.inflight.layout_demand.?.deinit();\n        output.inflight.layout_demand = null;\n        server.root.notifyLayoutDemandDone();\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutDemand.zig",
+      "type": "function",
+      "name": "apply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutManager.zig",
+    "response": "pub fn init(layout_manager: *LayoutManager) !void {\n    layout_manager.* = .{\n        .global = try wl.Global.create(server.wl_server, river.LayoutManagerV3, 2, ?*anyopaque, null, bind),\n    }",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutManager.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleServerDestroy from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutManager.zig",
+    "response": "fn handleServerDestroy(listener: *wl.Listener(*wl.Server), _: *wl.Server) void {\n    const layout_manager: *LayoutManager = @fieldParentPtr(\"server_destroy\", listener);\n    layout_manager.global.destroy();\n}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutManager.zig",
+      "type": "function",
+      "name": "handleServerDestroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bind from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutManager.zig",
+    "response": "fn bind(client: *wl.Client, _: ?*anyopaque, version: u32, id: u32) void {\n    const layout_manager_v3 = river.LayoutManagerV3.create(client, version, id) catch {\n        client.postNoMemory();\n        log.err(\"out of memory\", .{}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutManager.zig",
+      "type": "function",
+      "name": "bind",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequest from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutManager.zig",
+    "response": "fn handleRequest(\n    layout_manager_v3: *river.LayoutManagerV3,\n    request: river.LayoutManagerV3.Request,\n    _: ?*anyopaque,\n) void {\n    switch (request) {\n        .destroy => layout_manager_v3.destroy(),\n\n        .get_layout => |req| {\n            // Ignore if the output is inert\n            const wlr_output = wlr.Output.fromWlOutput(req.output) orelse return;\n            const output: *Output = @ptrFromInt(wlr_output.data);\n\n            log.debug(\"bind layout '{s}",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutManager.zig",
+      "type": "function",
+      "name": "handleRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to layout_manager from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutManager.zig",
+    "response": "const layout_manager: *LayoutManager = @fieldParentPtr(\"server_destroy\", listener);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutManager.zig",
+      "type": "const",
+      "name": "layout_manager",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to output from riverwm/river",
+    "context": "Repository: riverwm/river (3752 ⭐)\nFile: river/LayoutManager.zig",
+    "response": "const output: *Output = @ptrFromInt(wlr_output.data);",
+    "metadata": {
+      "repo": "riverwm/river",
+      "stars": 3752,
+      "file": "river/LayoutManager.zig",
+      "type": "const",
+      "name": "output",
+      "difficulty": "easy"
+    }
+  }
+]

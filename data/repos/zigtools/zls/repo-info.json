@@ -1,0 +1,9 @@
+{
+  "name": "zls",
+  "fullName": "zigtools/zls",
+  "owner": "zigtools",
+  "stars": 4263,
+  "description": "A language server for Zig supporting developers with features like autocomplete and goto definition",
+  "url": "https://github.com/zigtools/zls",
+  "defaultBranch": "master"
+}

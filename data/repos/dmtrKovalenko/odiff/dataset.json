@@ -1,0 +1,1822 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildOdiff from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: build.zig",
+    "response": "fn buildOdiff(\n    b: *std.Build,\n    target: std.Build.ResolvedTarget,\n    optimize: std.builtin.OptimizeMode,\n    dynamic: bool,\n    build_options_mod: *std.Build.Module,\n) struct { *std.Build.Module, *std.Build.Step.Compile }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildOdiff",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to linkDeps from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: build.zig",
+    "response": "pub fn linkDeps(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, dynamic: bool, module: *std.Build.Module) void {\n    const host_target = b.graph.host.result;\n    const build_target = target.result;\n    const is_cross_compiling = host_target.cpu.arch != build_target.cpu.arch or\n        host_target.os.tag != build_target.os.tag;\n    if (dynamic and !is_cross_compiling) {\n        switch (build_target.os.tag) {\n            .windows => {\n                std.log.warn(\"Dynamic linking is not supported on Windows, falling back to static linking\", .{}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "build.zig",
+      "type": "function",
+      "name": "linkDeps",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fmt from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: build.zig",
+    "response": "const fmt: ?[]const u8 = switch (os_tag) {\n            .linux => \"elf64\",\n            .macos => \"macho64\",\n            else => null,\n        };",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "build.zig",
+      "type": "const",
+      "name": "fmt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasManySiblingsWithSameColor from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/antialiasing.zig",
+    "response": "fn hasManySiblingsWithSameColor(x: u32, y: u32, width: u32, height: u32, image: *const Image) bool {\n    if (x <= width - 1 and y <= height - 1) {\n        const x0 = @max(if (x > 0) x - 1 else 0, 0);\n        const y0 = @max(if (y > 0) y - 1 else 0, 0);\n        const x1 = @min(x + 1, width - 1);\n        const y1 = @min(y + 1, height - 1);\n\n        var zeroes: u32 = if (x == x0 or x == x1 or y == y0 or y == y1) 1 else 0;\n\n        const base_color = image.readRawPixel(x, y);\n\n        var adj_y = y0;\n        while (adj_y <= y1) : (adj_y += 1) {\n            var adj_x = x0;\n            while (adj_x <= x1) : (adj_x += 1) {\n                if (zeroes < 3 and (x != adj_x or y != adj_y)) {\n                    const adjacent_color = image.readRawPixel(adj_x, adj_y);\n                    if (base_color == adjacent_color) {\n                        zeroes += 1;\n                    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/antialiasing.zig",
+      "type": "function",
+      "name": "hasManySiblingsWithSameColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to detect from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/antialiasing.zig",
+    "response": "pub fn detect(x: u32, y: u32, base_img: *const Image, comp_img: *const Image) bool {\n    const x0 = @max(if (x > 0) x - 1 else 0, 0);\n    const y0 = @max(if (y > 0) y - 1 else 0, 0);\n    const x1 = @min(x + 1, base_img.width - 1);\n    const y1 = @min(y + 1, base_img.height - 1);\n\n    var min_sibling_delta: f64 = 0.0;\n    var max_sibling_delta: f64 = 0.0;\n    var min_sibling_coord = struct { x: u32, y: u32 }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/antialiasing.zig",
+      "type": "function",
+      "name": "detect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) CliArgs {\n        return CliArgs{\n            .base_image = \"\",\n            .comp_image = \"\",\n            .ignore_regions = std.array_list.Managed(diff.IgnoreRegion).init(allocator),\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "pub fn deinit(self: *CliArgs) void {\n        self.ignore_regions.deinit();\n        if (self.base_image.len > 0) self.allocator.free(self.base_image);\n        if (self.comp_image.len > 0) self.allocator.free(self.comp_image);\n        if (self.diff_output) |output| {\n            if (output.len > 0) self.allocator.free(output);\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printUsage from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "fn printUsage(program_name: []const u8) void {\n    print(\"Usage: {s}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "function",
+      "name": "printUsage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseFloatArg from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "fn parseFloatArg(args: [][:0]u8, index: *usize, option_name: []const u8) ?f32 {\n    if (index.* >= args.len) return null;\n    const arg = args[index.*];\n\n    // --option=value format\n    if (std.mem.startsWith(u8, arg, option_name) and\n        arg.len > option_name.len and\n        arg[option_name.len] == '=') {\n\n        const value_str = arg[option_name.len + 1..];\n        if (value_str.len == 0) return null;\n\n        index.* += 1;\n        return std.fmt.parseFloat(f32, value_str) catch null;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "function",
+      "name": "parseFloatArg",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseIgnoreRegions from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "fn parseIgnoreRegions(input: []const u8, list: *std.array_list.Managed(diff.IgnoreRegion)) !void {\n    var regions_iter = std.mem.splitSequence(u8, input, \",\");\n    while (regions_iter.next()) |region_str| {\n        // Parse format: x1:y1-x2:y2\n        var coords_iter = std.mem.splitSequence(u8, region_str, \"-\");\n        const start_coords = coords_iter.next() orelse return error.InvalidFormat;\n        const end_coords = coords_iter.next() orelse return error.InvalidFormat;\n\n        // Parse start coordinates\n        var start_iter = std.mem.splitSequence(u8, start_coords, \":\");\n        const x1_str = start_iter.next() orelse return error.InvalidFormat;\n        const y1_str = start_iter.next() orelse return error.InvalidFormat;\n\n        // Parse end coordinates\n        var end_iter = std.mem.splitSequence(u8, end_coords, \":\");\n        const x2_str = end_iter.next() orelse return error.InvalidFormat;\n        const y2_str = end_iter.next() orelse return error.InvalidFormat;\n\n        const x1 = try std.fmt.parseInt(u32, x1_str, 10);\n        const y1 = try std.fmt.parseInt(u32, y1_str, 10);\n        const x2 = try std.fmt.parseInt(u32, x2_str, 10);\n        const y2 = try std.fmt.parseInt(u32, y2_str, 10);\n\n        try list.append(.{ .x1 = x1, .y1 = y1, .x2 = x2, .y2 = y2 }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "function",
+      "name": "parseIgnoreRegions",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseHexColor from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "pub fn parseHexColor(hex_str: []const u8) !u32 {\n    if (hex_str.len == 0) return 0xFF0000FF; // Default red pixel\n\n    var color_str = hex_str;\n    if (hex_str[0] == '#') {\n        color_str = hex_str[1..];\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "function",
+      "name": "parseHexColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseArgs from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "pub fn parseArgs(allocator: std.mem.Allocator) !CliArgs {\n    const args = try std.process.argsAlloc(allocator);\n    defer std.process.argsFree(allocator, args);\n\n    if (args.len < 2) {\n        printUsage(args[0]);\n        std.process.exit(1);\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "function",
+      "name": "parseArgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CliArgs from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/cli.zig",
+    "response": "pub const CliArgs = struct {\n    base_image: []const u8,\n    comp_image: []const u8,\n    diff_output: ?[]const u8 = null,\n    threshold: f32 = 0.1,\n    diff_mask: bool = false,\n    diff_overlay_factor: ?f32 = null,\n    fail_on_layout: bool = false,\n    parsable_stdout: bool = false,\n    diff_color: []const u8 = \"\",\n    antialiasing: bool = false,\n    diff_lines: bool = false,\n    reduce_ram_usage: bool = false,\n    enable_asm: bool = false,\n    ignore_regions: std.array_list.Managed(diff.IgnoreRegion),\n    allocator: std.mem.Allocator,\n\n    pub fn init(allocator: std.mem.Allocator) CliArgs {\n        return CliArgs{\n            .base_image = \"\",\n            .comp_image = \"\",\n            .ignore_regions = std.array_list.Managed(diff.IgnoreRegion).init(allocator),\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/cli.zig",
+      "type": "struct",
+      "name": "CliArgs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to blendChannelWhite from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "fn blendChannelWhite(color: f64, alpha: f64) f64 {\n    return 255.0 + ((color - 255.0) * alpha);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "blendChannelWhite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to blendSemiTransparentPixel from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "fn blendSemiTransparentPixel(pixel: Pixel) Pixel {\n    if (pixel.a == 0.0) return WHITE_PIXEL;\n    if (pixel.a == 255.0) return Pixel{ .r = pixel.r, .g = pixel.g, .b = pixel.b, .a = 1.0 }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "blendSemiTransparentPixel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to decodeRawPixel from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "fn decodeRawPixel(raw_pixel: u32) Pixel {\n    const a: f64 = @floatFromInt((raw_pixel >> 24) & 0xFF);\n    const b: f64 = @floatFromInt((raw_pixel >> 16) & 0xFF);\n    const g: f64 = @floatFromInt((raw_pixel >> 8) & 0xFF);\n    const r: f64 = @floatFromInt(raw_pixel & 0xFF);\n\n    return Pixel{ .r = r, .g = g, .b = b, .a = a }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "decodeRawPixel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgb2y from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "fn rgb2y(pixel: Pixel) f64 {\n    return (pixel.r * YIQ_Y_R_COEFF) + (pixel.g * YIQ_Y_G_COEFF) + (pixel.b * YIQ_Y_B_COEFF);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "rgb2y",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgb2i from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "fn rgb2i(pixel: Pixel) f64 {\n    return (pixel.r * YIQ_I_R_COEFF) + (pixel.g * YIQ_I_G_COEFF) + (pixel.b * YIQ_I_B_COEFF);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "rgb2i",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgb2q from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "fn rgb2q(pixel: Pixel) f64 {\n    return (pixel.r * YIQ_Q_R_COEFF) + (pixel.g * YIQ_Q_G_COEFF) + (pixel.b * YIQ_Q_B_COEFF);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "rgb2q",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calculatePixelColorDelta from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "pub fn calculatePixelColorDelta(pixel_a: u32, pixel_b: u32) f64 {\n    const decoded_a = blendSemiTransparentPixel(decodeRawPixel(pixel_a));\n    const decoded_b = blendSemiTransparentPixel(decodeRawPixel(pixel_b));\n\n    const y = rgb2y(decoded_a) - rgb2y(decoded_b);\n    const i = rgb2i(decoded_a) - rgb2i(decoded_b);\n    const q = rgb2q(decoded_a) - rgb2q(decoded_b);\n\n    return (YIQ_Y_WEIGHT * y * y) + (YIQ_I_WEIGHT * i * i) + (YIQ_Q_WEIGHT * q * q);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "calculatePixelColorDelta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calculatePixelBrightnessDelta from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "pub fn calculatePixelBrightnessDelta(pixel_a: u32, pixel_b: u32) f64 {\n    const decoded_a = blendSemiTransparentPixel(decodeRawPixel(pixel_a));\n    const decoded_b = blendSemiTransparentPixel(decodeRawPixel(pixel_b));\n\n    return rgb2y(decoded_a) - rgb2y(decoded_b);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "calculatePixelBrightnessDelta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to blendChannelSimd from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "fn blendChannelSimd(\n    channel_vec: @Vector(2, i64),\n    vec_alpha: @Vector(2, i64),\n) @Vector(2, i64) {\n    const VEC_2X_255: @Vector(2, i64) = @splat(255);\n    const VEC_2X_0: @Vector(2, i64) = @splat(0);\n    const VEC_2X_WHITE_SHIFTED = comptime VEC_2X_255 << VEC_2X_SHIFT;\n\n    const alpha_zero = vec_alpha == VEC_2X_0;\n    const alpha_full = vec_alpha == VEC_2X_255;\n\n    const opaque_value = channel_vec << VEC_2X_SHIFT;\n    const blended = VEC_2X_WHITE_SHIFTED + @divTrunc((channel_vec - VEC_2X_255) * vec_alpha * VEC_2X_SHIFTED_ONE, VEC_2X_255);\n\n    return @select(i64, alpha_zero, VEC_2X_WHITE_SHIFTED, @select(i64, alpha_full, opaque_value, blended));\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "blendChannelSimd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calculatePixelColorDeltaSimd from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "pub fn calculatePixelColorDeltaSimd(pixel_a: u32, pixel_b: u32) i64 {\n    const pixels: @Vector(2, u32) = .{ pixel_a, pixel_b }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "function",
+      "name": "calculatePixelColorDeltaSimd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Pixel from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "pub const Pixel = struct {\n    r: f64,\n    g: f64,\n    b: f64,\n    a: f64,\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "struct",
+      "name": "Pixel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to a from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const a: f64 = @floatFromInt((raw_pixel >> 24) & 0xFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "a",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to b from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const b: f64 = @floatFromInt((raw_pixel >> 16) & 0xFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "b",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to g from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const g: f64 = @floatFromInt((raw_pixel >> 8) & 0xFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "g",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to r from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const r: f64 = @floatFromInt(raw_pixel & 0xFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "r",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_2X_SHIFT from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_2X_SHIFT: @Vector(2, i64) = @splat(COLOR_DELTA_SIMD_SHIFT);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_2X_SHIFT",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_2X_SHIFTED_ONE from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_2X_SHIFTED_ONE: @Vector(2, i64) = @splat(SHIFTED_1);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_2X_SHIFTED_ONE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_Y_R_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_Y_R_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_Y_R_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_Y_R_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_Y_G_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_Y_G_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_Y_G_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_Y_G_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_Y_B_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_Y_B_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_Y_B_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_Y_B_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_I_R_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_I_R_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_I_R_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_I_R_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_I_G_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_I_G_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_I_G_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_I_G_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_I_B_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_I_B_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_I_B_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_I_B_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_Q_R_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_Q_R_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_Q_R_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_Q_R_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_Q_G_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_Q_G_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_Q_G_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_Q_G_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_YIQ_Q_B_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_YIQ_Q_B_COEFF: @Vector(2, i64) = @splat(@as(i64, @intFromFloat(YIQ_Q_B_COEFF * SHIFTED_1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_YIQ_Q_B_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_2X_255 from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_2X_255: @Vector(2, i64) = @splat(255);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_2X_255",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VEC_2X_0 from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const VEC_2X_0: @Vector(2, i64) = @splat(0);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "VEC_2X_0",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pixels from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const pixels: @Vector(2, u32) = .{ pixel_a, pixel_b };",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "pixels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mask_ff from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const mask_ff: @Vector(2, u32) = comptime @splat(0xFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "mask_ff",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to vec_r from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const vec_r: @Vector(2, i64) = @intCast(vec_r_u32);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "vec_r",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to vec_g from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const vec_g: @Vector(2, i64) = @intCast(vec_g_u32);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "vec_g",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to vec_b from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const vec_b: @Vector(2, i64) = @intCast(vec_b_u32);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "vec_b",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to vec_alpha from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/color_delta.zig",
+    "response": "const vec_alpha: @Vector(2, i64) = @intCast(vec_alpha_u32);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/color_delta.zig",
+      "type": "const",
+      "name": "vec_alpha",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator, max_height: u32) !DiffLines {\n        const lines = try allocator.alloc(u32, max_height);\n        return DiffLines{\n            .lines = lines,\n            .count = 0,\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub fn deinit(self: *DiffLines) void {\n        self.allocator.free(self.lines);\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addLine from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub fn addLine(self: *DiffLines, line: u32) void {\n        // Exactly match original logic: if (lines.items.len == 0 or lines.items[lines.items.len - 1] < y)\n        if (self.count == 0 or (self.count > 0 and self.lines[self.count - 1] < line)) {\n            if (self.count < self.lines.len) {\n                self.lines[self.count] = line;\n                self.count += 1;\n            }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "addLine",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getItems from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub fn getItems(self: *const DiffLines) []const u32 {\n        return self.lines[0..self.count];\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "getItems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unrollIgnoreRegions from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn unrollIgnoreRegions(width: u32, regions: ?[]const IgnoreRegion, allocator: std.mem.Allocator) !?[]struct { u32, u32 }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "unrollIgnoreRegions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isInIgnoreRegion from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn isInIgnoreRegion(offset: u32, regions: ?[]const struct { u32, u32 }) bool {\n    if (regions == null) return false;\n\n    for (regions.?) |region| {\n        if (offset >= region[0] and offset <= region[1]) {\n            return true;\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "isInIgnoreRegion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compare from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn compare(\n    base: *const Image,\n    comp: *const Image,\n    options: DiffOptions,\n    allocator: std.mem.Allocator,\n) !struct { ?Image, u32, f64, ?DiffLines }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "compare",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to processPixelDifference from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn processPixelDifference(\n    pixel_offset: usize,\n    base_color: u32,\n    comp_color: u32,\n    x: u32,\n    y: u32,\n    base: *const Image,\n    comp: *const Image,\n    diff_output: *?Image,\n    diff_count: *u32,\n    diff_lines: ?*DiffLines,\n    ignore_regions: ?[]struct { u32, u32 },\n    max_delta: i64,\n    options: DiffOptions,\n) !void {\n    const is_ignored = isInIgnoreRegion(@intCast(pixel_offset), ignore_regions);\n    if (!is_ignored) {\n        const delta = @call(.never_inline, color_delta.calculatePixelColorDeltaSimd, .{ base_color, comp_color }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "processPixelDifference",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to increment_coords from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn increment_coords(x: *u32, y: *u32, width: u32) void {\n    x.* += 1;\n    if (x.* >= width) {\n        x.* = 0;\n        y.* += 1;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "increment_coords",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to increment_coords_by from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn increment_coords_by(x: *u32, y: *u32, step: u32, width: u32) void {\n    var remaining = step;\n    while (remaining > 0) {\n        const pixels_to_end_of_row = width - x.*;\n        if (remaining >= pixels_to_end_of_row) {\n            remaining -= pixels_to_end_of_row;\n            x.* = 0;\n            y.* += 1;\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "increment_coords_by",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compareSameLayouts from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn compareSameLayouts(base: *const Image, comp: *const Image, diff_output: *?Image, diff_count: *u32, diff_lines: ?*DiffLines, ignore_regions: ?[]struct { u32, u32 }, max_delta: i64, options: DiffOptions) !void {\n    var x: u32 = 0;\n    var y: u32 = 0;\n\n    const size = (base.height * base.width);\n    const base_data = base.data;\n    const comp_data = comp.data;\n\n    const SIMD_SIZE = std.simd.suggestVectorLength(u32) orelse if (HAS_AVX512f) 16 else if (HAS_NEON) 8 else 4;\n    const simd_end = (size / SIMD_SIZE) * SIMD_SIZE;\n\n    var offset: usize = 0;\n    while (offset < simd_end) : (offset += SIMD_SIZE) {\n        const base_vec: @Vector(SIMD_SIZE, u32) = base_data[offset .. offset + SIMD_SIZE][0..SIMD_SIZE].*;\n        const comp_vec: @Vector(SIMD_SIZE, u32) = comp_data[offset .. offset + SIMD_SIZE][0..SIMD_SIZE].*;\n\n        const diff_mask = base_vec != comp_vec;\n        if (!@reduce(.Or, diff_mask)) {\n            increment_coords_by(&x, &y, SIMD_SIZE, base.width);\n            continue;\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "compareSameLayouts",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compareDifferentLayouts from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub fn compareDifferentLayouts(base: *const Image, comp: *const Image, maybe_diff_output: *?Image, diff_count: *u32, diff_lines: ?*DiffLines, ignore_regions: ?[]struct { u32, u32 }, max_delta: i64, options: DiffOptions) !void {\n    var x: u32 = 0;\n    var y: u32 = 0;\n    var offset: u32 = 0;\n\n    const size = (base.height * base.width);\n    while (offset < size) : (offset += 1) {\n        const base_color = base.readRawPixel(x, y);\n\n        if (x >= comp.width or y >= comp.height) {\n            const alpha = (base_color >> 24) & 0xFF;\n            if (alpha != 0) {\n                diff_count.* += 1;\n                if (maybe_diff_output.*) |*output| {\n                    output.setImgColor(x, y, options.diff_pixel);\n                }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "compareDifferentLayouts",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compareAVX from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub fn compareAVX(base: *const Image, comp: *const Image, diff_count: *u32) !void {\n    if (!HAS_AVX512bwvl) return error.Invalid;\n\n    const base_ptr: [*]const u8 = @ptrCast(@alignCast(base.data));\n    const comp_ptr: [*]const u8 = @ptrCast(@alignCast(comp.data));\n\n    const base_w: usize = base.width;\n    const base_h: usize = base.height;\n    const comp_w: usize = comp.width;\n    const comp_h: usize = comp.height;\n\n    diff_count.* = vxdiff(base_ptr, comp_ptr, base_w, comp_w, base_h, comp_h);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "compareAVX",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to vxdiff from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "fn vxdiff(\n    base_rgba: [*]const u8,\n    comp_rgba: [*]const u8,\n    base_width: usize,\n    comp_width: usize,\n    base_height: usize,\n    comp_height: usize,\n) u32;\n\nextern fn odiffRVV(\n    basePtr: [*]const u32,\n    compPtr: [*]const u32,\n    size: usize,\n    max_delta: f32,\n    diff: ?[*]u32,\n    diffcol: u32,\n) u32;\n\npub noinline fn compareRVV(base: *const Image, comp: *const Image, diff_output: *?Image, diff_count: *u32, diff_lines: ?*DiffLines, ignore_regions: ?[]struct { u32, u32 }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "vxdiff",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to diff from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub fn diff(\n    base: *const Image,\n    comp: *const Image,\n    options: DiffOptions,\n    allocator: std.mem.Allocator,\n) !DiffVariant {\n    if (options.fail_on_layout_change and (base.width != comp.width or base.height != comp.height)) {\n        return DiffVariant.layout;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "function",
+      "name": "diff",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DiffLines from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub const DiffLines = struct {\n    lines: []u32,\n    count: u32,\n    allocator: std.mem.Allocator,\n\n    pub fn init(allocator: std.mem.Allocator, max_height: u32) !DiffLines {\n        const lines = try allocator.alloc(u32, max_height);\n        return DiffLines{\n            .lines = lines,\n            .count = 0,\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "struct",
+      "name": "DiffLines",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IgnoreRegion from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub const IgnoreRegion = struct {\n    x1: u32,\n    y1: u32,\n    x2: u32,\n    y2: u32,\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "struct",
+      "name": "IgnoreRegion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DiffOptions from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "pub const DiffOptions = struct {\n    antialiasing: bool = false,\n    output_diff_mask: bool = false,\n    diff_overlay_factor: ?f32 = null,\n    diff_lines: bool = false,\n    diff_pixel: u32 = RED_PIXEL,\n    threshold: f64 = 0.1,\n    ignore_regions: ?[]const IgnoreRegion = null,\n    capture_diff: bool = true,\n    fail_on_layout_change: bool = true,\n    enable_asm: bool = false,\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "struct",
+      "name": "DiffOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RED_PIXEL from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const RED_PIXEL: u32 = 0xFF0000FF;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "RED_PIXEL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to WHITE_PIXEL from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const WHITE_PIXEL: u32 = 0xFFFFFFFF;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "WHITE_PIXEL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to MAX_YIQ_POSSIBLE_DELTA from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const MAX_YIQ_POSSIBLE_DELTA: f64 = 35215.0;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "MAX_YIQ_POSSIBLE_DELTA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to max_delta_i64 from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const max_delta_i64: i64 = @intFromFloat(max_delta_f64 * @as(f64, @floatFromInt(1 << color_delta.COLOR_DELTA_SIMD_SHIFT)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "max_delta_i64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to base_vec from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const base_vec: @Vector(SIMD_SIZE, u32) = base_data[offset .. offset + SIMD_SIZE][0..SIMD_SIZE].*;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "base_vec",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to comp_vec from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const comp_vec: @Vector(SIMD_SIZE, u32) = comp_data[offset .. offset + SIMD_SIZE][0..SIMD_SIZE].*;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "comp_vec",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to base_ptr from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const base_ptr: [*]const u8 = @ptrCast(@alignCast(base.data));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "base_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to comp_ptr from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const comp_ptr: [*]const u8 = @ptrCast(@alignCast(comp.data));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "comp_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to base_w from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const base_w: usize = base.width;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "base_w",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to base_h from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const base_h: usize = base.height;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "base_h",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to comp_w from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const comp_w: usize = comp.width;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "comp_w",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to comp_h from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const comp_h: usize = comp.height;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "comp_h",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to basePtr from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const basePtr: [*]const u32 = @ptrCast(@alignCast(base.data));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "basePtr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to compPtr from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/diff.zig",
+    "response": "const compPtr: [*]const u32 = @ptrCast(@alignCast(comp.data));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/diff.zig",
+      "type": "const",
+      "name": "compPtr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readU16LE from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn readU16LE(data: []const u8, offset: usize) !u16 {\n    if (offset + 2 > data.len) return BmpError.FileCorrupted;\n    return std.mem.readInt(u16, data[offset .. offset + 2], .little);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "readU16LE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readU32LE from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn readU32LE(data: []const u8, offset: usize) !u32 {\n    if (offset + 4 > data.len) return BmpError.FileCorrupted;\n    return std.mem.readInt(u32, data[offset .. offset + 4], .little);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "readU32LE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readI32LE from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn readI32LE(data: []const u8, offset: usize) !i32 {\n    if (offset + 4 > data.len) return BmpError.FileCorrupted;\n    return std.mem.readInt(i32, data[offset .. offset + 4], .little);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "readI32LE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to convertBGR24ToARGB_Vec4 from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn convertBGR24ToARGB_Vec4(bgr_data: []const u8, argb_data: []u32, start_idx: usize) void {\n    if (start_idx + 4 > argb_data.len) return;\n\n    // Load 4 BGR pixels (12 bytes) - not perfectly aligned but we'll handle it\n    const b0 = bgr_data[start_idx * 3 + 0];\n    const g0 = bgr_data[start_idx * 3 + 1];\n    const r0 = bgr_data[start_idx * 3 + 2];\n\n    const b1 = bgr_data[start_idx * 3 + 3];\n    const g1 = bgr_data[start_idx * 3 + 4];\n    const r1 = bgr_data[start_idx * 3 + 5];\n\n    const b2 = bgr_data[start_idx * 3 + 6];\n    const g2 = bgr_data[start_idx * 3 + 7];\n    const r2 = bgr_data[start_idx * 3 + 8];\n\n    const b3 = bgr_data[start_idx * 3 + 9];\n    const g3 = bgr_data[start_idx * 3 + 10];\n    const r3 = bgr_data[start_idx * 3 + 11];\n\n    // Create RGBA values (A=255, R, G, B) - fixed color order\n    argb_data[start_idx + 0] = (255 << 24) | (@as(u32, r0) << 16) | (@as(u32, g0) << 8) | @as(u32, b0);\n    argb_data[start_idx + 1] = (255 << 24) | (@as(u32, r1) << 16) | (@as(u32, g1) << 8) | @as(u32, b1);\n    argb_data[start_idx + 2] = (255 << 24) | (@as(u32, r2) << 16) | (@as(u32, g2) << 8) | @as(u32, b2);\n    argb_data[start_idx + 3] = (255 << 24) | (@as(u32, r3) << 16) | (@as(u32, g3) << 8) | @as(u32, b3);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "convertBGR24ToARGB_Vec4",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to convertBGRA32ToARGB_Vec4 from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn convertBGRA32ToARGB_Vec4(bgra_data: []const u8, argb_data: []u32, start_idx: usize) void {\n    if (start_idx + 4 > argb_data.len or start_idx * 4 + 16 > bgra_data.len) return;\n\n    // Load 4 BGRA pixels (16 bytes) as vector\n    const bgra_bytes = bgra_data[start_idx * 4 .. start_idx * 4 + 16];\n\n    // Process 4 pixels at once\n    var i: usize = 0;\n    while (i < 4) : (i += 1) {\n        const b = bgra_bytes[i * 4 + 0];\n        const g = bgra_bytes[i * 4 + 1];\n        const r = bgra_bytes[i * 4 + 2];\n        const a = bgra_bytes[i * 4 + 3];\n\n        // Convert BGRA to RGBA\n        argb_data[start_idx + i] = (@as(u32, a) << 24) | (@as(u32, r) << 16) | (@as(u32, g) << 8) | @as(u32, b);\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "convertBGRA32ToARGB_Vec4",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calculateRowPadding from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn calculateRowPadding(width: u32, bytes_per_pixel: u8) u32 {\n    const row_size = width * bytes_per_pixel;\n    return (4 - (row_size % 4)) % 4;\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "calculateRowPadding",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadImage24Data from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn loadImage24Data(data: []const u8, offset: usize, width: u32, height: u32, allocator: std.mem.Allocator) ![]u32 {\n    const pixel_count = width * height;\n    const argb_data = try allocator.alloc(u32, pixel_count);\n    errdefer allocator.free(argb_data);\n\n    const row_padding = (4 - (width * 3 % 4)) & 3;\n    var data_offset = offset;\n\n    // BMP stores pixels bottom-up\n    var y: i32 = @as(i32, @intCast(height)) - 1;\n    while (y >= 0) : (y -= 1) {\n        var x: u32 = 0;\n        while (x < width) : (x += 1) {\n            if (data_offset + 3 > data.len) return BmpError.FileCorrupted;\n\n            const b_byte = data[data_offset + 0];\n            const g_byte = data[data_offset + 1];\n            const r_byte = data[data_offset + 2];\n\n            const r = (@as(u32, r_byte) & 255) << 16; // Red to bits 16-23\n            const g = (@as(u32, g_byte) & 255) << 8; // Green to bits 8-15\n            const b = (@as(u32, b_byte) & 255) << 0; // Blue to bits 0-7\n            const a = comptime @as(u32, 255) << 24;\n\n            const pixel_index = (@as(u32, @intCast(y)) * width) + x;\n            argb_data[pixel_index] = a | b | g | r;\n\n            data_offset += 3;\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "loadImage24Data",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadImage32Data from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "fn loadImage32Data(data: []const u8, offset: usize, width: u32, height: u32, allocator: std.mem.Allocator) ![]u32 {\n    const pixel_count = width * height;\n    const argb_data = try allocator.alloc(u32, pixel_count);\n    errdefer allocator.free(argb_data);\n\n    var data_offset = offset;\n\n    var y: i32 = @as(i32, @intCast(height)) - 1;\n    while (y >= 0) : (y -= 1) {\n        var x: u32 = 0;\n        while (x < width) : (x += 1) {\n            if (data_offset + 4 > data.len) return BmpError.FileCorrupted;\n\n            const b_byte = data[data_offset + 0];\n            const g_byte = data[data_offset + 1];\n            const r_byte = data[data_offset + 2];\n            const a_byte = data[data_offset + 3];\n\n            const r = (@as(u32, r_byte) & 255) << 16; // Red to bits 16-23\n            const g = (@as(u32, g_byte) & 255) << 8; // Green to bits 8-15\n            const b = (@as(u32, b_byte) & 255) << 0; // Blue to bits 0-7\n            const a = (@as(u32, a_byte) & 255) << 24; // Alpha to bits 24-31\n\n            const pixel_index = (@as(u32, @intCast(y)) * width) + x;\n            argb_data[pixel_index] = a | b | g | r;\n\n            data_offset += 4;\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "loadImage32Data",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "pub fn load(allocator: std.mem.Allocator, file_data: []const u8) !io.Image {\n    if (file_data.len < @sizeOf(BitmapFileHeader) + @sizeOf(BitmapInfoHeader)) {\n        return BmpError.FileCorrupted;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to BMP_SIGNATURE from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "const BMP_SIGNATURE: u16 = 19778;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "const",
+      "name": "BMP_SIGNATURE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to BYTES_PER_PIXEL_24 from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "const BYTES_PER_PIXEL_24: u8 = 3;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "const",
+      "name": "BYTES_PER_PIXEL_24",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to BYTES_PER_PIXEL_32 from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/bmp.zig",
+    "response": "const BYTES_PER_PIXEL_32: u8 = 4;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/bmp.zig",
+      "type": "const",
+      "name": "BYTES_PER_PIXEL_32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to slice from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn slice(self: Image) []u32 {\n        return self.data[0..self.len];\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "slice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn deinit(self: Image, allocator: std.mem.Allocator) void {\n        allocator.free(self.slice());\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readRawPixelAtOffset from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "fn readRawPixelAtOffset(self: *const Image, offset: usize) u32 {\n        return self.data[offset];\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "readRawPixelAtOffset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readRawPixel from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn readRawPixel(self: *const Image, x: u32, y: u32) u32 {\n        const offset = y * self.width + x;\n        return self.data[offset];\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "readRawPixel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setImgColor from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn setImgColor(self: *Image, x: u32, y: u32, color: u32) void {\n        const offset = y * self.width + x;\n        self.data[offset] = color;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "setImgColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to makeSameAsLayout from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn makeSameAsLayout(self: *const Image, allocator: std.mem.Allocator) !Image {\n        const data = try allocator.alloc(u32, self.len);\n        @memset(data, 0);\n        return Image{\n            .width = self.width,\n            .height = self.height,\n            .data = data.ptr,\n            .len = data.len,\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "makeSameAsLayout",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromExtension from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn fromExtension(ext: []const u8) ?ImageFormat {\n        if (std.mem.eql(u8, ext, \".png\")) return .png;\n        if (std.mem.eql(u8, ext, \".jpg\") or std.mem.eql(u8, ext, \".jpeg\")) return .jpg;\n        if (std.mem.eql(u8, ext, \".bmp\")) return .bmp;\n        if (std.mem.eql(u8, ext, \".tiff\")) return .tiff;\n        if (std.mem.eql(u8, ext, \".webp\")) return .webp;\n        return null;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "fromExtension",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadImage from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn loadImage(allocator: std.mem.Allocator, file_path: []const u8) !Image {\n    const ext = std.fs.path.extension(file_path);\n    const format = ImageFormat.fromExtension(ext) orelse return error.UnsupportedFormat;\n    return try loadImageWithFormat(allocator, file_path, format);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "loadImage",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadImageWithFormat from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn loadImageWithFormat(allocator: std.mem.Allocator, file_path: []const u8, format: ImageFormat) !Image {\n    const file = MemoryMappedFile.open(file_path) catch return error.ImageNotLoaded;\n    defer file.close();\n\n    return switch (format) {\n        .png => try png.load(allocator, file.data),\n        .jpg => try jpeg.load(allocator, file.data),\n        .bmp => try bmp.load(allocator, file.data),\n        .tiff => try tiff.load(allocator, file.data),\n        .webp => try webp.load(allocator, file.data),\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "loadImageWithFormat",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to saveImage from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn saveImage(img: Image, file_path: []const u8) !void {\n    const ext = std.fs.path.extension(file_path);\n    const format = ImageFormat.fromExtension(ext) orelse return error.UnsupportedFormat;\n    return saveImageWithFormat(img, file_path, format);\n}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "saveImage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to saveImageWithFormat from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "pub fn saveImageWithFormat(img: Image, file_path: []const u8, format: ImageFormat) !void {\n    var file = try std.fs.cwd().createFile(file_path, .{\n        .truncate = true,\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "function",
+      "name": "saveImageWithFormat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to R_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const R_COEFF: u32 = 19595;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "R_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to G_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const G_COEFF: u32 = 38469;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "G_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to B_COEFF from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const B_COEFF: u32 = 7504;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "B_COEFF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to WHITE_SHADE_FACTOR from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const WHITE_SHADE_FACTOR: u32 = @intFromFloat(factor * 255);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "WHITE_SHADE_FACTOR",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to INV_SHADE_FACTOR from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const INV_SHADE_FACTOR: u32 = 255 - WHITE_SHADE_FACTOR;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "INV_SHADE_FACTOR",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to WHITE_CONTRIBUTION from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const WHITE_CONTRIBUTION: u32 = WHITE_SHADE_FACTOR * 255;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "WHITE_CONTRIBUTION",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to FULL_ALPHA from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const FULL_ALPHA: u32 = 0xFF000000;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "FULL_ALPHA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to R_COEFF_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const R_COEFF_VEC: @Vector(SIMD_SIZE, u32) = @splat(R_COEFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "R_COEFF_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to G_COEFF_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const G_COEFF_VEC: @Vector(SIMD_SIZE, u32) = @splat(G_COEFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "G_COEFF_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to B_COEFF_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const B_COEFF_VEC: @Vector(SIMD_SIZE, u32) = @splat(B_COEFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "B_COEFF_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to INV_SHADE_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const INV_SHADE_VEC: @Vector(SIMD_SIZE, u32) = @splat(INV_SHADE_FACTOR);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "INV_SHADE_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to WHITE_CONTRIB_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const WHITE_CONTRIB_VEC: @Vector(SIMD_SIZE, u32) = @splat(WHITE_CONTRIBUTION);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "WHITE_CONTRIB_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to DIV255_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const DIV255_VEC: @Vector(SIMD_SIZE, u32) = @splat(255);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "DIV255_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to MASK_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const MASK_VEC: @Vector(SIMD_SIZE, u32) = @splat(0xFF);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "MASK_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ALPHA_VEC from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const ALPHA_VEC: @Vector(SIMD_SIZE, u32) = @splat(FULL_ALPHA);",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "ALPHA_VEC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pixels from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/io.zig",
+    "response": "const pixels: @Vector(SIMD_SIZE, u32) = self.data[i .. i + SIMD_SIZE][0..SIMD_SIZE].*;",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/io.zig",
+      "type": "const",
+      "name": "pixels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/jpeg.zig",
+    "response": "pub fn load(allocator: std.mem.Allocator, data: []const u8) !Image {\n    const handle = c.tjInitDecompress() orelse return error.OutOfMemory;\n    defer if (c.tjDestroy(handle) != 0) {\n        std.log.warn(\"Failed to destroy TurboJPEG decompressor\", .{}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/jpeg.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to open from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/memory_mapped_file.zig",
+    "response": "pub fn open(file_path: []const u8) !Self {\n    const file = try std.fs.cwd().openFile(file_path, .{ .mode = .read_only }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/memory_mapped_file.zig",
+      "type": "function",
+      "name": "open",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/memory_mapped_file.zig",
+    "response": "pub fn close(self: Self) void {\n    switch (builtin.os.tag) {\n        .windows => {\n            // cast away const cuz windows api uses c and nothing is const there ffs\n            _ = win_aux.UnmapViewOfFile(@ptrCast(@constCast(self.data.ptr)));\n            win.CloseHandle(self.win_mapping);\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/memory_mapped_file.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/png.zig",
+    "response": "pub fn load(allocator: std.mem.Allocator, data: []const u8) !Image {\n    const ctx = c.spng_ctx_new(0) orelse return error.OutOfMemory;\n    defer c.spng_ctx_free(ctx);\n\n    // Ignore and don't calculate chunk CRC's for better performance\n    _ = c.spng_set_crc_action(ctx, c.SPNG_CRC_USE, c.SPNG_CRC_USE);\n\n    const limit = 1024 * 1024 * 64;\n    _ = c.spng_set_chunk_limits(ctx, limit, limit);\n\n    if (c.spng_set_png_buffer(ctx, @ptrCast(data.ptr), @intCast(data.len)) != 0)\n        return error.InvalidData;\n\n    var ihdr: c.spng_ihdr = undefined;\n    if (c.spng_get_ihdr(ctx, &ihdr) != 0) return error.InvalidData;\n\n    var out_size: usize = 0;\n    if (c.spng_decoded_image_size(ctx, c.SPNG_FMT_RGBA8, &out_size) != 0)\n        return error.InvalidData;\n\n    const result_data = try allocator.alignedAlloc(u8, .of(u32), out_size);\n    errdefer allocator.free(result_data);\n\n    if (c.spng_decode_image(ctx, @ptrCast(result_data.ptr), out_size, c.SPNG_FMT_RGBA8, c.SPNG_DECODE_TRNS) != 0)\n        return error.InvalidData;\n\n    return Image{\n        .width = ihdr.width,\n        .height = ihdr.height,\n        .data = @ptrCast(result_data),\n        .len = result_data.len / @sizeOf(u32),\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/png.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to save from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/png.zig",
+    "response": "pub fn save(img: Image, writer: *std.Io.Writer) !void {\n    const ctx = c.spng_ctx_new(c.SPNG_CTX_ENCODER) orelse return error.OutOfMemory;\n    defer c.spng_ctx_free(ctx);\n\n    var ihdr = c.spng_ihdr{\n        .width = img.width,\n        .height = img.height,\n        .bit_depth = 8,\n        .color_type = c.SPNG_COLOR_TYPE_TRUECOLOR_ALPHA,\n        .compression_method = 0,\n        .filter_method = c.SPNG_FILTER_NONE,\n        .interlace_method = c.SPNG_INTERLACE_NONE,\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/png.zig",
+      "type": "function",
+      "name": "save",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeFn from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/png.zig",
+    "response": "pub fn writeFn(_: ?*c.spng_ctx, user_data: ?*anyopaque, src: ?*anyopaque, len: usize) callconv(.c) c_int {\n                const w: *std.Io.Writer = @ptrCast(@alignCast(user_data.?));\n                const src_slice = @as([*]const u8, @ptrCast(src.?))[0..len];\n                w.writeAll(src_slice) catch |err| {\n                    std.log.err(\"writePNG: failed to write data: {}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/png.zig",
+      "type": "function",
+      "name": "writeFn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to w from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/png.zig",
+    "response": "const w: *std.Io.Writer = @ptrCast(@alignCast(user_data.?));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/png.zig",
+      "type": "const",
+      "name": "w",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn load(allocator: std.mem.Allocator, data: []const u8) !Image {\n    var client_handle: TIFFClient = .{ .buf = data }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn read(self_ptr: c.thandle_t, buf_ptr: ?*anyopaque, buf_len: c.tmsize_t) callconv(.c) c.tmsize_t {\n        const self: *TIFFClient = @ptrCast(@alignCast(self_ptr orelse return @as(c.tmsize_t, -1)));\n        if (buf_ptr == null) return @as(c.tmsize_t, -1);\n\n        const read_size = @min(buf_len, @as(c.tmsize_t, @intCast(self.buf.len - self.offset)));\n        const dest_buf = @as([*]u8, @ptrCast(buf_ptr))[0..@as(usize, @intCast(read_size))];\n\n        @memcpy(dest_buf, self.buf[self.offset .. self.offset + @as(usize, @intCast(read_size))]);\n        self.offset += @as(usize, @intCast(read_size));\n\n        return read_size;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "read",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn write(self_ptr: c.thandle_t, buf_ptr: ?*anyopaque, buf_len: c.tmsize_t) callconv(.c) c.tmsize_t {\n        _ = self_ptr;\n        _ = buf_ptr;\n        _ = buf_len;\n\n        return -1;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "write",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to seek from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn seek(self_ptr: c.thandle_t, offset: c.toff_t, whence: c_int) callconv(.c) c.toff_t {\n        const self: *TIFFClient = @ptrCast(@alignCast(self_ptr orelse return 0));\n        switch (whence) {\n            c.SEEK_SET => self.offset = @as(usize, @intCast(offset)),\n            c.SEEK_CUR => self.offset += @as(usize, @intCast(offset)),\n            c.SEEK_END => self.offset = self.buf.len + @as(usize, @intCast(offset)),\n            else => return 0,\n        }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "seek",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn close(self_ptr: c.thandle_t) callconv(.c) c_int {\n        _ = self_ptr;\n        return 0;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to size from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn size(self_ptr: c.thandle_t) callconv(.c) c.toff_t {\n        const self: *TIFFClient = @ptrCast(@alignCast(self_ptr orelse return 0));\n        return @as(c.toff_t, @intCast(self.buf.len));\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to map from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn map(self_ptr: c.thandle_t, base: [*c]?*anyopaque, sz: [*c]c.toff_t) callconv(.c) c_int {\n        _ = self_ptr;\n        _ = base;\n        _ = sz;\n        return 0; // FALSE - we don't support mapping\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "map",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unmap from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "pub fn unmap(self_ptr: c.thandle_t, base: ?*anyopaque, sz: c.toff_t) callconv(.c) void {\n        _ = self_ptr;\n        _ = base;\n        _ = sz;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "function",
+      "name": "unmap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TIFFClient from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "const TIFFClient = struct {\n    buf: []const u8,\n    offset: usize = 0,\n\n    pub fn read(self_ptr: c.thandle_t, buf_ptr: ?*anyopaque, buf_len: c.tmsize_t) callconv(.c) c.tmsize_t {\n        const self: *TIFFClient = @ptrCast(@alignCast(self_ptr orelse return @as(c.tmsize_t, -1)));\n        if (buf_ptr == null) return @as(c.tmsize_t, -1);\n\n        const read_size = @min(buf_len, @as(c.tmsize_t, @intCast(self.buf.len - self.offset)));\n        const dest_buf = @as([*]u8, @ptrCast(buf_ptr))[0..@as(usize, @intCast(read_size))];\n\n        @memcpy(dest_buf, self.buf[self.offset .. self.offset + @as(usize, @intCast(read_size))]);\n        self.offset += @as(usize, @intCast(read_size));\n\n        return read_size;\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "struct",
+      "name": "TIFFClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "const self: *TIFFClient = @ptrCast(@alignCast(self_ptr orelse return @as(c.tmsize_t, -1)));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "const self: *TIFFClient = @ptrCast(@alignCast(self_ptr orelse return 0));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/tiff.zig",
+    "response": "const self: *TIFFClient = @ptrCast(@alignCast(self_ptr orelse return 0));",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/tiff.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/io/webp.zig",
+    "response": "pub fn load(allocator: std.mem.Allocator, data: []const u8) !Image {\n    var width: c_int = 0;\n    var height: c_int = 0;\n\n    if (c.WebPGetInfo(@ptrCast(data.ptr), @intCast(data.len), &width, &height) == 0)\n        return error.InvalidData;\n\n    const result_data = try allocator.alignedAlloc(u8, .of(u32), @intCast(width * height * 4));\n    errdefer allocator.free(result_data);\n\n    _ = c.WebPDecodeRGBAInto(\n        @ptrCast(data.ptr),\n        @intCast(data.len),\n        @ptrCast(result_data.ptr),\n        @intCast(result_data.len),\n        @intCast(width * 4),\n    ) orelse return error.InvalidData;\n\n    return Image{\n        .width = @intCast(width),\n        .height = @intCast(height),\n        .data = @ptrCast(result_data),\n        .len = result_data.len / @sizeOf(u32),\n    }",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/io/webp.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from dmtrKovalenko/odiff",
+    "context": "Repository: dmtrKovalenko/odiff (2626 ⭐)\nFile: src/main.zig",
+    "response": "pub fn main() !void {\n    var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);\n    const stdout = &stdout_writer.interface;\n\n    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n    defer arena.deinit();\n\n    const allocator = arena.allocator();\n\n    var args = cli.parseArgs(allocator) catch |err| switch (err) {\n        error.OutOfMemory => {\n            print(\"Error: Out of memory\\n\", .{}",
+    "metadata": {
+      "repo": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  }
+]

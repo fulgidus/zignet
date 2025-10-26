@@ -1,0 +1,9 @@
+{
+  "name": "mewz",
+  "fullName": "mewz-project/mewz",
+  "owner": "mewz-project",
+  "stars": 637,
+  "description": "A unikernel designed specifically for running Wasm applications and compatible with WASI",
+  "url": "https://github.com/mewz-project/mewz",
+  "defaultBranch": "main"
+}

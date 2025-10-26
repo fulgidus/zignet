@@ -1,0 +1,366 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    b.reference_trace = 64;\n\n    // Standard target options allows the person running `zig build` to choose\n    // what target to build for. Here we do not override the defaults, which\n    // means any target is allowed, and the default is native. Other options\n    // for restricting supported target set are available.\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mkdtemp from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/common.zig",
+    "response": "pub fn mkdtemp(in: []u8) !void {\n    try std.posix.getrandom(in[in.len - 6 ..]);\n    for (in[in.len - 6 ..]) |*v| {\n        v.* = letters[v.* % letters.len];\n    }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "mkdtemp",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to extract_file from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/common.zig",
+    "response": "pub fn extract_file(tmpDir: []const u8, name: []const u8, data: []const u8, allocator: std.mem.Allocator) ![]const u8 {\n    const path = try std.fmt.allocPrint(allocator, \"{s}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "extract_file",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFooter from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/common.zig",
+    "response": "pub fn getFooter(path: []const u8) !Footer {\n    var file = try std.fs.cwd().openFile(path, .{}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "getFooter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeFooter from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/common.zig",
+    "response": "pub fn writeFooter(file: std.fs.File, footer: Footer) !void {\n    comptime std.debug.assert(@typeInfo(Footer).Struct.layout != .auto);\n\n    if (native_endian != std.builtin.Endian.little) {\n        std.mem.byteSwapAllFields(Footer, &footer);\n    }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "writeFooter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_runtime_content_len_u64 from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/dockerc.zig",
+    "response": "fn get_runtime_content_len_u64(runtime_content: []const u8) [8]u8 {\n    var buf: [8]u8 = undefined;\n    std.mem.writeInt(u64, &buf, runtime_content.len, .big);\n    return buf;\n}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/dockerc.zig",
+      "type": "function",
+      "name": "get_runtime_content_len_u64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mksquashfs_main from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/dockerc.zig",
+    "response": "fn mksquashfs_main(argc: c_int, argv: [*:null]const ?[*:0]const u8) void;\n\npub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/dockerc.zig",
+      "type": "function",
+      "name": "mksquashfs_main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/extract_squashfs.zig",
+    "response": "pub fn main() !void {\n    var args = std.process.args();\n    assert(args.skip());\n\n    if (args.next()) |dockercGeneratedBinary| {\n        if (args.next()) |squashfsOutput| {\n            const offset = (try common.getFooter(dockercGeneratedBinary)).offset;\n\n            const readFile = try std.fs.cwd().openFile(dockercGeneratedBinary, .{}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/extract_squashfs.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to squashfuse_main from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn squashfuse_main(argc: c_int, argv: [*:null]const ?[*:0]const u8) c_int;\nextern fn overlayfs_main(argc: c_int, argv: [*:null]const ?[*:0]const u8) c_int;\n\nconst eql = std.mem.eql;\n\n// inspired from std.posix.getenv\nfn getEnvFull(key: []const u8) ?[:0]const u8 {\n    var ptr = std.c.environ;\n    while (ptr[0]) |line| : (ptr += 1) {\n        var line_i: usize = 0;\n        while (line[line_i] != 0 and line[line_i] != '=') : (line_i += 1) {}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "squashfuse_main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toValue from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn toValue(self: @This(), allocator: Allocator) !std.json.Value {\n        var object = std.json.ObjectMap.init(allocator);\n        try object.put(\"containerID\", std.json.Value{\n            .integer = self.containerID,\n        }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "toValue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to intToString from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn intToString(allocator: Allocator, v: i64) ![]u8 {\n    return std.fmt.allocPrint(allocator, \"{}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "intToString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newgidmap from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn newgidmap(allocator: Allocator, pid: i64, gid_mappings: IDMappings) !void {\n    return uidgidmap_helper(allocator, \"newgidmap\", pid, gid_mappings);\n}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "newgidmap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newuidmap from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn newuidmap(allocator: Allocator, pid: i64, uid_mappings: IDMappings) !void {\n    return uidgidmap_helper(allocator, \"newuidmap\", pid, uid_mappings);\n}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "newuidmap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to uidgidmap_helper from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn uidgidmap_helper(child_allocator: Allocator, helper: []const u8, pid: i64, uid_mappings: IDMappings) !void {\n    var arena = std.heap.ArenaAllocator.init(child_allocator);\n    const allocator = arena.allocator();\n    defer arena.deinit();\n\n    var argv = try std.ArrayList([]const u8).initCapacity(allocator, 2 + 3 * uid_mappings.len);\n    argv.appendAssumeCapacity(helper);\n    // TODO: specify pid using fd:N to avoid a TOCTTOU, see newuidmap(1)\n    argv.appendAssumeCapacity(try intToString(allocator, pid));\n\n    for (uid_mappings) |uid_mapping| {\n        argv.appendAssumeCapacity(try intToString(allocator, uid_mapping.containerID));\n        argv.appendAssumeCapacity(try intToString(allocator, uid_mapping.hostID));\n        argv.appendAssumeCapacity(try intToString(allocator, uid_mapping.size));\n    }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "uidgidmap_helper",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to IDMappingsToValue from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn IDMappingsToValue(allocator: Allocator, id_mappings: IDMappings) !std.json.Value {\n    var array = try std.json.Array.initCapacity(allocator, id_mappings.len);\n    for (id_mappings) |id_mapping| {\n        array.appendAssumeCapacity(try id_mapping.toValue(allocator));\n    }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "IDMappingsToValue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextNumber from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn nextNumber(self: *IdMapParser) ?i64 {\n        while (self.index < self.bytes.len and (self.bytes[self.index] < '0' or self.bytes[self.index] > '9')) {\n            self.index += 1;\n        }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "nextNumber",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseIdmap from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn parseIdmap(allocator: Allocator, bytes: []const u8) !IDMappings {\n    var idmap_parser = IdMapParser{ .bytes = bytes }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "parseIdmap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateIdMap from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn updateIdMap(id_mappings: IDMappings) void {\n    var runningId: i64 = 0;\n\n    for (id_mappings) |*id_mapping| {\n        id_mapping.*.hostID = id_mapping.*.containerID;\n        id_mapping.*.containerID = runningId;\n        runningId += id_mapping.*.size;\n    }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "updateIdMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getContainerFromArgs from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn getContainerFromArgs(file: std.fs.File, rootfs_absolute_path: []const u8, parentAllocator: std.mem.Allocator) ![*c]c.libcrun_container_t {\n    var arena = std.heap.ArenaAllocator.init(parentAllocator);\n    defer arena.deinit();\n    const allocator = arena.allocator();\n\n    var jsonReader = std.json.reader(allocator, file.reader());\n\n    // TODO: having to specify max_value_len seems like a bug\n    var root_value = try std.json.Value.jsonParse(allocator, &jsonReader, .{ .max_value_len = 99999999 }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "getContainerFromArgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to check_unprivileged_userns_permissions from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn check_unprivileged_userns_permissions() void {\n    var sysctl_paths = [_]struct { path: []const u8, expected_value: u8, expected_value_is_set: bool }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "check_unprivileged_userns_permissions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to umount from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "fn umount(path: [*:0]const u8) void {\n    const umountRet: i64 = @bitCast(std.os.linux.umount(path));\n    if (umountRet != 0) {\n        assert(umountRet < 0 and umountRet > -4096);\n        const errno: std.posix.E = @enumFromInt(-umountRet);\n        std.debug.panic(\"Failed to unmount {s}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "umount",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "pub fn main() !u8 {\n    var args = std.process.args();\n    const executable_path = args.next() orelse @panic(\"unreachable: there must be a executable name\");\n\n    while (args.next()) |arg| {\n        if (eql(u8, arg, \"--dockerc-version\")) {\n            std.debug.print(\"dockerc version: {s}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IDMapping from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "const IDMapping = struct {\n    containerID: i64,\n    hostID: i64,\n    size: i64,\n\n    fn toValue(self: @This(), allocator: Allocator) !std.json.Value {\n        var object = std.json.ObjectMap.init(allocator);\n        try object.put(\"containerID\", std.json.Value{\n            .integer = self.containerID,\n        }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "struct",
+      "name": "IDMapping",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IdMapParser from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "const IdMapParser = struct {\n    bytes: []const u8,\n    index: usize = 0,\n\n    fn nextNumber(self: *IdMapParser) ?i64 {\n        while (self.index < self.bytes.len and (self.bytes[self.index] < '0' or self.bytes[self.index] > '9')) {\n            self.index += 1;\n        }",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "struct",
+      "name": "IdMapParser",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to umountRet from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "const umountRet: i64 = @bitCast(std.os.linux.umount(path));",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "umountRet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to errno from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "const errno: std.posix.E = @enumFromInt(-umountRet);",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "errno",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pid from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/main.zig",
+    "response": "const pid: i64 = @bitCast(std.os.linux.clone2(std.os.linux.CLONE.NEWUSER | std.os.linux.CLONE.NEWNS | std.os.linux.SIG.CHLD, 0));",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "pid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from NilsIrl/dockerc",
+    "context": "Repository: NilsIrl/dockerc (4820 ⭐)\nFile: src/replace.zig",
+    "response": "pub fn main() !void {\n    var args = std.process.args();\n    assert(args.skip());\n    const rawPath = args.next();\n    const rawPathOutput = args.next();\n\n    if (rawPath) |path| {\n        if (rawPathOutput) |path_output| {\n            const offset = (try common.getFooter(path)).offset;\n\n            const readFile = try std.fs.cwd().openFile(path, .{}",
+    "metadata": {
+      "repo": "NilsIrl/dockerc",
+      "stars": 4820,
+      "file": "src/replace.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "pixi",
+  "fullName": "foxnne/pixi",
+  "owner": "foxnne",
+  "stars": 1115,
+  "description": "Pixel art editor made with Zig.",
+  "url": "https://github.com/foxnne/pixi",
+  "defaultBranch": "main"
+}

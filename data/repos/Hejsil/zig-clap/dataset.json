@@ -1,0 +1,1055 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const optimize = b.standardOptimizeOption(.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to longest from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn longest(names: *const Names) Longest {\n        if (names.long) |long|\n            return .{ .kind = .long, .name = long }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "longest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to prefix from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn prefix(kind: Kind) []const u8 {\n            return switch (kind) {\n                .long => \"--\",\n                .short => \"-\",\n                .positional => \"\",\n            }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "prefix",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Param from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn Param(comptime Id: type) type {\n    return struct {\n        id: Id,\n        names: Names = Names{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "Param",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParams from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParams(allocator: std.mem.Allocator, str: []const u8) ![]Param(Help) {\n    var end: usize = undefined;\n    return parseParamsEx(allocator, str, &end);\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParams",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParamsEx from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParamsEx(allocator: std.mem.Allocator, str: []const u8, end: *usize) ![]Param(Help) {\n    var list = std.ArrayList(Param(Help)){}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParamsEx",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParamsComptime from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParamsComptime(comptime str: []const u8) [countParams(str)]Param(Help) {\n    var end: usize = undefined;\n    var res: [countParams(str)]Param(Help) = undefined;\n    _ = parseParamsIntoSliceEx(&res, str, &end) catch {\n        const loc = std.zig.findLineColumn(str, end);\n        @compileError(std.fmt.comptimePrint(\"error:{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParamsComptime",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to countParams from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn countParams(str: []const u8) usize {\n    // See parseParamEx for reasoning. I would like to remove it from parseParam, but people\n    // depend on that function to still work conveniently at comptime, so leaving it for now.\n    @setEvalBranchQuota(std.math.maxInt(u32));\n\n    var res: usize = 0;\n    var it = std.mem.splitScalar(u8, str, '\\n');\n    while (it.next()) |line| {\n        const trimmed = std.mem.trimLeft(u8, line, \" \\t\");\n        if (std.mem.startsWith(u8, trimmed, \"-\") or\n            std.mem.startsWith(u8, trimmed, \"<\"))\n        {\n            res += 1;\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "countParams",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParamsIntoSlice from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParamsIntoSlice(slice: []Param(Help), str: []const u8) ![]Param(Help) {\n    var list = std.ArrayList(Param(Help)){\n        .items = slice[0..0],\n        .capacity = slice.len,\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParamsIntoSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParamsIntoSliceEx from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParamsIntoSliceEx(slice: []Param(Help), str: []const u8, end: *usize) ![]Param(Help) {\n    var null_allocator = std.heap.FixedBufferAllocator.init(\"\");\n    var list = std.ArrayList(Param(Help)){\n        .items = slice[0..0],\n        .capacity = slice.len,\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParamsIntoSliceEx",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParamsIntoArrayList from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParamsIntoArrayList(list: *std.ArrayList(Param(Help)), str: []const u8) !void {\n    var end: usize = undefined;\n    return parseParamsIntoArrayListEx(list, str, &end);\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParamsIntoArrayList",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParamsIntoArrayListEx from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParamsIntoArrayListEx(allocator: std.mem.Allocator, list: *std.ArrayList(Param(Help)), str: []const u8, end: *usize) !void {\n    var i: usize = 0;\n    while (i != str.len) {\n        var end_of_this: usize = undefined;\n        errdefer end.* = i + end_of_this;\n\n        try list.append(allocator, try parseParamEx(str[i..], &end_of_this));\n        i += end_of_this;\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParamsIntoArrayListEx",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParam from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParam(str: []const u8) !Param(Help) {\n    var end: usize = undefined;\n    return parseParamEx(str, &end);\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParam",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseParamEx from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseParamEx(str: []const u8, end: *usize) !Param(Help) {\n    // This function become a lot less ergonomic to use once you hit the eval branch quota. To\n    // avoid this we pick a sane default. Sadly, the only sane default is the biggest possible\n    // value. If we pick something a lot smaller and a user hits the quota after that, they have\n    // no way of overriding it, since we set it here.\n    // We can recosider this again if:\n    // * We get parseParams: https://github.com/Hejsil/zig-clap/issues/39\n    // * We get a larger default branch quota in the zig compiler (stage 2).\n    // * Someone points out how this is a really bad idea.\n    @setEvalBranchQuota(std.math.maxInt(u32));\n\n    var res = Param(Help){ .id = .{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseParamEx",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testParseParams from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn testParseParams(str: []const u8, expected_params: []const Param(Help)) !void {\n    var end: usize = undefined;\n    const actual_params = parseParamsEx(std.testing.allocator, str, &end) catch |err| {\n        const loc = std.zig.findLineColumn(str, end);\n        std.debug.print(\"error:{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "testParseParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectParam from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn expectParam(expect: Param(Help), actual: Param(Help)) !void {\n    try std.testing.expectEqualStrings(expect.id.desc, actual.id.desc);\n    try std.testing.expectEqualStrings(expect.id.val, actual.id.val);\n    try std.testing.expectEqual(expect.names.short, actual.names.short);\n    try std.testing.expectEqual(expect.takes_value, actual.takes_value);\n    if (expect.names.long) |long| {\n        try std.testing.expectEqualStrings(long, actual.names.long.?);\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "expectParam",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to report from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn report(diag: Diagnostic, stream: *std.Io.Writer, err: anyerror) !void {\n        var longest = diag.name.longest();\n        if (longest.kind == .positional)\n            longest.name = diag.arg;\n\n        switch (err) {\n            streaming.Error.DoesntTakeValue => try stream.print(\n                \"The argument '{s}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "report",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reportToFile from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn reportToFile(diag: Diagnostic, file: std.fs.File, err: anyerror) !void {\n        var buf: [1024]u8 = undefined;\n        var writer = file.writer(&buf);\n        try diag.report(&writer.interface, err);\n        return writer.interface.flush();\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "reportToFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testDiag from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn testDiag(diag: Diagnostic, err: anyerror, expected: []const u8) !void {\n    var buf: [1024]u8 = undefined;\n    var writer = std.Io.Writer.fixed(&buf);\n    try diag.report(&writer, err);\n    try std.testing.expectEqualStrings(expected, writer.buffered());\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "testDiag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parse(\n    comptime Id: type,\n    comptime params: []const Param(Id),\n    comptime value_parsers: anytype,\n    opt: ParseOptions,\n) !Result(Id, params, value_parsers) {\n    var arena = std.heap.ArenaAllocator.init(opt.allocator);\n    errdefer arena.deinit();\n\n    var iter = try std.process.ArgIterator.initWithAllocator(arena.allocator());\n    const exe_arg = iter.next();\n\n    const result = try parseEx(Id, params, value_parsers, &iter, .{\n        // Let's reuse the arena from the `ArgIterator` since we already have it.\n        .allocator = arena.allocator(),\n        .diagnostic = opt.diagnostic,\n        .assignment_separators = opt.assignment_separators,\n        .terminating_positional = opt.terminating_positional,\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Result from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn Result(\n    comptime Id: type,\n    comptime params: []const Param(Id),\n    comptime value_parsers: anytype,\n) type {\n    return struct {\n        args: Arguments(Id, params, value_parsers, .slice),\n        positionals: Positionals(Id, params, value_parsers, .slice),\n        exe_arg: ?[]const u8,\n        arena: std.heap.ArenaAllocator,\n\n        pub fn deinit(result: @This()) void {\n            result.arena.deinit();\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "Result",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseEx from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn parseEx(\n    comptime Id: type,\n    comptime params: []const Param(Id),\n    comptime value_parsers: anytype,\n    iter: anytype,\n    opt: ParseOptions,\n) !ResultEx(Id, params, value_parsers) {\n    const allocator = opt.allocator;\n\n    var positional_count: usize = 0;\n    var positionals = initPositionals(Id, params, value_parsers, .list);\n    errdefer deinitPositionals(&positionals, allocator);\n\n    var arguments = Arguments(Id, params, value_parsers, .list){}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "parseEx",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ResultEx from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn ResultEx(\n    comptime Id: type,\n    comptime params: []const Param(Id),\n    comptime value_parsers: anytype,\n) type {\n    return struct {\n        args: Arguments(Id, params, value_parsers, .slice),\n        positionals: Positionals(Id, params, value_parsers, .slice),\n        allocator: std.mem.Allocator,\n\n        pub fn deinit(result: *@This()) void {\n            deinitArgs(&result.args, result.allocator);\n            deinitPositionals(&result.positionals, result.allocator);\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "ResultEx",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Positionals from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn Positionals(\n    comptime Id: type,\n    comptime params: []const Param(Id),\n    comptime value_parsers: anytype,\n    comptime multi_arg_kind: MultiArgKind,\n) type {\n    var fields_len: usize = 0;\n    for (params) |param| {\n        const longest = param.names.longest();\n        if (longest.kind != .positional)\n            continue;\n        fields_len += 1;\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "Positionals",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initPositionals from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn initPositionals(\n    comptime Id: type,\n    comptime params: []const Param(Id),\n    comptime value_parsers: anytype,\n    comptime multi_arg_kind: MultiArgKind,\n) Positionals(Id, params, value_parsers, multi_arg_kind) {\n    var res: Positionals(Id, params, value_parsers, multi_arg_kind) = undefined;\n\n    comptime var i: usize = 0;\n    inline for (params) |param| {\n        const longest = comptime param.names.longest();\n        if (longest.kind != .positional)\n            continue;\n\n        const T = ParamType(Id, param, value_parsers);\n        res[i] = switch (param.takes_value) {\n            .none => continue,\n            .one => @as(?T, null),\n            .many => switch (multi_arg_kind) {\n                .slice => @as([]const T, &[_]T{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "initPositionals",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinitPositionals from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn deinitPositionals(positionals: anytype, allocator: std.mem.Allocator) void {\n    inline for (positionals) |*pos| {\n        switch (@typeInfo(@TypeOf(pos.*))) {\n            .optional => {}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "deinitPositionals",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ParamType from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn ParamType(comptime Id: type, comptime param: Param(Id), comptime value_parsers: anytype) type {\n    const parser = switch (param.takes_value) {\n        .none => parsers.string,\n        .one, .many => @field(value_parsers, param.id.value()),\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "ParamType",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinitArgs from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn deinitArgs(arguments: anytype, allocator: std.mem.Allocator) void {\n    inline for (@typeInfo(@TypeOf(arguments.*)).@\"struct\".fields) |field| {\n        switch (@typeInfo(field.type)) {\n            .int, .optional => {}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "deinitArgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Arguments from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn Arguments(\n    comptime Id: type,\n    comptime params: []const Param(Id),\n    comptime value_parsers: anytype,\n    comptime multi_arg_kind: MultiArgKind,\n) type {\n    var fields_len: usize = 0;\n    for (params) |param| {\n        const longest = param.names.longest();\n        if (longest.kind == .positional)\n            continue;\n        fields_len += 1;\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "Arguments",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testErr from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn testErr(\n    comptime params: []const Param(Help),\n    args_strings: []const []const u8,\n    expected: []const u8,\n) !void {\n    var diag = Diagnostic{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "testErr",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to description from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn description(h: Help) []const u8 {\n        return h.desc;\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "description",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to value from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn value(h: Help) []const u8 {\n        return h.val;\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "value",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to helpToFile from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn helpToFile(\n    file: std.fs.File,\n    comptime Id: type,\n    params: []const Param(Id),\n    opt: HelpOptions,\n) !void {\n    var buf: [1024]u8 = undefined;\n    var writer = file.writer(&buf);\n    try help(&writer.interface, Id, params, opt);\n    return writer.interface.flush();\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "helpToFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to help from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn help(\n    writer: *std.Io.Writer,\n    comptime Id: type,\n    params: []const Param(Id),\n    opt: HelpOptions,\n) !void {\n    const max_spacing = blk: {\n        var res: usize = 0;\n        for (params) |param| {\n            var discarding = std.Io.Writer.Discarding.init(&.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "help",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeWord from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn writeWord(writer: *@This(), word: []const u8) !void {\n        std.debug.assert(word.len != 0);\n\n        var first_word = writer.printed_chars <= writer.indentation;\n        const chars_to_write = try std.unicode.utf8CountCodepoints(word) + @intFromBool(!first_word);\n        if (chars_to_write + writer.printed_chars > writer.max_width) {\n            // If the word does not fit on this line, then we insert a new line and print\n            // it on that line. The only exception to this is if this was the first word.\n            // If the first word does not fit on this line, then it will also not fit on the\n            // next one. In that case, all we can really do is just output the word.\n            if (!first_word)\n                try writer.newline();\n\n            first_word = true;\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "writeWord",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newline from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn newline(writer: *@This()) !void {\n        try writer.underlying_writer.writeAll(\"\\n\");\n        writer.printed_chars = 0;\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "newline",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ensureIndented from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn ensureIndented(writer: *@This()) !void {\n        if (writer.printed_chars < writer.indentation) {\n            const to_indent = writer.indentation - writer.printed_chars;\n            try writer.underlying_writer.splatByteAll(' ', to_indent);\n            writer.printed_chars += to_indent;\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "ensureIndented",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printParam from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn printParam(\n    stream: *std.Io.Writer,\n    comptime Id: type,\n    param: Param(Id),\n) !void {\n    if (param.names.short != null or param.names.long != null) {\n        try stream.writeAll(&[_]u8{\n            if (param.names.short) |_| '-' else ' ',\n            param.names.short orelse ' ',\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "printParam",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testHelp from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn testHelp(opt: HelpOptions, str: []const u8) !void {\n    const params = try parseParams(std.testing.allocator, str);\n    defer std.testing.allocator.free(params);\n\n    var buf: [2048]u8 = undefined;\n    var writer = std.Io.Writer.fixed(&buf);\n    try help(&writer, Help, params, opt);\n    try std.testing.expectEqualStrings(str, writer.buffered());\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "testHelp",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to usageToFile from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn usageToFile(file: std.fs.File, comptime Id: type, params: []const Param(Id)) !void {\n    var buf: [1024]u8 = undefined;\n    var writer = file.writer(&buf);\n    try usage(&writer.interface, Id, params);\n    return writer.interface.flush();\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "usageToFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to usage from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub fn usage(stream: *std.Io.Writer, comptime Id: type, params: []const Param(Id)) !void {\n    var cos = ccw.CodepointCountingWriter.init(stream);\n    const cs = &cos.interface;\n    for (params) |param| {\n        const name = param.names.short orelse continue;\n        if (param.takes_value != .none)\n            continue;\n\n        if (cos.codepoints_written == 0)\n            try stream.writeAll(\"[-\");\n        try cs.writeByte(name);\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "usage",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testUsage from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "fn testUsage(expected: []const u8, params: []const Param(Help)) !void {\n    var buf: [1024]u8 = undefined;\n    var writer = std.Io.Writer.fixed(&buf);\n    try usage(&writer, Help, params);\n    try std.testing.expectEqualStrings(expected, writer.buffered());\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "function",
+      "name": "testUsage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Names from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub const Names = struct {\n    /// '-' prefix\n    short: ?u8 = null,\n\n    /// '--' prefix\n    long: ?[]const u8 = null,\n\n    /// The longest of the possible names this `Names` struct can represent.\n    pub fn longest(names: *const Names) Longest {\n        if (names.long) |long|\n            return .{ .kind = .long, .name = long }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "struct",
+      "name": "Names",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Longest from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub const Longest = struct {\n        kind: Kind,\n        name: []const u8,\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "struct",
+      "name": "Longest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Diagnostic from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub const Diagnostic = struct {\n    arg: []const u8 = \"\",\n    name: Names = Names{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "struct",
+      "name": "Diagnostic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ParseOptions from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub const ParseOptions = struct {\n    allocator: std.mem.Allocator,\n    diagnostic: ?*Diagnostic = null,\n\n    /// The assignment separators, which by default is `=`. This is the separator between the name\n    /// of an argument and its value. For `--arg=value`, `arg` is the name and `value` is the value\n    /// if `=` is one of the assignment separators.\n    assignment_separators: []const u8 = default_assignment_separators,\n\n    /// This option makes `clap.parse` and `clap.parseEx` stop parsing after encountering a\n    /// certain positional index. Setting `terminating_positional` to 0 will make them stop\n    /// parsing after the 0th positional has been added to `positionals` (aka after parsing 1\n    /// positional)\n    terminating_positional: usize = std.math.maxInt(usize),\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "struct",
+      "name": "ParseOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Help from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "pub const Help = struct {\n    desc: []const u8 = \"\",\n    val: []const u8 = \"\",\n\n    pub fn description(h: Help) []const u8 {\n        return h.desc;\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "struct",
+      "name": "Help",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DescriptionWriter from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap.zig",
+    "response": "const DescriptionWriter = struct {\n    underlying_writer: *std.Io.Writer,\n\n    indentation: usize,\n    max_width: usize,\n    printed_chars: usize,\n\n    pub fn writeWord(writer: *@This(), word: []const u8) !void {\n        std.debug.assert(word.len != 0);\n\n        var first_word = writer.printed_chars <= writer.indentation;\n        const chars_to_write = try std.unicode.utf8CountCodepoints(word) + @intFromBool(!first_word);\n        if (chars_to_write + writer.printed_chars > writer.max_width) {\n            // If the word does not fit on this line, then we insert a new line and print\n            // it on that line. The only exception to this is if this was the first word.\n            // If the first word does not fit on this line, then it will also not fit on the\n            // next one. In that case, all we can really do is just output the word.\n            if (!first_word)\n                try writer.newline();\n\n            first_word = true;\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap.zig",
+      "type": "struct",
+      "name": "DescriptionWriter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/args.zig",
+    "response": "pub fn next(iter: *ExampleArgIterator) ?[]const u8 {\n        _ = iter;\n        return \"2\";\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/args.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/args.zig",
+    "response": "pub fn next(iter: *SliceIterator) ?[]const u8 {\n        if (iter.args.len <= iter.index)\n            return null;\n\n        defer iter.index += 1;\n        return iter.args[iter.index];\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/args.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ExampleArgIterator from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/args.zig",
+    "response": "pub const ExampleArgIterator = struct {\n    pub fn next(iter: *ExampleArgIterator) ?[]const u8 {\n        _ = iter;\n        return \"2\";\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/args.zig",
+      "type": "struct",
+      "name": "ExampleArgIterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SliceIterator from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/args.zig",
+    "response": "pub const SliceIterator = struct {\n    args: []const []const u8,\n    index: usize = 0,\n\n    pub fn next(iter: *SliceIterator) ?[]const u8 {\n        if (iter.args.len <= iter.index)\n            return null;\n\n        defer iter.index += 1;\n        return iter.args[iter.index];\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/args.zig",
+      "type": "struct",
+      "name": "SliceIterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/codepoint_counting_writer.zig",
+    "response": "pub fn init(child_stream: *std.Io.Writer) Self {\n        return .{\n            .child_stream = child_stream,\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/codepoint_counting_writer.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drain from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/codepoint_counting_writer.zig",
+    "response": "fn drain(w: *std.Io.Writer, data: []const []const u8, splat: usize) std.Io.Writer.Error!usize {\n        const self: *Self = @fieldParentPtr(\"interface\", w);\n        var n_bytes_written: usize = 0;\n        var i: usize = 0;\n\n        while (i < data.len + splat - 1) : (i += 1) {\n            const chunk = data[@min(i, data.len)];\n            const bytes_and_codepoints = utf8CountCodepointsAllowTruncate(chunk) catch return std.Io.Writer.Error.WriteFailed;\n            // Might not be the full input, so the leftover bytes are written on the next call.\n            const bytes_to_write = chunk[0..bytes_and_codepoints.bytes];\n            const amt = try self.child_stream.write(bytes_to_write);\n            n_bytes_written += amt;\n            const bytes_written = bytes_to_write[0..amt];\n            self.codepoints_written += (utf8CountCodepointsAllowTruncate(bytes_written) catch return std.Io.Writer.Error.WriteFailed).codepoints;\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/codepoint_counting_writer.zig",
+      "type": "function",
+      "name": "drain",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to utf8CountCodepointsAllowTruncate from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/codepoint_counting_writer.zig",
+    "response": "fn utf8CountCodepointsAllowTruncate(s: []const u8) !struct { bytes: usize, codepoints: usize }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/codepoint_counting_writer.zig",
+      "type": "function",
+      "name": "utf8CountCodepointsAllowTruncate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CodepointCountingWriter from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/codepoint_counting_writer.zig",
+    "response": "pub const CodepointCountingWriter = struct {\n    codepoints_written: u64 = 0,\n    child_stream: *std.Io.Writer,\n    interface: std.Io.Writer = .{\n        .buffer = &.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/codepoint_counting_writer.zig",
+      "type": "struct",
+      "name": "CodepointCountingWriter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/codepoint_counting_writer.zig",
+    "response": "const self: *Self = @fieldParentPtr(\"interface\", w);",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/codepoint_counting_writer.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to int from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/parsers.zig",
+    "response": "pub fn int(comptime T: type, comptime base: u8) fn ([]const u8) std.fmt.ParseIntError!T {\n    return struct {\n        fn parse(in: []const u8) std.fmt.ParseIntError!T {\n            return switch (@typeInfo(T).int.signedness) {\n                .signed => std.fmt.parseInt(T, in, base),\n                .unsigned => std.fmt.parseUnsigned(T, in, base),\n            }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/parsers.zig",
+      "type": "function",
+      "name": "int",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to float from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/parsers.zig",
+    "response": "pub fn float(comptime T: type) fn ([]const u8) std.fmt.ParseFloatError!T {\n    return struct {\n        fn parse(in: []const u8) std.fmt.ParseFloatError!T {\n            return std.fmt.parseFloat(T, in);\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/parsers.zig",
+      "type": "function",
+      "name": "float",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enumeration from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/parsers.zig",
+    "response": "pub fn enumeration(comptime T: type) fn ([]const u8) EnumError!T {\n    return struct {\n        fn parse(in: []const u8) EnumError!T {\n            return std.meta.stringToEnum(T, in) orelse error.NameNotPartOfEnum;\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/parsers.zig",
+      "type": "function",
+      "name": "enumeration",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ReturnType from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/parsers.zig",
+    "response": "fn ReturnType(comptime P: type) type {\n    return @typeInfo(P).@\"fn\".return_type.?;\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/parsers.zig",
+      "type": "function",
+      "name": "ReturnType",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Result from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/parsers.zig",
+    "response": "pub fn Result(comptime P: type) type {\n    return @typeInfo(ReturnType(P)).error_union.payload;\n}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/parsers.zig",
+      "type": "function",
+      "name": "Result",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Arg from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "pub fn Arg(comptime Id: type) type {\n    return struct {\n        const Self = @This();\n\n        param: *const clap.Param(Id),\n        value: ?[]const u8 = null,\n    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "Arg",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Clap from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "pub fn Clap(comptime Id: type, comptime ArgIterator: type) type {\n    return struct {\n        const State = union(enum) {\n            normal,\n            chaining: Chaining,\n            rest_are_positional,\n\n            const Chaining = struct {\n                arg: []const u8,\n                index: usize,\n            }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "Clap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "pub fn next(parser: *@This()) !?Arg(Id) {\n            switch (parser.state) {\n                .normal => return try parser.normal(),\n                .chaining => |state| return try parser.chaining(state),\n                .rest_are_positional => {\n                    const param = parser.positionalParam() orelse unreachable;\n                    const value = parser.iter.next() orelse return null;\n                    return Arg(Id){ .param = param, .value = value }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to normal from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "fn normal(parser: *@This()) !?Arg(Id) {\n            const arg_info = (try parser.parseNextArg()) orelse return null;\n            const arg = arg_info.arg;\n            switch (arg_info.kind) {\n                .long => {\n                    const eql_index = std.mem.indexOfAny(u8, arg, parser.assignment_separators);\n                    const name = if (eql_index) |i| arg[0..i] else arg;\n                    const maybe_value = if (eql_index) |i| arg[i + 1 ..] else null;\n\n                    for (parser.params) |*param| {\n                        const match = param.names.long orelse continue;\n\n                        if (!std.mem.eql(u8, name, match))\n                            continue;\n                        if (param.takes_value == .none) {\n                            if (maybe_value != null)\n                                return parser.err(arg, .{ .long = name }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "normal",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to chaining from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "fn chaining(parser: *@This(), state: State.Chaining) !?Arg(Id) {\n            const arg = state.arg;\n            const index = state.index;\n            const next_index = index + 1;\n\n            for (parser.params) |*param| {\n                const short = param.names.short orelse continue;\n                if (short != arg[index])\n                    continue;\n\n                // Before we return, we have to set the new state of the clap\n                defer {\n                    if (arg.len <= next_index or param.takes_value != .none) {\n                        parser.state = .normal;\n                    }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "chaining",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to positionalParam from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "fn positionalParam(parser: *@This()) ?*const clap.Param(Id) {\n            if (parser.positional) |p|\n                return p;\n\n            for (parser.params) |*param| {\n                if (param.names.long) |_|\n                    continue;\n                if (param.names.short) |_|\n                    continue;\n\n                parser.positional = param;\n                return param;\n            }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "positionalParam",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseNextArg from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "fn parseNextArg(parser: *@This()) !?ArgInfo {\n            const full_arg = parser.iter.next() orelse return null;\n            if (std.mem.eql(u8, full_arg, \"--\") or std.mem.eql(u8, full_arg, \"-\"))\n                return ArgInfo{ .arg = full_arg, .kind = .positional }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "parseNextArg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to err from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "fn err(parser: @This(), arg: []const u8, names: clap.Names, _err: anytype) @TypeOf(_err) {\n            if (parser.diagnostic) |d|\n                d.* = .{ .arg = arg, .name = names }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "err",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectArgs from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "fn expectArgs(\n    parser: *Clap(u8, clap.args.SliceIterator),\n    results: []const Arg(u8),\n) !void {\n    for (results) |res| {\n        const arg = (try parser.next()) orelse return error.TestFailed;\n        try std.testing.expectEqual(res.param, arg.param);\n        const expected_value = res.value orelse {\n            try std.testing.expectEqual(@as(@TypeOf(arg.value), null), arg.value);\n            continue;\n        }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "expectArgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectError from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "fn expectError(\n    parser: *Clap(u8, clap.args.SliceIterator),\n    expected: []const u8,\n) !void {\n    var diag: clap.Diagnostic = .{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "function",
+      "name": "expectError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Chaining from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "const Chaining = struct {\n                arg: []const u8,\n                index: usize,\n            }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "struct",
+      "name": "Chaining",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ArgInfo from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: clap/streaming.zig",
+    "response": "const ArgInfo = struct {\n            arg: []const u8,\n            kind: enum {\n                long,\n                short,\n                positional,\n            }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "clap/streaming.zig",
+      "type": "struct",
+      "name": "ArgInfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: example/help.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "example/help.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: example/simple-ex.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "example/simple-ex.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: example/simple.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "example/simple.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: example/streaming-clap.zig",
+    "response": "pub fn main() !void {\n    const allocator = std.heap.page_allocator;\n\n    // First we specify what parameters our program can take.\n    const params = [_]clap.Param(u8){\n        .{\n            .id = 'h',\n            .names = .{ .short = 'h', .long = \"help\" }",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "example/streaming-clap.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: example/subcommands.zig",
+    "response": "pub fn main() !void {\n    var gpa_state = std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "example/subcommands.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mathMain from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: example/subcommands.zig",
+    "response": "fn mathMain(gpa: std.mem.Allocator, iter: *std.process.ArgIterator, main_args: MainArgs) !void {\n    // The parent arguments are not used here, but there are cases where it might be useful, so\n    // this example shows how to pass the arguments around.\n    _ = main_args;\n\n    // The parameters for the subcommand.\n    const params = comptime clap.parseParamsComptime(\n        \\\\-h, --help  Display this help and exit.\n        \\\\-a, --add   Add the two numbers\n        \\\\-s, --sub   Subtract the two numbers\n        \\\\<isize>\n        \\\\<isize>\n        \\\\\n    );\n\n    // Here we pass the partially parsed argument iterator.\n    var diag = clap.Diagnostic{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "example/subcommands.zig",
+      "type": "function",
+      "name": "mathMain",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from Hejsil/zig-clap",
+    "context": "Repository: Hejsil/zig-clap (1343 ⭐)\nFile: example/usage.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "Hejsil/zig-clap",
+      "stars": 1343,
+      "file": "example/usage.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  }
+]

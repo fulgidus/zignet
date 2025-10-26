@@ -1,0 +1,1432 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add_example from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: build.zig",
+    "response": "fn add_example(\n    b: *std.Build,\n    name: []const u8,\n    link_libc: bool,\n    target: std.Build.ResolvedTarget,\n    optimize: std.builtin.Mode,\n    zzz_module: *std.Build.Module,\n) void {\n    const example = b.addExecutable(.{\n        .name = name,\n        .root_source_file = b.path(b.fmt(\"./examples/{s}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "build.zig",
+      "type": "function",
+      "name": "add_example",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to base_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/basic/main.zig",
+    "response": "fn base_handler(ctx: *const Context, _: void) !Respond {\n    return ctx.response.apply(.{\n        .status = .OK,\n        .mime = http.Mime.HTML,\n        .body = \"Hello, world!\",\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/basic/main.zig",
+      "type": "function",
+      "name": "base_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/basic/main.zig",
+    "response": "pub fn main() !void {\n    const host: []const u8 = \"0.0.0.0\";\n    const port: u16 = 9862;\n\n    var gpa = std.heap.GeneralPurposeAllocator(.{ .thread_safe = true }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/basic/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/basic/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{\n                    .stack_size = 1024 * 1024 * 4,\n                    .socket_buffer_bytes = 1024 * 2,\n                    .keepalive_count_max = null,\n                    .connection_count_max = 1024,\n                }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/basic/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/basic/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: Socket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/basic/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to host from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/basic/main.zig",
+    "response": "const host: []const u8 = \"0.0.0.0\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/basic/main.zig",
+      "type": "const",
+      "name": "host",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/basic/main.zig",
+    "response": "const port: u16 = 9862;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/basic/main.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to base_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/cookies/main.zig",
+    "response": "fn base_handler(ctx: *const Context, _: void) !Respond {\n    var iter = ctx.request.cookies.iterator();\n    while (iter.next()) |kv| log.debug(\"cookie: k={s}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/cookies/main.zig",
+      "type": "function",
+      "name": "base_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/cookies/main.zig",
+    "response": "pub fn main() !void {\n    const host: []const u8 = \"0.0.0.0\";\n    const port: u16 = 9862;\n\n    var gpa = std.heap.GeneralPurposeAllocator(.{ .thread_safe = true }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/cookies/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/cookies/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{\n                    .stack_size = 1024 * 1024 * 4,\n                    .socket_buffer_bytes = 1024 * 2,\n                    .keepalive_count_max = null,\n                    .connection_count_max = 10,\n                }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/cookies/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/cookies/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: Socket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/cookies/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to host from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/cookies/main.zig",
+    "response": "const host: []const u8 = \"0.0.0.0\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/cookies/main.zig",
+      "type": "const",
+      "name": "host",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/cookies/main.zig",
+    "response": "const port: u16 = 9862;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/cookies/main.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to base_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "fn base_handler(ctx: *const Context, _: void) !Respond {\n    const body =\n        \\\\<form>\n        \\\\    <label for=\"fname\">First name:</label>\n        \\\\    <input type=\"text\" id=\"fname\" name=\"fname\"><br><br>\n        \\\\    <label for=\"lname\">Last name:</label>\n        \\\\    <input type=\"text\" id=\"lname\" name=\"lname\"><br><br>\n        \\\\    <label for=\"age\">Age:</label>\n        \\\\    <input type=\"text\" id=\"age\" name=\"age\"><br><br>\n        \\\\    <label for=\"height\">Height:</label>\n        \\\\    <input type=\"text\" id=\"height\" name=\"height\"><br><br>\n        \\\\    <button formaction=\"/generate\" formmethod=\"get\">GET Submit</button>\n        \\\\    <button formaction=\"/generate\" formmethod=\"post\">POST Submit</button>\n        \\\\</form> \n    ;\n\n    return ctx.response.apply(.{\n        .status = .OK,\n        .mime = http.Mime.HTML,\n        .body = body,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "function",
+      "name": "base_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to generate_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "fn generate_handler(ctx: *const Context, _: void) !Respond {\n    const info = switch (ctx.request.method.?) {\n        .GET => try Query(UserInfo).parse(ctx.allocator, ctx),\n        .POST => try Form(UserInfo).parse(ctx.allocator, ctx),\n        else => return error.UnexpectedMethod,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "function",
+      "name": "generate_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "pub fn main() !void {\n    const host: []const u8 = \"0.0.0.0\";\n    const port: u16 = 9862;\n\n    var gpa = std.heap.GeneralPurposeAllocator(.{ .thread_safe = true }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{\n                    .stack_size = 1024 * 1024 * 4,\n                    .socket_buffer_bytes = 1024 * 2,\n                }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to UserInfo from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "const UserInfo = struct {\n    fname: []const u8,\n    mname: []const u8 = \"Middle\",\n    lname: []const u8,\n    age: u8,\n    height: f32,\n    weight: ?[]const u8,\n}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "struct",
+      "name": "UserInfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: Socket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to host from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "const host: []const u8 = \"0.0.0.0\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "const",
+      "name": "host",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/form/main.zig",
+    "response": "const port: u16 = 9862;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/form/main.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to base_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/fs/main.zig",
+    "response": "fn base_handler(ctx: *const Context, _: void) !Respond {\n    const body =\n        \\\\ <!DOCTYPE html>\n        \\\\ <html>\n        \\\\ <body>\n        \\\\ <h1>Hello, World!</h1>\n        \\\\ </body>\n        \\\\ </html>\n    ;\n\n    return try ctx.response.apply(.{\n        .status = .OK,\n        .mime = http.Mime.HTML,\n        .body = body[0..],\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/fs/main.zig",
+      "type": "function",
+      "name": "base_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/fs/main.zig",
+    "response": "pub fn main() !void {\n    const host: []const u8 = \"0.0.0.0\";\n    const port: u16 = 9862;\n\n    var gpa = std.heap.GeneralPurposeAllocator(\n        .{ .thread_safe = true }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/fs/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/fs/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{\n                    .stack_size = 1024 * 1024 * 4,\n                    .socket_buffer_bytes = 1024 * 4,\n                }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/fs/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/fs/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: Socket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/fs/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to host from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/fs/main.zig",
+    "response": "const host: []const u8 = \"0.0.0.0\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/fs/main.zig",
+      "type": "const",
+      "name": "host",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/fs/main.zig",
+    "response": "const port: u16 = 9862;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/fs/main.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to root_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "fn root_handler(ctx: *const Context, id: i8) !Respond {\n    const body_fmt =\n        \\\\ <!DOCTYPE html>\n        \\\\ <html>\n        \\\\ <body>\n        \\\\ <h1>Hello, World!</h1>\n        \\\\ <p>id: {d}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "function",
+      "name": "root_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to passing_middleware from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "fn passing_middleware(next: *Next, _: void) !Respond {\n    log.info(\"pass middleware: {s}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "function",
+      "name": "passing_middleware",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to failing_middleware from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "fn failing_middleware(next: *Next, _: void) !Respond {\n    log.info(\"fail middleware: {s}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "function",
+      "name": "failing_middleware",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "pub fn main() !void {\n    const host: []const u8 = \"0.0.0.0\";\n    const port: u16 = 9862;\n\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: Socket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to host from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "const host: []const u8 = \"0.0.0.0\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "const",
+      "name": "host",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/middleware/main.zig",
+    "response": "const port: u16 = 9862;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/middleware/main.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sse_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/sse/main.zig",
+    "response": "fn sse_handler(ctx: *const Context, _: void) !Respond {\n    var sse = try SSE.init(ctx);\n\n    while (true) {\n        sse.send(.{ .data = \"hello from handler!\" }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/sse/main.zig",
+      "type": "function",
+      "name": "sse_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/sse/main.zig",
+    "response": "pub fn main() !void {\n    const host: []const u8 = \"0.0.0.0\";\n    const port: u16 = 9862;\n\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/sse/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/sse/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{\n                    .stack_size = 1024 * 1024 * 4,\n                    .socket_buffer_bytes = 1024 * 2,\n                }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/sse/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/sse/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: Socket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/sse/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to host from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/sse/main.zig",
+    "response": "const host: []const u8 = \"0.0.0.0\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/sse/main.zig",
+      "type": "const",
+      "name": "host",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/sse/main.zig",
+    "response": "const port: u16 = 9862;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/sse/main.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to root_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/tls/main.zig",
+    "response": "fn root_handler(ctx: *const Context, _: void) !Respond {\n    const body =\n        \\\\ <!DOCTYPE html>\n        \\\\ <html>\n        \\\\ <head>\n        \\\\ <link rel=\"stylesheet\" href=\"/embed/pico.min.css\"/>\n        \\\\ </head>\n        \\\\ <body>\n        \\\\ <h1>Hello, World!</h1>\n        \\\\ </body>\n        \\\\ </html>\n    ;\n\n    return ctx.response.apply(.{\n        .status = .OK,\n        .mime = http.Mime.HTML,\n        .body = body[0..],\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/tls/main.zig",
+      "type": "function",
+      "name": "root_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/tls/main.zig",
+    "response": "pub fn main() !void {\n    const host: []const u8 = \"0.0.0.0\";\n    const port: u16 = 9862;\n\n    var gpa = std.heap.GeneralPurposeAllocator(\n        .{ .thread_safe = true }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/tls/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/tls/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{ .stack_size = 1024 * 1024 * 8 }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/tls/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/tls/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: SecureSocket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/tls/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to host from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/tls/main.zig",
+    "response": "const host: []const u8 = \"0.0.0.0\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/tls/main.zig",
+      "type": "const",
+      "name": "host",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/tls/main.zig",
+    "response": "const port: u16 = 9862;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/tls/main.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to root_handler from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/unix/main.zig",
+    "response": "pub fn root_handler(ctx: *const Context, _: void) !Respond {\n    return ctx.response.apply(.{\n        .status = .OK,\n        .mime = http.Mime.HTML,\n        .body = \"This is an HTTP benchmark\",\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/unix/main.zig",
+      "type": "function",
+      "name": "root_handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/unix/main.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{ .thread_safe = true }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/unix/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to entry from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/unix/main.zig",
+    "response": "fn entry(rt: *Runtime, p: EntryParams) !void {\n                var server = Server.init(.{}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/unix/main.zig",
+      "type": "function",
+      "name": "entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EntryParams from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/unix/main.zig",
+    "response": "const EntryParams = struct {\n        router: *const Router,\n        socket: Socket,\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/unix/main.zig",
+      "type": "struct",
+      "name": "EntryParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to std_options from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: examples/unix/main.zig",
+    "response": "pub const std_options: std.Options = .{ .log_level = .err };",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "examples/unix/main.zig",
+      "type": "const",
+      "name": "std_options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hash from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/any_case_string_map.zig",
+    "response": "pub fn hash(_: Self, key: []const u8) u64 {\n        var wyhash = std.hash.Wyhash.init(0);\n        for (key) |b| wyhash.update(&.{std.ascii.toLower(b)}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/any_case_string_map.zig",
+      "type": "function",
+      "name": "hash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/any_case_string_map.zig",
+    "response": "pub fn eql(_: Self, key1: []const u8, key2: []const u8) bool {\n        if (key1.len != key2.len) return false;\n        for (key1, key2) |b1, b2| if (std.ascii.toLower(b1) != std.ascii.toLower(b2)) return false;\n        return true;\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/any_case_string_map.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AnyCaseStringContext from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/any_case_string_map.zig",
+    "response": "const AnyCaseStringContext = struct {\n    const Self = @This();\n\n    pub fn hash(_: Self, key: []const u8) u64 {\n        var wyhash = std.hash.Wyhash.init(0);\n        for (key) |b| wyhash.update(&.{std.ascii.toLower(b)}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/any_case_string_map.zig",
+      "type": "struct",
+      "name": "AnyCaseStringContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Pair from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/lib.zig",
+    "response": "pub fn Pair(comptime A: type, comptime B: type) type {\n    return struct { A, B }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/lib.zig",
+      "type": "function",
+      "name": "Pair",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/pseudoslice.zig",
+    "response": "pub fn init(first: []const u8, second: []const u8, shared: []u8) Pseudoslice {\n        return Pseudoslice{\n            .first = first,\n            .second = second,\n            .shared = shared,\n            .len = first.len + second.len,\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/pseudoslice.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/pseudoslice.zig",
+    "response": "pub fn get(self: *const Pseudoslice, start: usize, end: usize) []const u8 {\n        assert(end >= start);\n        assert(self.shared.len >= end - start);\n        const clamped_end = @min(end, self.len);\n\n        if (start < self.first.len) {\n            if (clamped_end <= self.first.len) {\n                // within first slice\n                return self.first[start..clamped_end];\n            }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/pseudoslice.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Pseudoslice from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/pseudoslice.zig",
+    "response": "pub const Pseudoslice = struct {\n    first: []const u8,\n    second: []const u8,\n    shared: []u8,\n    len: usize,\n\n    pub fn init(first: []const u8, second: []const u8, shared: []u8) Pseudoslice {\n        return Pseudoslice{\n            .first = first,\n            .second = second,\n            .shared = shared,\n            .len = first.len + second.len,\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/pseudoslice.zig",
+      "type": "struct",
+      "name": "Pseudoslice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/typed_storage.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) TypedStorage {\n        return .{\n            .arena = std.heap.ArenaAllocator.init(allocator),\n            .storage = std.AutoHashMapUnmanaged(u64, *anyopaque){}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/typed_storage.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/typed_storage.zig",
+    "response": "pub fn deinit(self: *TypedStorage) void {\n        self.arena.deinit();\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/typed_storage.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clear from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/typed_storage.zig",
+    "response": "pub fn clear(self: *TypedStorage) void {\n        self.storage.clearAndFree(self.arena.allocator());\n        _ = self.arena.reset(.retain_capacity);\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/typed_storage.zig",
+      "type": "function",
+      "name": "clear",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to put from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/typed_storage.zig",
+    "response": "pub fn put(self: *TypedStorage, comptime T: type, value: T) !void {\n        const allocator = self.arena.allocator();\n        const ptr = try allocator.create(T);\n        ptr.* = value;\n        const type_id = comptime std.hash.Wyhash.hash(0, @typeName(T));\n        try self.storage.put(allocator, type_id, @ptrCast(ptr));\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/typed_storage.zig",
+      "type": "function",
+      "name": "put",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/typed_storage.zig",
+    "response": "pub fn get(self: *TypedStorage, comptime T: type) ?T {\n        const type_id = comptime std.hash.Wyhash.hash(0, @typeName(T));\n        const ptr = self.storage.get(type_id) orelse return null;\n        return @as(*T, @ptrCast(@alignCast(ptr))).*;\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/typed_storage.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TypedStorage from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/typed_storage.zig",
+    "response": "pub const TypedStorage = struct {\n    arena: std.heap.ArenaAllocator,\n    storage: std.AutoHashMapUnmanaged(u64, *anyopaque),\n\n    pub fn init(allocator: std.mem.Allocator) TypedStorage {\n        return .{\n            .arena = std.heap.ArenaAllocator.init(allocator),\n            .storage = std.AutoHashMapUnmanaged(u64, *anyopaque){}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/typed_storage.zig",
+      "type": "struct",
+      "name": "TypedStorage",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wrap from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/wrapping.zig",
+    "response": "pub fn wrap(comptime I: type, value: anytype) I {\n    const T = @TypeOf(value);\n    assert(@typeInfo(I) == .int);\n    assert(@typeInfo(I).int.signedness == .unsigned);\n\n    if (comptime @bitSizeOf(@TypeOf(value)) > @bitSizeOf(I)) {\n        @compileError(\"type: \" ++ @typeName(T) ++ \" is larger than given integer (\" ++ @typeName(I) ++ \")\");\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/wrapping.zig",
+      "type": "function",
+      "name": "wrap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unwrap from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/wrapping.zig",
+    "response": "pub fn unwrap(comptime T: type, value: anytype) T {\n    const I = @TypeOf(value);\n    assert(@typeInfo(I) == .int);\n    assert(@typeInfo(I).int.signedness == .unsigned);\n    if (comptime @bitSizeOf(@TypeOf(T)) > @bitSizeOf(I)) {\n        @compileError(\"type: \" ++ @typeName(T) ++ \"is larger than given integer (\" ++ @typeName(I) ++ \")\");\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/wrapping.zig",
+      "type": "function",
+      "name": "unwrap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pi_32 from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/wrapping.zig",
+    "response": "const pi_32: f32 = 3.14159;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/wrapping.zig",
+      "type": "const",
+      "name": "pi_32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pi_64 from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/wrapping.zig",
+    "response": "const pi_64: f64 = 3.14159;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/wrapping.zig",
+      "type": "const",
+      "name": "pi_64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to optional_int from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/wrapping.zig",
+    "response": "const optional_int: ?i32 = 42;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/wrapping.zig",
+      "type": "const",
+      "name": "optional_int",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to optional_none from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/core/wrapping.zig",
+    "response": "const optional_none: ?i32 = null;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/core/wrapping.zig",
+      "type": "const",
+      "name": "optional_none",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Context from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/context.zig",
+    "response": "pub const Context = struct {\n    allocator: std.mem.Allocator,\n    /// Not safe to access unless you are manually sending the headers\n    /// and returning the .responded variant of Respond.\n    header_buffer: *std.ArrayList(u8),\n    runtime: *Runtime,\n    /// The Request that triggered this handler.\n    request: *const Request,\n    response: *Response,\n    /// Storage\n    storage: *TypedStorage,\n    /// Socket for this Connection.\n    socket: SecureSocket,\n    /// Slice of the URL Slug Captures\n    captures: []const Capture,\n    /// Map of the KV Query pairs in the URL\n    queries: *const AnyCaseStringMap,\n}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/context.zig",
+      "type": "struct",
+      "name": "Context",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn init(name: []const u8, value: []const u8) Cookie {\n        return .{\n            .name = name,\n            .value = value,\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to to_string from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn to_string(self: SameSite) []const u8 {\n            return switch (self) {\n                .strict => \"Strict\",\n                .lax => \"Lax\",\n                .none => \"None\",\n            }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "to_string",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to to_string_buf from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn to_string_buf(self: Cookie, buf: []u8) ![]const u8 {\n        var list = std.ArrayListUnmanaged(u8).initBuffer(buf);\n        const writer = list.fixedWriter();\n\n        try writer.print(\"{s}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "to_string_buf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to to_string_alloc from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn to_string_alloc(self: Cookie, allocator: std.mem.Allocator) ![]const u8 {\n        var list = try std.ArrayListUnmanaged(u8).initCapacity(allocator, 128);\n        errdefer list.deinit(allocator);\n        const writer = list.writer(allocator);\n\n        try writer.print(\"{s}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "to_string_alloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) CookieMap {\n        return .{\n            .allocator = allocator,\n            .map = std.StringHashMap([]const u8).init(allocator),\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn deinit(self: *CookieMap) void {\n        var iter = self.map.iterator();\n        while (iter.next()) |entry| {\n            self.allocator.free(entry.key_ptr.*);\n            self.allocator.free(entry.value_ptr.*);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clear from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn clear(self: *CookieMap) void {\n        var iter = self.map.iterator();\n        while (iter.next()) |entry| {\n            self.allocator.free(entry.key_ptr.*);\n            self.allocator.free(entry.value_ptr.*);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "clear",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn get(self: CookieMap, name: []const u8) ?[]const u8 {\n        return self.map.get(name);\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to count from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn count(self: CookieMap) usize {\n        return self.map.count();\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to iterator from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn iterator(self: *const CookieMap) std.StringHashMap([]const u8).Iterator {\n        return self.map.iterator();\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "iterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse_from_header from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub fn parse_from_header(self: *CookieMap, cookie_header: []const u8) !void {\n        self.clear();\n\n        var pairs = std.mem.splitSequence(u8, cookie_header, \"; \");\n        while (pairs.next()) |pair| {\n            var kv = std.mem.splitScalar(u8, pair, '=');\n            const key = kv.next() orelse continue;\n            const value = kv.next() orelse continue;\n            if (kv.next() != null) continue;\n\n            const key_dup = try self.allocator.dupe(u8, key);\n            errdefer self.allocator.free(key_dup);\n            const value_dup = try self.allocator.dupe(u8, value);\n            errdefer self.allocator.free(value_dup);\n\n            if (try self.map.fetchPut(key_dup, value_dup)) |existing| {\n                self.allocator.free(existing.key);\n                self.allocator.free(existing.value);\n            }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "function",
+      "name": "parse_from_header",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Cookie from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub const Cookie = struct {\n    name: []const u8,\n    value: []const u8,\n    path: ?[]const u8 = null,\n    domain: ?[]const u8 = null,\n    expires: ?Date = null,\n    max_age: ?u32 = null,\n    secure: bool = false,\n    http_only: bool = false,\n    same_site: ?SameSite = null,\n\n    pub fn init(name: []const u8, value: []const u8) Cookie {\n        return .{\n            .name = name,\n            .value = value,\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "struct",
+      "name": "Cookie",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CookieMap from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/cookie.zig",
+    "response": "pub const CookieMap = struct {\n    allocator: std.mem.Allocator,\n    map: std.StringHashMap([]const u8),\n\n    pub fn init(allocator: std.mem.Allocator) CookieMap {\n        return .{\n            .allocator = allocator,\n            .map = std.StringHashMap([]const u8).init(allocator),\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/cookie.zig",
+      "type": "struct",
+      "name": "CookieMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to into_buf from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "pub fn into_buf(date: HTTPDate, buffer: []u8) ![]u8 {\n            assert(buffer.len >= 29);\n            return try std.fmt.bufPrint(buffer, format, date);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "function",
+      "name": "into_buf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to into_alloc from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "pub fn into_alloc(date: HTTPDate, allocator: std.mem.Allocator) ![]const u8 {\n            return try std.fmt.allocPrint(allocator, format, date);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "function",
+      "name": "into_alloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to into_writer from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "pub fn into_writer(date: HTTPDate, writer: anytype) !void {\n            assert(std.meta.hasMethod(@TypeOf(writer), \"print\"));\n            try writer.print(format, date);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "function",
+      "name": "into_writer",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "pub fn init(ts: i64) Date {\n        return Date{ .ts = ts }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to is_leap_year from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "fn is_leap_year(year: i64) bool {\n        return (@rem(year, 4) == 0 and @rem(year, 100) != 0) or (@rem(year, 400) == 0);\n    }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "function",
+      "name": "is_leap_year",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to to_http_date from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "pub fn to_http_date(date: Date) HTTPDate {\n        const secs = date.ts;\n        const days = @divFloor(secs, 86400);\n        const remsecs = @mod(secs, 86400);\n\n        var year: i64 = 1970;\n        var remaining_days = days;\n        while (true) {\n            const days_in_year: i64 = if (is_leap_year(year)) 366 else 365;\n            if (remaining_days < days_in_year) break;\n            remaining_days -= days_in_year;\n            year += 1;\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "function",
+      "name": "to_http_date",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Month from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "const Month = struct {\n    name: []const u8,\n    days: u32,\n}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "struct",
+      "name": "Month",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Date from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "pub const Date = struct {\n    const HTTPDate = struct {\n        const format = std.fmt.comptimePrint(\n            \"{s}",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "struct",
+      "name": "Date",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to day_names from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "const day_names: []const []const u8 = &.{\n    \"Mon\",\n    \"Tue\",\n    \"Wed\",\n    \"Thu\",\n    \"Fri\",\n    \"Sat\",\n    \"Sun\",\n};",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "const",
+      "name": "day_names",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to days_in_year from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "const days_in_year: i64 = if (is_leap_year(year)) 366 else 365;",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "const",
+      "name": "days_in_year",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to hour from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "const hour: u8 = @intCast(@divFloor(remsecs, 3600));",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "const",
+      "name": "hour",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to minute from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "const minute: u8 = @intCast(@mod(@divFloor(remsecs, 60), 60));",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "const",
+      "name": "minute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to second from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/date.zig",
+    "response": "const second: u8 = @intCast(@mod(remsecs, 60));",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/date.zig",
+      "type": "const",
+      "name": "second",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to decode_alloc from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "pub fn decode_alloc(allocator: std.mem.Allocator, input: []const u8) ![]const u8 {\n    var list = try std.ArrayListUnmanaged(u8).initCapacity(allocator, input.len);\n    defer list.deinit(allocator);\n\n    var input_index: usize = 0;\n    while (input_index < input.len) {\n        defer input_index += 1;\n        const byte = input[input_index];\n        switch (byte) {\n            '%' => {\n                if (input_index + 2 >= input.len) return error.InvalidEncoding;\n                list.appendAssumeCapacity(\n                    try std.fmt.parseInt(u8, input[input_index + 1 .. input_index + 3], 16),\n                );\n                input_index += 2;\n            }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "function",
+      "name": "decode_alloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse_from from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "fn parse_from(allocator: std.mem.Allocator, comptime T: type, comptime name: []const u8, value: []const u8) !T {\n    return switch (@typeInfo(T)) {\n        .int => |info| switch (info.signedness) {\n            .unsigned => try std.fmt.parseUnsigned(T, value, 10),\n            .signed => try std.fmt.parseInt(T, value, 10),\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "function",
+      "name": "parse_from",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse_struct from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "fn parse_struct(allocator: std.mem.Allocator, comptime T: type, map: *const AnyCaseStringMap) !T {\n    var ret: T = undefined;\n    assert(@typeInfo(T) == .@\"struct\");\n    const struct_info = @typeInfo(T).@\"struct\";\n    inline for (struct_info.fields) |field| {\n        const entry = map.getEntry(field.name);\n\n        if (entry) |e| {\n            @field(ret, field.name) = try parse_from(allocator, field.type, field.name, e.value_ptr.*);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "function",
+      "name": "parse_struct",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to construct_map_from_body from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "fn construct_map_from_body(allocator: std.mem.Allocator, m: *AnyCaseStringMap, body: []const u8) !void {\n    var pairs = std.mem.splitScalar(u8, body, '&');\n\n    while (pairs.next()) |pair| {\n        const field_idx = std.mem.indexOfScalar(u8, pair, '=') orelse return error.MissingSeperator;\n        if (pair.len < field_idx + 2) return error.MissingValue;\n\n        const key = pair[0..field_idx];\n        const value = pair[(field_idx + 1)..];\n\n        if (std.mem.indexOfScalar(u8, value, '=') != null) return error.MalformedPair;\n\n        const decoded_key = try decode_alloc(allocator, key);\n        errdefer allocator.free(decoded_key);\n\n        const decoded_value = try decode_alloc(allocator, value);\n        errdefer allocator.free(decoded_value);\n\n        // Allow for duplicates (like with the URL params),\n        // The last one just takes precedent.\n        const entry = try m.getOrPut(decoded_key);\n        if (entry.found_existing) {\n            allocator.free(decoded_key);\n            allocator.free(entry.value_ptr.*);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "function",
+      "name": "construct_map_from_body",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Form from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "pub fn Form(comptime T: type) type {\n    return struct {\n        pub fn parse(allocator: std.mem.Allocator, ctx: *const Context) !T {\n            var m = AnyCaseStringMap.init(ctx.allocator);\n            defer {\n                var it = m.iterator();\n                while (it.next()) |entry| {\n                    allocator.free(entry.key_ptr.*);\n                    allocator.free(entry.value_ptr.*);\n                }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "function",
+      "name": "Form",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Query from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "pub fn Query(comptime T: type) type {\n    return struct {\n        pub fn parse(allocator: std.mem.Allocator, ctx: *const Context) !T {\n            return parse_struct(allocator, T, ctx.queries);\n        }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "function",
+      "name": "Query",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to User from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "const User = struct { id: u32, name: []const u8, age: u8, role: UserRole }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "struct",
+      "name": "User",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to User from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "const User = struct { id: u32, name: []const u8, age: u8 }",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "struct",
+      "name": "User",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to body from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "const body: []const u8 = \"id=10&name=John&age=12&role=visitor\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "const",
+      "name": "body",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to body from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "const body: []const u8 = \"id=10\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "const",
+      "name": "body",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to body from tardy-org/zzz",
+    "context": "Repository: tardy-org/zzz (664 ⭐)\nFile: src/http/form.zig",
+    "response": "const body: []const u8 = \"abc=abc&id=\";",
+    "metadata": {
+      "repo": "tardy-org/zzz",
+      "stars": 664,
+      "file": "src/http/form.zig",
+      "type": "const",
+      "name": "body",
+      "difficulty": "easy"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "cyber",
+  "fullName": "fubark/cyber",
+  "owner": "fubark",
+  "stars": 1357,
+  "description": "Fast and concurrent scripting.",
+  "url": "https://github.com/fubark/cyber",
+  "defaultBranch": "master"
+}

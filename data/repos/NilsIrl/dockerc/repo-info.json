@@ -1,0 +1,9 @@
+{
+  "name": "dockerc",
+  "fullName": "NilsIrl/dockerc",
+  "owner": "NilsIrl",
+  "stars": 4820,
+  "description": "container image to single executable compiler",
+  "url": "https://github.com/NilsIrl/dockerc",
+  "defaultBranch": "trunk"
+}

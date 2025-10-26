@@ -1,0 +1,9 @@
+{
+  "name": "libvaxis",
+  "fullName": "rockorager/libvaxis",
+  "owner": "rockorager",
+  "stars": 1301,
+  "description": "a modern tui library written in zig",
+  "url": "https://github.com/rockorager/libvaxis",
+  "defaultBranch": "main"
+}

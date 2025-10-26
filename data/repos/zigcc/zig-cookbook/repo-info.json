@@ -1,0 +1,9 @@
+{
+  "name": "zig-cookbook",
+  "fullName": "zigcc/zig-cookbook",
+  "owner": "zigcc",
+  "stars": 1019,
+  "description": "Simple Zig programs that demonstrate good practices to accomplish common programming tasks.",
+  "url": "https://github.com/zigcc/zig-cookbook",
+  "defaultBranch": "main"
+}

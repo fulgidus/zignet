@@ -1,0 +1,873 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printUsage from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "fn printUsage() !void {\n    const stdout = std.io.getStdOut().writer();\n    try stdout.print(\n        \\\\Usage: ce [-h | --help] <command> [<args>]\n        \\\\\n        \\\\Commands:\n        \\\\  validate                 Validate all of the migrations\n        \\\\      -r, --root DIR       The direction containing the migrations file (default ./migrations)\n        \\\\\n        \\\\  export                   Export the taxonomy to a json file\n        \\\\      -r, --root DIR       The direction containing the migrations file (default ./migrations)\n        \\\\      -e, --ecosystem STR  The name of an ecosystem if you only want to export one\n        \\\\      -m, --max-date STR   The maximum date to run migrations until.\n        \\\\                           One can export the taxonomy state at specific past dates with this param.\n        \\\\      <output>             The output file\n        \\\\\n        \\\\  help                     Show this help message\n        \\\\  version                  Show program version\n        \\\\\n    , .{}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "printUsage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseRunOptions from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "fn parseRunOptions(command: Command, args: []const []const u8) CommandError!RunOptions {\n    var options = RunOptions{}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "parseRunOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseCommand from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "fn parseCommand(args: []const []const u8) CommandError!CommandArgs {\n    if (args.len == 0) return CommandError.MissingArgument;\n\n    const cmd_str = args[0];\n\n    const command = if (eql(u8, cmd_str, \"help\"))\n        Command.help\n    else if (eql(u8, cmd_str, \"version\"))\n        Command.version\n    else if (eql(u8, cmd_str, \"validate\"))\n        Command.validate\n    else if (eql(u8, cmd_str, \"export\"))\n        Command.@\"export\"\n    else\n        return CommandError.InvalidCommand;\n\n    if (command == .validate or command == .@\"export\") {\n        const run_options = try parseRunOptions(command, args[1..]);\n        return CommandArgs{\n            .command = command,\n            .run_options = run_options,\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "parseCommand",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printVersion from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "fn printVersion() !void {\n    const stdout = std.io.getStdOut().writer();\n    try stdout.writeAll(\"2.0\\n\");\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "printVersion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to executeCommand from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "fn executeCommand(a: std.mem.Allocator, cmd: CommandArgs) !void {\n    switch (cmd.command) {\n        .help => try printUsage(),\n        .version => try printVersion(),\n        .@\"export\" => try cmdExport(a, cmd.run_options.?),\n        .validate => try cmdValidate(a, cmd.run_options.?),\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "executeCommand",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cmdMain from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "pub fn cmdMain(allocator: std.mem.Allocator) !void {\n    const args = try std.process.argsAlloc(allocator);\n    defer std.process.argsFree(allocator, args);\n\n    if (args.len < 2) {\n        try printUsage();\n        return;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "cmdMain",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cmdValidate from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "pub fn cmdValidate(gpa: std.mem.Allocator, options: RunOptions) !void {\n    const default_dir = try defaultMigrationsPath(gpa);\n    defer gpa.free(default_dir);\n\n    const root = options.root orelse default_dir;\n    var taxonomy = db.Taxonomy.init(gpa);\n    defer taxonomy.deinit();\n    const load_result = try taxonomy.load(root, null);\n    _ = load_result;\n\n    const stats = taxonomy.stats();\n\n    const magenta = \"\\x1b[35m\";\n    const reset = \"\\x1b[0m\";\n\n    var stdout = std.io.getStdOut().writer();\n    try stdout.print(\"{s}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "cmdValidate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to defaultMigrationsPath from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "fn defaultMigrationsPath(a: std.mem.Allocator) ![]const u8 {\n    return try std.fs.cwd().realpathAlloc(a, \"migrations\");\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "defaultMigrationsPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cmdExport from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "pub fn cmdExport(gpa: std.mem.Allocator, options: RunOptions) !void {\n    const default_dir = try defaultMigrationsPath(gpa);\n    defer gpa.free(default_dir);\n\n    const root = options.root orelse default_dir;\n    var taxonomy = db.Taxonomy.init(gpa);\n    defer taxonomy.deinit();\n    const load_result = try taxonomy.load(root, options.max_date);\n    _ = load_result;\n    if (options.output) |output| {\n        try taxonomy.exportJson(output, options.ecosystem);\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "function",
+      "name": "cmdExport",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RunOptions from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "const RunOptions = struct {\n    help: bool = false,\n    root: ?[]const u8 = null,\n    max_date: ?[]const u8 = null,\n    ecosystem: ?[]const u8 = null,\n    output: ?[]const u8 = null,\n\n    // Validation flags to prevent duplicates\n    root_seen: bool = false,\n    max_date_seen: bool = false,\n    ecosystem_seen: bool = false,\n    output_seen: bool = false,\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "struct",
+      "name": "RunOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CommandArgs from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/commands.zig",
+    "response": "const CommandArgs = struct {\n    command: Command,\n    run_options: ?RunOptions = null,\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/commands.zig",
+      "type": "struct",
+      "name": "CommandArgs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/main.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to split from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/shlex.zig",
+    "response": "pub fn split(line: []const u8, tokens: []?[]const u8) !usize {\n    var token_count: usize = 0;\n    var i: usize = 0;\n    var start: usize = 0;\n\n    while (i < line.len and token_count < tokens.len) : (i += 1) {\n        while (i < line.len and std.ascii.isWhitespace(line[i])) {\n            i += 1;\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/shlex.zig",
+      "type": "function",
+      "name": "split",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stripEscapes from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/shlex.zig",
+    "response": "fn stripEscapes(input: []const u8) []const u8 {\n    var has_escapes = false;\n    for (input, 0..) |c, idx| {\n        if (c == '\\\\' and idx + 1 < input.len) {\n            has_escapes = true;\n            break;\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/shlex.zig",
+      "type": "function",
+      "name": "stripEscapes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn deinit(self: *Ecosystem, allocator: std.mem.Allocator) void {\n        allocator.free(self.repos);\n        allocator.free(self.sub_ecosystems);\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn deinit(self: *Self, allocator: std.mem.Allocator) void {\n        allocator.free(self.branch);\n        allocator.free(self.tags);\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) Taxonomy {\n        return .{\n            .allocator = allocator,\n            .eco_auto_id = 0,\n            .repo_auto_id = 0,\n            .tag_auto_id = 0,\n            .migration_count = 0,\n            .buffers = ArrayList([]const u8).init(allocator),\n            .eco_ids = SliceIdMap.init(allocator),\n            .repo_ids = SliceIdMap.init(allocator),\n            .tag_ids = SliceIdMap.init(allocator),\n            .tag_id_to_name_map = IdSliceMap.init(allocator),\n            .parent_to_child_map = ParentToChildMap.init(allocator),\n            .child_to_parent_map = ChildToParentMap.init(allocator),\n            .eco_to_repo_map = EcoToRepoMap.init(allocator),\n            .repo_to_eco_map = RepoToEcoMap.init(allocator),\n            .repo_id_to_url_map = IdSliceMap.init(allocator),\n            .eco_id_to_name_map = IdSliceMap.init(allocator),\n            .eco_repo_to_tag_map = EcoRepoToTagMap.init(allocator),\n            .errors = ArrayList(TaxonomyError).init(allocator),\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn deinit(self: *Taxonomy) void {\n        var iterator = self.eco_to_repo_map.iterator();\n        while (iterator.next()) |entry| {\n            entry.value_ptr.deinit();\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn load(self: *Taxonomy, root: []const u8, max_date_: ?[]const u8) !void {\n        var dir = try std.fs.cwd().openDir(root, .{ .iterate = true }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lessThan from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn lessThan(_: void, a: []const u8, b: []const u8) bool {\n                return std.mem.lessThan(u8, a[0..19], b[0..19]);\n            }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "lessThan",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadFile from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn loadFile(self: *Taxonomy, path: []const u8) !void {\n        const file = try std.fs.cwd().openFile(path, .{}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "loadFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasErrors from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn hasErrors(self: *Taxonomy) bool {\n        return self.errors.items.len > 0;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "hasErrors",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printErrors from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn printErrors(self: *Taxonomy) void {\n        for (self.errors.items) |err| {\n            std.debug.print(\"{s}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "printErrors",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stats from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn stats(self: *Taxonomy) TaxonomyStats {\n        return .{\n            .migration_count = self.migration_count,\n            .eco_count = self.eco_ids.count(),\n            .repo_count = self.repo_ids.count(),\n            .eco_connections_count = 0,\n            .tag_count = self.tag_ids.count(),\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "stats",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tagStringsForEcoRepo from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn tagStringsForEcoRepo(self: *Taxonomy, a: std.mem.Allocator, eco_id: u32, repo_id: u32) !?[][]const u8 {\n        const key: EcoTagKey = .{ .eco_id = eco_id, .repo_id = repo_id }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "tagStringsForEcoRepo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to emitEcosystemJson from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn emitEcosystemJson(self: *Taxonomy, writer: anytype, top: []const u8, branch: *ArrayList([]const u8), eco_id: u32) !void {\n        var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n        defer arena.deinit();\n\n        const IdStrTuple = struct { id: u32, str: []const u8 }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "emitEcosystemJson",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to inner from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn inner(_: void, a: IdStrTuple, b: IdStrTuple) bool {\n                return std.ascii.lessThanIgnoreCase(a.str, b.str);\n            }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "inner",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to exportJson from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn exportJson(self: *Taxonomy, output_file: []const u8, ecosystem: ?[]const u8) !void {\n        const KeyPair = struct { eco_name: []const u8, eco_id: u32 }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "exportJson",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lessThan from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn lessThan(_: void, a: KeyPair, b: KeyPair) bool {\n                        return std.ascii.lessThanIgnoreCase(a.eco_name, b.eco_name);\n                    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "lessThan",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eco from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub fn eco(self: *Taxonomy, name: []const u8) !?Ecosystem {\n        const eco_id = self.eco_ids.get(name) orelse return null;\n        const repo_ids = self.eco_to_repo_map.get(eco_id);\n        const repo_urls = if (repo_ids) |ids| ok: {\n            const repo_urls = try self.allocator.alloc([]const u8, ids.count());\n            var iterator = ids.keyIterator();\n            var i: u32 = 0;\n            while (iterator.next()) |repo_id| {\n                repo_urls[i] = self.repo_id_to_url_map.get(repo_id.*).?;\n                i += 1;\n            }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "eco",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addEco from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn addEco(self: *Taxonomy, name: []const u8) !void {\n        const eco_id_entry = try self.eco_ids.getOrPut(name);\n        if (!eco_id_entry.found_existing) {\n            self.eco_auto_id += 1;\n            eco_id_entry.value_ptr.* = self.eco_auto_id;\n            try self.eco_id_to_name_map.putNoClobber(self.eco_auto_id, name);\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "addEco",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to connectEco from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn connectEco(self: *Taxonomy, parent: []const u8, child: []const u8) !void {\n        const parent_id = self.eco_ids.get(parent) orelse return error.InvalidParentEcosystem;\n        const child_id = self.eco_ids.get(child) orelse return error.InvalidChildEcosystem;\n        const child_entry = try self.parent_to_child_map.getOrPut(parent_id);\n        if (!child_entry.found_existing) {\n            child_entry.value_ptr.* = IdSet.init(self.allocator);\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "connectEco",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to disconnectEco from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn disconnectEco(self: *Taxonomy, parent: []const u8, child: []const u8) !void {\n        const parent_id = self.eco_ids.get(parent) orelse return error.InvalidParentEcosystem;\n        const child_id = self.eco_ids.get(child) orelse return error.InvalidChildEcosystem;\n\n        var child_set = self.parent_to_child_map.getPtr(parent_id) orelse return error.ParentEcosystemHasNoChildren;\n        _ = child_set.remove(child_id);\n\n        if (self.child_to_parent_map.getPtr(child_id)) |parent_set| {\n            _ = parent_set.remove(parent_id);\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "disconnectEco",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeEcoById from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn removeEcoById(self: *Taxonomy, eco_id: u32) void {\n        const parent_set = self.child_to_parent_map.getPtr(eco_id);\n        if (parent_set) |ps| {\n            var parent_id_it = ps.keyIterator();\n            while (parent_id_it.next()) |parent_id| {\n                if (self.parent_to_child_map.getPtr(parent_id.*)) |child_set| {\n                    const removed = child_set.remove(eco_id);\n                    assert(removed);\n                }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "removeEcoById",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeEco from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn removeEco(self: *Taxonomy, eco_name: []const u8) !void {\n        const eco_id = self.eco_ids.get(eco_name) orelse return error.InvalidEcosystem;\n        self.removeEcoById(eco_id);\n\n        const removed = self.eco_ids.remove(eco_name);\n        assert(removed);\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "removeEco",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addRepo from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn addRepo(self: *Taxonomy, eco_name: []const u8, repo_url: []const u8, tags_: ?[]?[]const u8) !void {\n        const eco_id = self.eco_ids.get(eco_name) orelse return error.InvalidEcosystem;\n        const repo_id_entry = try self.repo_ids.getOrPut(repo_url);\n        if (!repo_id_entry.found_existing) {\n            self.repo_auto_id += 1;\n            repo_id_entry.value_ptr.* = self.repo_auto_id;\n            try self.repo_id_to_url_map.putNoClobber(self.repo_auto_id, repo_url);\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "addRepo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moveRepo from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn moveRepo(self: *Taxonomy, src: []const u8, dst: []const u8) !void {\n        const src_id = self.repo_ids.get(src) orelse return error.InvalidSourceRepo;\n        if (self.repo_ids.get(dst)) |dst_id| {\n            var eco_iter = self.eco_to_repo_map.iterator();\n            while (eco_iter.next()) |entry| {\n                const repo_set = entry.value_ptr;\n                if (repo_set.contains(src_id)) {\n                    _ = repo_set.remove(src_id);\n                    try repo_set.put(dst_id, {}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "moveRepo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moveEco from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn moveEco(self: *Taxonomy, src: []const u8, dst: []const u8) !void {\n        const src_id = self.eco_ids.get(src) orelse return error.InvalidSourceEcosystem;\n        if (self.eco_ids.contains(dst)) {\n            return error.DestinationEcosystemAlreadyExists;\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "moveEco",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeRepoFromEcosystem from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn removeRepoFromEcosystem(self: *Taxonomy, eco_name: []const u8, repo: []const u8) !void {\n        const eco_id = self.eco_ids.get(eco_name) orelse return error.InvalidEcosystem;\n        var repos_for_eco = self.eco_to_repo_map.getPtr(eco_id) orelse return error.EcosystemHasNoRepos;\n        const repo_id = self.repo_ids.get(repo) orelse return error.InvalidRepo;\n        _ = repos_for_eco.remove(repo_id);\n\n        const key: EcoTagKey = .{ .eco_id = eco_id, .repo_id = repo_id }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "removeRepoFromEcosystem",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isComment from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn isComment(line: []const u8) bool {\n    var i: usize = 0;\n    while (i < line.len) {\n        // Skip whitespace\n        while (i < line.len and std.ascii.isWhitespace(line[i])) i += 1;\n        if (i >= line.len) break;\n        if (line[i] == '#') {\n            return true;\n        }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "isComment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ecoAdd from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn ecoAdd(sub_line: []const u8, db: *Taxonomy) !void {\n    var tokens: [10]?[]const u8 = undefined;\n    const token_count = try shlex.split(sub_line, &tokens);\n    if (token_count != 1) {\n        return error.EcoAddRequiresOneParameter;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "ecoAdd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ecoCon from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn ecoCon(sub_line: []const u8, db: *Taxonomy) !void {\n    var tokens: [10]?[]const u8 = undefined;\n    const token_count = try shlex.split(sub_line, &tokens);\n    if (token_count != 2) {\n        return error.EcoConRequiresExactlyTwoParameters;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "ecoCon",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ecoDis from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn ecoDis(sub_line: []const u8, db: *Taxonomy) !void {\n    var tokens: [2]?[]const u8 = undefined;\n    const token_count = try shlex.split(sub_line, &tokens);\n    if (token_count != 2) {\n        return error.EcoDisRequiresExactlyTwoParameters;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "ecoDis",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ecoRem from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn ecoRem(sub_line: []const u8, db: *Taxonomy) !void {\n    var tokens: [1]?[]const u8 = undefined;\n    const token_count = try shlex.split(sub_line, &tokens);\n    if (token_count != 1) {\n        return error.EcoRemRequiresExactlyTwoParameters;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "ecoRem",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to repAdd from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn repAdd(remainder: []const u8, db: *Taxonomy) !void {\n    var tokens: [10]?[]const u8 = undefined;\n    const token_count = try shlex.split(remainder, &tokens);\n    if (token_count < 2) {\n        return error.RepAddRequiresAtLeastTwoParameters;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "repAdd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to repMov from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn repMov(remainder: []const u8, db: *Taxonomy) !void {\n    var tokens: [2]?[]const u8 = undefined;\n    const token_count = try shlex.split(remainder, &tokens);\n    if (token_count != 2) {\n        return error.RepMovRequiresExactlyTwoParameters;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "repMov",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ecoMov from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn ecoMov(remainder: []const u8, db: *Taxonomy) !void {\n    var tokens: [2]?[]const u8 = undefined;\n    const token_count = try shlex.split(remainder, &tokens);\n    if (token_count != 2) {\n        return error.EcoMovRequiresExactlyTwoParameters;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "ecoMov",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to repRem from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn repRem(remainder: []const u8, db: *Taxonomy) !void {\n    var tokens: [2]?[]const u8 = undefined;\n    const token_count = try shlex.split(remainder, &tokens);\n    if (token_count != 2) {\n        return error.RepRemRequiresExactlyTwoParameters;\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "repRem",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lessThanLowercase from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn lessThanLowercase(_: void, a: []const u8, b: []const u8) bool {\n    return std.ascii.lessThanIgnoreCase(a, b);\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "lessThanLowercase",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getTestsPath from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn getTestsPath(a: std.mem.Allocator, testDir: []const u8) ![]u8 {\n    const build_dir = try findBuildZigDirAlloc(a);\n    defer a.free(build_dir);\n\n    const tests_path = try std.fs.path.join(a, &.{ build_dir, \"tests\", testDir }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "getTestsPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupTestFixtures from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn setupTestFixtures(testDir: []const u8) !Taxonomy {\n    const a = std.testing.allocator;\n    const tests_path = try getTestsPath(a, testDir);\n\n    defer a.free(tests_path);\n\n    var db = Taxonomy.init(a);\n    try db.load(tests_path, null);\n\n    return db;\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "setupTestFixtures",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findBuildZigDirAlloc from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "fn findBuildZigDirAlloc(allocator: std.mem.Allocator) ![]const u8 {\n    const self_path = try std.fs.selfExePathAlloc(allocator);\n    defer allocator.free(self_path);\n\n    var current_path = std.fs.path.dirname(self_path) orelse \"/\";\n\n    while (true) {\n        const build_path = try std.fs.path.join(allocator, &.{ current_path, \"build.zig\" }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "function",
+      "name": "findBuildZigDirAlloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EcoTagKey from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "const EcoTagKey = struct { eco_id: u32, repo_id: u32 }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "EcoTagKey",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TaxonomyStats from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub const TaxonomyStats = struct {\n    migration_count: u32,\n    eco_count: u32,\n    repo_count: u32,\n    eco_connections_count: u32,\n    tag_count: u32,\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "TaxonomyStats",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TaxonomyError from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub const TaxonomyError = struct {\n    message: []const u8,\n    line_num: u32,\n    path: []const u8,\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "TaxonomyError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TaxonomyLoadResult from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub const TaxonomyLoadResult = struct { errors: ArrayList(TaxonomyError) }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "TaxonomyLoadResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Ecosystem from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub const Ecosystem = struct {\n    id: u32,\n    name: []const u8,\n    sub_ecosystems: []const []const u8,\n    repos: []const []const u8,\n\n    pub fn deinit(self: *Ecosystem, allocator: std.mem.Allocator) void {\n        allocator.free(self.repos);\n        allocator.free(self.sub_ecosystems);\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "Ecosystem",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EcosystemRepoRowJson from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "pub const EcosystemRepoRowJson = struct {\n    const Self = @This();\n    eco_name: []const u8,\n    branch: []const []const u8,\n    repo_url: []const u8,\n    tags: []const []const u8,\n\n    pub fn deinit(self: *Self, allocator: std.mem.Allocator) void {\n        allocator.free(self.branch);\n        allocator.free(self.tags);\n    }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "EcosystemRepoRowJson",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IdStrTuple from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "const IdStrTuple = struct { id: u32, str: []const u8 }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "IdStrTuple",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to lessThanLowercaseTuple from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "const lessThanLowercaseTuple = struct {\n            fn inner(_: void, a: IdStrTuple, b: IdStrTuple) bool {\n                return std.ascii.lessThanIgnoreCase(a.str, b.str);\n            }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "lessThanLowercaseTuple",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to KeyPair from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "const KeyPair = struct { eco_name: []const u8, eco_id: u32 }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "struct",
+      "name": "KeyPair",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to key from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "const key: EcoTagKey = .{ .eco_id = eco_id, .repo_id = repo_id };",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "const",
+      "name": "key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to key from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "const key: EcoTagKey = .{ .eco_id = eco_id, .repo_id = repo_id };",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "const",
+      "name": "key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to key from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/taxonomy.zig",
+    "response": "const key: EcoTagKey = .{ .eco_id = eco_id, .repo_id = repo_id };",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/taxonomy.zig",
+      "type": "const",
+      "name": "key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasValidTimestamp from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/timestamp.zig",
+    "response": "pub fn hasValidTimestamp(filename: []const u8) bool {\n    // Check minimum length (YYYY-MM-DDTHHMMSS = 17 characters)\n    if (filename.len < 17) return false;\n\n    // Check all digits and delimiters are in correct positions\n    const pattern = \"0000-00-00T000000\";\n    inline for (pattern, 0..) |c, i| {\n        switch (c) {\n            '0' => {\n                if (!std.ascii.isDigit(filename[i])) return false;\n            }",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/timestamp.zig",
+      "type": "function",
+      "name": "hasValidTimestamp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isLeapYear from electric-capital/crypto-ecosystems",
+    "context": "Repository: electric-capital/crypto-ecosystems (1900 ⭐)\nFile: src/timestamp.zig",
+    "response": "fn isLeapYear(year: u16) bool {\n    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0);\n}",
+    "metadata": {
+      "repo": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "file": "src/timestamp.zig",
+      "type": "function",
+      "name": "isLeapYear",
+      "difficulty": "easy"
+    }
+  }
+]

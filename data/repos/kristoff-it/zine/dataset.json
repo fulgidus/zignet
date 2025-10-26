@@ -1,0 +1,3148 @@
+[
+  {
+    "instruction": "Write a Zig function similar to website from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub fn website(project: *std.Build, opts: Options) *std.Build.Step.Run {\n    const zine_dep = project.dependencyFromBuildZig(@This(), .{\n        .optimize = opts.debug.optimize,\n        .scope = opts.debug.scopes,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "website",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serve from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub fn serve(project: *std.Build, opts: Options) *std.Build.Step.Run {\n    const zine_dep = project.dependencyFromBuildZig(@This(), .{\n        .optimize = opts.debug.optimize,\n        .scope = opts.debug.scopes,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "serve",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupSnapshotTesting from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "fn setupSnapshotTesting(\n    b: *std.Build,\n    target: std.Build.ResolvedTarget,\n    zine_exe: *std.Build.Step.Compile,\n) !void {\n    const test_step = b.step(\"test\", \"build snapshot tests and diff the results\");\n\n    const camera = b.addExecutable(.{\n        .name = \"camera\",\n        .root_module = b.createModule(.{\n            .root_source_file = b.path(\"build/camera.zig\"),\n            .target = target,\n            .optimize = .ReleaseFast,\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "setupSnapshotTesting",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupFuzzing from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "fn setupFuzzing(\n    b: *std.Build,\n    target: std.Build.ResolvedTarget,\n    optimize: std.builtin.OptimizeMode,\n) void {\n    const afl = b.lazyImport(@This(), \"afl_kit\") orelse return;\n\n    const scripty_afl_obj = b.addObject(.{\n        .name = \"scripty\",\n        .root_source_file = b.path(\"src/fuzz/scripty.zig\"),\n        .target = b.resolveTargetQuery(.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "setupFuzzing",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupReleaseStep from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "fn setupReleaseStep(\n    b: *std.Build,\n    release_step: *std.Build.Step,\n    version: []const u8,\n) void {\n    const targets: []const std.Target.Query = &.{\n        .{ .cpu_arch = .aarch64, .os_tag = .macos }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "setupReleaseStep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to string from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub fn string(v: Version) []const u8 {\n        return switch (v) {\n            .tag, .commit => |tc| tc,\n            .unknown => \"unknown\",\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "string",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getVersion from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "fn getVersion(b: *std.Build) Version {\n    const git_path = b.findProgram(&.{\"git\"}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getVersion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to BuildAsset from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub const BuildAsset = struct {\n    /// Name of this asset\n    name: []const u8,\n    /// LazyPath of the generated asset.\n    ///\n    /// The LazyPath cannot be generated by calling `b.path`.\n    /// Use the 'assets' directory for non-buildtime assets.\n    lp: std.Build.LazyPath,\n    /// Installation path relative to the website's asset output path prefix.\n    ///\n    /// It is recommended to give the file an appropriate file extension.\n    /// No need to specify this value if the asset is not meant to be\n    /// `link()`ed\n    install_path: ?[]const u8 = null,\n    /// Installs the asset unconditionally when set to true.\n    ///\n    /// When set to false, the asset will be installed only if `link()`ed\n    /// in a content file or layout (requires `install_path` to be set).\n    ///\n    /// Note that even when this property is set to false the asset will be\n    /// generated by the Zig build system regardless.\n    install_always: bool = false,\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "BuildAsset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Options from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub const Options = struct {\n    /// The directory that contains 'zine.ziggy'.\n    /// Defaults to the directory where your 'build.zig' lives.\n    website_root: ?std.Build.LazyPath = null,\n\n    /// Assets generated by the Zig build system to be made available to Zine.\n    build_assets: []const BuildAsset = &.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "Options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to version from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "const version: Version = if (b.option(\n        bool,\n        \"preview\",\n        \"Make a preview release of Zine\",\n    ) orelse false) .{\n        .tag = getVersion(b).commit,\n    } else getVersion(b);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "const",
+      "name": "version",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to scopes from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "const scopes: []const []const u8 = b.option(\n        []const []const u8,\n        \"scope\",\n        \"logging scopes to enable\",\n    ) orelse &.{};",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "const",
+      "name": "scopes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to log_scope_levels from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub const log_scope_levels: []const std.log.ScopeLevel = &.{{\n            \\\\\n        , .{ tsan, highlight, version.string() });",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "const",
+      "name": "log_scope_levels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to targets from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "const targets: []const std.Target.Query = &.{\n        .{ .cpu_arch = .aarch64, .os_tag = .macos },\n        .{ .cpu_arch = .aarch64, .os_tag = .linux, .abi = .musl },\n        .{ .cpu_arch = .x86_64, .os_tag = .macos },\n        .{ .cpu_arch = .x86_64, .os_tag = .linux, .abi = .musl },\n        .{ .cpu_arch = .x86_64, .os_tag = .windows },\n        .{ .cpu_arch = .aarch64, .os_tag = .windows },\n    };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "const",
+      "name": "targets",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to log_scope_levels from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build.zig",
+    "response": "pub const log_scope_levels: []const std.log.ScopeLevel = &.{{}};",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build.zig",
+      "type": "const",
+      "name": "log_scope_levels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: build/camera.zig",
+    "response": "pub fn main() !void {\n    const gpa = std.heap.smp_allocator;\n    const args = try std.process.argsAlloc(gpa);\n\n    var cmd = std.process.Child.init(args[1..], gpa);\n    const term = try cmd.spawnAndWait();\n\n    switch (term) {\n        .Exited => |code| {\n            const fmt = \"\\n\\n ----- EXIT CODE: {}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "build/camera.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/AnsiRenderer.zig",
+    "response": "fn print(style: Style, out: *Writer, open: bool) !void {\n        comptime var fields: [std.meta.fields(Style).len]std.builtin.Type.StructField = undefined;\n        @memcpy(&fields, std.meta.fields(Style));\n        comptime std.mem.reverse(std.builtin.Type.StructField, &fields);\n        const FieldEnum = std.meta.FieldEnum(Style);\n        inline for (fields) |field| {\n            const value = @field(style, field.name);\n            const tag: ?std.meta.Tuple(&.{ []const u8, ?[]const u8 }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/AnsiRenderer.zig",
+      "type": "function",
+      "name": "print",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printOpen from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/AnsiRenderer.zig",
+    "response": "fn printOpen(style: Style, out: *Writer) !void {\n        try style.print(out, true);\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/AnsiRenderer.zig",
+      "type": "function",
+      "name": "printOpen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printClose from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/AnsiRenderer.zig",
+    "response": "fn printClose(style: Style, out: *Writer) !void {\n        try style.print(out, false);\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/AnsiRenderer.zig",
+      "type": "function",
+      "name": "printClose",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderSlice from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/AnsiRenderer.zig",
+    "response": "pub fn renderSlice(allocator: std.mem.Allocator, src: []const u8) ![]const u8 {\n    var fbs = std.io.fixedBufferStream(src);\n\n    var out = std.ArrayList(u8).init(allocator);\n    defer out.deinit();\n\n    var renderer: AnsiRenderer = .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/AnsiRenderer.zig",
+      "type": "function",
+      "name": "renderSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to render from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/AnsiRenderer.zig",
+    "response": "fn render(renderer: *AnsiRenderer, reader: *Reader, writer: *Writer) !void {\n    try renderer.current_style.printOpen(writer);\n\n    while (true) {\n        const char = reader.readByte() catch break;\n\n        switch (renderer.state) {\n            .normal => switch (char) {\n                '\\x1b' => renderer.state = .escape,\n                else => switch (renderer.g0_charset) {\n                    .ascii => {\n                        _ = try writer.write(switch (char) {\n                            '<' => \"&lt;\",\n                            '>' => \"&gt;\",\n                            else => &.{char}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/AnsiRenderer.zig",
+      "type": "function",
+      "name": "render",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Style from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/AnsiRenderer.zig",
+    "response": "const Style = struct {\n    bold: bool = false,\n    dim: bool = false,\n    foreground: ?Color = null,\n\n    const Color = enum {\n        black,\n        red,\n        green,\n        yellow,\n        blue,\n        magenta,\n        cyan,\n        white,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/AnsiRenderer.zig",
+      "type": "struct",
+      "name": "Style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tag from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/AnsiRenderer.zig",
+    "response": "const tag: ?std.meta.Tuple(&.{ []const u8, ?[]const u8 }) = switch (@field(FieldEnum, field.name)) {\n                .bold => if (value) .{ \"b\", null } else null,\n                .dim => if (value) .{ \"span\", \"style=\\\"filter: brightness(75%)\\\"\" } else null,\n                .foreground => if (value) |color| .{ \"span\", switch (color) {\n                    inline else => |c| \"style=\\\"color: \" ++ @tagName(c) ++ \"\\\"\",\n                } } else null,\n            };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/AnsiRenderer.zig",
+      "type": "const",
+      "name": "tag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "pub fn deinit(b: *const Build, gpa: Allocator) void {\n    {\n        var dir = b.base_dir;\n        dir.close();\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "pub fn load(gpa: Allocator, cfg: *const root.Config, opts: root.Options) Build {\n    errdefer |err| switch (err) {\n        error.OutOfMemory => fatal.oom(),\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ensureEmpty from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "fn ensureEmpty(dir: std.fs.Dir, path: []const u8) void {\n    var it = dir.iterateAssumeFirstIteration();\n    const next = it.next() catch |err| fatal.dir(path, err);\n    if (next != null) {\n        fatal.msg(\n            \\\\error: the output directory is not empty\n            \\\\\n            \\\\info: the output path:\n            \\\\      {s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "function",
+      "name": "ensureEmpty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to collectGitInfo from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "fn collectGitInfo(\n    arena: Allocator,\n    path: []const u8,\n    dir: std.fs.Dir,\n) void {\n    const g = Git.init(arena, path) catch |err| fatal(\n        \"error while collecting git info: {s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "function",
+      "name": "collectGitInfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanSiteAssets from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "pub fn scanSiteAssets(\n    b: *Build,\n    gpa: Allocator,\n    arena: Allocator,\n) !void {\n    const zone = tracy.trace(@src());\n    defer zone.end();\n\n    var dir_stack: std.ArrayListUnmanaged([]const u8) = .empty;\n    try dir_stack.append(arena, \"\");\n\n    const empty_path: Path = @enumFromInt(0);\n    assert(b.pt.get(&.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "function",
+      "name": "scanSiteAssets",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanTemplates from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "pub fn scanTemplates(b: *Build, gpa: Allocator, arena: Allocator) !void {\n    const zone = tracy.trace(@src());\n    defer zone.end();\n    var progress = root.progress.start(\"Scan templates\", 0);\n    defer progress.end();\n\n    const layouts_dir_path = b.cfg.getLayoutsDirPath();\n    log.debug(\"scanTemplates('{s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "function",
+      "name": "scanTemplates",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Error from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "const Error = struct {\n        ref: []const u8, // the file this error relates to\n        msg: []const u8,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "struct",
+      "name": "Error",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mode from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "const mode: Mode = switch (opts.mode) {\n        .memory => .{ .memory = .{} },\n        .disk => |disk| blk: {\n            const output_base_dir = if (disk.output_dir_path == null)\n                base_dir\n            else\n                std.fs.cwd();",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "const",
+      "name": "mode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to empty_path from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "const empty_path: Path = @enumFromInt(0);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "const",
+      "name": "empty_path",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pn from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "const pn: PathName = .{\n                        .path = asset_sub_path,\n                        .name = name,\n                    };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "const",
+      "name": "pn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pn from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Build.zig",
+    "response": "const pn: PathName = .{\n                            .path = dir_entry.p,\n                            .name = str,\n                        };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Build.zig",
+      "type": "const",
+      "name": "pn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stringify from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "pub fn stringify(\n            value: Self,\n            opts: ziggy.serializer.StringifyOptions,\n            indent_level: usize,\n            depth: usize,\n            w: *Writer,\n        ) !void {\n            _ = opts;\n            _ = indent_level;\n            _ = depth;\n\n            const date = zeit.instant(.{\n                .source = .{ .unix_timestamp = value.unix }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "function",
+      "name": "stringify",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "pub fn init(gpa: Allocator, path: []const u8) !Git {\n    var p = path;\n    var git_dir = while (true) {\n        var dir = try std.fs.openDirAbsolute(p, .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readHead from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "fn readHead(gpa: Allocator, git_dir: std.fs.Dir) !Head {\n    var head_file = try git_dir.openFile(\"HEAD\", .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "function",
+      "name": "readHead",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readCommitOfBranch from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "fn readCommitOfBranch(gpa: Allocator, git_dir: std.fs.Dir, branch: []const u8) ![git_commit_hash_len]u8 {\n    const rel_path = switch (builtin.os.tag) {\n        .windows => win: {\n            const duped_branch = try gpa.dupe(u8, branch);\n            defer gpa.free(duped_branch);\n            std.mem.replaceScalar(u8, duped_branch, '/', '\\\\');\n            break :win try std.fs.path.join(gpa, &.{ \"refs\", \"heads\", duped_branch }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "function",
+      "name": "readCommitOfBranch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getTagForCommitHash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "fn getTagForCommitHash(\n    arena: Allocator,\n    git_dir: std.fs.Dir,\n    commit_hash: []const u8,\n) !?[]const u8 {\n    const rel_path = \"refs\" ++ std.fs.path.sep_str ++ \"tags\";\n\n    var tags = try git_dir.openDir(rel_path, .{ .iterate = true }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "function",
+      "name": "getTagForCommitHash",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setAdditionalMetadata from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "fn setAdditionalMetadata(\n    arena: Allocator,\n    git_dir: std.fs.Dir,\n    commit_hash: [git_commit_hash_len]u8,\n) !Meta {\n    const commit_path = \"objects\" ++ std.fs.path.sep_str ++ commit_hash[0..2] ++ std.fs.path.sep_str ++ commit_hash[2..];\n\n    const content = try git_dir.openFile(commit_path, .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "function",
+      "name": "setAdditionalMetadata",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CommitDate from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "const CommitDate = struct {\n    unix: i64 = 0,\n\n    const Self = @This();\n    pub const ziggy_options = struct {\n        pub fn stringify(\n            value: Self,\n            opts: ziggy.serializer.StringifyOptions,\n            indent_level: usize,\n            depth: usize,\n            w: *Writer,\n        ) !void {\n            _ = opts;\n            _ = indent_level;\n            _ = depth;\n\n            const date = zeit.instant(.{\n                .source = .{ .unix_timestamp = value.unix }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "struct",
+      "name": "CommitDate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Meta from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Git.zig",
+    "response": "const Meta = struct {\n    author_name: []const u8 = \"\",\n    author_email: []const u8 = \"\",\n    commit_date: CommitDate = .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Git.zig",
+      "type": "struct",
+      "name": "Meta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn deinit(pt: *const PathTable, gpa: Allocator) void {\n    var pc = pt.path_components;\n    pc.deinit(gpa);\n\n    var pm = pt.path_map;\n    pm.deinit(gpa);\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fmt from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn fmt(\n        u: PathName,\n        st: *const StringTable,\n        pt: *const PathTable,\n        prefix: ?[]const u8,\n        maybe_sep: []const u8,\n    ) PathName.Formatter {\n        return .{\n            .u = u,\n            .st = st,\n            .pt = pt,\n            .prefix = prefix,\n            .maybe_sep = maybe_sep,\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "fmt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn get(st: *const StringTable, pt: *const PathTable, src: []const u8) ?PathName {\n        if (builtin.mode == .Debug) {\n            assert(!std.mem.endsWith(u8, src, \"/\\\\\"));\n            assert(st.get(\"\") == empty_name);\n            assert(pt.get(&.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn format(f: PathName.Formatter, w: *Writer) !void {\n            assert(f.maybe_sep.len < 2);\n            const sep = if (f.maybe_sep.len == 0) \"/\" else blk: {\n                assert(f.maybe_sep[0] == '/' or f.maybe_sep[0] == '\\\\');\n                break :blk f.maybe_sep;\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPathNoName from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn getPathNoName(\n    pt: *const PathTable,\n    string_table: *const StringTable,\n    /// Optional already computed prefix\n    prefix: []const String,\n    path: []const u8,\n) ?Path {\n    var it = std.mem.tokenizeScalar(u8, path, '/');\n    const component_count = blk: {\n        var count: u32 = 0;\n        while (it.next() != null) count += 1;\n        it.reset();\n        break :blk count;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "getPathNoName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn get(pt: *const PathTable, components: []const String) ?Path {\n    return pt.path_map.getKeyAdapted(\n        mem.sliceAsBytes(components),\n        @as(Path.MapIndexAdapter, .{ .components = pt.path_components.items }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to internPathWithName from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn internPathWithName(\n    pt: *PathTable,\n    gpa: Allocator,\n    string_table: *StringTable,\n    path_prefix: []const String,\n    path: []const u8,\n) !PathName {\n    assert(string_table.string_bytes.items.len > 0); // string_table must contain a zero elem\n    assert(string_table.string_bytes.items[0] == 0); // the zero elem must be the empty string\n\n    var it = std.mem.tokenizeScalar(u8, path, '/');\n    const component_count = blk: {\n        var count: u32 = 0;\n        while (it.next() != null) count += 1;\n        it.reset();\n        break :blk count;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "internPathWithName",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to internPath from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn internPath(\n    pt: *PathTable,\n    gpa: Allocator,\n    string_table: *StringTable,\n    path: []const u8,\n) !Path {\n    assert(string_table.string_bytes.items.len > 0); // string_table must contain a zero elem\n    assert(string_table.string_bytes.items[0] == 0); // the zero elem must be the empty string\n    var it = std.mem.tokenizeScalar(u8, path, std.fs.path.sep);\n    const component_count = blk: {\n        var count: u32 = 0;\n        while (it.next() != null) count += 1;\n        it.reset();\n        break :blk count;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "internPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to intern from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn intern(pt: *PathTable, gpa: Allocator, components: []const String) !Path {\n    const gop = try pt.path_map.getOrPutContextAdapted(\n        gpa,\n        mem.sliceAsBytes(components),\n        @as(Path.MapIndexAdapter, .{ .components = pt.path_components.items }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "intern",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to internExtend from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn internExtend(\n    pt: *PathTable,\n    gpa: Allocator,\n    prefix_path: Path,\n    new_component: String,\n) !Path {\n    // NOTE: this needs to be recalculated again after ensuring capacity\n    // in case that the memory got reallocated\n    const components_len = prefix_path.slice(pt).len;\n    try pt.path_components.ensureUnusedCapacity(gpa, components_len + 2);\n    const components = prefix_path.slice(pt);\n\n    const old_len = pt.path_components.items.len;\n    const new = pt.path_components.items[old_len..].ptr[0 .. components_len + 1];\n    for (components, new[0..components_len]) |c, *n| n.* = c;\n    new[components_len] = new_component;\n\n    const gop = try pt.path_map.getOrPutContextAdapted(\n        gpa,\n        mem.sliceAsBytes(new),\n        @as(Path.MapIndexAdapter, .{ .components = pt.path_components.items }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "internExtend",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ArrayHashMap from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn ArrayHashMap(T: type) type {\n    return std.AutoArrayHashMapUnmanaged(Path, T);\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "ArrayHashMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to HashMap from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn HashMap(T: type) type {\n    return std.AutoHashMapUnmanaged(Path, T);\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "HashMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn eql(_: @This(), a: Path, b: Path) bool {\n            return a == b;\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn hash(ctx: @This(), key: Path) u64 {\n            return std.hash_map.hashString(\n                mem.sliceAsBytes(mem.sliceTo(\n                    ctx.components[@intFromEnum(key)..],\n                    @enumFromInt(0),\n                )),\n            );\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "hash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn eql(ctx: @This(), a: []const u8, b: Path) bool {\n            return mem.eql(u8, a, mem.sliceAsBytes(\n                mem.sliceTo(\n                    ctx.components[@intFromEnum(b)..],\n                    @enumFromInt(0),\n                ),\n            ));\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn hash(_: @This(), adapted_key: []const u8) u64 {\n            assert(mem.indexOfScalar(\n                String,\n                @alignCast(mem.bytesAsSlice(String, adapted_key)),\n                @enumFromInt(0),\n            ) == null);\n            return std.hash_map.hashString(adapted_key);\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "hash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to slice from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn slice(index: Path, pt: *const PathTable) []const String {\n        const start_slice = pt.path_components.items[@intFromEnum(index)..];\n        return start_slice[0..mem.indexOfScalar(String, start_slice, @enumFromInt(0)).?];\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "slice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bytesSlice from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn bytesSlice(\n    //     index: Path,\n    //     st: *const StringTable,\n    //     pt: *const PathTable,\n    //     buf: []u8,\n    //     sep: u8,\n    //     // extra path component to add at the end\n    //     name: ?StringTable.String,\n    // ) usize {\n    //     var out = std.ArrayListUnmanaged(u8).initBuffer(buf);\n    //     const components = index.slice(pt);\n    //     for (components) |c| {\n    //         const bytes = c.slice(st);\n    //         out.appendSliceAssumeCapacity(bytes);\n    //         out.appendAssumeCapacity(sep);\n    //     }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "bytesSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fmt from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn fmt(\n        p: Path,\n        st: *const StringTable,\n        pt: *const PathTable,\n        prefix: ?[]const u8,\n        trailing_slash: bool,\n    ) Path.Formatter {\n        return .{\n            .p = p,\n            .st = st,\n            .pt = pt,\n            .prefix = prefix,\n            .slash = trailing_slash,\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "fmt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub fn format(f: Path.Formatter, writer: *Writer) !void {\n            if (f.prefix) |p| {\n                if (p.len > 0) {\n                    try writer.writeAll(p);\n                    if (p[p.len - 1] != '/') {\n                        try writer.writeAll(\"/\");\n                    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Formatter from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub const Formatter = struct {\n        u: PathName,\n        st: *const StringTable,\n        pt: *const PathTable,\n        prefix: ?[]const u8,\n        maybe_sep: []const u8,\n\n        pub fn format(f: PathName.Formatter, w: *Writer) !void {\n            assert(f.maybe_sep.len < 2);\n            const sep = if (f.maybe_sep.len == 0) \"/\" else blk: {\n                assert(f.maybe_sep[0] == '/' or f.maybe_sep[0] == '\\\\');\n                break :blk f.maybe_sep;\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "struct",
+      "name": "Formatter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MapContext from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "const MapContext = struct {\n        components: []const String,\n\n        pub fn eql(_: @This(), a: Path, b: Path) bool {\n            return a == b;\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "struct",
+      "name": "MapContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MapIndexAdapter from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "const MapIndexAdapter = struct {\n        components: []const String,\n\n        pub fn eql(ctx: @This(), a: []const u8, b: Path) bool {\n            return mem.eql(u8, a, mem.sliceAsBytes(\n                mem.sliceTo(\n                    ctx.components[@intFromEnum(b)..],\n                    @enumFromInt(0),\n                ),\n            ));\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "struct",
+      "name": "MapIndexAdapter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Formatter from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub const Formatter = struct {\n        p: Path,\n        st: *const StringTable,\n        pt: *const PathTable,\n        prefix: ?[]const u8,\n        slash: bool,\n\n        pub fn format(f: Path.Formatter, writer: *Writer) !void {\n            if (f.prefix) |p| {\n                if (p.len > 0) {\n                    try writer.writeAll(p);\n                    if (p[p.len - 1] != '/') {\n                        try writer.writeAll(\"/\");\n                    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "struct",
+      "name": "Formatter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to empty from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub const empty: PathTable = .{\n    .path_components = .empty,\n    .path_map = .empty,\n};",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "const",
+      "name": "empty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to empty_name from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub const empty_name: String = @enumFromInt(0);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "const",
+      "name": "empty_name",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to empty_path from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "pub const empty_path: Path = @enumFromInt(0);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "const",
+      "name": "empty_path",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_off from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "const new_off: Path = @enumFromInt(old_len);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "const",
+      "name": "new_off",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_off from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "const new_off: Path = @enumFromInt(old_len);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "const",
+      "name": "new_off",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_off from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "const new_off: Path = @enumFromInt(pt.path_components.items.len);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "const",
+      "name": "new_off",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_off from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/PathTable.zig",
+    "response": "const new_off: Path = @enumFromInt(pt.path_components.items.len);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/PathTable.zig",
+      "type": "const",
+      "name": "new_off",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn deinit(st: *const StringTable, gpa: Allocator) void {\n    var sb = st.string_bytes;\n    sb.deinit(gpa);\n\n    var sm = st.string_map;\n    sm.deinit(gpa);\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn get(st: *const StringTable, bytes: []const u8) ?String {\n    return st.string_map.getKeyAdapted(\n        @as([]const u8, bytes),\n        @as(String.MapIndexAdapter, .{ .bytes = st.string_bytes.items }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to intern from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn intern(\n    st: *StringTable,\n    gpa: Allocator,\n    bytes: []const u8,\n) !String {\n    const gop = try st.string_map.getOrPutContextAdapted(\n        gpa,\n        @as([]const u8, bytes),\n        @as(String.MapIndexAdapter, .{ .bytes = st.string_bytes.items }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "intern",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ArrayHashMap from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn ArrayHashMap(T: type) type {\n    return std.AutoArrayHashMapUnmanaged(String, T);\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "ArrayHashMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to HashMap from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn HashMap(T: type) type {\n    return std.AutoHashMapUnmanaged(String, T);\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "HashMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn eql(_: @This(), a: String, b: String) bool {\n            return a == b;\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn hash(ctx: @This(), key: String) u64 {\n            return std.hash_map.hashString(mem.sliceTo(ctx.bytes[@intFromEnum(key)..], 0));\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "hash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn eql(ctx: @This(), a: []const u8, b: String) bool {\n            return mem.eql(u8, a, mem.sliceTo(ctx.bytes[@intFromEnum(b)..], 0));\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn hash(_: @This(), adapted_key: []const u8) u64 {\n            assert(mem.indexOfScalar(u8, adapted_key, 0) == null);\n            return std.hash_map.hashString(adapted_key);\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "hash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to slice from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn slice(index: String, st: *const StringTable) [:0]const u8 {\n        const start_slice = st.string_bytes.items[@intFromEnum(index)..];\n        return start_slice[0..mem.indexOfScalar(u8, start_slice, 0).? :0];\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "slice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MapContext from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "const MapContext = struct {\n        bytes: []const u8,\n\n        pub fn eql(_: @This(), a: String, b: String) bool {\n            return a == b;\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "struct",
+      "name": "MapContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MapIndexAdapter from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "const MapIndexAdapter = struct {\n        bytes: []const u8,\n\n        pub fn eql(ctx: @This(), a: []const u8, b: String) bool {\n            return mem.eql(u8, a, mem.sliceTo(ctx.bytes[@intFromEnum(b)..], 0));\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "struct",
+      "name": "MapIndexAdapter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to empty from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub const empty: StringTable = .{\n    .string_bytes = .empty,\n    .string_map = .empty,\n};",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "const",
+      "name": "empty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_off from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/StringTable.zig",
+    "response": "const new_off: String = @enumFromInt(st.string_bytes.items.len);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/StringTable.zig",
+      "type": "const",
+      "name": "new_off",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Template.zig",
+    "response": "pub fn deinit(t: *const Template, gpa: Allocator) void {\n    gpa.free(t.src);\n    t.html_ast.deinit(gpa);\n    if (t.html_ast.errors.len == 0) t.ast.deinit(gpa);\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Template.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Template.zig",
+    "response": "pub fn parse(\n    t: *Template,\n    gpa: Allocator,\n    arena: Allocator,\n    build: *const Build,\n    pn: PathName,\n) void {\n    const zone = tracy.trace(@src());\n    defer zone.end();\n\n    errdefer |err| switch (err) {\n        error.OutOfMemory => fatal.oom(),\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Template.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fmt from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn fmt(\n        lh: LocationHint,\n        st: *const StringTable,\n        pt: *const PathTable,\n        pages: []const Page,\n    ) LocationHint.Formatter {\n        return .{ .lh = lh, .st = st, .pt = pt, .pages = pages }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "fmt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn format(f: LocationHint.Formatter, w: *Writer) !void {\n            const page = f.pages[f.lh.id];\n            try w.print(\"{f}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn deinit(s: *const Section, gpa: Allocator) void {\n        {\n            var p = s.pages;\n            p.deinit(gpa);\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to activate from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn activate(\n        s: *Section,\n        gpa: Allocator,\n        variant: *const Variant,\n        index: *Page,\n        drafts: bool,\n    ) void {\n        const zone = tracy.trace(@src());\n        defer zone.end();\n\n        index.parse(gpa, worker.cmark, null, variant, drafts);\n        s.active = index._parse.active;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "activate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sortPages from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn sortPages(\n        s: *Section,\n        v: *Variant,\n        pages: []Page,\n    ) void {\n        const Ctx = struct {\n            v: *Variant,\n            pages: []Page,\n            pub fn lessThan(ctx: @This(), lhs: u32, rhs: u32) bool {\n                if (ctx.pages[rhs].date.eql(ctx.pages[lhs].date)) {\n                    var bl: [std.fs.max_path_bytes]u8 = undefined;\n                    var br: [std.fs.max_path_bytes]u8 = undefined;\n                    return std.mem.order(\n                        u8,\n                        std.fmt.bufPrint(&bl, \"{f}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "sortPages",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn deinit(v: *const Variant, gpa: Allocator) void {\n    {\n        var dir = v.content_dir;\n        dir.close();\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanContentDir from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn scanContentDir(\n    variant: *Variant,\n    gpa: Allocator,\n    arena: Allocator,\n    base_dir: std.fs.Dir,\n    content_dir_path: []const u8,\n    variant_id: u32,\n    multilingual: ?MultilingualScanParams,\n    output_path_prefix: []const u8,\n) void {\n    const zone = tracy.trace(@src());\n    defer zone.end();\n\n    errdefer |err| switch (err) {\n        error.OutOfMemory => fatal.oom(),\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "scanContentDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lessThan from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn lessThan(ctx: @This(), lhs: String, rhs: String) bool {\n                    return std.mem.order(u8, lhs.slice(ctx.st), rhs.slice(ctx.st)) == .lt;\n                }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "lessThan",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to installAssets from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub fn installAssets(\n    v: *const Variant,\n    progress: std.Progress.Node,\n    install_dir: std.fs.Dir,\n) void {\n    const zone = tracy.trace(@src());\n    defer zone.end();\n\n    // errdefer |err| switch (err) {\n    //     error.OutOfMemory => fatal.oom(),\n    // }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "function",
+      "name": "installAssets",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Collision from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const Collision = struct {\n    url: PathName,\n    loc: LocationHint,\n    previous: LocationHint,\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "struct",
+      "name": "Collision",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to LocationHint from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub const LocationHint = struct {\n    id: u32, // index into pages\n    kind: union(ResourceKind) {\n        page_main,\n        page_alias,\n        page_alternative: []const u8,\n        // for page assets, 'id' is the page that owns the asset\n        page_asset: std.atomic.Value(u32), // reference counting\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "struct",
+      "name": "LocationHint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Formatter from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub const Formatter = struct {\n        lh: LocationHint,\n        st: *const StringTable,\n        pt: *const PathTable,\n        pages: []const Page,\n\n        pub fn format(f: LocationHint.Formatter, w: *Writer) !void {\n            const page = f.pages[f.lh.id];\n            try w.print(\"{f}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "struct",
+      "name": "Formatter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Section from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub const Section = struct {\n    active: bool = true,\n    content_sub_path: Path,\n    parent_section: u32, // index into sections, 0 = no parent section\n    index: u32, // index into pages\n    pages: std.ArrayListUnmanaged(u32) = .empty, // indices into pages\n\n    pub fn deinit(s: *const Section, gpa: Allocator) void {\n        {\n            var p = s.pages;\n            p.deinit(gpa);\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "struct",
+      "name": "Section",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Ctx from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const Ctx = struct {\n            v: *Variant,\n            pages: []Page,\n            pub fn lessThan(ctx: @This(), lhs: u32, rhs: u32) bool {\n                if (ctx.pages[rhs].date.eql(ctx.pages[lhs].date)) {\n                    var bl: [std.fs.max_path_bytes]u8 = undefined;\n                    var br: [std.fs.max_path_bytes]u8 = undefined;\n                    return std.mem.order(\n                        u8,\n                        std.fmt.bufPrint(&bl, \"{f}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "struct",
+      "name": "Ctx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MultilingualScanParams from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "pub const MultilingualScanParams = struct {\n    i18n_dir: std.fs.Dir,\n    i18n_dir_path: []const u8,\n    locale_code: []const u8,\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "struct",
+      "name": "MultilingualScanParams",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Ctx from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const Ctx = struct {\n                st: *StringTable,\n                pub fn lessThan(ctx: @This(), lhs: String, rhs: String) bool {\n                    return std.mem.order(u8, lhs.slice(ctx.st), rhs.slice(ctx.st)) == .lt;\n                }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "struct",
+      "name": "Ctx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ctx from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const ctx: Ctx = .{ .pages = pages, .v = v };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "ctx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to page_id from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const page_id: u32 = @intCast(pages.items.len);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "page_id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pn from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const pn: PathName = .{ .path = content_sub_path, .name = index_html };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "pn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lh from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const lh: LocationHint = .{ .id = page_id, .kind = .page_main };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "lh",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ctx from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const ctx: Ctx = .{ .st = &string_table };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "ctx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pn from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const pn: PathName = .{ .path = page_url, .name = index_html };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "pn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lh from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const lh: LocationHint = .{ .id = @intCast(idx), .kind = .page_main };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "lh",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lh from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const lh: LocationHint = .{\n                .id = assets_owner_id,\n                .kind = .{ .page_asset = .init(0) },\n            };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "lh",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pn from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const pn: PathName = .{ .path = content_sub_path, .name = a };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "pn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pn from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/Variant.zig",
+    "response": "const pn: PathName = .{ .path = dir_path, .name = index_html };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/Variant.zig",
+      "type": "const",
+      "name": "pn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Channel from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/channel.zig",
+    "response": "pub fn Channel(comptime T: type) type {\n    return struct {\n        lock: std.Thread.Mutex = .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/channel.zig",
+      "type": "function",
+      "name": "Channel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/channel.zig",
+    "response": "pub fn init(buffer: []T) Self {\n            return Self{ .fifo = Fifo.initBuffer(buffer) }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/channel.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to put from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/channel.zig",
+    "response": "pub fn put(self: *Self, item: T) void {\n            self.lock.lock();\n            defer {\n                self.lock.unlock();\n                self.readable.signal();\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/channel.zig",
+      "type": "function",
+      "name": "put",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tryPut from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/channel.zig",
+    "response": "pub fn tryPut(self: *Self, item: T) !void {\n            self.lock.lock();\n            defer self.lock.unlock();\n\n            try self.fifo.appendBounded(item);\n\n            // only signal on success\n            self.readable.signal();\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/channel.zig",
+      "type": "function",
+      "name": "tryPut",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/channel.zig",
+    "response": "pub fn get(self: *Self) T {\n            self.lock.lock();\n            defer {\n                self.lock.unlock();\n                self.writeable.signal();\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/channel.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOrNull from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/channel.zig",
+    "response": "pub fn getOrNull(self: *Self) ?T {\n            self.lock.lock();\n            defer self.lock.unlock();\n\n            if (self.fifo.pop()) |item| return item;\n\n            // signal on empty queue\n            self.writeable.signal();\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/channel.zig",
+      "type": "function",
+      "name": "getOrNull",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to debug from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/debug.zig",
+    "response": "pub fn debug(\n    gpa: Allocator,\n    args: []const []const u8,\n) bool {\n    errdefer |err| switch (err) {\n        error.OutOfMemory => fatal.oom(),\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/debug.zig",
+      "type": "function",
+      "name": "debug",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lessThan from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/debug.zig",
+    "response": "pub fn lessThan(v: *Variant, lhs: Section, rhs: Section) bool {\n                var bl: [std.fs.max_path_bytes]u8 = undefined;\n                var br: [std.fs.max_path_bytes]u8 = undefined;\n                return std.mem.order(\n                    u8,\n                    std.fmt.bufPrint(&bl, \"{f}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/debug.zig",
+      "type": "function",
+      "name": "lessThan",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/debug.zig",
+    "response": "pub fn deinit(co: *const Command, gpa: Allocator) void {\n        var ba = co.build_assets;\n        ba.deinit(gpa);\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/debug.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/debug.zig",
+    "response": "pub fn parse(gpa: Allocator, args: []const []const u8) !Command {\n        var build_assets: std.StringArrayHashMapUnmanaged(BuildAsset) = .empty;\n        var drafts = false;\n        var ids = false;\n\n        const eql = std.mem.eql;\n        const startsWith = std.mem.startsWith;\n        var idx: usize = 0;\n        while (idx < args.len) : (idx += 1) {\n            const arg = args[idx];\n            if (eql(u8, arg, \"-h\") or eql(u8, arg, \"--help\")) {\n                fatal.msg(help_message, .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/debug.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Command from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/debug.zig",
+    "response": "pub const Command = struct {\n    build_assets: std.StringArrayHashMapUnmanaged(BuildAsset),\n    drafts: bool,\n    ids: bool,\n\n    pub fn deinit(co: *const Command, gpa: Allocator) void {\n        var ba = co.build_assets;\n        ba.deinit(gpa);\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/debug.zig",
+      "type": "struct",
+      "name": "Command",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cmd from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/debug.zig",
+    "response": "const cmd: Command = try .parse(gpa, args);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/debug.zig",
+      "type": "const",
+      "name": "cmd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/init.zig",
+    "response": "pub fn init(gpa: Allocator, args: []const []const u8) bool {\n    _ = gpa;\n\n    const cmd: Command = .parse(args);\n    if (cmd.multilingual) @panic(\"TODO: multilingual init\");\n\n    const File = struct { path: []const u8, src: []const u8 }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/init.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/init.zig",
+    "response": "fn parse(args: []const []const u8) Command {\n        var multilingual: ?bool = null;\n        for (args) |a| {\n            if (std.mem.eql(u8, a, \"--multilingual\")) {\n                multilingual = true;\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/init.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to File from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/init.zig",
+    "response": "const File = struct { path: []const u8, src: []const u8 }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/init.zig",
+      "type": "struct",
+      "name": "File",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Command from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/init.zig",
+    "response": "const Command = struct {\n    multilingual: bool,\n    fn parse(args: []const []const u8) Command {\n        var multilingual: ?bool = null;\n        for (args) |a| {\n            if (std.mem.eql(u8, a, \"--multilingual\")) {\n                multilingual = true;\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/init.zig",
+      "type": "struct",
+      "name": "Command",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cmd from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/init.zig",
+    "response": "const cmd: Command = .parse(args);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/init.zig",
+      "type": "const",
+      "name": "cmd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to release from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/release.zig",
+    "response": "pub fn release(gpa: Allocator, args: []const []const u8) bool {\n    errdefer |err| switch (err) {\n        error.OutOfMemory => fatal.oom(),\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/release.zig",
+      "type": "function",
+      "name": "release",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/release.zig",
+    "response": "pub fn deinit(co: *const Command, gpa: Allocator) void {\n        var ba = co.build_assets;\n        ba.deinit(gpa);\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/release.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/release.zig",
+    "response": "pub fn parse(gpa: Allocator, args: []const []const u8) !Command {\n        var output_dir_path: ?[]const u8 = null;\n        var build_assets: std.StringArrayHashMapUnmanaged(BuildAsset) = .empty;\n        var drafts = false;\n        var force = false;\n\n        const eql = std.mem.eql;\n        const startsWith = std.mem.startsWith;\n        var idx: usize = 0;\n        while (idx < args.len) : (idx += 1) {\n            const arg = args[idx];\n            if (eql(u8, arg, \"-h\") or eql(u8, arg, \"--help\")) {\n                fatal.msg(help_message, .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/release.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Command from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/release.zig",
+    "response": "pub const Command = struct {\n    output_dir_path: ?[]const u8,\n    build_assets: std.StringArrayHashMapUnmanaged(BuildAsset),\n    drafts: bool,\n    force: bool,\n\n    pub fn deinit(co: *const Command, gpa: Allocator) void {\n        var ba = co.build_assets;\n        ba.deinit(gpa);\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/release.zig",
+      "type": "struct",
+      "name": "Command",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cmd from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/release.zig",
+    "response": "const cmd: Command = try .parse(gpa, args);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/release.zig",
+      "type": "const",
+      "name": "cmd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serve from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub fn serve(gpa: Allocator, args: []const []const u8) noreturn {\n    if (builtin.single_threaded) {\n        std.debug.print(\n            \"error: single-threaded zine does not yet support running the live server, sorry\\n\\n\",\n            .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "serve",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseAddress from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn parseAddress(arg: []const u8) struct { []const u8, ?u16 }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "parseAddress",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub fn parse(\n        gpa: Allocator,\n        args: []const []const u8,\n    ) error{OutOfMemory}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dirNameWithSlash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn dirNameWithSlash(path: []const u8) []const u8 {\n//     const d = std.fs.path.dirname(path).?;\n//     if (d.len > 1) {\n//         return path[0 .. d.len + 1];\n//     }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "dirNameWithSlash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub fn init(\n        gpa: Allocator,\n        channel: *Channel(ServeEvent),\n        build: *const Build,\n        build_lock: *std.Thread.RwLock,\n    ) Server {\n        return .{\n            .gpa = gpa,\n            .channel = channel,\n            .build = build,\n            .build_lock = build_lock,\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub fn start(s: *Server, cmd: Command) !std.net.Address {\n        const host = if (cmd.host[0] == '[')\n            cmd.host[1..][0 .. cmd.host.len - 2] // Strip brackets from IPv6\n        else\n            cmd.host;\n        const list = try std.net.getAddressList(s.gpa, host, cmd.port);\n        errdefer list.deinit();\n\n        if (list.addrs.len == 0) fatal.msg(\n            \"error: unable to resolve host '{s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serve from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn serve(s: *Server, list: *std.net.AddressList) void {\n        defer list.deinit();\n\n        errdefer |err| switch (err) {\n            error.OutOfMemory => fatal.oom(),\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "serve",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleConnection from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn handleConnection(\n        s: *Server,\n        conn: std.net.Server.Connection,\n    ) void {\n        defer conn.stream.close();\n\n        var bufin: [4096 * 4]u8 = undefined;\n        var in = conn.stream.reader(&bufin);\n        var bufout: [4096]u8 = undefined;\n        var out = conn.stream.writer(&bufout);\n\n        var arena_state = std.heap.ArenaAllocator.init(s.gpa);\n        const arena = arena_state.allocator();\n\n        var http_server = std.http.Server.init(in.interface(), &out.interface);\n\n        while (true) {\n            var request = http_server.receiveHead() catch |err| {\n                if (err != error.HttpConnectionClosing) {\n                    log.debug(\"connection error: {s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "handleConnection",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequest from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn handleRequest(\n        server: *Server,\n        arena: Allocator,\n        req: *std.http.Server.Request,\n    ) !void {\n        var path_with_query = req.head.target;\n\n        if (std.mem.indexOf(u8, path_with_query, \"..\")) |_| {\n            std.debug.print(\"'..' not allowed in URLs\\n\", .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "handleRequest",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendAlternative from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn sendAlternative(\n        arena: Allocator,\n        req: *std.http.Server.Request,\n        path: []const u8,\n        src: []const u8,\n    ) !void {\n        const ext = std.fs.path.extension(path);\n        const mime_type = mime.extension_map.get(ext) orelse\n            .@\"application/octet-stream\";\n\n        if (mime_type == .@\"text/html\") {\n            return sendHtml(arena, req, src);\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "sendAlternative",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendHtml from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn sendHtml(\n        arena: Allocator,\n        req: *std.http.Server.Request,\n        src: []const u8,\n    ) !void {\n        const injection =\n            \\\\<script defer src=\"/__zine/zinereload.js\"></script>\n        ;\n        const head = \"</head>\";\n        const head_pos = std.mem.indexOf(u8, src, head) orelse src.len;\n\n        const injected = try std.fmt.allocPrint(arena, \"{s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "sendHtml",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendOutsideOfPathPrefix from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn sendOutsideOfPathPrefix(\n        arena: Allocator,\n        req: *std.http.Server.Request,\n        path: []const u8,\n    ) !void {\n        const data = try std.fmt.allocPrint(arena, outside_html, .{path}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "sendOutsideOfPathPrefix",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendError from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn sendError(\n        arena: Allocator,\n        req: *std.http.Server.Request,\n        msg: []const u8,\n    ) !void {\n        const data = try std.fmt.allocPrint(arena, error_html, .{msg}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "sendError",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendNotFound from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn sendNotFound(\n        arena: Allocator,\n        req: *std.http.Server.Request,\n        /// Set to true when the asset exists but it was not referenced anywhere\n        /// and thus would not be installed.\n        not_installed: bool,\n    ) !void {\n        const msg = switch (not_installed) {\n            true => \"This path does exist but it was never referenced in the build!\",\n            false => \"This path does not exist!\",\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "sendNotFound",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendFile from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn sendFile(\n        arena: Allocator,\n        req: *std.http.Server.Request,\n        dir: std.fs.Dir,\n        mime_type: mime.Type,\n        file_path: []const u8,\n    ) !void {\n        assert(file_path[0] != '/');\n\n        const contents = try dir.readFileAlloc(\n            arena,\n            file_path,\n            std.math.maxInt(usize),\n        );\n\n        if (mime_type == .@\"text/html\") {\n            return sendHtml(arena, req, contents);\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "sendFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to appendSlashRedirect from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn appendSlashRedirect(\n        arena: std.mem.Allocator,\n        req: *std.http.Server.Request,\n        path_with_query: []const u8,\n    ) !void {\n        // convert `foo/bar?query=1` to `foo/bar/?query=1`\n        const query_start = std.mem.indexOfScalar(u8, path_with_query, '?') orelse path_with_query.len;\n        const location = try std.fmt.allocPrint(\n            arena,\n            \"{s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "appendSlashRedirect",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleWebsocket from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "fn handleWebsocket(s: *Server, req: *std.http.Server.Request) void {\n        const up = req.upgradeRequested();\n        const wsup = switch (up) {\n            .none, .other => return req.respond(\"error: must request websocket upgrade\", .{\n                .status = .bad_request,\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "handleWebsocket",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newEvent from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub fn newEvent(d: *Debouncer) void {\n        {\n            d.cascade_mutex.lock();\n            defer d.cascade_mutex.unlock();\n            d.cascade_start_ms = std.time.milliTimestamp();\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "newEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub fn start(d: *Debouncer) !void {\n        const t = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to notify from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub fn notify(d: *Debouncer) void {\n        while (true) {\n            d.cascade_mutex.lock();\n            defer d.cascade_mutex.unlock();\n\n            while (d.cascade_start_ms == 0) {\n                // no active cascade\n                d.cascade_condition.wait(&d.cascade_mutex);\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "function",
+      "name": "notify",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Command from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub const Command = struct {\n    host: []const u8,\n    port: u16,\n    debounce: u16,\n    build_assets: std.StringArrayHashMapUnmanaged(BuildAsset),\n    drafts: bool,\n\n    fn parseAddress(arg: []const u8) struct { []const u8, ?u16 }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "struct",
+      "name": "Command",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Server from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub const Server = struct {\n    gpa: Allocator,\n    channel: *Channel(ServeEvent),\n    build: *const Build,\n    build_lock: *std.Thread.RwLock,\n\n    pub const max_connection_header_size: usize = 8 * 1024;\n\n    pub fn init(\n        gpa: Allocator,\n        channel: *Channel(ServeEvent),\n        build: *const Build,\n        build_lock: *std.Thread.RwLock,\n    ) Server {\n        return .{\n            .gpa = gpa,\n            .channel = channel,\n            .build = build,\n            .build_lock = build_lock,\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "struct",
+      "name": "Server",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Debouncer from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub const Debouncer = struct {\n    cascade_window_ms: i64,\n\n    cascade_mutex: std.Thread.Mutex = .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "struct",
+      "name": "Debouncer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cmd from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "const cmd: Command = try .parse(gpa, args);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "const",
+      "name": "cmd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to max_connection_header_size from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve.zig",
+    "response": "pub const max_connection_header_size: usize = 8 * 1024;",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve.zig",
+      "type": "const",
+      "name": "max_connection_header_size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "pub fn init(\n    gpa: std.mem.Allocator,\n    debouncer: *Debouncer,\n    dir_paths: []const []const u8,\n) LinuxWatcher {\n    errdefer |err| fatal.msg(\"error: unable to start the file watcher: {s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addChild from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn addChild(\n    watcher: *LinuxWatcher,\n    parent: std.posix.fd_t,\n    child: std.posix.fd_t,\n) !void {\n    const gpa = watcher.gpa;\n    const children = try watcher.children_fds.getOrPut(gpa, parent);\n    if (!children.found_existing) {\n        children.value_ptr.* = .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "addChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeChild from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn removeChild(\n    self: *LinuxWatcher,\n    parent: std.posix.fd_t,\n    child: std.posix.fd_t,\n) ?std.posix.fd_t {\n    if (self.children_fds.getEntry(parent)) |entry| {\n        for (0.., entry.value_ptr.items) |i, fd| {\n            if (child == fd) {\n                return entry.value_ptr.swapRemove(i);\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "removeChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeChildByName from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn removeChildByName(\n    self: *LinuxWatcher,\n    parent: std.posix.fd_t,\n    name: []const u8,\n) ?std.posix.fd_t {\n    if (self.children_fds.getEntry(parent)) |entry| {\n        for (0.., entry.value_ptr.items) |i, fd| {\n            if (self.watch_fds.get(fd)) |data| {\n                if (std.mem.eql(u8, data.name, name)) {\n                    return entry.value_ptr.swapRemove(i);\n                }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "removeChildByName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addTree from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn addTree(\n    watcher: *LinuxWatcher,\n    root_dir_path: []const u8,\n) !std.posix.fd_t {\n    const gpa = watcher.gpa;\n\n    var root_dir = try std.fs.openDirAbsolute(root_dir_path, .{\n        .iterate = true,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "addTree",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addDir from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn addDir(\n    watcher: *LinuxWatcher,\n    dir_path: []const u8,\n) !std.posix.fd_t {\n    const gpa = watcher.gpa;\n    const mask = Mask.all(&.{\n        .IN_ONLYDIR,     .IN_CLOSE_WRITE,\n        .IN_MOVE,        .IN_MOVE_SELF,\n        .IN_CREATE,      .IN_DELETE,\n        .IN_EXCL_UNLINK,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "addDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rmWatch from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn rmWatch(\n    watcher: *LinuxWatcher,\n    fd: std.posix.fd_t,\n) void {\n    if (watcher.children_fds.getEntry(fd)) |entry| {\n        for (entry.value_ptr.items) |child_fd| {\n            watcher.rmWatch(child_fd);\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "rmWatch",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moveDirStart from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn moveDirStart(\n    watcher: *LinuxWatcher,\n    from_fd: std.posix.fd_t,\n    cookie: u32,\n    name: []const u8,\n) !void {\n    const moved_fd = watcher.removeChildByName(from_fd, name).?;\n\n    try watcher.cookie_fds.put(\n        watcher.gpa,\n        cookie,\n        moved_fd,\n    );\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "moveDirStart",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moveDirEnd from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn moveDirEnd(\n    watcher: *LinuxWatcher,\n    to_fd: std.posix.fd_t,\n    cookie: u32,\n    name: []const u8,\n) !std.posix.fd_t {\n    const gpa = watcher.gpa;\n    const parent = watcher.watch_fds.get(to_fd).?;\n\n    // known cookie - move within watched directories\n    if (watcher.cookie_fds.fetchRemove(cookie)) |entry| {\n        const moved_fd = entry.value;\n\n        var watch_entry = watcher.watch_fds.getEntry(moved_fd).?.value_ptr;\n        gpa.free(watch_entry.name);\n        const name_copy = try gpa.dupe(u8, name);\n        watch_entry.name = name_copy;\n\n        try watcher.updateDirPath(moved_fd, parent.dir_path);\n        try watcher.addChild(to_fd, moved_fd);\n        return moved_fd;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "moveDirEnd",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateDirPath from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn updateDirPath(\n    watcher: *LinuxWatcher,\n    fd: std.posix.fd_t,\n    parent_dir: []const u8,\n) !void {\n    const gpa = watcher.gpa;\n    var data = watcher.watch_fds.getEntry(fd).?.value_ptr;\n    gpa.free(data.dir_path);\n    const dir_path = try std.fs.path.join(gpa, &.{ parent_dir, data.name }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "updateDirPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moveDirComplete from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn moveDirComplete(\n    watcher: *LinuxWatcher,\n    moved_fd: std.posix.fd_t,\n) !void {\n    var it = watcher.cookie_fds.iterator();\n    while (it.next()) |entry| {\n        // cookie for fd exists - moved outside the watched directory\n        if (entry.value_ptr.* == moved_fd) {\n            watcher.rmWatch(moved_fd);\n            watcher.cookie_fds.removeByPtr(entry.key_ptr);\n            break;\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "moveDirComplete",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dropWatch from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "fn dropWatch(\n    watcher: *LinuxWatcher,\n    fd: std.posix.fd_t,\n) void {\n    const gpa = watcher.gpa;\n    if (watcher.watch_fds.fetchRemove(fd)) |entry| {\n        gpa.free(entry.value.dir_path);\n        gpa.free(entry.value.name);\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "dropWatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "pub fn start(watcher: *LinuxWatcher) !void {\n    const t = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listen from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "pub fn listen(watcher: *LinuxWatcher) !void {\n    const gpa = watcher.gpa;\n    const Event = std.os.linux.inotify_event;\n    const event_size = @sizeOf(Event);\n    while (true) {\n        var buffer: [event_size * 10]u8 = undefined;\n        const len = try std.posix.read(watcher.notify_fd, &buffer);\n        if (len < 0) @panic(\"notify fd read error\");\n\n        var event_data = buffer[0..len];\n        while (event_data.len > 0) {\n            const event: *Event = @alignCast(@ptrCast(event_data[0..event_size]));\n            const parent = watcher.watch_fds.get(event.wd).?;\n            event_data = event_data[event_size + event.len ..];\n\n            // std.debug.print(\"flags: \", .{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "listen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to is from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "pub fn is(m: u32, comptime flag: std.meta.DeclEnum(Mask)) bool {\n        const f = @field(Mask, @tagName(flag));\n        return (m & f) != 0;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "is",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to all from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "pub fn all(comptime flags: []const std.meta.DeclEnum(Mask)) u32 {\n        var result: u32 = 0;\n        inline for (flags) |f| result |= @field(Mask, @tagName(f));\n        return result;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "all",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to debugPrint from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "pub fn debugPrint(m: u32) void {\n        const flags = .{\n            .IN_ACCESS,\n            .IN_MODIFY,\n            .IN_ATTRIB,\n            .IN_CLOSE_WRITE,\n            .IN_CLOSE_NOWRITE,\n            .IN_CLOSE,\n            .IN_OPEN,\n            .IN_MOVED_FROM,\n            .IN_MOVED_TO,\n            .IN_MOVE,\n            .IN_CREATE,\n            .IN_DELETE,\n            .IN_DELETE_SELF,\n            .IN_MOVE_SELF,\n            .IN_ALL_EVENTS,\n\n            .IN_UNMOUNT,\n            .IN_Q_OVERFLOW,\n            .IN_IGNORED,\n\n            .IN_ONLYDIR,\n            .IN_DONT_FOLLOW,\n            .IN_EXCL_UNLINK,\n            .IN_MASK_CREATE,\n            .IN_MASK_ADD,\n\n            .IN_ISDIR,\n            .IN_ONESHOT,\n        }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "function",
+      "name": "debugPrint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to WatchEntry from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "const WatchEntry = struct {\n    dir_path: []const u8,\n    name: []const u8,\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "struct",
+      "name": "WatchEntry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Mask from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "const Mask = struct {\n    pub const IN_ACCESS = 0x00000001;\n    pub const IN_MODIFY = 0x00000002;\n    pub const IN_ATTRIB = 0x00000004;\n    pub const IN_CLOSE_WRITE = 0x00000008;\n    pub const IN_CLOSE_NOWRITE = 0x00000010;\n    pub const IN_CLOSE = (IN_CLOSE_WRITE | IN_CLOSE_NOWRITE);\n    pub const IN_OPEN = 0x00000020;\n    pub const IN_MOVED_FROM = 0x00000040;\n    pub const IN_MOVED_TO = 0x00000080;\n    pub const IN_MOVE = (IN_MOVED_FROM | IN_MOVED_TO);\n    pub const IN_CREATE = 0x00000100;\n    pub const IN_DELETE = 0x00000200;\n    pub const IN_DELETE_SELF = 0x00000400;\n    pub const IN_MOVE_SELF = 0x00000800;\n    pub const IN_ALL_EVENTS = 0x00000fff;\n\n    pub const IN_UNMOUNT = 0x00002000;\n    pub const IN_Q_OVERFLOW = 0x00004000;\n    pub const IN_IGNORED = 0x00008000;\n\n    pub const IN_ONLYDIR = 0x01000000;\n    pub const IN_DONT_FOLLOW = 0x02000000;\n    pub const IN_EXCL_UNLINK = 0x04000000;\n    pub const IN_MASK_CREATE = 0x10000000;\n    pub const IN_MASK_ADD = 0x20000000;\n\n    pub const IN_ISDIR = 0x40000000;\n    pub const IN_ONESHOT = 0x80000000;\n\n    pub fn is(m: u32, comptime flag: std.meta.DeclEnum(Mask)) bool {\n        const f = @field(Mask, @tagName(flag));\n        return (m & f) != 0;\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "struct",
+      "name": "Mask",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to event from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/LinuxWatcher.zig",
+    "response": "const event: *Event = @alignCast(@ptrCast(event_data[0..event_size]));",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/LinuxWatcher.zig",
+      "type": "const",
+      "name": "event",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "pub fn init(\n    gpa: std.mem.Allocator,\n    debouncer: *Debouncer,\n    dir_paths: []const []const u8,\n) MacosWatcher {\n    return .{\n        .gpa = gpa,\n        .debouncer = debouncer,\n        .dir_paths = dir_paths,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "pub fn start(watcher: *MacosWatcher) !void {\n    const t = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listen from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "pub fn listen(watcher: *MacosWatcher) void {\n    errdefer |err| switch (err) {\n        error.OutOfMemory => fatal.oom(),\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "function",
+      "name": "listen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to macosCallback from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "pub fn macosCallback(\n    streamRef: c.ConstFSEventStreamRef,\n    clientCallBackInfo: ?*anyopaque,\n    numEvents: usize,\n    eventPaths: ?*anyopaque,\n    eventFlags: ?[*]const c.FSEventStreamEventFlags,\n    eventIds: ?[*]const c.FSEventStreamEventId,\n) callconv(.c) void {\n    _ = eventIds;\n    _ = eventFlags;\n    _ = streamRef;\n    const watcher: *MacosWatcher = @alignCast(@ptrCast(clientCallBackInfo));\n\n    const paths: [*][*:0]u8 = @alignCast(@ptrCast(eventPaths));\n    for (paths[0..numEvents]) |p| {\n        const path = std.mem.span(p);\n        log.debug(\"Changed: {s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "function",
+      "name": "macosCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to paths_to_watch from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "const paths_to_watch: c.CFArrayRef = c.CFArrayCreate(\n        null,\n        @ptrCast(macos_paths.ptr),\n        @intCast(macos_paths.len),\n        null,\n    );",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "const",
+      "name": "paths_to_watch",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to stream from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "const stream: c.FSEventStreamRef = c.FSEventStreamCreate(\n        null,\n        &macosCallback,\n        &stream_context,\n        paths_to_watch,\n        c.kFSEventStreamEventIdSinceNow,\n        0.05,\n        c.kFSEventStreamCreateFlagFileEvents,\n    );",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "const",
+      "name": "stream",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to watcher from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "const watcher: *MacosWatcher = @alignCast(@ptrCast(clientCallBackInfo));",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "const",
+      "name": "watcher",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to paths from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/MacosWatcher.zig",
+    "response": "const paths: [*][*:0]u8 = @alignCast(@ptrCast(eventPaths));",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/MacosWatcher.zig",
+      "type": "const",
+      "name": "paths",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/WindowsWatcher.zig",
+    "response": "pub fn init(\n    gpa: std.mem.Allocator,\n    debouncer: *Debouncer,\n    dir_paths: []const []const u8,\n) WindowsWatcher {\n    errdefer |err| fatal.msg(\"error: unable to start the file watcher: {s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/WindowsWatcher.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addPath from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/WindowsWatcher.zig",
+    "response": "fn addPath(\n    path: [:0]const u8,\n    /// Assumed to increment by 1 after each invocation, starting at 0.\n    key: CompletionKey,\n    port: *windows.HANDLE,\n) !WatchEntry {\n    const dir_handle = CreateFileA(\n        path,\n        windows.GENERIC_READ, // FILE_LIST_DIRECTORY,\n        windows.FILE_SHARE_READ | windows.FILE_SHARE_WRITE | windows.FILE_SHARE_DELETE,\n        null,\n        windows.OPEN_EXISTING,\n        windows.FILE_FLAG_BACKUP_SEMANTICS | windows.FILE_FLAG_OVERLAPPED,\n        null,\n    );\n    if (dir_handle == windows.INVALID_HANDLE_VALUE) {\n        log.err(\n            \"Unable to open directory {s}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/WindowsWatcher.zig",
+      "type": "function",
+      "name": "addPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/WindowsWatcher.zig",
+    "response": "pub fn start(watcher: *WindowsWatcher) !void {\n    const t = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/WindowsWatcher.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listen from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/WindowsWatcher.zig",
+    "response": "pub fn listen(watcher: *WindowsWatcher) !void {\n    var dont_care: struct {\n        bytes_transferred: windows.DWORD = undefined,\n        overlap: ?*windows.OVERLAPPED = undefined,\n    }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/WindowsWatcher.zig",
+      "type": "function",
+      "name": "listen",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to WatchEntry from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/WindowsWatcher.zig",
+    "response": "const WatchEntry = struct {\n    dir_path: [:0]const u8,\n    dir_handle: windows.HANDLE,\n\n    overlap: windows.OVERLAPPED = std.mem.zeroes(windows.OVERLAPPED),\n    buf_idx: ReadBufferIndex,\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/WindowsWatcher.zig",
+      "type": "struct",
+      "name": "WatchEntry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to filename from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/cli/serve/watcher/WindowsWatcher.zig",
+    "response": "const filename: []const u8 = blk: {\n                const n = try std.unicode.utf16LeToUtf8(\n                    &path_buf,\n                    @as([*]u16, @ptrCast(&info.FileName))[0 .. info.FileNameLength / 2],\n                );",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/cli/serve/watcher/WindowsWatcher.zig",
+      "type": "const",
+      "name": "filename",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to errFmt from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn errFmt(gpa: Allocator, comptime fmt: []const u8, args: anytype) !Value {\n        const err_msg = try std.fmt.allocPrint(gpa, fmt, args);\n        return .{ .err = err_msg }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "errFmt",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderForError from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn renderForError(v: Value, arena: Allocator, w: *Writer) !void {\n        _ = arena;\n\n        w.print(\n            \\\\Scripty evaluated to type: {t}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "renderForError",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromStringLiteral from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn fromStringLiteral(s: []const u8) Value {\n        return .{ .string = .{ .value = s }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "fromStringLiteral",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromNumberLiteral from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn fromNumberLiteral(bytes: []const u8) Value {\n        const num = std.fmt.parseInt(i64, bytes, 10) catch {\n            return .{ .err = \"error parsing numeric literal\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "fromNumberLiteral",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromBooleanLiteral from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn fromBooleanLiteral(b: bool) Value {\n        return .{ .bool = .{ .value = b }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "fromBooleanLiteral",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromZiggy from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn fromZiggy(gpa: Allocator, value: ziggy.dynamic.Value) !Value {\n        switch (value) {\n            .null => return .{ .optional = null }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "fromZiggy",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to from from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn from(gpa: Allocator, v: anytype) !Value {\n        return switch (@TypeOf(v)) {\n            *Template => .{ .template = v }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "from",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dot from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn dot(\n        self: *Value,\n        gpa: Allocator,\n        path: []const u8,\n    ) error{OutOfMemory}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "dot",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stripTrailingSlash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context.zig",
+    "response": "pub fn stripTrailingSlash(path: []const u8) []const u8 {\n    if (path[path.len - 1] == '/') return path[0 .. path.len - 1];\n    return path;\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context.zig",
+      "type": "function",
+      "name": "stripTrailingSlash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub fn init(gpa: Allocator, T: type, items: []const T) error{OutOfMemory}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub fn deinit(iter: *const Iterator, gpa: Allocator) void {\n//     gpa.destroy(iter);\n// }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub fn call(\n            arr: Array,\n            gpa: Allocator,\n            _: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            const bad_arg: Value = .{ .err = \"expected 1 or 2 integer argument(s)\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub fn call(\n            arr: Array,\n            gpa: Allocator,\n            _: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            const bad_arg: Value = .{ .err = \"expected 1 integer argument\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub fn call(\n            arr: Array,\n            gpa: Allocator,\n            _: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            const bad_arg: Value = .{ .err = \"expected 0 arguments\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub fn call(\n            arr: Array,\n            gpa: Allocator,\n            _: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            const bad_arg: Value = .{ .err = \"expected 0 arguments\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Fields from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const Fields = struct {\n    pub const len =\n        \\\\The length of the array.\n    ;\n    pub const empty =\n        \\\\True when len is 0.\n    ;\n}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "struct",
+      "name": "Fields",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Builtins from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const Builtins = struct {\n    pub const slice = struct {\n        pub const signature: Signature = .{\n            .params = &.{ .Int, .{ .Opt = .Int }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "struct",
+      "name": "Builtins",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to at from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const at = struct {\n        pub const signature: Signature = .{\n            .params = &.{.Int}",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "struct",
+      "name": "at",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to Empty from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const Empty: Value = .{\n    .array = .{\n        .len = 0,\n        .empty = true,\n        ._items = &.{},\n    },\n};",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "Empty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const signature: Signature = .{\n            .params = &.{ .Int, .{ .Opt = .Int } },\n            .ret = .{ .Many = .any },\n        };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bad_arg from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "const bad_arg: Value = .{ .err = \"expected 1 or 2 integer argument(s)\" };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "bad_arg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to end from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "const end: i64 = if (args.len == 1) @intCast(arr.len) else switch (args[1]) {\n                .int => |i| i.value,\n                else => return bad_arg,\n            };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "end",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const signature: Signature = .{\n            .params = &.{.Int},\n            .ret = .any,\n        };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bad_arg from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "const bad_arg: Value = .{ .err = \"expected 1 integer argument\" };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "bad_arg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const signature: Signature = .{\n            .params = &.{},\n            .ret = .{ .Many = .any },\n        };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bad_arg from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "const bad_arg: Value = .{ .err = \"expected 0 arguments\" };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "bad_arg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "pub const signature: Signature = .{\n            .params = &.{},\n            .ret = .{ .Many = .any },\n        };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bad_arg from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Array.zig",
+    "response": "const bad_arg: Value = .{ .err = \"expected 0 arguments\" };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Array.zig",
+      "type": "const",
+      "name": "bad_arg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub fn init(ref: []const u8, path: []const u8, kind: context.AssetKindUnion) Value {\n    return .{\n        .asset = .{\n            ._meta = .{\n                .ref = ref,\n                .path = path,\n                .kind = kind,\n            }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub fn call(\n            asset: Asset,\n            gpa: Allocator,\n            ctx: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            const bad_arg: Value = .{ .err = \"expected 0 arguments\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub fn call(\n            asset: Asset,\n            gpa: Allocator,\n            ctx: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            _ = gpa;\n            if (args.len != 0) return .{ .err = \"expected 0 arguments\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub fn call(\n            asset: Asset,\n            gpa: Allocator,\n            ctx: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            if (args.len != 0) return .{ .err = \"expected 0 arguments\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub fn call(\n            asset: Asset,\n            gpa: Allocator,\n            ctx: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            if (args.len != 0) return .{ .err = \"expected 0 arguments\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub fn call(\n            asset: Asset,\n            gpa: Allocator,\n            ctx: *const context.Template,\n            args: []const Value,\n        ) context.CallError!Value {\n            if (args.len != 0) return .{ .err = \"expected 0 arguments\" }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Builtins from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const Builtins = struct {\n    pub const link = struct {\n        pub const signature: Signature = .{ .ret = .String }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "struct",
+      "name": "Builtins",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to size from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const size = struct {\n        pub const signature: Signature = .{ .ret = .String }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "struct",
+      "name": "size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to bytes from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const bytes = struct {\n        pub const signature: Signature = .{ .ret = .String }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "struct",
+      "name": "bytes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to sriHash from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const sriHash = struct {\n        pub const signature: Signature = .{ .ret = .String }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "struct",
+      "name": "sriHash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ziggy from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const ziggy = struct {\n        pub const signature: Signature = .{ .ret = .any }",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "struct",
+      "name": "ziggy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const signature: Signature = .{ .ret = .String };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bad_arg from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "const bad_arg: Value = .{ .err = \"expected 0 arguments\" };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "const",
+      "name": "bad_arg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const signature: Signature = .{ .ret = .String };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const signature: Signature = .{ .ret = .String };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const signature: Signature = .{ .ret = .String };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to result from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "const result: []u8 = try gpa.dupe(u8, \"sha384-\" ++ hashed_encoded_data);",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "const",
+      "name": "result",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to signature from kristoff-it/zine",
+    "context": "Repository: kristoff-it/zine (1176 ⭐)\nFile: src/context/Asset.zig",
+    "response": "pub const signature: Signature = .{ .ret = .any };",
+    "metadata": {
+      "repo": "kristoff-it/zine",
+      "stars": 1176,
+      "file": "src/context/Asset.zig",
+      "type": "const",
+      "name": "signature",
+      "difficulty": "easy"
+    }
+  }
+]

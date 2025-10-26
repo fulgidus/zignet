@@ -1,0 +1,9 @@
+{
+  "name": "zig",
+  "fullName": "ziglang/zig",
+  "owner": "ziglang",
+  "stars": 41797,
+  "description": "General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software.",
+  "url": "https://github.com/ziglang/zig",
+  "defaultBranch": "master"
+}

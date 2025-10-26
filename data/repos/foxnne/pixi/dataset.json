@@ -1,0 +1,1575 @@
+[
+  {
+    "instruction": "Write a Zig function similar to update_step from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: build.zig",
+    "response": "fn update_step(step: *std.Build.Step, _: std.Build.Step.MakeOptions) !void {\n    const deps = &.{\n        GitDependency{\n            // mach_objc\n            .url = \"https://github.com/foxnne/mach-objc\",\n            .branch = \"dvuizig15\",\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "build.zig",
+      "type": "function",
+      "name": "update_step",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to thisDir from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: build.zig",
+    "response": "fn thisDir() []const u8 {\n    return comptime std.fs.path.dirname(@src().file) orelse \".\";\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "build.zig",
+      "type": "function",
+      "name": "thisDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addImport from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: build.zig",
+    "response": "fn addImport(\n    compile: *std.Build.Step.Compile,\n    name: [:0]const u8,\n    module: *std.Build.Module,\n) void {\n    compile.root_module.addImport(name, module);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addImport",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addCGif from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: build.zig",
+    "response": "fn addCGif(b: *std.Build, compile: *std.Build.Step.Compile) void {\n    compile.addIncludePath(std.Build.path(b, \"src/deps/cgif/inc\"));\n    compile.addCSourceFile(.{ .file = std.Build.path(b, \"src/deps/cgif/cgif.c\") }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addCGif",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTitlebarColor from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/App.zig",
+    "response": "pub fn setTitlebarColor(win: *dvui.Window, color: dvui.Color) void {\n    if (builtin.os.tag == .macos) {\n        const native_window: ?*objc.app_kit.Window = @ptrCast(dvui.backend.c.SDL_GetPointerProperty(\n            dvui.backend.c.SDL_GetWindowProperties(win.backend.impl.window),\n            dvui.backend.c.SDL_PROP_WINDOW_COCOA_WINDOW_POINTER,\n            null,\n        ));\n\n        if (native_window) |window| {\n            window.setTitlebarAppearsTransparent(true);\n            const new_color = objc.app_kit.Color.colorWithRed_green_blue_alpha(\n                @as(f32, @floatFromInt(color.r)) / 255.0,\n                @as(f32, @floatFromInt(color.g)) / 255.0,\n                @as(f32, @floatFromInt(color.b)) / 255.0,\n                @as(f32, @floatFromInt(color.a)) / 255.0,\n            );\n            window.setBackgroundColor(new_color);\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/App.zig",
+      "type": "function",
+      "name": "setTitlebarColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AppInit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/App.zig",
+    "response": "pub fn AppInit(win: *dvui.Window) !void {\n    const allocator = gpa.allocator();\n\n    // Run from the directory where the executable is located so relative assets can be found.\n    var buffer: [1024]u8 = undefined;\n    const path = std.fs.selfExeDirPath(buffer[0..]) catch \".\";\n    std.posix.chdir(path) catch {}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/App.zig",
+      "type": "function",
+      "name": "AppInit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AppDeinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/App.zig",
+    "response": "pub fn AppDeinit() void {\n    pixi.editor.deinit() catch unreachable;\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/App.zig",
+      "type": "function",
+      "name": "AppDeinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AppFrame from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/App.zig",
+    "response": "pub fn AppFrame() !dvui.App.Result {\n    return try pixi.editor.tick();\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/App.zig",
+      "type": "function",
+      "name": "AppFrame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dvui_app from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/App.zig",
+    "response": "pub const dvui_app: dvui.App = .{ .config = .{ .options = .{\n    .size = .{ .w = 1200.0, .h = 800.0 },\n    .min_size = .{ .w = 640.0, .h = 480.0 },\n    .title = \"Pixi\",\n    .icon = icon,\n} }, .frameFn = AppFrame, .initFn = AppInit, .deinitFn = AppDeinit };",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/App.zig",
+      "type": "const",
+      "name": "dvui_app",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to std_options from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/App.zig",
+    "response": "pub const std_options: std.Options = .{\n    .logFn = dvui.App.logFn,\n};",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/App.zig",
+      "type": "const",
+      "name": "std_options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to native_window from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/App.zig",
+    "response": "const native_window: ?*objc.app_kit.Window = @ptrCast(dvui.backend.c.SDL_GetPointerProperty(\n            dvui.backend.c.SDL_GetWindowProperties(win.backend.impl.window),\n            dvui.backend.c.SDL_PROP_WINDOW_COCOA_WINDOW_POINTER,\n            null,\n        ));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/App.zig",
+      "type": "const",
+      "name": "native_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn init(assets: *Assets) !void {\n    const allocator = gpa.allocator();\n\n    zstbi.init(allocator);\n    assets.* = .{\n        .textures = assets.textures,\n        .atlases = assets.atlases,\n        .paths = assets.paths,\n        .allocator = allocator,\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadTexture from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn loadTexture(assets: *Assets, path: []const u8, options: pixi.gfx.Texture.SamplerOptions) !?mach.ObjectID {\n    assets.textures.lock();\n    defer assets.textures.unlock();\n\n    const term_path = try assets.allocator.dupeZ(u8, path);\n\n    if (pixi.gfx.Texture.loadFromFile(term_path, options) catch null) |texture| {\n        const texture_id = try assets.textures.new(texture);\n        const path_id = try assets.paths.new(.{ .value = term_path }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "loadTexture",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadAtlas from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn loadAtlas(assets: *Assets, path: []const u8) !?mach.ObjectID {\n    assets.atlases.lock();\n    defer assets.atlases.unlock();\n\n    const term_path = try assets.allocator.dupeZ(u8, path);\n\n    if (pixi.Atlas.loadFromFile(assets.allocator, term_path) catch null) |atlas| {\n        const atlas_id = try assets.atlases.new(atlas);\n        const path_id = try assets.paths.new(.{ .value = term_path }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "loadAtlas",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reload from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn reload(assets: *Assets, id: mach.ObjectID) !void {\n    if (assets.textures.is(id)) {\n        var old_texture = assets.textures.getValue(id);\n        defer old_texture.deinitWithoutClear();\n\n        if (assets.textures.getTag(id, Assets, .path)) |path_id| {\n            const path = assets.paths.get(path_id, .value);\n\n            if (pixi.gfx.Texture.loadFromFile(path, .{\n                .address_mode = old_texture.address_mode,\n                .copy_dst = old_texture.copy_dst,\n                .copy_src = old_texture.copy_src,\n                .filter = old_texture.filter,\n                .format = old_texture.format,\n                .render_attachment = old_texture.render_attachment,\n                .storage_binding = old_texture.storage_binding,\n                .texture_binding = old_texture.texture_binding,\n            }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "reload",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getTexture from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn getTexture(assets: *Assets, id: mach.ObjectID) pixi.gfx.Texture {\n    return assets.textures.getValue(id);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "getTexture",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAtlas from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn getAtlas(assets: *Assets, id: mach.ObjectID) pixi.Atlas {\n    return assets.atlases.getValue(id);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "getAtlas",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getWatchPaths from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn getWatchPaths(assets: *Assets, allocator: std.mem.Allocator) ![]const []const u8 {\n    var out_paths = std.ArrayList([]const u8).init(allocator);\n\n    var paths = assets.paths.slice();\n    while (paths.next()) |id| {\n        const path = paths.objs.get(id, .value);\n        for (out_paths.items) |out_path| {\n            if (std.mem.eql(u8, path, out_path)) {\n                continue;\n            }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "getWatchPaths",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getWatchDirs from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn getWatchDirs(assets: *Assets, allocator: std.mem.Allocator) ![]const []const u8 {\n    var out_dirs = std.ArrayList([]const u8).init(allocator);\n\n    var paths = assets.paths.slice();\n    path_blk: while (paths.next()) |id| {\n        if (std.fs.path.dirname(paths.objs.get(id, .value))) |new_dir| {\n            for (out_dirs.items) |dir| {\n                if (std.mem.eql(u8, dir, new_dir)) {\n                    continue :path_blk;\n                }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "getWatchDirs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to watch from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn watch(assets: *Assets) !void {\n    if (!assets.watching)\n        try spawnWatchThread(assets);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "watch",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stopWatching from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn stopWatching(assets: *Assets) void {\n    assets.stopWatchThread();\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "stopWatching",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to spawnWatchThread from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "fn spawnWatchThread(assets: *Assets) !void {\n    assets.watcher = try Watcher.init(assets.allocator);\n    assets.thread = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "spawnWatchThread",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stopWatchThread from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "fn stopWatchThread(assets: *Assets) void {\n    assets.watching = false;\n    assets.watcher.stop();\n    //assets.thread.join();\n    //assets.thread = undefined;\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "stopWatchThread",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listen from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn listen(assets: *Assets) !void {\n    try assets.watcher.listen(assets);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "listen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to comparePaths from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "fn comparePaths(allocator: std.mem.Allocator, path1: []const u8, path2: []const u8) !bool {\n    const rel_1 = try std.fs.path.relative(allocator, pixi.app.root_path, path1);\n    const rel_2 = try std.fs.path.relative(allocator, pixi.app.root_path, path2);\n\n    defer allocator.free(rel_1);\n    defer allocator.free(rel_2);\n\n    return std.mem.eql(u8, rel_1, rel_2);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "comparePaths",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onAssetChange from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn onAssetChange(assets: *Assets, path: []const u8, name: []const u8) void {\n    const changed_path = std.fs.path.join(assets.allocator, &.{ path, name }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "onAssetChange",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Assets.zig",
+    "response": "pub fn deinit(assets: *Assets) void {\n    assets.stopWatching();\n\n    var textures = assets.textures.slice();\n    while (textures.next()) |id| {\n        var t = assets.textures.getValue(id);\n        t.deinit();\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Assets.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadFromFile from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Atlas.zig",
+    "response": "pub fn loadFromFile(allocator: std.mem.Allocator, file: []const u8) !Atlas {\n    const read = try fs.read(allocator, file);\n    defer allocator.free(read);\n\n    const options = std.json.ParseOptions{ .duplicate_field_behavior = .use_first, .ignore_unknown_fields = true }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Atlas.zig",
+      "type": "function",
+      "name": "loadFromFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to spriteName from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Atlas.zig",
+    "response": "pub fn spriteName(atlas: *Atlas, allocator: std.mem.Allocator, index: usize) ![]const u8 {\n    for (atlas.animations) |animation| {\n        if (index >= animation.start and index < animation.start + animation.length) {\n            if (animation.length > 1) {\n                const frame: usize = index - animation.start;\n                return std.fmt.allocPrint(allocator, \"{s}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Atlas.zig",
+      "type": "function",
+      "name": "spriteName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Atlas.zig",
+    "response": "pub fn deinit(atlas: *Atlas, allocator: std.mem.Allocator) void {\n    for (atlas.animations) |*animation| {\n        allocator.free(animation.name);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Atlas.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to parsed from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Atlas.zig",
+    "response": "const parsed: std.json.Parsed(Atlas) = try std.json.parseFromSlice(Atlas, allocator, read, options);",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Atlas.zig",
+      "type": "const",
+      "name": "parsed",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to frame from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Atlas.zig",
+    "response": "const frame: usize = index - animation.start;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Atlas.zig",
+      "type": "const",
+      "name": "frame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/File.zig",
+    "response": "pub fn deinit(self: *File, allocator: std.mem.Allocator) void {\n    for (self.layers) |*layer| {\n        allocator.free(layer.name);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/File.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/Layer.zig",
+    "response": "pub fn deinit(layer: *Layer, allocator: std.mem.Allocator) void {\n    allocator.free(layer.name);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/Layer.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to process from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "pub fn process(start: dvui.Point, end: dvui.Point) ![]dvui.Point {\n    // Bresenham's line algorithm for integer grid points\n    var output = std.array_list.Managed(dvui.Point).init(pixi.editor.arena.allocator());\n\n    // Round input points to nearest integer grid\n    const x0: i32 = @intFromFloat(@floor(start.x));\n    const y0: i32 = @intFromFloat(@floor(start.y));\n    const x1: i32 = @intFromFloat(@floor(end.x));\n    const y1: i32 = @intFromFloat(@floor(end.y));\n\n    const dx: i32 = @intCast(@abs(x1 - x0));\n    const dy: i32 = @intCast(@abs(y1 - y0));\n\n    var x: i32 = x0;\n    var y: i32 = y0;\n\n    const sx: i32 = if (x0 < x1) 1 else -1;\n    const sy: i32 = if (y0 < y1) 1 else -1;\n\n    var err: i32 = dx - dy;\n\n    while (true) {\n        try output.append(.{ .x = @floatFromInt(x), .y = @floatFromInt(y) }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "function",
+      "name": "process",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to x0 from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const x0: i32 = @intFromFloat(@floor(start.x));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "x0",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to y0 from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const y0: i32 = @intFromFloat(@floor(start.y));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "y0",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to x1 from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const x1: i32 = @intFromFloat(@floor(end.x));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "x1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to y1 from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const y1: i32 = @intFromFloat(@floor(end.y));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "y1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dx from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const dx: i32 = @intCast(@abs(x1 - x0));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "dx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dy from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const dy: i32 = @intCast(@abs(y1 - y0));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "dy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sx from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const sx: i32 = if (x0 < x1) 1 else -1;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "sx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sy from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/algorithms/brezenham.zig",
+    "response": "const sy: i32 = if (y0 < y1) 1 else -1;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/algorithms/brezenham.zig",
+      "type": "const",
+      "name": "sy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to slice from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/stbi/zstbi.zig",
+    "response": "pub fn slice(self: Rect) [4]u32 {\n        return .{\n            @intCast(self.x),\n            @intCast(self.y),\n            @intCast(self.w),\n            @intCast(self.h),\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/stbi/zstbi.zig",
+      "type": "function",
+      "name": "slice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initTarget from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/stbi/zstbi.zig",
+    "response": "pub fn initTarget(context: *Context, width: u32, height: u32, nodes: []Node) void {\n    stbrp_init_target(context, width, height, nodes.ptr, nodes.len);\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/stbi/zstbi.zig",
+      "type": "function",
+      "name": "initTarget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to packRects from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/stbi/zstbi.zig",
+    "response": "pub fn packRects(context: *Context, rects: []Rect) usize {\n    return @as(usize, @intCast(stbrp_pack_rects(context, rects.ptr, rects.len)));\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/stbi/zstbi.zig",
+      "type": "function",
+      "name": "packRects",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupHeuristic from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/stbi/zstbi.zig",
+    "response": "pub fn setupHeuristic(context: *Context, heuristic: Heuristic) void {\n    stbrp_setup_heuristic(context, @as(u32, @intCast(@intFromEnum(heuristic))));\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/stbi/zstbi.zig",
+      "type": "function",
+      "name": "setupHeuristic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to package from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/zip/build.zig",
+    "response": "pub fn package(b: *std.Build, _: struct {}) Package {\n    const module = b.createModule(.{\n        .root_source_file = .{ .cwd_relative = thisDir() ++ \"/zip.zig\" }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/zip/build.zig",
+      "type": "function",
+      "name": "package",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to link from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/zip/build.zig",
+    "response": "pub fn link(exe: *std.Build.Step.Compile) void {\n    exe.linkLibC();\n    exe.addIncludePath(.{ .cwd_relative = thisDir() ++ \"/src\" }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/zip/build.zig",
+      "type": "function",
+      "name": "link",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to thisDir from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/zip/build.zig",
+    "response": "fn thisDir() []const u8 {\n    return comptime std.fs.path.dirname(@src().file) orelse \".\";\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/zip/build.zig",
+      "type": "function",
+      "name": "thisDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Package from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/zip/build.zig",
+    "response": "pub const Package = struct {\n    module: *std.Build.Module,\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/zip/build.zig",
+      "type": "struct",
+      "name": "Package",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zip_strerror from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/deps/zip/zip.zig",
+    "response": "fn zip_strerror(errnum: c_int) [*c]const u8;\npub const struct_zip_t = opaque {}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/deps/zip/zip.zig",
+      "type": "function",
+      "name": "zip_strerror",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to paned from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn paned(src: std.builtin.SourceLocation, init_opts: PanedWidget.InitOptions, opts: dvui.Options) *PanedWidget {\n    var ret = dvui.widgetAlloc(PanedWidget);\n    ret.* = PanedWidget.init(src, init_opts, opts);\n    ret.data().was_allocated_on_widget_stack = true;\n    ret.install();\n    ret.processEvents();\n    return ret;\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "paned",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hovered from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn hovered(wd: *dvui.WidgetData) bool {\n    for (dvui.events()) |*event| {\n        if (!dvui.eventMatchSimple(event, wd)) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "hovered",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reorder from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn reorder(src: std.builtin.SourceLocation, init_opts: ReorderWidget.InitOptions, opts: dvui.Options) *ReorderWidget {\n    var ret = dvui.widgetAlloc(ReorderWidget);\n    ret.* = ReorderWidget.init(src, init_opts, opts);\n    ret.install();\n    ret.processEvents();\n    return ret;\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "reorder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toastDisplay from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn toastDisplay(id: dvui.Id) !void {\n    const message = dvui.dataGetSlice(null, id, \"_message\", []u8) orelse {\n        dvui.log.err(\"toastDisplay lost data for toast {x}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "toastDisplay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sprite from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn sprite(src: std.builtin.SourceLocation, init_opts: SpriteInitOptions, opts: dvui.Options) dvui.WidgetData {\n    const source_size: dvui.Size = dvui.imageSize(init_opts.source) catch .{ .w = 0, .h = 0 }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "sprite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pathToSubdividedQuad from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn pathToSubdividedQuad(path: dvui.Path, allocator: std.mem.Allocator, options: PathToSubdividedQuadOptions) std.mem.Allocator.Error!dvui.Triangles {\n    if (path.points.len != 4) {\n        return .empty;\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "pathToSubdividedQuad",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderSprite from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn renderSprite(source: dvui.ImageSource, s: pixi.Sprite, data_point: dvui.Point, scale: f32, opts: dvui.RenderTextureOptions) !void {\n    const atlas_size = dvui.imageSize(source) catch {\n        std.log.err(\"Failed to get atlas size\", .{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "renderSprite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to labelWithKeybind from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn labelWithKeybind(label_str: []const u8, hotkey: dvui.enums.Keybind, enabled: bool, opts: dvui.Options) void {\n    const box = dvui.box(@src(), .{ .dir = .horizontal }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "labelWithKeybind",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keybindLabels from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn keybindLabels(self: *const dvui.enums.Keybind, enabled: bool, opts: dvui.Options) void {\n    var box = dvui.box(@src(), .{ .dir = .horizontal }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "keybindLabels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawEdgeShadow from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub fn drawEdgeShadow(container: dvui.RectScale, shadow: Shadow, opts: ShadowOptions) void {\n    switch (shadow) {\n        .top => {\n            var rs = container;\n            rs.r.h = opts.thickness;\n\n            rs.r = rs.r.plus(.cast(opts.offset));\n\n            var path: dvui.Path.Builder = .init(dvui.currentWindow().arena());\n            path.addRect(rs.r, dvui.Rect.Physical.all(5));\n\n            var triangles = path.build().fillConvexTriangles(dvui.currentWindow().arena(), .{ .center = rs.r.center(), .color = .white }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "function",
+      "name": "drawEdgeShadow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SpriteInitOptions from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub const SpriteInitOptions = struct {\n    source: dvui.ImageSource,\n    sprite: pixi.Sprite,\n    scale: f32 = 1.0,\n    //vertex_offsets: [4]dvui.Point.Physical = .{ .{ .x = 0, .y = 0 }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "struct",
+      "name": "SpriteInitOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to PathToSubdividedQuadOptions from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "pub const PathToSubdividedQuadOptions = struct {\n    subdivisions: usize = 4,\n    uv: ?dvui.Rect = null,\n    vertical_fade: bool = false,\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "struct",
+      "name": "PathToSubdividedQuadOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ShadowOptions from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "const ShadowOptions = struct {\n    color: dvui.Color = .black,\n    opacity: f32 = 0.25,\n    offset: dvui.Rect = .{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "struct",
+      "name": "ShadowOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to source_size from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "const source_size: dvui.Size = dvui.imageSize(init_opts.source) catch .{ .w = 0, .h = 0 };",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "const",
+      "name": "source_size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to col from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/dvui.zig",
+    "response": "const col: dvui.Color = if (options.vertical_fade) dvui.Color.white.opacity(0.5 * (1.0 - (1.0 - t))) else .white;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/dvui.zig",
+      "type": "const",
+      "name": "col",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Brushes.zig",
+    "response": "pub fn init() !Brushes {\n    return .{\n        .brushes = std.ArrayList(Brush).init(pixi.app.allocator),\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Brushes.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Brushes.zig",
+    "response": "pub fn deinit(self: *Brushes) void {\n    self.brushes.deinit();\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Brushes.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Brush from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Brushes.zig",
+    "response": "pub const Brush = struct {\n    name: []const u8,\n    source: dvui.ImageSource,\n    origin: dvui.Point,\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Brushes.zig",
+      "type": "struct",
+      "name": "Brush",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn init(\n    app: *App,\n) !Editor {\n    var editor: Editor = .{\n        .explorer = try app.allocator.create(Explorer),\n        .panel = try app.allocator.create(Panel),\n        .sidebar = try .init(),\n        .infobar = try .init(),\n        .settings = try .load(app.allocator),\n        .recents = try .load(app.allocator),\n        .arena = .init(std.heap.page_allocator),\n        .last_titlebar_color = dvui.themeGet().color(.control, .fill),\n        .atlas = .{\n            .data = try .loadFromFile(app.allocator, pixi.paths.@\"pixi.atlas\"),\n            .source = try pixi.image.fromImageFilePath(pixi.paths.@\"pixi.png\", pixi.paths.@\"pixi.png\", .ptr),\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to currentGroupingID from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn currentGroupingID(editor: *Editor) u64 {\n    return editor.open_workspace_grouping;\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "currentGroupingID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newGroupingID from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn newGroupingID(editor: *Editor) u64 {\n    editor.grouping_id_counter += 1;\n    return editor.grouping_id_counter;\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "newGroupingID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newFileID from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn newFileID(editor: *Editor) u64 {\n    editor.file_id_counter += 1;\n    return editor.file_id_counter;\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "newFileID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn tick(editor: *Editor) !dvui.App.Result {\n    if (!std.mem.eql(u8, &editor.last_titlebar_color.toRGBA(), &dvui.themeGet().color(.control, .fill).toRGBA())) {\n        editor.last_titlebar_color = dvui.themeGet().color(.control, .fill);\n        App.setTitlebarColor(dvui.currentWindow(), editor.last_titlebar_color);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawRadialMenu from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn drawRadialMenu(editor: *Editor) !void {\n    var fw = dvui.FloatingWidget.init(@src(), .{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "drawRadialMenu",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rebuildWorkspaces from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn rebuildWorkspaces(editor: *Editor) !void {\n\n    // Create workspaces for each grouping ID\n    for (editor.open_files.values()) |*file| {\n        if (!editor.workspaces.contains(file.editor.grouping)) {\n            var workspace: pixi.Editor.Workspace = .init(file.editor.grouping);\n            for (editor.open_files.values()) |*f| {\n                if (f.editor.grouping == file.editor.grouping) {\n                    workspace.open_file_index = editor.open_files.getIndex(f.id) orelse 0;\n                }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "rebuildWorkspaces",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawWorkspaces from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn drawWorkspaces(editor: *Editor, index: usize) !dvui.App.Result {\n    if (index >= editor.workspaces.count()) return .ok;\n\n    if (index <= editor.workspaces.count() - 1) {\n        var s = pixi.dvui.paned(@src(), .{\n            .direction = .horizontal,\n            .collapsed_size = if (index == editor.workspaces.count() - 1) std.math.floatMax(f32) else 0,\n            .handle_size = handle_size,\n            .handle_dynamic = .{ .handle_size_max = handle_size, .distance_max = handle_dist }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "drawWorkspaces",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn close(app: *App, editor: *Editor) void {\n    var should_close = true;\n    for (editor.open_files.items) |file| {\n        if (file.dirty()) {\n            should_close = false;\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setProjectFolder from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn setProjectFolder(editor: *Editor, path: []const u8) !void {\n    if (editor.folder) |folder| {\n        if (editor.project) |*project| {\n            project.save() catch {\n                dvui.log.err(\"Failed to save project\", .{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "setProjectFolder",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to saving from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn saving(editor: *Editor) bool {\n    for (editor.open_files.items) |file| {\n        if (file.saving) return true;\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "saving",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to openFilePath from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn openFilePath(editor: *Editor, path: []const u8, grouping: u64) !bool {\n    for (editor.open_files.values(), 0..) |*file, i| {\n        if (std.mem.eql(u8, file.path, path)) {\n            editor.setActiveFile(i);\n            return false;\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "openFilePath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setActiveFile from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn setActiveFile(editor: *Editor, index: usize) void {\n    if (index >= editor.open_files.values().len) return;\n    const file = editor.open_files.values()[index];\n    const grouping = file.editor.grouping;\n\n    if (editor.workspaces.getPtr(grouping)) |workspace| {\n        editor.open_workspace_grouping = grouping;\n        workspace.open_file_index = index;\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "setActiveFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to activeFile from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn activeFile(editor: *Editor) ?*pixi.Internal.File {\n    if (editor.workspaces.get(editor.open_workspace_grouping)) |workspace| {\n        return editor.getFile(workspace.open_file_index);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "activeFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFile from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn getFile(editor: *Editor, index: usize) ?*pixi.Internal.File {\n    if (editor.open_files.values().len == 0) return null;\n    if (index >= editor.open_files.values().len) return null;\n\n    return &editor.open_files.values()[index];\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "getFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFileFromPath from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn getFileFromPath(editor: *Editor, path: []const u8) ?*pixi.Internal.File {\n    if (editor.open_files.values().len == 0) return null;\n\n    for (editor.open_files.values()) |*file| {\n        if (std.mem.eql(u8, file.path, path)) {\n            return file;\n        }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "getFileFromPath",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to forceCloseFile from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn forceCloseFile(editor: *Editor, index: usize) !void {\n    if (editor.getFile(index) != null) {\n        return editor.rawCloseFile(index);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "forceCloseFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to copy from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn copy(editor: *Editor) !void {\n    if (switch (editor.tools.current) {\n        .selection, .pointer => false,\n        else => true,\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "copy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to paste from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn paste(editor: *Editor) !void {\n    if (editor.sprite_clipboard) |*clipboard| {\n        if (editor.activeFile()) |file| {\n            const active_layer = file.layers.get(file.selected_layer_index);\n\n            var dst_rect: dvui.Rect = .fromSize(pixi.image.size(clipboard.source));\n\n            var sprite_iterator = file.editor.selected_sprites.iterator(.{ .kind = .set, .direction = .forward }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "paste",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to transform from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn transform(editor: *Editor) !void {\n    if (switch (editor.tools.current) {\n        .selection, .pointer => false,\n        else => true,\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "transform",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to save from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn save(editor: *Editor) !void {\n    if (editor.activeFile()) |file| {\n        try file.saveAsync();\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "save",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to undo from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn undo(editor: *Editor) !void {\n    if (editor.activeFile()) |file| {\n        try file.history.undoRedo(file, .undo);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "undo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to redo from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn redo(editor: *Editor) !void {\n    if (editor.activeFile()) |file| {\n        try file.history.undoRedo(file, .redo);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "redo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeFileID from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn closeFileID(editor: *Editor, id: u64) !void {\n    if (editor.open_files.get(id)) |file| {\n        if (file.dirty()) {\n            std.log.debug(\"closeFile: {d}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "closeFileID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeFile from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn closeFile(editor: *Editor, index: usize) !void {\n    // Handle confirm close if file is dirty\n    {\n        const file = editor.open_files.values()[index];\n        if (file.dirty()) {\n            std.log.debug(\"closeFile: {d}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "closeFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rawCloseFile from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn rawCloseFile(editor: *Editor, index: usize) !void {\n    //editor.open_file_index = 0;\n    var file = editor.open_files.values()[index];\n\n    if (editor.workspaces.getPtr(file.editor.grouping)) |workspace| {\n        if (workspace.open_file_index == pixi.editor.open_files.getIndex(file.id)) {\n            for (pixi.editor.open_files.values(), 0..) |f, i| {\n                if (f.grouping == workspace.grouping and f.id != file.id) {\n                    workspace.open_file_index = i;\n                    break;\n                }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "rawCloseFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rawCloseFileID from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn rawCloseFileID(editor: *Editor, id: u64) !void {\n    if (editor.open_files.getPtr(id)) |file| {\n\n        //editor.open_file_index = 0;\n        if (editor.workspaces.getPtr(file.editor.grouping)) |workspace| {\n            if (workspace.open_file_index == pixi.editor.open_files.getIndex(file.id)) {\n                for (pixi.editor.open_files.values(), 0..) |f, i| {\n                    if (f.editor.grouping == workspace.grouping and f.id != file.id) {\n                        workspace.open_file_index = i;\n                        break;\n                    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "rawCloseFileID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeReference from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn closeReference(editor: *Editor, index: usize) !void {\n    editor.open_reference_index = 0;\n    var reference: pixi.Internal.Reference = editor.open_references.orderedRemove(index);\n    reference.deinit();\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "closeReference",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub fn deinit(editor: *Editor) !void {\n    if (editor.colors.palette) |*palette| palette.deinit();\n    if (editor.colors.file_tree_palette) |*palette| palette.deinit();\n\n    editor.recents.save(pixi.app.allocator) catch {\n        dvui.log.err(\"Failed to save recents\", .{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SpriteClipboard from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "pub const SpriteClipboard = struct {\n    source: dvui.ImageSource,\n    offset: dvui.Point,\n}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "struct",
+      "name": "SpriteClipboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tool_count from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const tool_count: usize = std.meta.fields(Editor.Tools.Tool).len;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "tool_count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to radius from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const radius: f32 = 50.0;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "radius",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to width from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const width: f32 = radius * 2.0;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "width",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to height from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const height: f32 = radius * 2.0;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "height",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const step: f32 = (2.0 * std.math.pi) / @as(f32, @floatFromInt(tool_count));",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to x from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const x: f32 = std.math.round(width / 2.0 + radius * std.math.cos(angle) - width / 2.0);",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "x",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to y from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const y: f32 = std.math.round(height / 2.0 + radius * std.math.sin(angle) - height / 2.0);",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "y",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to size from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const size: dvui.Size = dvui.imageSize(pixi.editor.atlas.source) catch .{ .w = 0, .h = 0 };",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to new_index from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Editor.zig",
+    "response": "const new_index: usize = if (editor.workspaces.getIndex(workspace.grouping)) |index| if (index > 0) index - 1 else 0 else 0;",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Editor.zig",
+      "type": "const",
+      "name": "new_index",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Infobar.zig",
+    "response": "pub fn draw(_: Infobar) !void {\n    var scrollarea = dvui.scrollArea(@src(), .{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Infobar.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to register from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Keybinds.zig",
+    "response": "pub fn register() !void {\n    const window = dvui.currentWindow();\n\n    if (builtin.os.tag.isDarwin()) {\n        try window.keybinds.putNoClobber(window.gpa, \"open_folder\", .{ .key = .f, .command = true }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Keybinds.zig",
+      "type": "function",
+      "name": "register",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Keybinds.zig",
+    "response": "pub fn tick() !void {\n    for (dvui.events()) |e| {\n        if (e.handled) continue;\n\n        switch (e.evt) {\n            .key => |ke| {\n                if (ke.matchBind(\"open_folder\") and ke.action == .down) {\n                    if (try dvui.dialogNativeFolderSelect(dvui.currentWindow().arena(), .{\n                        .title = \"Open Project Folder\",\n                    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Keybinds.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Menu.zig",
+    "response": "pub fn draw() !dvui.App.Result {\n    var m = dvui.menu(@src(), .horizontal, .{}",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Menu.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to menuItemWithHotkey from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Menu.zig",
+    "response": "pub fn menuItemWithHotkey(src: std.builtin.SourceLocation, label_str: []const u8, hotkey: dvui.enums.Keybind, enabled: bool, init_opts: dvui.MenuItemWidget.InitOptions, opts: dvui.Options) ?dvui.Rect.Natural {\n    var mi = dvui.menuItem(src, init_opts, opts);\n\n    var ret: ?dvui.Rect.Natural = null;\n    if (mi.activeRect()) |r| {\n        ret = r;\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Menu.zig",
+      "type": "function",
+      "name": "menuItemWithHotkey",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to menuItem from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Menu.zig",
+    "response": "pub fn menuItem(src: std.builtin.SourceLocation, label_str: []const u8, init_opts: dvui.MenuItemWidget.InitOptions, opts: dvui.Options) ?dvui.Rect.Natural {\n    var mi = dvui.menuItem(src, init_opts, opts);\n\n    var ret: ?dvui.Rect.Natural = null;\n    if (mi.activeRect()) |r| {\n        ret = r;\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Menu.zig",
+      "type": "function",
+      "name": "menuItem",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to menuItemWithChevron from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Menu.zig",
+    "response": "pub fn menuItemWithChevron(src: std.builtin.SourceLocation, label_str: []const u8, init_opts: dvui.MenuItemWidget.InitOptions, opts: dvui.Options) ?dvui.Rect.Natural {\n    var mi = dvui.menuItem(src, init_opts, opts);\n\n    var ret: ?dvui.Rect.Natural = null;\n    if (mi.activeRect()) |r| {\n        ret = r;\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Menu.zig",
+      "type": "function",
+      "name": "menuItemWithChevron",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Project.zig",
+    "response": "pub fn load(allocator: std.mem.Allocator) !?Project {\n    if (pixi.editor.folder) |folder| {\n        const file = try std.fs.path.join(pixi.editor.arena.allocator(), &.{ folder, \".pixiproject\" }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Project.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to save from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Project.zig",
+    "response": "pub fn save(project: *Project) !void {\n    if (pixi.editor.folder) |folder| {\n        const file = try std.fs.path.join(pixi.editor.arena.allocator(), &.{ folder, \".pixiproject\" }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Project.zig",
+      "type": "function",
+      "name": "save",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to exportAssets from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Project.zig",
+    "response": "pub fn exportAssets(project: *Project) !void {\n    if (project.packed_atlas_output) |packed_atlas_output| {\n        try pixi.editor.atlas.save(packed_atlas_output, .data);\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Project.zig",
+      "type": "function",
+      "name": "exportAssets",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from foxnne/pixi",
+    "context": "Repository: foxnne/pixi (1115 ⭐)\nFile: src/editor/Project.zig",
+    "response": "pub fn deinit(self: *Project, allocator: std.mem.Allocator) void {\n    if (read) |r| allocator.free(r);\n\n    if (parsed) |p| {\n        p.deinit();\n        parsed = null;\n    }",
+    "metadata": {
+      "repo": "foxnne/pixi",
+      "stars": 1115,
+      "file": "src/editor/Project.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "ly",
+  "fullName": "fairyglade/ly",
+  "owner": "fairyglade",
+  "stars": 6555,
+  "description": "A lightweight TUI (ncurses-like) display manager for Linux and BSD (mirror of https://codeberg.org/fairyglade/ly).",
+  "url": "https://github.com/fairyglade/ly",
+  "defaultBranch": "master"
+}

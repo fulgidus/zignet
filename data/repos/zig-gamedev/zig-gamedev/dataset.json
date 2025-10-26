@@ -1,0 +1,1185 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    checkGitLfsContent() catch {\n        try ensureGit(b.allocator);\n        try ensureGitLfs(b.allocator, \"install\");\n        try ensureGitLfs(b.allocator, \"pull\");\n        try checkGitLfsContent();\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildWeb from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "fn buildWeb(b: *std.Build, target: std.Build.ResolvedTarget) void {\n    const options = .{\n        .optimize = b.standardOptimizeOption(.{\n            .preferred_optimize_mode = .ReleaseSmall,\n        }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildWeb",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildDesktop from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "fn buildDesktop(b: *std.Build, target: std.Build.ResolvedTarget) void {\n    const optimize = b.standardOptimizeOption(.{}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildDesktop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildBenchmarks from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "fn buildBenchmarks(b: *std.Build, target: std.Build.ResolvedTarget) void {\n    const benchmark_step = b.step(\"benchmark\", \"Run all benchmarks\");\n    const zmath = b.dependency(\"zmath\", .{\n        .target = target,\n        .optimize = .ReleaseFast,\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildBenchmarks",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildExe from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "fn buildExe(b: *std.Build, options: anytype, sample: anytype) *std.Build.Step.Compile {\n    const exe = sample.build(b, options);\n\n    if (exe.rootModuleTarget().os.tag == .windows) {\n        // TODO: Problems with LTO on Windows.\n        exe.want_lto = false;\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildExe",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ensureGit from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "fn ensureGit(allocator: std.mem.Allocator) !void {\n    const printErrorMsg = (struct {\n        fn impl() void {\n            std.log.err(\"\\n\" ++\n                \\\\---------------------------------------------------------------------------\n                \\\\\n                \\\\'git version' failed. Is Git not installed?\n                \\\\\n                \\\\---------------------------------------------------------------------------\n                \\\\\n            , .{}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "ensureGit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ensureGitLfs from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "fn ensureGitLfs(allocator: std.mem.Allocator, cmd: []const u8) !void {\n    const printNoGitLfs = (struct {\n        fn impl() void {\n            std.log.err(\"\\n\" ++\n                \\\\---------------------------------------------------------------------------\n                \\\\\n                \\\\Please install Git LFS (Large File Support) extension and run 'zig build' again.\n                \\\\\n                \\\\For more info about Git LFS see: https://git-lfs.github.com/\n                \\\\\n                \\\\---------------------------------------------------------------------------\n                \\\\\n            , .{}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "ensureGitLfs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkGitLfsContent from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "fn checkGitLfsContent() !void {\n    const expected_contents =\n        \\\\DO NOT EDIT OR DELETE\n        \\\\This file is used to check if Git LFS content has been downloaded\n    ;\n    var buf: [expected_contents.len]u8 = undefined;\n    _ = std.fs.cwd().readFile(\".lfs-content-token\", &buf) catch {\n        return error.GitLfsContentTokenNotFound;\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "function",
+      "name": "checkGitLfsContent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to samples from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "pub const samples = struct {\n    /// Windows sample apps that can only be build using Windows. Try to move these to `windows_linux_cross`...\n    pub const windows_only = struct {\n        pub const audio_experiments = @import(\"samples/audio_experiments/build.zig\");\n        pub const audio_playback_test = @import(\"samples/audio_playback_test/build.zig\");\n        pub const directml_convolution_test = @import(\"samples/directml_convolution_test/build.zig\");\n        pub const vector_graphics_test = @import(\"samples/vector_graphics_test/build.zig\");\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "samples",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to windows_linux_cross from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "pub const windows_linux_cross = struct {\n        pub const bindless = @import(\"samples/bindless/build.zig\");\n        pub const mesh_shader_test = @import(\"samples/mesh_shader_test/build.zig\");\n        pub const minimal_d3d12 = @import(\"samples/minimal_d3d12/build.zig\");\n        pub const minimal_glfw_d3d12 = @import(\"samples/minimal_glfw_d3d12/build.zig\");\n        pub const minimal_zgui_glfw_d3d12 = @import(\"samples/minimal_zgui_glfw_d3d12/build.zig\");\n        pub const minimal_zgui_win32_d3d12 = @import(\"samples/minimal_zgui_win32_d3d12/build.zig\");\n        pub const openvr_test = @import(\"samples/openvr_test/build.zig\");\n        pub const simple_openvr = @import(\"samples/simple_openvr/build.zig\");\n        pub const rasterization = @import(\"samples/rasterization/build.zig\");\n        // TODO: get simple raytracer working again\n        //pub const simple_raytracer = @import(\"samples/simple_raytracer/build.zig\");\n        pub const textured_quad = @import(\"samples/textured_quad/build.zig\");\n        pub const triangle = @import(\"samples/triangle/build.zig\");\n        pub const zphysics_instanced_cubes_d3d12 = @import(\"samples/zphysics_instanced_cubes_d3d12/build.zig\");\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "windows_linux_cross",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to web from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: build.zig",
+    "response": "pub const web = struct {\n        pub const sdl2_demo = samples.crossplatform.sdl2_demo;\n\n        // WebGL samples\n        // TODO:\n        // pub const minimal_sdl_gl = samples.crossplatform.minimal_sdl_gl;\n        pub const minimal_glfw_gl = samples.crossplatform.minimal_glfw_gl;\n        // pub const minimal_zgui_glfw_gl = samples.crossplatform.minimal_zgui_glfw_gl;\n\n        // WebGPU samples\n        // TODO:\n        // pub const audio_experiments_wgpu = samples.crossplatform.audio_experiments_wgpu;\n        // pub const bullet_physics_test_wgpu = samples.crossplatform.bullet_physics_test_wgpu;\n        // pub const gamepad_wgpu = samples.crossplatform.gamepad_wgpu;\n        // pub const gui_test_wgpu = samples.crossplatform.gui_test_wgpu;\n        // pub const instanced_pills_wgpu = samples.crossplatform.instanced_pills_wgpu;\n        // pub const layers_wgpu = samples.crossplatform.layers_wgpu;\n        // pub const minimal_zgpu_zgui = samples.crossplatform.minimal_zgpu_zgui;\n        // pub const monolith = samples.crossplatform.monolith;\n        // pub const physically_based_rendering_wgpu = samples.crossplatform.physically_based_rendering_wgpu;\n        // pub const physics_test_wgpu = samples.crossplatform.physics_test_wgpu;\n        // pub const procedural_mesh_wgpu = samples.crossplatform.procedural_mesh_wgpu;\n        // pub const textured_quad_wgpu = samples.crossplatform.textured_quad_wgpu;\n        // pub const triangle_wgpu = samples.crossplatform.triangle_wgpu;\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "web",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/build.zig",
+    "response": "pub fn build(b: *std.Build, options: anytype) void {\n    @import(\"genart/build.zig\").build(b, options);\n}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/build.zig",
+    "response": "pub fn build(b: *std.Build, options: anytype) void {\n    const latest_experiment = 31;\n    inline for (1..latest_experiment + 1) |i| {\n        if (i == 6 or i == 7 or i == 30) continue;\n        const name = comptime std.fmt.comptimePrint(\"x{d:0>4}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to install from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/build.zig",
+    "response": "fn install(\n    b: *std.Build,\n    optimize: std.builtin.Mode,\n    target: std.Build.ResolvedTarget,\n    comptime name: []const u8,\n) void {\n    const zsdl = b.dependency(\"zsdl\", .{}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/build.zig",
+      "type": "function",
+      "name": "install",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/genart.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/genart.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateFrameStats from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/genart.zig",
+    "response": "fn updateFrameStats(window: *sdl.Window, name: [:0]const u8) struct { time: f64, delta_time: f32 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/genart.zig",
+      "type": "function",
+      "name": "updateFrameStats",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to state from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/genart.zig",
+    "response": "const state = struct {\n        var timer: std.time.Timer = undefined;\n        var previous_time_ns: u64 = 0;\n        var header_refresh_time_ns: u64 = 0;\n        var frame_count: u64 = ~@as(u64, 0);\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/genart.zig",
+      "type": "struct",
+      "name": "state",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "pub fn draw() void {\n    if (y <= bounds and pass <= 3) {\n        gl.begin(gl.POINTS);\n        const step: f32 = 0.001;\n        var row: u32 = 0;\n        while (row < 4) : (row += 1) {\n            var x: f32 = -bounds;\n            while (x <= bounds) : (x += step) {\n                var v = Vec2{ x, y }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 1.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sinusoidal from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "fn sinusoidal(v: Vec2, scale: f32) Vec2 {\n    return .{ scale * math.sin(v[0]), scale * math.sin(v[1]) }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "function",
+      "name": "sinusoidal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hyperbolic from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "fn hyperbolic(v: Vec2, scale: f32) Vec2 {\n    const r = @sqrt(v[0] * v[0] + v[1] * v[1]) + 0.0001;\n    const theta = math.atan2(v[0], v[1]);\n    const xx = scale * math.sin(theta) / r;\n    const yy = scale * math.cos(theta) * r;\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "function",
+      "name": "hyperbolic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pdj from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "fn pdj(v: Vec2, scale: f32) Vec2 {\n    const pdj_a = 0.1;\n    const pdj_b = 1.9;\n    const pdj_c = -0.8;\n    const pdj_d = -1.2;\n    //const pdj_a = 1.0111;\n    //const pdj_b = -1.011;\n    //const pdj_c = 2.08;\n    //const pdj_d = 10.2;\n    return .{\n        scale * (math.sin(pdj_a * v[1]) - math.cos(pdj_b * v[0])),\n        scale * (math.sin(pdj_c * v[0]) - math.cos(pdj_d * v[1])),\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "function",
+      "name": "pdj",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to julia from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "fn julia(v: Vec2, scale: f32, rand01: f32) Vec2 {\n    const r = scale * @sqrt(@sqrt(v[0] * v[0] + v[1] * v[1]));\n    const theta = 0.5 * math.atan2(v[0], v[1]) +\n        math.pi * @as(f32, @floatFromInt(@as(i32, @intFromFloat(2.0 * rand01))));\n    const xx = r * math.cos(theta);\n    const yy = r * math.sin(theta);\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "function",
+      "name": "julia",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "const bounds: f32 = 3.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0001.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0001.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "pub fn draw() void {\n    gl.enable(gl.BLEND);\n\n    if (y <= bounds and pass <= 3) {\n        gl.begin(gl.POINTS);\n        const step: f32 = 0.001;\n        var row: u32 = 0;\n        while (row < 4) : (row += 1) {\n            var x: f32 = -bounds;\n            while (x <= bounds) : (x += step) {\n                var v = Vec2{ x, y }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 0.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sinusoidal from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "fn sinusoidal(v: Vec2, scale: f32) Vec2 {\n    return .{ scale * math.sin(v[0]), scale * math.sin(v[1]) }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "function",
+      "name": "sinusoidal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hyperbolic from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "fn hyperbolic(v: Vec2, scale: f32) Vec2 {\n    const r = @sqrt(v[0] * v[0] + v[1] * v[1]) + 0.0001;\n    const theta = math.atan2(v[0], v[1]);\n    const xx = scale * math.sin(theta) / r;\n    const yy = scale * math.cos(theta) * r;\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "function",
+      "name": "hyperbolic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pdj from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "fn pdj(v: Vec2, scale: f32) Vec2 {\n    const pdj_a = 0.1;\n    const pdj_b = 1.9;\n    const pdj_c = -0.8;\n    const pdj_d = -1.2;\n    return .{\n        scale * (math.sin(pdj_a * v[1]) - math.cos(pdj_b * v[0])),\n        scale * (math.sin(pdj_c * v[0]) - math.cos(pdj_d * v[1])),\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "function",
+      "name": "pdj",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to julia from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "fn julia(v: Vec2, scale: f32, rand01: f32) Vec2 {\n    const r = scale * @sqrt(@sqrt(v[0] * v[0] + v[1] * v[1]));\n    const theta = 0.5 * math.atan2(v[0], v[1]) +\n        math.pi * @as(f32, @floatFromInt(@as(i32, @intFromFloat(2.0 * rand01))));\n    const xx = r * math.cos(theta);\n    const yy = r * math.sin(theta);\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "function",
+      "name": "julia",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "const bounds: f32 = 3.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0002.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0002.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0003.zig",
+    "response": "pub fn draw() void {\n    const bounds: f32 = 6.0;\n    gl.matrixLoadIdentityEXT(gl.PROJECTION);\n    gl.matrixOrthoEXT(gl.PROJECTION, -bounds, bounds, -bounds, bounds, -1.0, 1.0);\n\n    gl.loadIdentity();\n    gl.rotatef(rot, 0.0, 0.0, 1.0);\n    rot += 0.2;\n    if (rot > 360.0) rot = 0.0;\n\n    gl.useProgram(fs_draw);\n    gl.begin(gl.TRIANGLES);\n\n    gl.color3f(1.0, 0.0, 0.0);\n    gl.vertex2f(-1.0, -1.0);\n    gl.vertex2f(3.0, -1.0);\n    gl.vertex2f(-1.0, 3.0);\n\n    gl.color3f(0.0, 1.0, 0.0);\n    gl.vertex2f(0.0, -1.0);\n    gl.vertex2f(4.0, -1.0);\n    gl.vertex2f(0.0, 3.0);\n\n    gl.color3f(0.0, 0.0, 1.0);\n    gl.vertex2f(1.0, -1.0);\n    gl.vertex2f(5.0, -1.0);\n    gl.vertex2f(1.0, 3.0);\n\n    gl.end();\n    gl.textureBarrier();\n\n    gl.loadIdentity();\n    gl.matrixLoadIdentityEXT(gl.PROJECTION);\n    gl.useProgram(fs_postprocess);\n    gl.begin(gl.TRIANGLES);\n    gl.vertex2f(-1.0, -1.0);\n    gl.vertex2f(3.0, -1.0);\n    gl.vertex2f(-1.0, 3.0);\n    gl.end();\n}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0003.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0003.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 0.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0003.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0003.zig",
+    "response": "const bounds: f32 = 6.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0003.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0004.zig",
+    "response": "pub fn draw() void {\n    gl.loadIdentity();\n    rot += 0.2;\n    if (rot > 360.0) rot = 0.0;\n\n    const do_barrier = @mod(xcommon.frame_time, 6.0) < 3.0;\n\n    gl.useProgram(fs_draw);\n\n    gl.pushMatrix();\n    gl.rotatef(rot, 0.0, 0.0, 1.0);\n    gl.translatef(@sin(@as(f32, @floatCast(xcommon.frame_time))), 0, 0);\n    for (0..6) |_| {\n        gl.begin(gl.POINTS);\n        gl.color3f(0.2, 0.0, 0.0);\n        gl.vertex2f(-0.2, -0.2);\n        gl.end();\n        if (do_barrier) gl.textureBarrier();\n\n        gl.begin(gl.POINTS);\n        gl.color3f(0.0, 0.2, 0.0);\n        gl.vertex2f(0.2, -0.2);\n        gl.end();\n        if (do_barrier) gl.textureBarrier();\n\n        gl.begin(gl.POINTS);\n        gl.color3f(0.0, 0.01, 0.2);\n        gl.vertex2f(-0.2, 0.2);\n        gl.end();\n        if (do_barrier) gl.textureBarrier();\n\n        gl.rotatef(30.0, 0.0, 0.0, 1.0);\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0004.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0004.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 0.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0004.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0005.zig",
+    "response": "pub fn draw() void {\n    gl.loadIdentity();\n    rot += 0.3;\n    if (rot > 360.0) rot = 0.0;\n\n    gl.color3f(1, 1, 1);\n    gl.useProgram(fs_draw);\n\n    const t = @as(f32, @floatCast(xcommon.frame_time));\n    const r = 0.55 + 0.2 * @sin(t);\n    const r1 = @sin(t);\n\n    for (0..4) |i| {\n        gl.pushMatrix();\n        gl.rotatef(rot + @as(f32, @floatFromInt(i)) * 45.0, 0.0, 0.0, 1.0);\n        gl.begin(gl.LINES);\n        gl.vertex2f(0.0, -1.0);\n        gl.vertex2f(0.0, 1.0);\n        gl.end();\n        gl.popMatrix();\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0005.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0005.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 0.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0005.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0008.zig",
+    "response": "pub fn draw() void {\n    rot += 0.3;\n    if (rot > 360.0) rot = 0.0;\n\n    gl.useProgram(fs_draw);\n\n    const t = @as(f32, @floatCast(xcommon.frame_time));\n    const r = @sin(t);\n\n    gl.loadIdentity();\n    gl.rotatef(0.5 * rot, 0.0, 0.0, 1.0);\n\n    gl.color3f(1.0, 0.1, 0.05);\n    gl.pushMatrix();\n    gl.rotatef(rot, 0.0, 0.0, 1.0);\n    gl.begin(gl.POINTS);\n    for (0..10) |i| {\n        const fract = @as(f32, @floatFromInt(i)) / 10.0;\n        const x = r * @cos(math.tau * fract);\n        const y = r * @sin(math.tau * fract);\n        gl.vertex2f(x, y);\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0008.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0008.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 0.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0008.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0009.zig",
+    "response": "pub fn draw() void {\n    angle0 += 0.2;\n    if (angle0 > 360.0) angle0 = 0.0;\n\n    angle1 += 0.5;\n    if (angle1 > 360.0) angle1 = 0.0;\n\n    if (step0 == 0) x0 += 0.01;\n    //if (step == 1) y += 0.005;\n    if (step0 == 1) x0 -= 0.01;\n    //if (step == 3) y -= 0.005;\n\n    if (step1 == 0) x1 += 0.01;\n    if (step1 == 1) x1 -= 0.01;\n\n    frame0 += 1;\n    if (frame0 == 100) {\n        frame0 = 0;\n        step0 += 1;\n        if (step0 == 2) step0 = 0;\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0009.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0009.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 0.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0009.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0010.zig",
+    "response": "pub fn draw() void {\n    for (&particles) |*p| {\n        p.angle += p.angle_delta;\n        if (p.angle > 360.0) p.angle = 0.0;\n\n        if (p.step == 0) {\n            p.x += p.xy_delta;\n        }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0010.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0010.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.clearBufferfv(gl.COLOR, 0, &[_]f32{ 0.0, 0.0, 0.0, 0.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0010.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Particle from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0010.zig",
+    "response": "const Particle = struct {\n    x: f32 = 0.0,\n    y: f32 = 0.0,\n    xy_delta: f32 = 0.01,\n    frame: u32 = 0,\n    num_frames: u32 = 50,\n    step: u32 = 0,\n    angle: f32 = 0.0,\n    angle_delta: f32 = 0.0,\n    color: [3]f32 = .{ 1.0, 1.0, 1.0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0010.zig",
+      "type": "struct",
+      "name": "Particle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0011.zig",
+    "response": "pub fn draw() void {\n    for (&particles) |*p| {\n        if (p.step == 0) {\n            p.x += 0.01;\n        }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0011.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0011.zig",
+    "response": "pub fn init() !void {\n    for (&particles) |*p| {\n        p.x = -1.25 + 2.0 * random.float(f32);\n        p.y = -1.25 + 2.0 * random.float(f32);\n        p.num_frames = 20 + random.uintLessThan(u32, 100);\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0011.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Particle from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0011.zig",
+    "response": "const Particle = struct {\n    x: f32 = 0.0,\n    y: f32 = 0.0,\n    frame: u32 = 0,\n    num_frames: u32 = 50,\n    step: u32 = 0,\n}",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0011.zig",
+      "type": "struct",
+      "name": "Particle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0012.zig",
+    "response": "pub fn draw() void {\n    const xy_delta: f32 = if (frame % 180 < 90) 0.01 else 0.02;\n    frame += 1;\n\n    for (&particles) |*p| {\n        if (p.step == 0) {\n            p.x += xy_delta;\n        }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0012.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0012.zig",
+    "response": "pub fn init() !void {\n    for (&particles) |*p| {\n        p.x = -1.25 + 2.0 * random.float(f32);\n        p.y = -1.25 + 2.0 * random.float(f32);\n        p.num_frames = 20 + random.uintLessThan(u32, 100);\n        p.color = switch (random.uintAtMost(u2, 3)) {\n            0 => .{ 1.0, 1.0, 0.01 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0012.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Particle from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0012.zig",
+    "response": "const Particle = struct {\n    x: f32 = 0.0,\n    y: f32 = 0.0,\n    frame: u32 = 0,\n    num_frames: u32 = 50,\n    step: u32 = 0,\n    color: [3]f32 = .{ 1, 1, 1 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0012.zig",
+      "type": "struct",
+      "name": "Particle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to xy_delta from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0012.zig",
+    "response": "const xy_delta: f32 = if (frame % 180 < 90) 0.01 else 0.02;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0012.zig",
+      "type": "const",
+      "name": "xy_delta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0013.zig",
+    "response": "pub fn draw() void {\n    const angle_accel: f32 = if (frame % 240 < 100) 0.0 else 2.0;\n    frame += 1;\n\n    for (&particles) |*p| {\n        p.angle += p.angle_delta + angle_accel;\n        if (p.angle > 360.0 or p.angle < -360.0) p.angle = 0.0;\n\n        if (p.frame == p.num_frames) {\n            p.frame = 0;\n            p.angle_delta = -p.angle_delta;\n        }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0013.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0013.zig",
+    "response": "pub fn init() !void {\n    for (&particles) |*p| {\n        p.x = -0.9 + 1.8 * random.float(f32);\n        p.y = -0.9 + 1.8 * random.float(f32);\n        p.angle_delta = 0.5 + random.float(f32);\n        p.num_frames = 20 + random.uintLessThan(u32, 100);\n        p.color = switch (random.uintAtMost(u2, 3)) {\n            0 => .{ 1, 0.005, 0 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0013.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Particle from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0013.zig",
+    "response": "const Particle = struct {\n    x: f32 = 0.0,\n    y: f32 = 0.0,\n    frame: u32 = 0,\n    num_frames: u32 = 50,\n    angle: f32 = 0.0,\n    angle_delta: f32 = 0.0,\n    color: [3]f32 = .{ 1, 1, 1 }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0013.zig",
+      "type": "struct",
+      "name": "Particle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to angle_accel from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0013.zig",
+    "response": "const angle_accel: f32 = if (frame % 240 < 100) 0.0 else 2.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0013.zig",
+      "type": "const",
+      "name": "angle_accel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "pub fn draw() void {\n    gl.enable(gl.BLEND);\n    gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, accum_fbo);\n    gl.useProgram(0);\n\n    gl.matrixLoadIdentityEXT(gl.PROJECTION);\n    gl.matrixOrthoEXT(gl.PROJECTION, -bounds, bounds, -bounds, bounds, -1.0, 1.0);\n\n    gl.loadIdentity();\n    gl.rotatef(angle, 0, 0, 1);\n\n    angle += 0.15;\n    if (angle > 360.0) angle = 0.0;\n\n    if (y <= bounds and pass == 0) {\n        gl.begin(gl.POINTS);\n        const step: f32 = 0.001;\n        var row: u32 = 0;\n        while (row < 16) : (row += 1) {\n            var x = -bounds;\n            while (x <= bounds) : (x += step) {\n                const xoff = random.floatNorm(f32) * 0.002;\n                const yoff = random.floatNorm(f32) * 0.002;\n                gl.color3f(0.002, 0.002, 0.002);\n                gl.vertex2f(x + xoff, y + yoff);\n            }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.pointSize(3.0);\n\n    gl.blendFunc(gl.ONE, gl.ONE);\n    gl.blendEquation(gl.FUNC_ADD);\n\n    gl.createTextures(gl.TEXTURE_2D, 1, &accum_tex);\n    gl.textureStorage2D(accum_tex, 1, gl.RGBA16F, display_width, display_height);\n    gl.clearTexImage(accum_tex, 0, gl.RGBA, gl.FLOAT, null);\n\n    gl.createFramebuffers(1, &accum_fbo);\n    gl.namedFramebufferTexture(accum_fbo, gl.COLOR_ATTACHMENT0, accum_tex, 0);\n\n    const accum_texh = gl.getTextureHandleNV(accum_tex);\n    gl.makeTextureHandleResidentNV(accum_texh);\n\n    fs_postprocess = gl.createShaderProgramv(gl.FRAGMENT_SHADER, 1, &@as([*:0]const gl.Char, \n        \\\\  #version 460 compatibility\n        \\\\  #extension NV_bindless_texture : require\n        \\\\\n        \\\\  layout(location = 0) uniform sampler2D accum_texh;\n        \\\\\n        \\\\  void main() {\n        \\\\      vec3 color = texelFetch(accum_texh, ivec2(gl_FragCoord.xy), 0).rgb;\n        \\\\      color = color / (color + 1.0);\n        \\\\      color = 1.0 - color;\n        \\\\      color = pow(color, vec3(2.2));\n        \\\\      gl_FragColor = vec4(color, 1.0);\n        \\\\  }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sinusoidal from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "fn sinusoidal(v: Vec2, scale: f32) Vec2 {\n    return .{ scale * math.sin(v[0]), scale * math.sin(v[1]) }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "function",
+      "name": "sinusoidal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hyperbolic from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "fn hyperbolic(v: Vec2, scale: f32) Vec2 {\n    const r = @sqrt(v[0] * v[0] + v[1] * v[1]) + 0.0001;\n    const theta = math.atan2(v[0], v[1]);\n    const xx = scale * math.sin(theta) / r;\n    const yy = scale * math.cos(theta) * r;\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "function",
+      "name": "hyperbolic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pdj from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "fn pdj(v: Vec2, scale: f32) Vec2 {\n    const pdj_a = 0.1;\n    const pdj_b = 1.9;\n    const pdj_c = -0.8;\n    const pdj_d = -1.2;\n    //const pdj_a = 1.0111;\n    //const pdj_b = -1.011;\n    //const pdj_c = 2.08;\n    //const pdj_d = 10.2;\n    return .{\n        scale * (math.sin(pdj_a * v[1]) - math.cos(pdj_b * v[0])),\n        scale * (math.sin(pdj_c * v[0]) - math.cos(pdj_d * v[1])),\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "function",
+      "name": "pdj",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to julia from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "fn julia(v: Vec2, scale: f32, rand01: f32) Vec2 {\n    const r = scale * @sqrt(@sqrt(v[0] * v[0] + v[1] * v[1]));\n    const theta = 0.5 * math.atan2(v[0], v[1]) +\n        math.pi * @as(f32, @floatFromInt(@as(i32, @intFromFloat(2.0 * rand01))));\n    const xx = r * math.cos(theta);\n    const yy = r * math.sin(theta);\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "function",
+      "name": "julia",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "const bounds: f32 = 3.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0014.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0014.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "pub fn draw() void {\n    gl.enable(gl.BLEND);\n    gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, accum_fbo);\n    gl.useProgram(0);\n\n    gl.matrixLoadIdentityEXT(gl.PROJECTION);\n    gl.matrixOrthoEXT(gl.PROJECTION, -bounds, bounds, -bounds, bounds, -1.0, 1.0);\n    gl.loadIdentity();\n\n    if (y <= bounds and pass == 1) {\n        gl.begin(gl.POINTS);\n        const step: f32 = 0.001;\n        var row: u32 = 0;\n        while (row < 4) : (row += 1) {\n            var x: f32 = -bounds;\n            while (x <= bounds) : (x += step) {\n                var v = Vec2{ x, y }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.pointSize(3.0);\n\n    gl.blendFunc(gl.ONE, gl.ONE);\n    gl.blendEquation(gl.FUNC_ADD);\n\n    gl.createTextures(gl.TEXTURE_2D, 1, &accum_tex);\n    gl.textureStorage2D(accum_tex, 1, gl.RGBA16F, display_width, display_height);\n    gl.clearTexImage(accum_tex, 0, gl.RGBA, gl.FLOAT, null);\n\n    gl.createFramebuffers(1, &accum_fbo);\n    gl.namedFramebufferTexture(accum_fbo, gl.COLOR_ATTACHMENT0, accum_tex, 0);\n\n    const accum_texh = gl.getTextureHandleNV(accum_tex);\n    gl.makeTextureHandleResidentNV(accum_texh);\n\n    fs_postprocess = gl.createShaderProgramv(gl.FRAGMENT_SHADER, 1, &@as([*:0]const gl.Char, \n        \\\\  #version 460 compatibility\n        \\\\  #extension NV_bindless_texture : require\n        \\\\\n        \\\\  layout(location = 0) uniform sampler2D accum_texh;\n        \\\\\n        \\\\  void main() {\n        \\\\      vec3 color = texelFetch(accum_texh, ivec2(gl_FragCoord.xy), 0).rgb;\n        \\\\      color = color / (color + 1.0);\n        \\\\      color = 1.0 - color;\n        \\\\      color = pow(color, vec3(2.2));\n        \\\\      gl_FragColor = vec4(color, 1.0);\n        \\\\  }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sinusoidal from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "fn sinusoidal(v: Vec2, scale: f32) Vec2 {\n    return .{ scale * math.sin(v[0]), scale * math.sin(v[1]) }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "function",
+      "name": "sinusoidal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hyperbolic from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "fn hyperbolic(v: Vec2, scale: f32) Vec2 {\n    const r = @sqrt(v[0] * v[0] + v[1] * v[1]) + 0.0001;\n    const theta = math.atan2(v[0], v[1]);\n    const xx = scale * math.sin(theta) / r;\n    const yy = scale * math.cos(theta) * r;\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "function",
+      "name": "hyperbolic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pdj from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "fn pdj(v: Vec2, scale: f32) Vec2 {\n    const pdj_a = 0.1;\n    const pdj_b = 1.9;\n    const pdj_c = -0.8;\n    const pdj_d = -1.2;\n    //const pdj_a = 1.0111;\n    //const pdj_b = -1.011;\n    //const pdj_c = 2.08;\n    //const pdj_d = 10.2;\n    return .{\n        scale * (math.sin(pdj_a * v[1]) - math.cos(pdj_b * v[0])),\n        scale * (math.sin(pdj_c * v[0]) - math.cos(pdj_d * v[1])),\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "function",
+      "name": "pdj",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to julia from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "fn julia(v: Vec2, scale: f32, rand01: f32) Vec2 {\n    const r = scale * @sqrt(@sqrt(v[0] * v[0] + v[1] * v[1]));\n    const theta = 0.5 * math.atan2(v[0], v[1]) +\n        math.pi * @as(f32, @floatFromInt(@as(i32, @intFromFloat(2.0 * rand01))));\n    const xx = r * math.cos(theta);\n    const yy = r * math.sin(theta);\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "function",
+      "name": "julia",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "const bounds: f32 = 3.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0015.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0015.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0016.zig",
+    "response": "pub fn draw() void {\n    gl.enable(gl.BLEND);\n    gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, accum_fbo);\n    gl.useProgram(0);\n\n    gl.matrixLoadIdentityEXT(gl.PROJECTION);\n    gl.matrixOrthoEXT(gl.PROJECTION, -bounds, bounds, -bounds, bounds, -1.0, 1.0);\n\n    gl.loadIdentity();\n\n    if (y <= bounds and pass == 1) {\n        gl.color3f(0.001, 0.001, 0.001);\n        gl.begin(gl.POINTS);\n        const step: f32 = 0.001;\n        var row: u32 = 0;\n        while (row < 4) : (row += 1) {\n            var x: f32 = -bounds;\n            while (x <= bounds) : (x += step) {\n                var v = Vec2{ x, y }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0016.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sinusoidal from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0016.zig",
+    "response": "fn sinusoidal(v: Vec2, scale: f32) Vec2 {\n    return .{ scale * math.sin(v[0]), scale * math.sin(v[1]) }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0016.zig",
+      "type": "function",
+      "name": "sinusoidal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0016.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.pointSize(3.0);\n\n    gl.blendFunc(gl.ONE, gl.ONE);\n    gl.blendEquation(gl.FUNC_ADD);\n\n    gl.createTextures(gl.TEXTURE_2D, 1, &accum_tex);\n    gl.textureStorage2D(accum_tex, 1, gl.RGBA16F, display_width, display_height);\n    gl.clearTexImage(accum_tex, 0, gl.RGBA, gl.FLOAT, null);\n\n    gl.createFramebuffers(1, &accum_fbo);\n    gl.namedFramebufferTexture(accum_fbo, gl.COLOR_ATTACHMENT0, accum_tex, 0);\n\n    const accum_texh = gl.getTextureHandleNV(accum_tex);\n    gl.makeTextureHandleResidentNV(accum_texh);\n\n    fs_postprocess = gl.createShaderProgramv(gl.FRAGMENT_SHADER, 1, &@as([*:0]const gl.Char, \n        \\\\  #version 460 compatibility\n        \\\\  #extension NV_bindless_texture : require\n        \\\\\n        \\\\  layout(location = 0) uniform sampler2D accum_texh;\n        \\\\\n        \\\\  void main() {\n        \\\\      vec3 color = texelFetch(accum_texh, ivec2(gl_FragCoord.xy), 0).rgb;\n        \\\\      color = color / (color + 1.0);\n        \\\\      color = 1.0 - color;\n        \\\\      color = pow(color, vec3(2.2));\n        \\\\      gl_FragColor = vec4(color, 1.0);\n        \\\\  }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0016.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0016.zig",
+    "response": "const bounds: f32 = 3.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0016.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0016.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0016.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0017.zig",
+    "response": "pub fn draw() void {\n    gl.enable(gl.BLEND);\n    gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, accum_fbo);\n    gl.useProgram(0);\n\n    gl.matrixLoadIdentityEXT(gl.PROJECTION);\n    gl.matrixOrthoEXT(gl.PROJECTION, -bounds, bounds, -bounds, bounds, -1.0, 1.0);\n\n    gl.loadIdentity();\n    gl.rotatef(2.5 * (-1.0 + 2.0 * random.float(f32)), 0, 0, 1);\n    gl.translatef(\n        0.05 * (-1.0 + 2.0 * random.float(f32)),\n        0.05 * (-1.0 + 2.0 * random.float(f32)),\n        1.0,\n    );\n\n    if (y <= bounds and pass == 1) {\n        const step: f32 = 0.001;\n        gl.color3f(step, step, step);\n        gl.begin(gl.POINTS);\n        var row: u32 = 0;\n        while (row < 4) : (row += 1) {\n            var x: f32 = -bounds;\n            while (x <= bounds) : (x += step) {\n                var v = Vec2{ x, y }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0017.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0017.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.pointSize(3.0);\n\n    gl.blendFunc(gl.ONE, gl.ONE);\n    gl.blendEquation(gl.FUNC_ADD);\n\n    gl.createTextures(gl.TEXTURE_2D, 1, &accum_tex);\n    gl.textureStorage2D(accum_tex, 1, gl.RGBA16F, display_width, display_height);\n    gl.clearTexImage(accum_tex, 0, gl.RGBA, gl.FLOAT, null);\n\n    gl.createFramebuffers(1, &accum_fbo);\n    gl.namedFramebufferTexture(accum_fbo, gl.COLOR_ATTACHMENT0, accum_tex, 0);\n\n    const accum_texh = gl.getTextureHandleNV(accum_tex);\n    gl.makeTextureHandleResidentNV(accum_texh);\n\n    fs_postprocess = gl.createShaderProgramv(gl.FRAGMENT_SHADER, 1, &@as([*:0]const gl.Char, \n        \\\\  #version 460 compatibility\n        \\\\  #extension NV_bindless_texture : require\n        \\\\\n        \\\\  layout(location = 0) uniform sampler2D accum_texh;\n        \\\\\n        \\\\  void main() {\n        \\\\      vec3 color = texelFetch(accum_texh, ivec2(gl_FragCoord.xy), 0).rgb;\n        \\\\      color = color / (color + 1.0);\n        \\\\      color = 1.0 - color;\n        \\\\      color = pow(color, vec3(2.2));\n        \\\\      gl_FragColor = vec4(color, 1.0);\n        \\\\  }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0017.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pdj from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0017.zig",
+    "response": "fn pdj(v: Vec2, scale: f32) Vec2 {\n    const pdj_a = 0.1;\n    const pdj_b = 1.9;\n    const pdj_c = -0.8;\n    const pdj_d = -1.2;\n    return .{\n        scale * (math.sin(pdj_a * v[1]) - math.cos(pdj_b * v[0])),\n        scale * (math.sin(pdj_c * v[0]) - math.cos(pdj_d * v[1])),\n    }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0017.zig",
+      "type": "function",
+      "name": "pdj",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0017.zig",
+    "response": "const bounds: f32 = 3.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0017.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0017.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0017.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0018.zig",
+    "response": "pub fn draw() void {\n    gl.enable(gl.BLEND);\n    gl.bindFramebuffer(gl.DRAW_FRAMEBUFFER, accum_fbo);\n    gl.useProgram(0);\n\n    gl.matrixLoadIdentityEXT(gl.PROJECTION);\n    gl.matrixOrthoEXT(gl.PROJECTION, -bounds, bounds, -bounds, bounds, -1.0, 1.0);\n\n    gl.loadIdentity();\n\n    if (y <= bounds and pass == 1) {\n        const step: f32 = 0.001;\n        gl.color3f(step, step, step);\n        gl.begin(gl.POINTS);\n        var row: u32 = 0;\n        while (row < 2) : (row += 1) {\n            const xoff = 0.05 * (-1.0 + 2.0 * random.float(f32));\n            const yoff = 0.05 * (-1.0 + 2.0 * random.float(f32));\n            var x: f32 = -bounds;\n            while (x <= bounds) : (x += step) {\n                var v = Vec2{ x, y }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0018.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0018.zig",
+    "response": "pub fn init() !void {\n    try sdl.gl.setSwapInterval(1);\n\n    gl.pointSize(3.0);\n\n    gl.blendFunc(gl.ONE, gl.ONE);\n    gl.blendEquation(gl.FUNC_ADD);\n\n    gl.createTextures(gl.TEXTURE_2D, 1, &accum_tex);\n    gl.textureStorage2D(accum_tex, 1, gl.RGBA16F, display_width, display_height);\n    gl.clearTexImage(accum_tex, 0, gl.RGBA, gl.FLOAT, null);\n\n    gl.createFramebuffers(1, &accum_fbo);\n    gl.namedFramebufferTexture(accum_fbo, gl.COLOR_ATTACHMENT0, accum_tex, 0);\n\n    const accum_texh = gl.getTextureHandleNV(accum_tex);\n    gl.makeTextureHandleResidentNV(accum_texh);\n\n    fs_postprocess = gl.createShaderProgramv(gl.FRAGMENT_SHADER, 1, &@as([*:0]const gl.Char, \n        \\\\  #version 460 compatibility\n        \\\\  #extension NV_bindless_texture : require\n        \\\\\n        \\\\  layout(location = 0) uniform sampler2D accum_texh;\n        \\\\\n        \\\\  void main() {\n        \\\\      vec3 color = texelFetch(accum_texh, ivec2(gl_FragCoord.xy), 0).rgb;\n        \\\\      color = color / (color + 1.0);\n        \\\\      color = 1.0 - color;\n        \\\\      color = pow(color, vec3(2.2));\n        \\\\      gl_FragColor = vec4(color, 1.0);\n        \\\\  }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0018.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sinusoidal from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0018.zig",
+    "response": "fn sinusoidal(v: Vec2, scale: f32) Vec2 {\n    return .{ scale * math.sin(v[0]), scale * math.sin(v[1]) }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0018.zig",
+      "type": "function",
+      "name": "sinusoidal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to julia from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0018.zig",
+    "response": "fn julia(v: Vec2, scale: f32, rand01: f32) Vec2 {\n    const r = scale * @sqrt(@sqrt(v[0] * v[0] + v[1] * v[1]));\n    const theta = 0.5 * math.atan2(v[0], v[1]) +\n        math.pi * @as(f32, @floatFromInt(@as(i32, @intFromFloat(2.0 * rand01))));\n    const xx = r * math.cos(theta);\n    const yy = r * math.sin(theta);\n    return .{ xx, yy }",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0018.zig",
+      "type": "function",
+      "name": "julia",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bounds from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0018.zig",
+    "response": "const bounds: f32 = 3.0;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0018.zig",
+      "type": "const",
+      "name": "bounds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to step from zig-gamedev/zig-gamedev",
+    "context": "Repository: zig-gamedev/zig-gamedev (2703 ⭐)\nFile: experiments/genart/src/x0018.zig",
+    "response": "const step: f32 = 0.001;",
+    "metadata": {
+      "repo": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "file": "experiments/genart/src/x0018.zig",
+      "type": "const",
+      "name": "step",
+      "difficulty": "easy"
+    }
+  }
+]

@@ -1,0 +1,3265 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/cli.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/cli.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to widget from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "function",
+      "name": "widget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedEventHandler from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "fn typeErasedEventHandler(ptr: *anyopaque, ctx: *vxfw.EventContext, event: vxfw.Event) anyerror!void {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        switch (event) {\n            // The root widget is always sent an init event as the first event. Users of the\n            // library can also send this event to other widgets they create if they need to do\n            // some initialization.\n            .init => return ctx.requestFocus(self.button.widget()),\n            .key_press => |key| {\n                if (key.matches('c', .{ .ctrl = true }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "function",
+      "name": "typeErasedEventHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedDrawFn from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "fn typeErasedDrawFn(ptr: *anyopaque, ctx: vxfw.DrawContext) std.mem.Allocator.Error!vxfw.Surface {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        // The DrawContext is inspired from Flutter. Each widget will receive a minimum and maximum\n        // constraint. The minimum constraint will always be set, even if it is set to 0x0. The\n        // maximum constraint can have null width and/or height - meaning there is no constraint in\n        // that direction and the widget should take up as much space as it needs. By calling size()\n        // on the max, we assert that it has some constrained size. This is *always* the case for\n        // the root widget - the maximum size will always be the size of the terminal screen.\n        const max_size = ctx.max.size();\n\n        // The DrawContext also contains an arena allocator that can be used for each frame. The\n        // lifetime of this allocation is until the next time we draw a frame. This is useful for\n        // temporary allocations such as the one below: we have an integer we want to print as text.\n        // We can safely allocate this with the ctx arena since we only need it for this frame.\n        if (self.count > 0) {\n            self.button.label = try std.fmt.allocPrint(ctx.arena, \"Clicks: {d}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "function",
+      "name": "typeErasedDrawFn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onClick from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "fn onClick(maybe_ptr: ?*anyopaque, ctx: *vxfw.EventContext) anyerror!void {\n        const ptr = maybe_ptr orelse return;\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        self.count +|= 1;\n        return ctx.consumeAndRedraw();\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "function",
+      "name": "onClick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Model from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "const Model = struct {\n    /// State of the counter\n    count: u32 = 0,\n    /// The button. This widget is stateful and must live between frames\n    button: vxfw.Button,\n\n    /// Helper function to return a vxfw.Widget struct\n    pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "struct",
+      "name": "Model",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to button_child from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "const button_child: vxfw.SubSurface = .{\n            .origin = .{ .row = 0, .col = 0 },\n            .surface = try self.button.draw(ctx.withConstraints(\n                ctx.min,\n                // Here we explicitly set a new maximum size constraint for the Button. A Button will\n                // expand to fill it's area and must have some hard limit in the maximum constraint\n                .{ .width = 16, .height = 3 },\n            )),\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "const",
+      "name": "button_child",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/counter.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/counter.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to widget from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "widget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedEventHandler from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "fn typeErasedEventHandler(ptr: *anyopaque, ctx: *vxfw.EventContext, event: vxfw.Event) anyerror!void {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        switch (event) {\n            .init => {\n                // Initialize the filtered list\n                const allocator = self.arena.allocator();\n                for (self.list.items) |line| {\n                    var spans = std.ArrayList(vxfw.RichText.TextSpan){}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "typeErasedEventHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedDrawFn from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "fn typeErasedDrawFn(ptr: *anyopaque, ctx: vxfw.DrawContext) std.mem.Allocator.Error!vxfw.Surface {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        const max = ctx.max.size();\n\n        const list_view: vxfw.SubSurface = .{\n            .origin = .{ .row = 2, .col = 0 }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "typeErasedDrawFn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to widgetBuilder from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "fn widgetBuilder(ptr: *const anyopaque, idx: usize, _: usize) ?vxfw.Widget {\n        const self: *const Model = @ptrCast(@alignCast(ptr));\n        if (idx >= self.filtered.items.len) return null;\n\n        return self.filtered.items[idx].widget();\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "widgetBuilder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onChange from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "fn onChange(maybe_ptr: ?*anyopaque, _: *vxfw.EventContext, str: []const u8) anyerror!void {\n        const ptr = maybe_ptr orelse return;\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        const allocator = self.arena.allocator();\n        self.filtered.clearAndFree(allocator);\n        _ = self.arena.reset(.free_all);\n\n        const hasUpper = for (str) |b| {\n            if (std.ascii.isUpper(b)) break true;\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "onChange",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onSubmit from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "fn onSubmit(maybe_ptr: ?*anyopaque, ctx: *vxfw.EventContext, _: []const u8) anyerror!void {\n        const ptr = maybe_ptr orelse return;\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        if (self.list_view.cursor < self.filtered.items.len) {\n            const selected = self.filtered.items[self.list_view.cursor];\n            const allocator = self.arena.allocator();\n            var result = std.ArrayList(u8){}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "onSubmit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toLower from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "fn toLower(allocator: std.mem.Allocator, src: []const u8) std.mem.Allocator.Error![]const u8 {\n    const lower = try allocator.alloc(u8, src.len);\n    for (src, 0..) |b, i| {\n        lower[i] = std.ascii.toLower(b);\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "toLower",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Model from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const Model = struct {\n    list: std.ArrayList(vxfw.Text),\n    filtered: std.ArrayList(vxfw.RichText),\n    list_view: vxfw.ListView,\n    text_field: vxfw.TextField,\n    result: []const u8,\n\n    /// Used for filtered RichText Spans\n    arena: std.heap.ArenaAllocator,\n\n    pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "struct",
+      "name": "Model",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to span from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const span: vxfw.RichText.TextSpan = .{ .text = line.text };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "span",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to list_view from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const list_view: vxfw.SubSurface = .{\n            .origin = .{ .row = 2, .col = 0 },\n            .surface = try self.list_view.draw(ctx.withConstraints(\n                ctx.min,\n                .{ .width = max.width, .height = max.height - 3 },\n            )),\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "list_view",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to text_field from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const text_field: vxfw.SubSurface = .{\n            .origin = .{ .row = 0, .col = 2 },\n            .surface = try self.text_field.draw(ctx.withConstraints(\n                ctx.min,\n                .{ .width = max.width, .height = 1 },\n            )),\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "text_field",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to prompt from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const prompt: vxfw.Text = .{ .text = \"\", .style = .{ .fg = .{ .index = 4 } } };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "prompt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to prompt_surface from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const prompt_surface: vxfw.SubSurface = .{\n            .origin = .{ .row = 0, .col = 0 },\n            .surface = try prompt.draw(ctx.withConstraints(ctx.min, .{ .width = 2, .height = 1 })),\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "prompt_surface",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const self: *const Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to up_to_here from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const up_to_here: vxfw.RichText.TextSpan = .{ .text = item.text[i..idx] };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "up_to_here",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to match from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const match: vxfw.RichText.TextSpan = .{\n                        .text = item.text[idx .. idx + g.len],\n                        .style = .{ .fg = .{ .index = 4 }, .reverse = true },\n                    };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "match",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to up_to_here from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const up_to_here: vxfw.RichText.TextSpan = .{ .text = item.text[i..] };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "up_to_here",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/fuzzy.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/fuzzy.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/image.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/image.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/main.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to msg_len from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/main.zig",
+    "response": "const msg_len: u16 = @intCast(msg.len);",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/main.zig",
+      "type": "const",
+      "name": "msg_len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to second_cell from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/main.zig",
+    "response": "const second_cell: Cell = .{\n                .char = .{ .grapheme = msg[i .. i + 1] },\n                .style = .{\n                    .fg = .{ .index = color_idx },\n                },\n            };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/main.zig",
+      "type": "const",
+      "name": "second_cell",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to widget from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "pub fn widget(self: *ModelRow) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .drawFn = ModelRow.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "function",
+      "name": "widget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedDrawFn from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "fn typeErasedDrawFn(ptr: *anyopaque, ctx: vxfw.DrawContext) std.mem.Allocator.Error!vxfw.Surface {\n        const self: *ModelRow = @ptrCast(@alignCast(ptr));\n\n        const idx_text = try std.fmt.allocPrint(ctx.arena, \"{d: >4}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "function",
+      "name": "typeErasedDrawFn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to widget from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "function",
+      "name": "widget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedEventHandler from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "fn typeErasedEventHandler(ptr: *anyopaque, ctx: *vxfw.EventContext, event: vxfw.Event) anyerror!void {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        switch (event) {\n            .key_press => |key| {\n                if (key.matches('c', .{ .ctrl = true }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "function",
+      "name": "typeErasedEventHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedDrawFn from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "fn typeErasedDrawFn(ptr: *anyopaque, ctx: vxfw.DrawContext) std.mem.Allocator.Error!vxfw.Surface {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        const max = ctx.max.size();\n\n        const scroll_view: vxfw.SubSurface = .{\n            .origin = .{ .row = 0, .col = 0 }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "function",
+      "name": "typeErasedDrawFn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to widgetBuilder from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "fn widgetBuilder(ptr: *const anyopaque, idx: usize, _: usize) ?vxfw.Widget {\n        const self: *const Model = @ptrCast(@alignCast(ptr));\n        if (idx >= self.rows.items.len) return null;\n\n        return self.rows.items[idx].widget();\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "function",
+      "name": "widgetBuilder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ModelRow from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const ModelRow = struct {\n    text: []const u8,\n    idx: usize,\n    wrap_lines: bool = true,\n\n    pub fn widget(self: *ModelRow) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .drawFn = ModelRow.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "struct",
+      "name": "ModelRow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Model from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const Model = struct {\n    scroll_bars: vxfw.ScrollBars,\n    rows: std.ArrayList(ModelRow),\n\n    pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "struct",
+      "name": "Model",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const self: *ModelRow = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to idx_widget from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const idx_widget: vxfw.Text = .{ .text = idx_text };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "idx_widget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to idx_surf from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const idx_surf: vxfw.SubSurface = .{\n            .origin = .{ .row = 0, .col = 0 },\n            .surface = try idx_widget.draw(ctx.withConstraints(\n                // We're only interested in constraining the width, and we know the height will\n                // always be 1 row.\n                .{ .width = 1, .height = 1 },\n                .{ .width = 4, .height = 1 },\n            )),\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "idx_surf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to text_widget from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const text_widget: vxfw.Text = .{ .text = self.text, .softwrap = self.wrap_lines };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "text_widget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to scroll_view from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const scroll_view: vxfw.SubSurface = .{\n            .origin = .{ .row = 0, .col = 0 },\n            .surface = try self.scroll_bars.draw(ctx),\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "scroll_view",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/scroll.zig",
+    "response": "const self: *const Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/scroll.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to widget from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/split_view.zig",
+    "response": "pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/split_view.zig",
+      "type": "function",
+      "name": "widget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedEventHandler from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/split_view.zig",
+    "response": "fn typeErasedEventHandler(ptr: *anyopaque, ctx: *vxfw.EventContext, event: vxfw.Event) anyerror!void {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        switch (event) {\n            .init => {\n                self.split.lhs = self.lhs.widget();\n                self.split.rhs = self.rhs.widget();\n            }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/split_view.zig",
+      "type": "function",
+      "name": "typeErasedEventHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typeErasedDrawFn from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/split_view.zig",
+    "response": "fn typeErasedDrawFn(ptr: *anyopaque, ctx: vxfw.DrawContext) std.mem.Allocator.Error!vxfw.Surface {\n        const self: *Model = @ptrCast(@alignCast(ptr));\n        const surf = try self.split.widget().draw(ctx);\n        self.children[0] = .{\n            .surface = surf,\n            .origin = .{ .row = 0, .col = 0 }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/split_view.zig",
+      "type": "function",
+      "name": "typeErasedDrawFn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/split_view.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/split_view.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Model from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/split_view.zig",
+    "response": "const Model = struct {\n    split: vxfw.SplitView,\n    lhs: vxfw.Text,\n    rhs: vxfw.Text,\n    children: [1]vxfw.SubSurface = undefined,\n\n    pub fn widget(self: *Model) vxfw.Widget {\n        return .{\n            .userdata = self,\n            .eventHandler = Model.typeErasedEventHandler,\n            .drawFn = Model.typeErasedDrawFn,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/split_view.zig",
+      "type": "struct",
+      "name": "Model",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/split_view.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/split_view.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/split_view.zig",
+    "response": "const self: *Model = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/split_view.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "pub fn main() !void {\n    var gpa = heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to see from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "fn see(win: *vaxis.Window, ctx_raw: *const anyopaque) !u16 {\n                    const ctx: *const RowContext = @ptrCast(@alignCast(ctx_raw));\n                    win.height = 5;\n                    const see_win = win.child(.{\n                        .x_off = 0,\n                        .y_off = 1,\n                        .width = win.width,\n                        .height = 4,\n                    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "function",
+      "name": "see",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RowContext from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "const RowContext = struct {\n                row: []const u8,\n                bg: vaxis.Color,\n            }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "struct",
+      "name": "RowContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to User from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "pub const User = struct {\n    first: []const u8,\n    last: []const u8,\n    user: []const u8,\n    email: ?[]const u8 = null,\n    phone: ?[]const u8 = null,\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "struct",
+      "name": "User",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to active_bg from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "const active_bg: vaxis.Cell.Color = .{ .rgb = .{ 64, 128, 255 } };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "const",
+      "name": "active_bg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to selected_bg from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "const selected_bg: vaxis.Cell.Color = .{ .rgb = .{ 32, 64, 255 } };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "const",
+      "name": "selected_bg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to other_bg from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "const other_bg: vaxis.Cell.Color = .{ .rgb = .{ 32, 32, 48 } };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "const",
+      "name": "other_bg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ctx from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "const ctx: *const RowContext = @ptrCast(@alignCast(ctx_raw));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "const",
+      "name": "ctx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to content_segs from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/table.zig",
+    "response": "const content_segs: []const vaxis.Cell.Segment = &.{\n                        .{\n                            .text = ctx.row,\n                            .style = .{ .bg = ctx.bg },\n                        },\n                        .{\n                            .text = content_logo,\n                            .style = .{ .bg = ctx.bg },\n                        },\n                    };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/table.zig",
+      "type": "const",
+      "name": "content_segs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/text_input.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/text_input.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to style from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/text_input.zig",
+    "response": "const style: vaxis.Style = .{\n            .fg = .{ .index = color_idx },\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/text_input.zig",
+      "type": "const",
+      "name": "style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/vaxis.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/vaxis.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to blendColors from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/vaxis.zig",
+    "response": "fn blendColors(a: [3]u8, b: [3]u8, pct: u8) !vaxis.Color {\n    // const r_a = (a[0] * (100 -| pct)) / 100;\n\n    const r_a = (@as(u16, a[0]) * @as(u16, (100 -| pct))) / 100;\n    const r_b = (@as(u16, b[0]) * @as(u16, pct)) / 100;\n\n    const g_a = (@as(u16, a[1]) * @as(u16, (100 -| pct))) / 100;\n    const g_b = (@as(u16, b[1]) * @as(u16, pct)) / 100;\n    // const g_a = try std.math.mul(u8, a[1], (100 -| pct) / 100);\n    // const g_b = (b[1] * pct) / 100;\n\n    const b_a = (@as(u16, a[2]) * @as(u16, (100 -| pct))) / 100;\n    const b_b = (@as(u16, b[2]) * @as(u16, pct)) / 100;\n    // const b_a = try std.math.mul(u8, a[2], (100 -| pct) / 100);\n    // const b_b = (b[2] * pct) / 100;\n    return .{ .rgb = [_]u8{\n        @min(r_a + r_b, 255),\n        @min(g_a + g_b, 255),\n        @min(b_a + b_b, 255),\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/vaxis.zig",
+      "type": "function",
+      "name": "blendColors",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to style from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/vaxis.zig",
+    "response": "const style: vaxis.Style = .{ .fg = color };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/vaxis.zig",
+      "type": "const",
+      "name": "style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to segment from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/vaxis.zig",
+    "response": "const segment: vaxis.Segment = .{\n            .text = vaxis.logo,\n            .style = style,\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/vaxis.zig",
+      "type": "const",
+      "name": "segment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/view.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/view.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lg_map_width from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/view.zig",
+    "response": "const lg_map_width: u16 = mapWidth: {\n    @setEvalBranchQuota(100_000);",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/view.zig",
+      "type": "const",
+      "name": "lg_map_width",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lg_map_height from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/view.zig",
+    "response": "const lg_map_height: u16 = mapHeight: {\n    @setEvalBranchQuota(100_000);",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/view.zig",
+      "type": "const",
+      "name": "lg_map_height",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/vt.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/vt.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to vt_opts from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: examples/vt.zig",
+    "response": "const vt_opts: vaxis.widgets.Terminal.Options = .{\n        .winsize = .{\n            .rows = 24,\n            .cols = 100,\n            .x_pixel = 0,\n            .y_pixel = 0,\n        },\n        .scrollback_size = 0,\n        .initial_working_directory = env.get(\"HOME\") orelse @panic(\"no $HOME\"),\n    };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "examples/vt.zig",
+      "type": "const",
+      "name": "vt_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub fn eql(self: Scale, other: Scale) bool {\n        const a_scale: u13 = @bitCast(self);\n        const b_scale: u13 = @bitCast(other);\n        return a_scale == b_scale;\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub fn eql(a: Style, b: Style) bool {\n        const SGRBits = packed struct {\n            bold: bool,\n            dim: bool,\n            italic: bool,\n            blink: bool,\n            reverse: bool,\n            invisible: bool,\n            strikethrough: bool,\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub fn eql(a: Color, b: Color) bool {\n        switch (a) {\n            .default => return b == .default,\n            .index => |a_idx| {\n                switch (b) {\n                    .index => |b_idx| return a_idx == b_idx,\n                    else => return false,\n                }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgbFromUint from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub fn rgbFromUint(val: u24) Color {\n        const r_bits = val & 0b11111111_00000000_00000000;\n        const g_bits = val & 0b00000000_11111111_00000000;\n        const b_bits = val & 0b00000000_00000000_11111111;\n        const rgb = [_]u8{\n            @truncate(r_bits >> 16),\n            @truncate(g_bits >> 8),\n            @truncate(b_bits),\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "function",
+      "name": "rgbFromUint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgbFromSpec from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub fn rgbFromSpec(spec: []const u8) !Color {\n        var iter = std.mem.splitScalar(u8, spec, ':');\n        const prefix = iter.next() orelse return error.InvalidColorSpec;\n        if (!std.mem.eql(u8, \"rgb\", prefix)) return error.InvalidColorSpec;\n\n        const spec_str = iter.next() orelse return error.InvalidColorSpec;\n\n        var spec_iter = std.mem.splitScalar(u8, spec_str, '/');\n\n        const r_raw = spec_iter.next() orelse return error.InvalidColorSpec;\n        if (r_raw.len != 4) return error.InvalidColorSpec;\n\n        const g_raw = spec_iter.next() orelse return error.InvalidColorSpec;\n        if (g_raw.len != 4) return error.InvalidColorSpec;\n\n        const b_raw = spec_iter.next() orelse return error.InvalidColorSpec;\n        if (b_raw.len != 4) return error.InvalidColorSpec;\n\n        const r = try std.fmt.parseUnsigned(u8, r_raw[2..], 16);\n        const g = try std.fmt.parseUnsigned(u8, g_raw[2..], 16);\n        const b = try std.fmt.parseUnsigned(u8, b_raw[2..], 16);\n\n        return .{\n            .rgb = [_]u8{ r, g, b }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "function",
+      "name": "rgbFromSpec",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Segment from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub const Segment = struct {\n    text: []const u8,\n    style: Style = .{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "struct",
+      "name": "Segment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Character from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub const Character = struct {\n    grapheme: []const u8 = \" \",\n    /// width should only be provided when the application is sure the terminal\n    /// will measure the same width. This can be ensure by using the gwidth method\n    /// included in libvaxis. If width is 0, libvaxis will measure the glyph at\n    /// render time\n    width: u8 = 1,\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "struct",
+      "name": "Character",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Hyperlink from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub const Hyperlink = struct {\n    uri: []const u8 = \"\",\n    /// ie \"id=app-1234\"\n    params: []const u8 = \"\",\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "struct",
+      "name": "Hyperlink",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Style from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub const Style = struct {\n    pub const Underline = enum {\n        off,\n        single,\n        double,\n        curly,\n        dotted,\n        dashed,\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "struct",
+      "name": "Style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Report from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "pub const Report = struct {\n        kind: Kind,\n        value: [3]u8,\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "struct",
+      "name": "Report",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to a_scale from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "const a_scale: u13 = @bitCast(self);",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "const",
+      "name": "a_scale",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to b_scale from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "const b_scale: u13 = @bitCast(other);",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "const",
+      "name": "b_scale",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to a_sgr from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "const a_sgr: SGRBits = .{\n            .bold = a.bold,\n            .dim = a.dim,\n            .italic = a.italic,\n            .blink = a.blink,\n            .reverse = a.reverse,\n            .invisible = a.invisible,\n            .strikethrough = a.strikethrough,\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "const",
+      "name": "a_sgr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to b_sgr from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Cell.zig",
+    "response": "const b_sgr: SGRBits = .{\n            .bold = b.bold,\n            .dim = b.dim,\n            .italic = b.italic,\n            .blink = b.blink,\n            .reverse = b.reverse,\n            .invisible = b.invisible,\n            .strikethrough = b.strikethrough,\n        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Cell.zig",
+      "type": "const",
+      "name": "b_sgr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to put from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/GraphemeCache.zig",
+    "response": "pub fn put(self: *GraphemeCache, bytes: []const u8) []u8 {\n    // reset the idx to 0 if we would overflow\n    if (self.idx + bytes.len > self.buf.len) self.idx = 0;\n    defer self.idx += bytes.len;\n    // copy the grapheme to our storage\n    @memcpy(self.buf[self.idx .. self.idx + bytes.len], bytes);\n    // return the slice\n    return self.buf[self.idx .. self.idx + bytes.len];\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/GraphemeCache.zig",
+      "type": "function",
+      "name": "put",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Image.zig",
+    "response": "pub fn draw(self: Image, win: Window, opts: DrawOptions) !void {\n    var p_opts = opts;\n    switch (opts.scale) {\n        .none => {}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Image.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cellSize from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Image.zig",
+    "response": "pub fn cellSize(self: Image, win: Window) !CellSize {\n    // cell geometry\n    const x_pix = win.screen.width_pix;\n    const y_pix = win.screen.height_pix;\n    const w = win.screen.width;\n    const h = win.screen.height;\n\n    const pix_per_col = try std.math.divCeil(u16, x_pix, w);\n    const pix_per_row = try std.math.divCeil(u16, y_pix, h);\n\n    const cell_width = std.math.divCeil(u16, self.width, pix_per_col) catch 0;\n    const cell_height = std.math.divCeil(u16, self.height, pix_per_row) catch 0;\n    return .{\n        .rows = cell_height,\n        .cols = cell_width,\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Image.zig",
+      "type": "function",
+      "name": "cellSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Placement from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Image.zig",
+    "response": "pub const Placement = struct {\n    img_id: u32,\n    options: Image.DrawOptions,\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Image.zig",
+      "type": "struct",
+      "name": "Placement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CellSize from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Image.zig",
+    "response": "pub const CellSize = struct {\n    rows: u16,\n    cols: u16,\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Image.zig",
+      "type": "struct",
+      "name": "CellSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DrawOptions from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Image.zig",
+    "response": "pub const DrawOptions = struct {\n    /// an offset into the top left cell, in pixels, with where to place the\n    /// origin of the image. These must be less than the pixel size of a single\n    /// cell\n    pixel_offset: ?struct {\n        x: u16,\n        y: u16,\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Image.zig",
+      "type": "struct",
+      "name": "DrawOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fit_x from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Image.zig",
+    "response": "const fit_x: bool = if (win_width_pix >= self.width) true else false;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Image.zig",
+      "type": "const",
+      "name": "fit_x",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fit_y from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Image.zig",
+    "response": "const fit_y: bool = if (win_height_pix >= self.height) true else false;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Image.zig",
+      "type": "const",
+      "name": "fit_y",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/InternalScreen.zig",
+    "response": "pub fn eql(self: InternalCell, cell: Cell) bool {\n\n        // fastpath when both cells are default\n        if (self.default and cell.default) return true;\n\n        return std.mem.eql(u8, self.char.items, cell.char.grapheme) and\n            Style.eql(self.style, cell.style) and\n            std.mem.eql(u8, self.uri.items, cell.link.uri) and\n            std.mem.eql(u8, self.uri_id.items, cell.link.params);\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/InternalScreen.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/InternalScreen.zig",
+    "response": "pub fn init(alloc: std.mem.Allocator, w: u16, h: u16) !InternalScreen {\n    const arena = try alloc.create(std.heap.ArenaAllocator);\n    arena.* = .init(alloc);\n    var screen = InternalScreen{\n        .arena = arena,\n        .buf = try arena.allocator().alloc(InternalCell, @as(usize, @intCast(w)) * h),\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/InternalScreen.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/InternalScreen.zig",
+    "response": "pub fn deinit(self: *InternalScreen, alloc: std.mem.Allocator) void {\n    self.arena.deinit();\n    alloc.destroy(self.arena);\n    self.* = undefined;\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/InternalScreen.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeCell from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/InternalScreen.zig",
+    "response": "pub fn writeCell(\n    self: *InternalScreen,\n    col: u16,\n    row: u16,\n    cell: Cell,\n) void {\n    if (self.width < col) {\n        // column out of bounds\n        return;\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/InternalScreen.zig",
+      "type": "function",
+      "name": "writeCell",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readCell from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/InternalScreen.zig",
+    "response": "pub fn readCell(self: *InternalScreen, col: u16, row: u16) ?Cell {\n    if (self.width < col) {\n        // column out of bounds\n        return null;\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/InternalScreen.zig",
+      "type": "function",
+      "name": "readCell",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to InternalCell from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/InternalScreen.zig",
+    "response": "pub const InternalCell = struct {\n    char: std.ArrayListUnmanaged(u8) = .empty,\n    style: Style = .{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/InternalScreen.zig",
+      "type": "struct",
+      "name": "InternalCell",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn eql(self: Modifiers, other: Modifiers) bool {\n        const a: u8 = @bitCast(self);\n        const b: u8 = @bitCast(other);\n        return a == b;\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matches from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn matches(self: Key, cp: u21, mods: Modifiers) bool {\n    // rule 1\n    if (self.matchExact(cp, mods)) return true;\n\n    // rule 2\n    if (self.matchText(cp, mods)) return true;\n\n    // rule 3\n    if (self.matchShiftedCodepoint(cp, mods)) return true;\n\n    return false;\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "matches",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchesAny from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn matchesAny(self: Key, cps: []const u21, mods: Modifiers) bool {\n    for (cps) |cp| {\n        if (self.matches(cp, mods)) return true;\n    }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "matchesAny",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchShortcut from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn matchShortcut(self: Key, cp: u21, mods: Modifiers) bool {\n    if (self.base_layout_codepoint == null) return false;\n    return cp == self.base_layout_codepoint.? and std.meta.eql(self.mods, mods);\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "matchShortcut",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchShiftedCodepoint from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn matchShiftedCodepoint(self: Key, cp: u21, mods: Modifiers) bool {\n    if (self.shifted_codepoint == null) return false;\n    if (!self.mods.shift) return false;\n    var self_mods = self.mods;\n    self_mods.shift = false;\n    self_mods.caps_lock = false;\n    self_mods.num_lock = false;\n    var tgt_mods = mods;\n    tgt_mods.caps_lock = false;\n    tgt_mods.num_lock = false;\n    return cp == self.shifted_codepoint.? and std.meta.eql(self_mods, mods);\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "matchShiftedCodepoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchText from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn matchText(self: Key, cp: u21, mods: Modifiers) bool {\n    // return early if we have no text\n    if (self.text == null) return false;\n\n    var self_mods = self.mods;\n    self_mods.num_lock = false;\n    self_mods.shift = false;\n    self_mods.caps_lock = false;\n    var arg_mods = mods;\n\n    // TODO: Use zg case_data for full unicode support. We'll need to allocate the case data\n    // somewhere\n    const _cp: u21 = if (cp < 128 and (mods.shift or mods.caps_lock))\n        // Uppercase our codepoint\n        std.ascii.toUpper(@intCast(cp))\n    else\n        cp;\n\n    arg_mods.num_lock = false;\n    arg_mods.shift = false;\n    arg_mods.caps_lock = false;\n\n    var buf: [4]u8 = undefined;\n    const n = std.unicode.utf8Encode(_cp, &buf) catch return false;\n    return std.mem.eql(u8, self.text.?, buf[0..n]) and std.meta.eql(self_mods, arg_mods);\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "matchText",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchExact from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn matchExact(self: Key, cp: u21, mods: Modifiers) bool {\n    var self_mods = self.mods;\n    self_mods.caps_lock = false;\n    self_mods.num_lock = false;\n    var tgt_mods = mods;\n    tgt_mods.caps_lock = false;\n    tgt_mods.num_lock = false;\n    return self.codepoint == cp and std.meta.eql(self_mods, tgt_mods);\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "matchExact",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isModifier from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub fn isModifier(self: Key) bool {\n    return self.codepoint == left_shift or\n        self.codepoint == left_alt or\n        self.codepoint == left_super or\n        self.codepoint == left_hyper or\n        self.codepoint == left_control or\n        self.codepoint == left_meta or\n        self.codepoint == right_shift or\n        self.codepoint == right_alt or\n        self.codepoint == right_super or\n        self.codepoint == right_hyper or\n        self.codepoint == right_control or\n        self.codepoint == right_meta;\n}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "function",
+      "name": "isModifier",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to a from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const a: u8 = @bitCast(self);",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "a",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to b from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const b: u8 = @bitCast(other);",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "b",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to _cp from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const _cp: u21 = if (cp < 128 and (mods.shift or mods.caps_lock))\n        // Uppercase our codepoint\n        std.ascii.toUpper(@intCast(cp))\n    else\n        cp;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "_cp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tab from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const tab: u21 = 0x09;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "tab",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to enter from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const enter: u21 = 0x0D;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "enter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to escape from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const escape: u21 = 0x1B;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "escape",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to space from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const space: u21 = 0x20;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "space",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to backspace from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const backspace: u21 = 0x7F;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "backspace",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to multicodepoint from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const multicodepoint: u21 = 1_114_112 + 1;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "multicodepoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to insert from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const insert: u21 = 57348;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "insert",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to delete from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const delete: u21 = 57349;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "delete",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to left from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const left: u21 = 57350;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "left",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to right from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const right: u21 = 57351;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "right",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to up from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const up: u21 = 57352;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "up",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to down from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const down: u21 = 57353;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "down",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to page_up from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const page_up: u21 = 57354;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "page_up",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to page_down from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const page_down: u21 = 57355;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "page_down",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to home from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const home: u21 = 57356;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "home",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to end from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const end: u21 = 57357;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "end",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to caps_lock from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const caps_lock: u21 = 57358;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "caps_lock",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to scroll_lock from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const scroll_lock: u21 = 57359;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "scroll_lock",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to num_lock from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const num_lock: u21 = 57360;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "num_lock",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to print_screen from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const print_screen: u21 = 57361;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "print_screen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pause from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const pause: u21 = 57362;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "pause",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to menu from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const menu: u21 = 57363;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "menu",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f1 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f1: u21 = 57364;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f2 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f2: u21 = 57365;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f3 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f3: u21 = 57366;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f3",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f4 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f4: u21 = 57367;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f4",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f5 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f5: u21 = 57368;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f5",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f6 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f6: u21 = 57369;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f6",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f7 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f7: u21 = 57370;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f7",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f8 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f8: u21 = 57371;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f8",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f9 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f9: u21 = 57372;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f9",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f10 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f10: u21 = 57373;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f10",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f11 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f11: u21 = 57374;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f11",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f12 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f12: u21 = 57375;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f12",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f13 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f13: u21 = 57376;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f13",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f14 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f14: u21 = 57377;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f14",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f15 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f15: u21 = 57378;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f15",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f17 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f17: u21 = 57380;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f17",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f18 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f18: u21 = 57381;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f18",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f19 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f19: u21 = 57382;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f19",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f20 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f20: u21 = 57383;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f20",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f21 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f21: u21 = 57384;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f21",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f22 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f22: u21 = 57385;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f22",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f23 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f23: u21 = 57386;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f23",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f24 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f24: u21 = 57387;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f24",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f25 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f25: u21 = 57388;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f25",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f26 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f26: u21 = 57389;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f26",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f27 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f27: u21 = 57390;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f27",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f28 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f28: u21 = 57391;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f28",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f29 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f29: u21 = 57392;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f29",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f30 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f30: u21 = 57393;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f30",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f31 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f31: u21 = 57394;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f31",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f33 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f33: u21 = 57396;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f33",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f34 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f34: u21 = 57397;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f34",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to f35 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const f35: u21 = 57398;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "f35",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_0 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_0: u21 = 57399;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_0",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_1 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_1: u21 = 57400;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_2 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_2: u21 = 57401;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_3 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_3: u21 = 57402;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_3",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_4 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_4: u21 = 57403;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_4",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_5 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_5: u21 = 57404;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_5",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_6 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_6: u21 = 57405;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_6",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_7 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_7: u21 = 57406;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_7",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_8 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_8: u21 = 57407;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_8",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_9 from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_9: u21 = 57408;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_9",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_decimal from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_decimal: u21 = 57409;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_decimal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_divide from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_divide: u21 = 57410;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_divide",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_multiply from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_multiply: u21 = 57411;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_multiply",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_subtract from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_subtract: u21 = 57412;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_subtract",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_add from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_add: u21 = 57413;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_enter from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_enter: u21 = 57414;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_enter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_equal from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_equal: u21 = 57415;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_equal",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_separator from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_separator: u21 = 57416;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_separator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_left from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_left: u21 = 57417;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_left",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_right from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_right: u21 = 57418;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_right",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_up from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_up: u21 = 57419;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_up",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_down from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_down: u21 = 57420;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_down",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_page_up from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_page_up: u21 = 57421;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_page_up",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_page_down from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_page_down: u21 = 57422;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_page_down",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_home from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_home: u21 = 57423;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_home",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_end from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_end: u21 = 57424;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_end",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_insert from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_insert: u21 = 57425;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_insert",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_delete from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_delete: u21 = 57426;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_delete",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kp_begin from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const kp_begin: u21 = 57427;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "kp_begin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_play from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_play: u21 = 57428;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_play",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_pause from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_pause: u21 = 57429;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_pause",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_play_pause from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_play_pause: u21 = 57430;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_play_pause",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_reverse from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_reverse: u21 = 57431;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_reverse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_stop from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_stop: u21 = 57432;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_stop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_fast_forward from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_fast_forward: u21 = 57433;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_fast_forward",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_rewind from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_rewind: u21 = 57434;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_rewind",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_track_next from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_track_next: u21 = 57435;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_track_next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_track_previous from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_track_previous: u21 = 57436;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_track_previous",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to media_record from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const media_record: u21 = 57437;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "media_record",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to lower_volume from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const lower_volume: u21 = 57438;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "lower_volume",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to raise_volume from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const raise_volume: u21 = 57439;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "raise_volume",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mute_volume from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const mute_volume: u21 = 57440;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "mute_volume",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to left_shift from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const left_shift: u21 = 57441;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "left_shift",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to left_control from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const left_control: u21 = 57442;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "left_control",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to left_alt from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const left_alt: u21 = 57443;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "left_alt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to left_super from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const left_super: u21 = 57444;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "left_super",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to left_hyper from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const left_hyper: u21 = 57445;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "left_hyper",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to left_meta from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const left_meta: u21 = 57446;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "left_meta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to right_shift from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const right_shift: u21 = 57447;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "right_shift",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to right_control from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const right_control: u21 = 57448;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "right_control",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to right_alt from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const right_alt: u21 = 57449;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "right_alt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to right_super from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const right_super: u21 = 57450;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "right_super",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to right_hyper from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const right_hyper: u21 = 57451;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "right_hyper",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to right_meta from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const right_meta: u21 = 57452;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "right_meta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to iso_level_3_shift from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const iso_level_3_shift: u21 = 57453;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "iso_level_3_shift",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to iso_level_5_shift from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "pub const iso_level_5_shift: u21 = 57454;",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "iso_level_5_shift",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to key from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const key: Key = .{\n        .codepoint = 'a',\n        .mods = .{ .num_lock = true },\n        .text = \"a\",\n    };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to key from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const key: Key = .{\n        .codepoint = 'a',\n        .shifted_codepoint = 'A',\n        .mods = .{ .shift = true },\n        .text = \"A\",\n    };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to key from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const key: Key = .{\n        .codepoint = Key.tab,\n        .mods = .{ .shift = true, .num_lock = true },\n    };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to key from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const key: Key = .{\n        .codepoint = ';",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to colon from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Key.zig",
+    "response": "const colon: Key = .{\n        .codepoint = ':',\n        .mods = .{},\n    };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Key.zig",
+      "type": "const",
+      "name": "colon",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Loop from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn Loop(comptime T: type) type {\n    return struct {\n        const Self = @This();\n\n        const Event = T;\n\n        tty: *Tty,\n        vaxis: *Vaxis,\n\n        queue: Queue(T, 512) = .{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "Loop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn init(self: *Self) !void {\n            switch (builtin.os.tag) {\n                .windows => {}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn start(self: *Self) !void {\n            if (self.thread) |_| return;\n            self.thread = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stop from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn stop(self: *Self) void {\n            // If we don't have a thread, we have nothing to stop\n            if (self.thread == null) return;\n            self.should_quit = true;\n            // trigger a read\n            self.vaxis.deviceStatusReport(self.tty.writer()) catch {}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "stop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextEvent from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn nextEvent(self: *Self) T {\n            return self.queue.pop();\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "nextEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pollEvent from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn pollEvent(self: *Self) void {\n            self.queue.poll();\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "pollEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tryEvent from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn tryEvent(self: *Self) ?T {\n            return self.queue.tryPop();\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "tryEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to postEvent from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn postEvent(self: *Self, event: T) void {\n            self.queue.push(event);\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "postEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tryPostEvent from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn tryPostEvent(self: *Self, event: T) bool {\n            return self.queue.tryPush(event);\n        }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "tryPostEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to winsizeCallback from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn winsizeCallback(ptr: *anyopaque) void {\n            const self: *Self = @ptrCast(@alignCast(ptr));\n            // We will be receiving winsize updates in-band\n            if (self.vaxis.state.in_band_resize) return;\n\n            const winsize = Tty.getWinsize(self.tty.fd) catch return;\n            if (@hasField(Event, \"winsize\")) {\n                self.postEvent(.{ .winsize = winsize }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "winsizeCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ttyRun from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "fn ttyRun(\n            self: *Self,\n            paste_allocator: ?std.mem.Allocator,\n        ) !void {\n            // Return early if we're in test mode to avoid infinite loops\n            if (builtin.is_test) return;\n\n            // initialize a grapheme cache\n            var cache: GraphemeCache = .{}",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "ttyRun",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleEventGeneric from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "pub fn handleEventGeneric(self: anytype, vx: *Vaxis, cache: *GraphemeCache, Event: type, event: anytype, paste_allocator: ?std.mem.Allocator) !void {\n    switch (builtin.os.tag) {\n        .windows => {\n            switch (event) {\n                .winsize => |ws| {\n                    if (@hasField(Event, \"winsize\")) {\n                        return self.postEvent(.{ .winsize = ws }",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "function",
+      "name": "handleEventGeneric",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to handler from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "const handler: Tty.SignalHandler = .{\n                            .context = self,\n                            .callback = Self.winsizeCallback,\n                        };",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "const",
+      "name": "handler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from rockorager/libvaxis",
+    "context": "Repository: rockorager/libvaxis (1301 ⭐)\nFile: src/Loop.zig",
+    "response": "const self: *Self = @ptrCast(@alignCast(ptr));",
+    "metadata": {
+      "repo": "rockorager/libvaxis",
+      "stars": 1301,
+      "file": "src/Loop.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  }
+]

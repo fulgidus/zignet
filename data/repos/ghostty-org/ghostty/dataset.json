@@ -1,0 +1,535 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    // This defines all the available build options (e.g. `-D`). If you\n    // want to know what options are available, you can run `--help` or\n    // you can read `src/build/Config.zig`.\n\n    const config = try buildpkg.Config.init(b, appVersion);\n    const test_filters = b.option(\n        [][]const u8,\n        \"test-filter\",\n        \"Filter for test. Only applies to Zig tests.\",\n    ) orelse &[0][]const u8{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/c-vt-key-encode/build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/c-vt-key-encode/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/c-vt-paste/build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/c-vt-paste/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/c-vt-sgr/build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/c-vt-sgr/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/c-vt/build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/c-vt/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/zig-vt-stream/build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/zig-vt-stream/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/zig-vt-stream/src/main.zig",
+    "response": "pub fn main() !void {\n    var gpa: std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/zig-vt-stream/src/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/zig-vt/build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/zig-vt/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: example/zig-vt/src/main.zig",
+    "response": "pub fn main() !void {\n    // Use a debug allocator so we get leak checking. You probably want\n    // to replace this for release builds.\n    var gpa: std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "example/zig-vt/src/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/apple-sdk/build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/apple-sdk/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addPaths from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/apple-sdk/build.zig",
+    "response": "pub fn addPaths(\n    b: *std.Build,\n    step: *std.Build.Step.Compile,\n) !void {\n    // The cache. This always uses b.allocator and never frees memory\n    // (which is idiomatic for a Zig build exe). We cache the libc txt\n    // file we create because it is expensive to generate (subprocesses).\n    const Cache = struct {\n        const Key = struct {\n            arch: std.Target.Cpu.Arch,\n            os: std.Target.Os.Tag,\n            abi: std.Target.Abi,\n        }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/apple-sdk/build.zig",
+      "type": "function",
+      "name": "addPaths",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Cache from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/apple-sdk/build.zig",
+    "response": "const Cache = struct {\n        const Key = struct {\n            arch: std.Target.Cpu.Arch,\n            os: std.Target.Os.Tag,\n            abi: std.Target.Abi,\n        }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/apple-sdk/build.zig",
+      "type": "struct",
+      "name": "Cache",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to common from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "const common: []const []const u8 = &.{\n    \"src/common/convert_UTF.cc\",\n    \"src/common/md5.cc\",\n    \"src/common/string_conversion.cc\",\n};",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "const",
+      "name": "common",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to common_linux from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "const common_linux: []const []const u8 = &.{\n    \"src/common/linux/elf_core_dump.cc\",\n    \"src/common/linux/elfutils.cc\",\n    \"src/common/linux/file_id.cc\",\n    \"src/common/linux/guid_creator.cc\",\n    \"src/common/linux/linux_libc_support.cc\",\n    \"src/common/linux/memory_mapped_file.cc\",\n    \"src/common/linux/safe_readlink.cc\",\n    \"src/common/linux/scoped_pipe.cc\",\n    \"src/common/linux/scoped_tmpfile.cc\",\n    \"src/common/linux/breakpad_getcontext.S\",\n};",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "const",
+      "name": "common_linux",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to common_apple from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "const common_apple: []const []const u8 = &.{\n    \"src/common/mac/arch_utilities.cc\",\n    \"src/common/mac/file_id.cc\",\n    \"src/common/mac/macho_id.cc\",\n    \"src/common/mac/macho_utilities.cc\",\n    \"src/common/mac/macho_walker.cc\",\n    \"src/common/mac/string_utilities.cc\",\n};",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "const",
+      "name": "common_apple",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to common_mac from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "const common_mac: []const []const u8 = &.{\n    \"src/common/mac/MachIPC.mm\",\n    \"src/common/mac/bootstrap_compat.cc\",\n};",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "const",
+      "name": "common_mac",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to client_apple from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "const client_apple: []const []const u8 = &.{\n    \"src/client/minidump_file_writer.cc\",\n    \"src/client/mac/handler/breakpad_nlist_64.cc\",\n    \"src/client/mac/handler/dynamic_images.cc\",\n    \"src/client/mac/handler/minidump_generator.cc\",\n};",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "const",
+      "name": "client_apple",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to client_mac from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "const client_mac: []const []const u8 = &.{\n    \"src/client/mac/handler/exception_handler.cc\",\n    \"src/client/mac/crash_generation/crash_generation_client.cc\",\n};",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "const",
+      "name": "client_mac",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to client_ios from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/breakpad/build.zig",
+    "response": "const client_ios: []const []const u8 = &.{\n    \"src/client/ios/exception_handler_no_mach.cc\",\n    \"src/client/ios/handler/ios_exception_minidump_generator.mm\",\n    \"src/client/mac/crash_generation/ConfigFile.mm\",\n    \"src/client/mac/handler/protected_memory_allocator.cc\",\n};",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/breakpad/build.zig",
+      "type": "const",
+      "name": "client_ios",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/cimgui/build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/cimgui/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dynamic_link_opts from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/cimgui/build.zig",
+    "response": "const dynamic_link_opts: std.Build.Module.LinkSystemLibraryOptions = .{\n        .preferred_link_mode = .dynamic,\n        .search_strategy = .mode_first,\n    };",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/cimgui/build.zig",
+      "type": "const",
+      "name": "dynamic_link_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ImGui_ImplOpenGL3_Init from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/cimgui/main.zig",
+    "response": "fn ImGui_ImplOpenGL3_Init(?[*:0]const u8) callconv(.c) bool;\npub extern fn ImGui_ImplOpenGL3_Shutdown() callconv(.c) void;\npub extern fn ImGui_ImplOpenGL3_NewFrame() callconv(.c) void;\npub extern fn ImGui_ImplOpenGL3_RenderDrawData(*c.ImDrawData) callconv(.c) void;\n\n// Metal\npub extern fn ImGui_ImplMetal_Init(*anyopaque) callconv(.c) bool;\npub extern fn ImGui_ImplMetal_Shutdown() callconv(.c) void;\npub extern fn ImGui_ImplMetal_NewFrame(*anyopaque) callconv(.c) void;\npub extern fn ImGui_ImplMetal_RenderDrawData(*c.ImDrawData, *anyopaque, *anyopaque) callconv(.c) void;\n\n// OSX\npub extern fn ImGui_ImplOSX_Init(*anyopaque) callconv(.c) bool;\npub extern fn ImGui_ImplOSX_Shutdown() callconv(.c) void;\npub extern fn ImGui_ImplOSX_NewFrame(*anyopaque) callconv(.c) void;\n\ntest {}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/cimgui/main.zig",
+      "type": "function",
+      "name": "ImGui_ImplOpenGL3_Init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildLib from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/build.zig",
+    "response": "fn buildLib(b: *std.Build, module: *std.Build.Module, options: anytype) !*std.Build.Step.Compile {\n    const target = options.target;\n    const optimize = options.optimize;\n\n    const libxml2_enabled = options.libxml2_enabled;\n    const libxml2_iconv_enabled = options.libxml2_iconv_enabled;\n    const freetype_enabled = options.freetype_enabled;\n\n    const lib = b.addLibrary(.{\n        .name = \"fontconfig\",\n        .root_module = b.createModule(.{\n            .target = target,\n            .optimize = optimize,\n        }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/build.zig",
+      "type": "function",
+      "name": "buildLib",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dynamic_link_opts from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/build.zig",
+    "response": "const dynamic_link_opts: std.Build.Module.LinkSystemLibraryOptions = .{\n        .preferred_link_mode = .dynamic,\n        .search_strategy = .mode_first,\n    };",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/build.zig",
+      "type": "const",
+      "name": "dynamic_link_opts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/char_set.zig",
+    "response": "pub fn create() *CharSet {\n        return @ptrCast(c.FcCharSetCreate());\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/char_set.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroy from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/char_set.zig",
+    "response": "pub fn destroy(self: *CharSet) void {\n        c.FcCharSetDestroy(self.cval());\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/char_set.zig",
+      "type": "function",
+      "name": "destroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addChar from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/char_set.zig",
+    "response": "pub fn addChar(self: *CharSet, cp: u32) bool {\n        return c.FcCharSetAddChar(self.cval(), cp) == c.FcTrue;\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/char_set.zig",
+      "type": "function",
+      "name": "addChar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasChar from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/char_set.zig",
+    "response": "pub fn hasChar(self: *const CharSet, cp: u32) bool {\n        return c.FcCharSetHasChar(self.cvalConst(), cp) == c.FcTrue;\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/char_set.zig",
+      "type": "function",
+      "name": "hasChar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cval from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/char_set.zig",
+    "response": "fn cval(self: *CharSet) *c.struct__FcCharSet {\n        return @ptrCast(self);\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/char_set.zig",
+      "type": "function",
+      "name": "cval",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cvalConst from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/char_set.zig",
+    "response": "fn cvalConst(self: *const CharSet) *const c.struct__FcCharSet {\n        return @ptrCast(self);\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/char_set.zig",
+      "type": "function",
+      "name": "cvalConst",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cval from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/common.zig",
+    "response": "pub fn cval(self: Property) [:0]const u8 {\n        @setEvalBranchQuota(10_000);\n        inline for (@typeInfo(Property).@\"enum\".fields) |field| {\n            if (self == @field(Property, field.name)) {\n                // Build our string in a comptime context so it is a binary\n                // constant and not stack allocated.\n                return comptime name: {\n                    // Replace _ with \"\"\n                    var buf: [field.name.len]u8 = undefined;\n                    const count = std.mem.replace(u8, field.name, \"_\", \"\", &buf);\n                    const replaced = buf[0 .. field.name.len - count];\n\n                    // Build our string\n                    var name: [replaced.len:0]u8 = undefined;\n                    @memcpy(&name, replaced);\n                    name[replaced.len] = 0;\n                    const final = name;\n                    break :name &final;\n                }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/common.zig",
+      "type": "function",
+      "name": "cval",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toError from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/common.zig",
+    "response": "pub fn toError(self: Result) Error!void {\n        return switch (self) {\n            .match => {}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/common.zig",
+      "type": "function",
+      "name": "toError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroy from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/config.zig",
+    "response": "pub fn destroy(self: *Config) void {\n        c.FcConfigDestroy(@ptrCast(self));\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/config.zig",
+      "type": "function",
+      "name": "destroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fontList from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/config.zig",
+    "response": "pub fn fontList(self: *Config, pat: *Pattern, os: *ObjectSet) *FontSet {\n        return @ptrCast(c.FcFontList(self.cval(), pat.cval(), os.cval()));\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/config.zig",
+      "type": "function",
+      "name": "fontList",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fontSort from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/config.zig",
+    "response": "pub fn fontSort(\n        self: *Config,\n        pat: *Pattern,\n        trim: bool,\n        charset: ?[*]*CharSet,\n    ) FontSortResult {\n        var result: FontSortResult = undefined;\n        result.fs = @ptrCast(c.FcFontSort(\n            self.cval(),\n            pat.cval(),\n            if (trim) c.FcTrue else c.FcFalse,\n            @ptrCast(charset),\n            @ptrCast(&result.result),\n        ));\n\n        return result;\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/config.zig",
+      "type": "function",
+      "name": "fontSort",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fontRenderPrepare from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/config.zig",
+    "response": "pub fn fontRenderPrepare(self: *Config, pat: *Pattern, font: *Pattern) Error!*Pattern {\n        return @as(\n            ?*Pattern,\n            @ptrCast(c.FcFontRenderPrepare(self.cval(), pat.cval(), font.cval())),\n        ) orelse Error.FontconfigFailed;\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/config.zig",
+      "type": "function",
+      "name": "fontRenderPrepare",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to substituteWithPat from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/config.zig",
+    "response": "pub fn substituteWithPat(self: *Config, pat: *Pattern, kind: MatchKind) bool {\n        return c.FcConfigSubstitute(\n            self.cval(),\n            pat.cval(),\n            @intFromEnum(kind),\n        ) == c.FcTrue;\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/config.zig",
+      "type": "function",
+      "name": "substituteWithPat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cval from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/config.zig",
+    "response": "fn cval(self: *Config) *c.struct__FcConfig {\n        return @ptrCast(self);\n    }",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/config.zig",
+      "type": "function",
+      "name": "cval",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FontSortResult from ghostty-org/ghostty",
+    "context": "Repository: ghostty-org/ghostty (37413 ⭐)\nFile: pkg/fontconfig/config.zig",
+    "response": "pub const FontSortResult = struct {\n    result: Result,\n    fs: *FontSet,\n}",
+    "metadata": {
+      "repo": "ghostty-org/ghostty",
+      "stars": 37413,
+      "file": "pkg/fontconfig/config.zig",
+      "type": "struct",
+      "name": "FontSortResult",
+      "difficulty": "easy"
+    }
+  }
+]

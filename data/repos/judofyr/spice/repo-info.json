@@ -1,0 +1,9 @@
+{
+  "name": "spice",
+  "fullName": "judofyr/spice",
+  "owner": "judofyr",
+  "stars": 895,
+  "description": "Fine-grained parallelism with sub-nanosecond overhead in Zig",
+  "url": "https://github.com/judofyr/spice",
+  "defaultBranch": "main"
+}

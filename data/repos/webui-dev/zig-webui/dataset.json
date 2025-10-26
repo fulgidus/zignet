@@ -1,0 +1,3941 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *Build) !void {\n    // Parse command-line options or use defaults\n    const isStatic = b.option(bool, \"is_static\", \"whether lib is static\") orelse default_isStatic;\n    const enableTLS = b.option(bool, \"enable_tls\", \"whether lib enable tls\") orelse default_enableTLS;\n    const enableWebUILog = b.option(bool, \"enable_webui_log\", \"whether lib enable tls\") orelse default_enableTLS;\n\n    // Standard build options for target and optimization\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to generate_docs from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: build.zig",
+    "response": "fn generate_docs(b: *Build, optimize: OptimizeMode, target: Build.ResolvedTarget, flags_module: *Module) void {\n    // Create a temporary object for documentation generation\n    const webui_lib = b.addObject(if (builtin.zig_version.minor == 14) .{\n        .name = \"webui_lib\",\n        .root_source_file = b.path(b.pathJoin(&.{ \"src\", \"webui.zig\" }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "build.zig",
+      "type": "function",
+      "name": "generate_docs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build_examples from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: build.zig",
+    "response": "fn build_examples(b: *Build, optimize: OptimizeMode, target: Build.ResolvedTarget, webui_module: *Module, webui_lib: *Compile) !void {\n\n    // Get the absolute path to the examples directory\n    var lazy_path = b.path(\"examples\");\n\n    // Create a step to build all examples\n    const build_all_step = b.step(\"examples\", \"build all examples\");\n\n    const examples_path = lazy_path.getPath(b);\n\n    // Open the examples directory for iteration\n    var iter_dir = std.fs.openDirAbsolute(\n        examples_path,\n        .{ .iterate = true }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build_examples",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "pub fn main() !void {\n    const window = webui.newWindow();\n\n    // Set window properties before showing\n    window.setSize(1024, 768);\n    window.setMinimumSize(640, 480);\n    window.setPosition(100, 100);\n\n    // Enable high contrast support\n    window.setHighContrast(true);\n\n    // Check if high contrast is enabled system-wide\n    const high_contrast = webui.isHighConstrast();\n    std.debug.print(\"System high contrast: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to centerWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn centerWindow(e: *webui.Event) void {\n    const window = e.getWindow();\n    window.setCenter();\n    e.returnString(\"Window centered\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "centerWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toggleHide from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn toggleHide(e: *webui.Event) void {\n    const window = e.getWindow();\n    const hide = e.getBool();\n    if (hide) {\n        // 使用 WebUI API 最小化窗口，避免触发 wait() 返回\n        window.minimize();\n        e.returnString(\"Window minimized\");\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "toggleHide",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to resizeWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn resizeWindow(e: *webui.Event) void {\n    const window = e.getWindow();\n    const width = e.getIntAt(0);\n    const height = e.getIntAt(1);\n\n    if (width > 0 and height > 0) {\n        window.setSize(@intCast(width), @intCast(height));\n        e.returnString(\"Window resized\");\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "resizeWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moveWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn moveWindow(e: *webui.Event) void {\n    const window = e.getWindow();\n    const x = e.getIntAt(0);\n    const y = e.getIntAt(1);\n\n    if (x >= 0 and y >= 0) {\n        window.setPosition(@intCast(x), @intCast(y));\n        e.returnString(\"Window moved\");\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "moveWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getMimeType from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn getMimeType(e: *webui.Event) void {\n    const filename = e.getString();\n    const mime = webui.getMimeType(filename);\n    e.returnString(mime);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "getMimeType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPortInfo from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn getPortInfo(e: *webui.Event) void {\n    const window = e.getWindow();\n\n    var buffer: [256]u8 = undefined;\n    var fbs = std.io.fixedBufferStream(&buffer);\n    const writer = fbs.writer();\n\n    const port = window.getPort() catch 0;\n    const free_port = webui.getFreePort();\n\n    writer.print(\"Current port: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "getPortInfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getProcessInfo from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn getProcessInfo(e: *webui.Event) void {\n    const window = e.getWindow();\n\n    var buffer: [512]u8 = undefined;\n    var fbs = std.io.fixedBufferStream(&buffer);\n    const writer = fbs.writer();\n\n    const parent_pid = window.getParentProcessId() catch 0;\n    const child_pid = window.getChildProcessId() catch 0;\n\n    writer.print(\"Parent PID: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "getProcessInfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroyWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/advanced_window/main.zig",
+    "response": "fn destroyWindow(e: *webui.Event) void {\n    const window = e.getWindow();\n    window.close();\n    e.returnString(\"Window closed\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/advanced_window/main.zig",
+      "type": "function",
+      "name": "destroyWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_js_from_zig/main.zig",
+    "response": "pub fn main() !void {\n    // Create a window\n    var nwin = webui.newWindow();\n\n    // Bind HTML elements with Zig functions\n    _ = try nwin.bind(\"my_function_count\", my_function_count);\n    _ = try nwin.bind(\"my_function_exit\", my_function_exit);\n\n    // Show the window\n    try nwin.show(html);\n    // _ = nwin.showBrowser(html, .Chrome);\n\n    // Wait until all windows get closed\n    webui.wait();\n\n    // Free all memory resources (Optional)\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_js_from_zig/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_function_count from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_js_from_zig/main.zig",
+    "response": "fn my_function_count(e: *webui.Event) void {\n    // This function gets called every time the user clicks on \"my_function_count\"\n\n    // Create a buffer to hold the response\n    var response = std.mem.zeroes([64]u8);\n\n    const win = e.getWindow();\n\n    // Run JavaScript\n    win.script(\"return GetCount();\", 0, &response) catch {\n        if (!win.isShown()) {\n            std.debug.print(\"window closed\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_js_from_zig/main.zig",
+      "type": "function",
+      "name": "my_function_count",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_function_exit from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_js_from_zig/main.zig",
+    "response": "fn my_function_exit(_: *webui.Event) void {\n\n    // Close all opened windows\n    webui.exit();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_js_from_zig/main.zig",
+      "type": "function",
+      "name": "my_function_exit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to content from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_js_from_zig/main.zig",
+    "response": "const content: [:0]const u8 = js[0..buf.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_js_from_zig/main.zig",
+      "type": "const",
+      "name": "content",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "pub fn main() !void {\n    // Create a new WebUI window object\n    var nwin = webui.newWindow();\n\n    // Use binding function instead of standard bind function\n    // binding is an advanced API that automatically handles parameter type conversion and function signature adaptation\n    // It allows using native Zig function signatures without needing to handle Event pointers directly\n    // Here we bind the HTML/JS \"my_function_string\" to Zig function getString\n    _ = try nwin.binding(\"my_function_string\", getString);\n    // Equivalent using traditional bind function which requires manual Event handling\n    // _ = try nwin.bind(\"my_function_string\", my_function_string);\n\n    // Bind integer handler function, binding automatically converts JS parameters to corresponding Zig types\n    _ = try nwin.binding(\"my_function_integer\", getInteger);\n    // _ = try nwin.bind(\"my_function_integer\", my_function_integer);\n\n    // Bind boolean handler function, also with automatic type conversion\n    _ = try nwin.binding(\"my_function_boolean\", getBool);\n    // _ = try nwin.bind(\"my_function_boolean\", my_function_boolean);\n\n    // Bind function with response, binding supports using event object directly for responses\n    _ = try nwin.binding(\"my_function_with_response\", getResponse);\n    // _ = try nwin.bind(\"my_function_with_response\", my_function_with_response);\n\n    // Bind function for handling binary data, binding supports raw binary data processing\n    _ = try nwin.binding(\"my_function_raw_binary\", raw_binary);\n    // _ = try nwin.bind(\"my_function_raw_binary\", my_function_raw_binary);\n\n    // Show the window with embedded HTML content\n    try nwin.show(html);\n\n    // Wait for all windows to close, this will block the current thread\n    webui.wait();\n\n    // Clean up all resources\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getString from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn getString(str1: [:0]const u8, str2: [:0]const u8) void {\n    // Hello\n    std.debug.print(\"my_function_string 1: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "getString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_function_string from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn my_function_string(e: *webui.Event) void {\n    // JavaScript:\n    // my_function_string('Hello', 'World`);\n\n    // or e.getStringAt(0);\n    const str_1 = e.getString();\n    const str_2 = e.getStringAt(1);\n\n    // Hello\n    std.debug.print(\"my_function_string 1: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "my_function_string",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getInteger from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn getInteger(n1: i64, n2: i64, n3: i64, f1: f64) void {\n    std.debug.print(\"number is {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "getInteger",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_function_integer from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn my_function_integer(e: *webui.Event) void {\n    // JavaScript:\n    // my_function_integer(123, 456, 789, 12345.6789);\n\n    const count = e.getCount();\n\n    std.debug.print(\"my_function_integer: There is {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "my_function_integer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getBool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn getBool(b1: bool, b2: bool) void {\n    std.debug.print(\"boolean is {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "getBool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_function_boolean from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn my_function_boolean(e: *webui.Event) void {\n    // JavaScript:\n    // my_function_boolean(true, false);\n\n    // Or e.getBoolAt(0);\n    const status_1 = e.getBool();\n    const status_2 = e.getBoolAt(1);\n\n    // Ture\n    std.debug.print(\"my_function_bool 1: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "my_function_boolean",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getResponse from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn getResponse(e: *webui.Event, n1: i64, n2: i64) void {\n    const res = n1 * n2;\n    std.debug.print(\"my_function_with_response: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "getResponse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_function_with_response from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn my_function_with_response(e: *webui.Event) void {\n    // JavaScript:\n    // my_function_with_response(number, 2).then(...)\n\n    // Or e.getIntAt(0);\n    const number = e.getInt();\n    const times = e.getIntAt(1);\n    const res = number * times;\n\n    std.debug.print(\"my_function_with_response: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "my_function_with_response",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to raw_binary from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn raw_binary(e: *webui.Event, raw_1: [:0]const u8, raw_2: [*]const u8) void {\n    // Or e.getSizeAt(0);\n    const len_1 = e.getSize() catch return;\n    const len_2 = e.getSizeAt(1) catch return;\n\n    // Print raw_1\n    std.debug.print(\"my_function_raw_binary 1 ({}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "raw_binary",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_function_raw_binary from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/call_zig_from_js/main.zig",
+    "response": "fn my_function_raw_binary(e: *webui.Event) void {\n    // JavaScript:\n    // my_function_raw_binary(new Uint8Array([0x41]), new Uint8Array([0x42, 0x43]));\n\n    // Or e.getStringAt(0);\n    const raw_1 = e.getString();\n    const raw_2 = e.getRawAt(1);\n\n    // Or e.getSizeAt(0);\n    const len_1 = e.getSize() catch return;\n    const len_2 = e.getSizeAt(1) catch return;\n\n    // Print raw_1\n    std.debug.print(\"my_function_raw_binary 1 ({}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/call_zig_from_js/main.zig",
+      "type": "function",
+      "name": "my_function_raw_binary",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "pub fn main() !void {\n    // Initialize settings storage\n    settings_map = std.HashMap([]const u8, []const u8, std.hash_map.StringContext, 80).init(allocator);\n    defer {\n        // Clean up all allocated setting keys and values\n        var iterator = settings_map.iterator();\n        while (iterator.next()) |entry| {\n            allocator.free(entry.key_ptr.*);\n            allocator.free(entry.value_ptr.*);\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to customFileHandler from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn customFileHandler(filename: []const u8) ?[]const u8 {\n    // Handle API endpoints\n    if (std.mem.startsWith(u8, filename, \"/api/\")) {\n        return handleApiRequest(filename);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "customFileHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleApiRequest from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn handleApiRequest(path: []const u8) ?[]const u8 {\n    if (std.mem.eql(u8, path, \"/api/stats\")) {\n        var buffer: [512]u8 = undefined;\n\n        const json = std.fmt.bufPrint(buffer[0..],\n            \\\\HTTP/1.1 200 OK\n            \\\\Content-Type: application/json\n            \\\\Access-Control-Allow-Origin: *\n            \\\\\n            \\\\{{\"users\":{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "handleApiRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAppStatus from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn getAppStatus(e: *webui.Event) void {\n    const win = e.getWindow();\n    const port = win.getPort() catch 0;\n    const url = win.getUrl() catch \"unknown\";\n\n    var buffer: [1024]u8 = undefined;\n    const json = std.fmt.bufPrintZ(buffer[0..],\n        \\\\{{\"status\":\"running\",\"users\":{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "getAppStatus",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to userAction from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn userAction(e: *webui.Event, action: [:0]const u8, data: [:0]const u8) void {\n    std.debug.print(\"User action: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "userAction",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendNotification from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn sendNotification(e: *webui.Event, message: [:0]const u8, level: [:0]const u8) void {\n    const win = e.getWindow();\n\n    // Send notification to all clients\n    var js_code: [512]u8 = undefined;\n    const script = std.fmt.bufPrintZ(js_code[0..], \"showNotification('{s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "sendNotification",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to processData from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn processData(e: *webui.Event, operation: [:0]const u8, input_data: [:0]const u8) void {\n    std.debug.print(\"Processing data: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "processData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to executeCommand from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn executeCommand(e: *webui.Event, command: [:0]const u8, args: [:0]const u8) void {\n    std.debug.print(\"Execute command: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "executeCommand",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSystemInfo from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn getSystemInfo(e: *webui.Event) void {\n    const builtin = @import(\"builtin\");\n\n    var buffer: [1024]u8 = undefined;\n    const info = std.fmt.bufPrintZ(buffer[0..],\n        \\\\{{\"os\":\"{s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "getSystemInfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testPerformance from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn testPerformance(e: *webui.Event, iterations: i64, operation: [:0]const u8) void {\n    const start_time = std.time.nanoTimestamp();\n\n    var i: i64 = 0;\n    var result: u64 = 0;\n\n    if (std.mem.eql(u8, operation, \"math\")) {\n        while (i < iterations) : (i += 1) {\n            result = result +% (@as(u64, @intCast(i)) * @as(u64, @intCast(i)));\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "testPerformance",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to manageSettings from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn manageSettings(e: *webui.Event, action: [:0]const u8, key: [:0]const u8, value: [:0]const u8) void {\n    std.debug.print(\"Settings: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "manageSettings",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to uploadFile from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "fn uploadFile(e: *webui.Event, filename: [:0]const u8, content: [:0]const u8) void {\n    std.debug.print(\"Upload file: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "function",
+      "name": "uploadFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AppState from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/comprehensive/main.zig",
+    "response": "const AppState = struct {\n    users_online: u32 = 0,\n    messages_sent: u32 = 0,\n    files_uploaded: u32 = 0,\n\n    fn init() AppState {\n        return AppState{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/comprehensive/main.zig",
+      "type": "struct",
+      "name": "AppState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "pub fn main() !void {\n    // Create new window\n    var nwin = webui.newWindow();\n\n    // Bind all events\n    _ = try nwin.bind(\"\", events);\n    // Bind a JS call to a Zig fn\n    _ = try nwin.bind(\"gotoPage\", goto_page);\n\n    // The `webui.js` script will be available at:\n    //\n    // http://localhost:[WEBUI_PORT]/webui.js\n    //\n    // (see [WEBUI_PORT] in: index.html, free_port_web_server.py)\n    //\n    // So, get and set a free port for WebUI to use:\n\n    const webui_port: u64 = webui.getFreePort();\n    std.debug.print(\"Free Port for webui.js: {d}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startPythonWebServer from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "fn startPythonWebServer() void {\n    if (python_running == false) { // a better check would be a test for the process itself\n        if (python_server_proc.spawn()) |_| {\n            python_running = true;\n            std.debug.print(\"Spawned python server process PID={}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "function",
+      "name": "startPythonWebServer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to killPythonWebServer from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "fn killPythonWebServer() void {\n    if (python_running == true) {\n        if (python_server_proc.kill()) |_| {\n            python_running = false;\n            std.debug.print(\"Killing python server\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "function",
+      "name": "killPythonWebServer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to goto_page from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "fn goto_page(e: *webui.Event) void {\n    // JavaScript that invoked this function: gotoPage('some-path');\n    const path = e.getString();\n    std.debug.print(\"JS invoked Zig: Navigating to page: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "function",
+      "name": "goto_page",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to events from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "fn events(e: *webui.Event) void {\n    // This function gets called every time\n    // there is an event\n    switch (e.event_type) {\n        .EVENT_CONNECTED => {\n            std.debug.print(\"Connected. \\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "function",
+      "name": "events",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to webui_port from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "const webui_port: u64 = webui.getFreePort();",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "const",
+      "name": "webui_port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port_argument1 from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "const port_argument1: []u8 = try std.fmt.bufPrintZ(&buf1, \"{d}\", .{backend_port});",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "const",
+      "name": "port_argument1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port_argument2 from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "const port_argument2: []u8 = try std.fmt.bufPrintZ(&buf2, \"{d}\", .{webui_port});",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "const",
+      "name": "port_argument2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to content from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_spa_server_on_free_port/main.zig",
+    "response": "const content: [:0]const u8 = js[0..buf.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_spa_server_on_free_port/main.zig",
+      "type": "const",
+      "name": "content",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_web_server/main.zig",
+    "response": "pub fn main() !void {\n    // Create new windows\n    var nwin = webui.newWindow();\n\n    // Bind all events\n    _ = try nwin.bind(\"\", events);\n\n    // Bind HTML elements with Zig functions\n    _ = try nwin.bind(\"my_backend_func\", my_backend_func);\n\n    // Set the web-server/WebSocket port that WebUI should\n    // use. This means `webui.js` will be available at:\n    // http://localhost:MY_PORT_NUMBER/webui.js\n    try nwin.setPort(8081);\n\n    // Show a new window and show our custom web server\n    // Assuming the custom web server is running on port\n    // 8080...\n    try nwin.show(\"http://localhost:8080/\");\n\n    // Wait until all windows get closed\n    webui.wait();\n\n    // Free all memory resources (Optional)\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_web_server/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to events from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_web_server/main.zig",
+    "response": "fn events(e: *webui.Event) void {\n    // This function gets called every time\n    // there is an event\n\n    switch (e.event_type) {\n        .EVENT_CONNECTED => {\n            std.debug.print(\"Connected. \\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_web_server/main.zig",
+      "type": "function",
+      "name": "events",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_backend_func from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/custom_web_server/main.zig",
+    "response": "fn my_backend_func(e: *webui.Event) void {\n    // JavaScript:\n    // my_backend_func(123, 456, 789);\n    // or webui.my_backend_func(...);\n\n    const number_1 = e.getInt();\n    const number_2 = e.getIntAt(1);\n    const number_3 = e.getIntAt(2);\n\n    std.debug.print(\"my_backend_func 1: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/custom_web_server/main.zig",
+      "type": "function",
+      "name": "my_backend_func",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ensureContextsInitialized from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn ensureContextsInitialized() void {\n    if (global_user_contexts == null) {\n        global_user_contexts = std.AutoHashMap(usize, *UserContext).init(allocator);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "ensureContextsInitialized",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getContextsMap from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn getContextsMap() *std.AutoHashMap(usize, *UserContext) {\n    ensureContextsInitialized();\n    return &global_user_contexts.?;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "getContextsMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn create(user_id: u32, username: []const u8) !*UserContext {\n        const context = try allocator.create(UserContext);\n        context.* = UserContext{\n            .user_id = user_id,\n            .username = try allocator.dupe(u8, username),\n            .session_start = std.time.timestamp(),\n            .click_count = 0,\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroy from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn destroy(self: *UserContext) void {\n        allocator.free(self.username);\n        allocator.destroy(self);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "destroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "pub fn main() !void {\n    // Configure for multi-client support\n    webui.setConfig(.multi_client, true);  // Enable multi-client mode\n    webui.setConfig(.use_cookies, true);   // Use cookies for client identification\n    \n    // Set public access to allow connections from other devices\n    // This allows other devices on the same network to connect\n    \n    // Create window\n    var nwin = webui.newWindow();\n    \n    // Allow public network access (other devices can connect)\n    nwin.setPublic(true);\n    \n    // Set event blocking mode\n    nwin.setEventBlocking(false); // Non-blocking events\n    \n    // Bind event handlers with context\n    _ = try nwin.bind(\"user_login\", userLogin);\n    _ = try nwin.bind(\"user_logout\", userLogout);\n    _ = try nwin.bind(\"track_click\", trackClick);\n    _ = try nwin.bind(\"get_user_info\", getUserInfo);\n    _ = try nwin.bind(\"get_online_users\", getOnlineUsers);\n    _ = try nwin.bind(\"send_message\", sendMessage);\n    _ = try nwin.bind(\"broadcast_message\", broadcastMessage);\n    _ = try nwin.bind(\"client_connect\", clientConnect);\n    _ = try nwin.bind(\"client_disconnect\", clientDisconnect);\n    \n    // Bind interface handlers for advanced event management\n    _ = try nwin.interfaceBind(\"interface_handler\", interfaceEventHandler);\n    \n    // Bind universal event handler (empty element name = all events)\n    _ = try nwin.bind(\"\", universalEventHandler);\n    \n    // Show window with multi-client support\n    // Try to show embedded HTML first\n    nwin.show(html) catch |err| {\n        // If that fails, try alternative approach\n        std.debug.print(\"Warning: Failed to show embedded HTML ({}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getLocalIPAddress from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn getLocalIPAddress() ![]const u8 {\n    // Placeholder function - user should check their actual IP address\n    // Use the commands shown in the console output to find your real IP\n    return \"192.168.x.x\";\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "getLocalIPAddress",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to userLogin from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn userLogin(e: *webui.Event) void {\n    const username = e.getString();\n    const user_id = @as(u32, @intCast(e.getIntAt(1)));\n    \n    std.debug.print(\"User login attempt: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "userLogin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to userLogout from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn userLogout(e: *webui.Event) void {\n    // Get user context from global storage\n    const context = getContextsMap().get(e.client_id) orelse {\n        e.returnString(\"No active session found\");\n        return;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "userLogout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to trackClick from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn trackClick(e: *webui.Event) void {\n    const button_name = e.getString();\n    \n    // Get user context from global storage\n    const context = getContextsMap().get(e.client_id) orelse {\n        e.returnString(\"No active session - please login first\");\n        return;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "trackClick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getUserInfo from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn getUserInfo(e: *webui.Event) void {\n    // Get user context from global storage\n    const context = getContextsMap().get(e.client_id) orelse {\n        e.returnString(\"{\\\"error\\\":\\\"No active session\\\"}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "getUserInfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendMessage from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn sendMessage(e: *webui.Event) void {\n    const message = e.getString();\n    const target_client = e.getIntAt(1);\n    \n    // Get sender context from global storage\n    const context = getContextsMap().get(e.client_id) orelse {\n        e.returnString(\"Authentication required\");\n        return;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "sendMessage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to broadcastUserListUpdate from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn broadcastUserListUpdate() void {\n    // Create JSON list of online users\n    var users_json: [1024]u8 = undefined;\n    var json_content: []const u8 = undefined;\n    \n    if (online_users) |users| {\n        var stream = std.io.fixedBufferStream(&users_json);\n        var writer = stream.writer();\n        \n        writer.writeAll(\"[\") catch return;\n        for (users.items, 0..) |user, i| {\n            if (i > 0) writer.writeAll(\",\") catch return;\n            writer.print(\"{{\\\"clientId\\\":{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "broadcastUserListUpdate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOnlineUsers from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn getOnlineUsers(e: *webui.Event) void {\n    // Return list of online users as JSON\n    var users_json: [1024]u8 = undefined;\n    var json_content: []const u8 = undefined;\n    \n    if (online_users) |users| {\n        var stream = std.io.fixedBufferStream(&users_json);\n        var writer = stream.writer();\n        \n        writer.writeAll(\"[\") catch {\n            e.returnString(\"[]\");\n            return;\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "getOnlineUsers",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to broadcastMessage from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn broadcastMessage(e: *webui.Event) void {\n    const message = e.getString();\n    \n    // Get sender context from global storage\n    const context = getContextsMap().get(e.client_id) orelse {\n        e.returnString(\"Authentication required\");\n        return;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "broadcastMessage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clientConnect from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn clientConnect(e: *webui.Event) void {\n    std.debug.print(\"Client connected: ID={}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "clientConnect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clientDisconnect from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn clientDisconnect(e: *webui.Event) void {\n    std.debug.print(\"Client disconnected: ID={}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "clientDisconnect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to universalEventHandler from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn universalEventHandler(e: *webui.Event) void {\n    // This handler catches all events\n    std.debug.print(\"Universal handler - Event: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "universalEventHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceEventHandler from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn interfaceEventHandler(\n    window_handle: usize,\n    event_type: webui.EventKind,\n    element: []u8,\n    event_number: usize,\n    bind_id: usize,\n) void {\n    std.debug.print(\"Interface handler - Window: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "interfaceEventHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cleanupAllContexts from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "fn cleanupAllContexts() void {\n    // In a real application, you would maintain a list of all contexts\n    // and clean them up here\n    // Clean up all remaining user contexts\n    if (global_user_contexts) |*contexts| {\n        var iterator = contexts.iterator();\n        while (iterator.next()) |entry| {\n            entry.value_ptr.*.destroy();\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "function",
+      "name": "cleanupAllContexts",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to OnlineUser from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const OnlineUser = struct {\n    client_id: usize,\n    username: []const u8,\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "struct",
+      "name": "OnlineUser",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to UserContext from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const UserContext = struct {\n    user_id: u32,\n    username: []const u8,\n    session_start: i64,\n    click_count: u32,\n    \n    fn create(user_id: u32, username: []const u8) !*UserContext {\n        const context = try allocator.create(UserContext);\n        context.* = UserContext{\n            .user_id = user_id,\n            .username = try allocator.dupe(u8, username),\n            .session_start = std.time.timestamp(),\n            .click_count = 0,\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "struct",
+      "name": "UserContext",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = response[0..msg.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = response[0..msg.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = response[0..msg.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = response[0..json.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = js_code[0..script.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = response[0..json_content.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = js_code[0..script.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to null_terminated from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/event_handling/main.zig",
+    "response": "const null_terminated: [:0]const u8 = response[0..msg.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/event_handling/main.zig",
+      "type": "const",
+      "name": "null_terminated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to minimize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/frameless/main.zig",
+    "response": "fn minimize(e: *webui.Event) void {\n    const win = e.getWindow();\n    win.minimize();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/frameless/main.zig",
+      "type": "function",
+      "name": "minimize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to maximize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/frameless/main.zig",
+    "response": "fn maximize(e: *webui.Event) void {\n    const win = e.getWindow();\n    win.maximize();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/frameless/main.zig",
+      "type": "function",
+      "name": "maximize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/frameless/main.zig",
+    "response": "fn close(e: *webui.Event) void {\n    const win = e.getWindow();\n    win.close();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/frameless/main.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/frameless/main.zig",
+    "response": "pub fn main() !void {\n    // create a new window\n    var nwin = webui.newWindow();\n\n    _ = try nwin.bind(\"minimize\", minimize);\n    _ = try nwin.bind(\"maximize\", maximize);\n    _ = try nwin.bind(\"close\", close);\n\n    nwin.setSize(800, 600);\n    nwin.setFrameless(true);\n    nwin.setTransparent(true);\n    nwin.setResizable(true);\n    nwin.setCenter();\n\n    try nwin.showWv(html);\n\n    // wait the window exit\n    webui.wait();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/frameless/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "pub fn main() !void {\n    // Create window\n    var nwin = webui.newWindow();\n    \n    // Set runtime for JavaScript execution\n    nwin.setRuntime(.NodeJS);\n    \n    // Bind functions for JavaScript execution\n    _ = try nwin.binding(\"run_simple_js\", runSimpleJs);\n    _ = try nwin.binding(\"run_js_with_response\", runJsWithResponse);\n    _ = try nwin.binding(\"run_complex_js\", runComplexJs);\n    _ = try nwin.binding(\"send_data_to_js\", sendDataToJs);\n    _ = try nwin.binding(\"send_raw_data\", sendRawData);\n    _ = try nwin.binding(\"navigate_to_url\", navigateToUrl);\n    _ = try nwin.binding(\"get_page_content\", getPageContent);\n    _ = try nwin.binding(\"manipulate_dom\", manipulateDom);\n    _ = try nwin.binding(\"handle_json_data\", handleJsonData);\n\n    // Show window\n    try nwin.show(html);\n    \n    // Wait for window to close\n    webui.wait();\n    \n    // Clean up\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runSimpleJs from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn runSimpleJs(e: *webui.Event) void {\n    const win = e.getWindow();\n    \n    // Run JavaScript without waiting for response\n    win.run(\"alert('Hello from Zig!'); console.log('JavaScript executed from Zig');\");\n    \n    e.returnString(\"Simple JavaScript executed\");\n    std.debug.print(\"Executed simple JavaScript\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "runSimpleJs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runJsWithResponse from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn runJsWithResponse(e: *webui.Event, operation: [:0]const u8, a: i64, b: i64) void {\n    const win = e.getWindow();\n    \n    // Prepare JavaScript code based on operation\n    var js_code: [256]u8 = undefined;\n    const script = switch (std.mem.eql(u8, operation, \"add\")) {\n        true => std.fmt.bufPrint(js_code[0..], \"return {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "runJsWithResponse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runComplexJs from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn runComplexJs(e: *webui.Event, data: [:0]const u8) void {\n    const win = e.getWindow();\n    \n    // Complex JavaScript that processes data and returns result\n    var js_code: [512]u8 = undefined;\n    const script = std.fmt.bufPrint(js_code[0..], \n        \\\\const data = '{s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "runComplexJs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendDataToJs from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn sendDataToJs(e: *webui.Event, message: [:0]const u8, value: i64) void {\n    const win = e.getWindow();\n    \n    // Create data structure to send\n    var data: [256]u8 = undefined;\n    const json_data = std.fmt.bufPrint(data[0..], \n        \"{{\\\"message\\\":\\\"{s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "sendDataToJs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendRawData from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn sendRawData(e: *webui.Event, size: i64) void {\n    const win = e.getWindow();\n    \n    // Create raw binary data\n    const data_size: usize = @intCast(@min(size, 1024));\n    const raw_data = allocator.alloc(u8, data_size) catch return;\n    defer allocator.free(raw_data);\n    \n    // Fill with sample data\n    for (raw_data, 0..) |*byte, i| {\n        byte.* = @intCast(i % 256);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "sendRawData",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to navigateToUrl from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn navigateToUrl(e: *webui.Event, url: [:0]const u8) void {\n    const win = e.getWindow();\n    \n    if (std.mem.startsWith(u8, url, \"http://\") or std.mem.startsWith(u8, url, \"https://\")) {\n        win.navigate(url);\n        e.returnString(\"Navigation initiated\");\n        std.debug.print(\"Navigating to: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "navigateToUrl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPageContent from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn getPageContent(e: *webui.Event) void {\n    const win = e.getWindow();\n    \n    const js_code = \n        \\\\return JSON.stringify({\n        \\\\  title: document.title,\n        \\\\  url: window.location.href,\n        \\\\  userAgent: navigator.userAgent,\n        \\\\  cookies: document.cookie,\n        \\\\  elements: document.querySelectorAll('*').length\n        \\\\}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "getPageContent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to manipulateDom from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn manipulateDom(e: *webui.Event, element_id: [:0]const u8, new_text: [:0]const u8) void {\n    const win = e.getWindow();\n    \n    var js_code: [512]u8 = undefined;\n    const script = std.fmt.bufPrint(js_code[0..], \n        \\\\const element = document.getElementById('{s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "manipulateDom",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleJsonData from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "fn handleJsonData(e: *webui.Event, json_str: [:0]const u8) void {\n    // In a real application, you would parse the JSON properly\n    // For this example, we'll just echo back some processed info\n    \n    var response: [512]u8 = undefined;\n    const result = std.fmt.bufPrint(response[0..], \n        \"Received JSON data: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "function",
+      "name": "handleJsonData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script_z from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "const script_z: [:0]const u8 = null_terminated_script[0..script.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "const",
+      "name": "script_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script_z from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "const script_z: [:0]const u8 = null_terminated_script[0..script.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "const",
+      "name": "script_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to js_code_z from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "const js_code_z: [:0]const u8 = null_terminated_js[0..js_code.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "const",
+      "name": "js_code_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to data_size from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "const data_size: usize = @intCast(@min(size, 1024));",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "const",
+      "name": "data_size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to msg_z from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "const msg_z: [:0]const u8 = null_terminated_msg[0..msg.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "const",
+      "name": "msg_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script_z from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "const script_z: [:0]const u8 = null_terminated_script[0..script.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "const",
+      "name": "script_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to result_z from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/js_execution/main.zig",
+    "response": "const result_z: [:0]const u8 = null_terminated_result[0..result.len :0];",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/js_execution/main.zig",
+      "type": "const",
+      "name": "result_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/minimal/main.zig",
+    "response": "pub fn main() !void {\n    // create a new window\n    var nwin = webui.newWindow();\n\n    // show the content\n    try nwin.show(\"<html><head><script src=\\\"/webui.js\\\"></script></head> Hello World ! </html>\");\n\n    // wait the window exit\n    webui.wait();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/minimal/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to app_exit from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/public_network_access/main.zig",
+    "response": "fn app_exit(_: *webui.Event) void {\n    webui.exit();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/public_network_access/main.zig",
+      "type": "function",
+      "name": "app_exit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to public_window_events from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/public_network_access/main.zig",
+    "response": "fn public_window_events(e: *webui.Event) void {\n    if (e.event_type == .EVENT_CONNECTED) {\n        // New connection\n        private_window.run(\"document.getElementById(\\\"Logs\\\").value += \\\"New connection.\\\\n\\\";\");\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/public_network_access/main.zig",
+      "type": "function",
+      "name": "public_window_events",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to private_window_events from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/public_network_access/main.zig",
+    "response": "fn private_window_events(e: *webui.Event) void {\n    if (e.event_type == .EVENT_CONNECTED) {\n\n        // get the public window URL and port\n        const public_win_port = public_window.getPort() catch unreachable;\n        const public_win_url: [:0]const u8 = public_window.getUrl() catch return;\n\n        var buf = std.mem.zeroes([1024]u8);\n        const js_1 = std.fmt.bufPrintZ(&buf, \"document.getElementById('urlSpan1').innerHTML = 'http://localhost:{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/public_network_access/main.zig",
+      "type": "function",
+      "name": "private_window_events",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/public_network_access/main.zig",
+    "response": "pub fn main() !void {\n    // Create windows\n    private_window = webui.newWindow();\n    public_window = webui.newWindow();\n\n    // App\n    webui.setTimeout(0); // Wait forever (never timeout)\n\n    // Public Window\n    // Make URL accessible from public networks\n    public_window.setPublic(true);\n\n    // Bind all events\n    _ = try public_window.bind(\"\", public_window_events);\n\n    _ = try public_window.setPort(9090); // Set port for public access\n\n    // Set public window HTML\n    try public_window.showBrowser(public_html, .NoBrowser);\n\n    // Main Private Window\n\n    // Run Js\n    _ = try private_window.bind(\"\", private_window_events);\n\n    // Bind exit button\n    _ = try private_window.bind(\"Exit\", app_exit);\n\n    // Show the window\n    _ = try private_window.show(private_html);\n\n    // Wait until all windows get closed\n    webui.wait();\n\n    // Free all memory resources (Optional)\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/public_network_access/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to public_win_url from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/public_network_access/main.zig",
+    "response": "const public_win_url: [:0]const u8 = public_window.getUrl() catch return;",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/public_network_access/main.zig",
+      "type": "const",
+      "name": "public_win_url",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/serve_a_folder/main.zig",
+    "response": "pub fn main() !void {\n    // Create new windows\n    MyWindow = try webui.newWindowWithId(1);\n    MySecondWindow = try webui.newWindowWithId(2);\n\n    // Bind HTML element IDs with a Zig functions\n    _ = try MyWindow.bind(\"SwitchToSecondPage\", switch_second_window);\n    _ = try MyWindow.bind(\"OpenNewWindow\", show_second_window);\n    _ = try MyWindow.bind(\"Exit\", exit_app);\n    _ = try MySecondWindow.bind(\"Exit\", exit_app);\n\n    // Bind events\n    _ = try MyWindow.bind(\"\", events);\n\n    // Set the `.ts` and `.js` runtime\n    // webui_set_runtime(MyWindow, NodeJS);\n    // webui_set_runtime(MyWindow, Bun);\n    MyWindow.setRuntime(.Deno);\n\n    // Set a custom files handler\n    MyWindow.setFileHandler(my_files_handler);\n\n    // Set window size\n    MyWindow.setSize(800, 800);\n\n    // Set window position\n    MyWindow.setPosition(200, 200);\n\n    // Show a new window\n    // webui_set_root_folder(MyWindow, \"_MY_PATH_HERE_\");\n    // webui_show_browser(MyWindow, \"index.html\", Chrome);\n    try MyWindow.show(\"index.html\");\n\n    // Wait until all windows get closed\n    webui.wait();\n\n    // Free all memory resources (Optional)\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/serve_a_folder/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to exit_app from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/serve_a_folder/main.zig",
+    "response": "fn exit_app(_: *webui.Event) void {\n    // Close all opened windows\n    webui.exit();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/serve_a_folder/main.zig",
+      "type": "function",
+      "name": "exit_app",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to events from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/serve_a_folder/main.zig",
+    "response": "fn events(e: *webui.Event) void {\n    // This function gets called every time\n    // there is an event\n    switch (e.event_type) {\n        .EVENT_CONNECTED => {\n            std.debug.print(\"Connected. \\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/serve_a_folder/main.zig",
+      "type": "function",
+      "name": "events",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to switch_second_window from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/serve_a_folder/main.zig",
+    "response": "fn switch_second_window(e: *webui.Event) void {\n    // This function gets called every\n    // time the user clicks on \"SwitchToSecondPage\"\n\n    // Switch to `/second.html` in the same opened window.\n    e.getWindow().show(\"second.html\") catch return;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/serve_a_folder/main.zig",
+      "type": "function",
+      "name": "switch_second_window",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to show_second_window from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/serve_a_folder/main.zig",
+    "response": "fn show_second_window(_: *webui.Event) void {\n    // This function gets called every\n    // time the user clicks on \"OpenNewWindow\"\n\n    // Show a new window, and navigate to `/second.html`\n    // if it's already open, then switch in the same window\n    MySecondWindow.show(\"second.html\") catch return;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/serve_a_folder/main.zig",
+      "type": "function",
+      "name": "show_second_window",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to my_files_handler from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/serve_a_folder/main.zig",
+    "response": "fn my_files_handler(filename: []const u8) ?[]const u8 {\n    std.debug.print(\"File: {s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/serve_a_folder/main.zig",
+      "type": "function",
+      "name": "my_files_handler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/text_editor/main.zig",
+    "response": "fn close(_: *webui.Event) void {\n    std.debug.print(\"Exit.\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/text_editor/main.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/text_editor/main.zig",
+    "response": "pub fn main() !void {\n    // Create a new window\n    var mainW = webui.newWindow();\n\n    // Set the root folder for the UI\n    try mainW.setRootFolder(\"ui\");\n\n    // Bind HTML elements with the specified ID to Zig functions\n    _ = try mainW.bind(\"close_app\", close);\n\n    // Show the window, this will select the best browser to show\n    // and you can use showBrowser to select which browser will be used\n    try mainW.show(\"index.html\");\n\n    // Wait until all windows get closed\n    webui.wait();\n\n    // Free all memory resources (Optional)\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/text_editor/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to exit_app from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/web_app_multi_client/main.zig",
+    "response": "fn exit_app(_: *webui.Event) void {\n    // Close all opened windows\n    webui.exit();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/web_app_multi_client/main.zig",
+      "type": "function",
+      "name": "exit_app",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to save from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/web_app_multi_client/main.zig",
+    "response": "fn save(e: *webui.Event) void {\n    // Get input value\n    const privateInput = e.getString();\n\n    // free previous memory\n    if (private_input_arr[e.client_id]) |val|\n        allocator.free(val);\n\n    // allocate new memory, to save new private input\n    private_input_arr[e.client_id] = allocator.dupe(u8, privateInput) catch unreachable;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/web_app_multi_client/main.zig",
+      "type": "function",
+      "name": "save",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to saveAll from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/web_app_multi_client/main.zig",
+    "response": "fn saveAll(e: *webui.Event) void {\n    // Get input value\n    const publicInput = e.getString();\n\n    // free previous memory\n    if (public_input) |val|\n        allocator.free(val);\n\n    // allocate new memory to save new public input\n    public_input = allocator.dupe(u8, publicInput) catch unreachable;\n\n    // general new js\n    const js = if (builtin.zig_version.minor == 14) std.fmt.allocPrintZ(\n        allocator,\n        \"document.getElementById(\\\"publicInput\\\").value = \\\"{s}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/web_app_multi_client/main.zig",
+      "type": "function",
+      "name": "saveAll",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to events from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/web_app_multi_client/main.zig",
+    "response": "fn events(e: *webui.Event) void {\n    // This function gets called every time\n    // there is an event\n\n    // Full web browser cookies\n    // const cookies = e.cookies;\n\n    // Static client (Based on web browser cookies)\n    const client_id = e.client_id;\n\n    // Dynamic client connection ID (Changes on connect/disconnect events)\n    const connection_id = e.connection_id;\n\n    if (e.event_type == .EVENT_CONNECTED) {\n        // New connection\n        if (users_count < (client_id + 1))\n            users_count = client_id + 1;\n        tab_count += 1;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/web_app_multi_client/main.zig",
+      "type": "function",
+      "name": "events",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/web_app_multi_client/main.zig",
+    "response": "pub fn main() !void {\n    defer {\n        const deinit_status = gpa.deinit();\n\n        if (deinit_status == .leak) @panic(\"memory leak!\");\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/web_app_multi_client/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "pub fn main() !void {\n    // 配置WebUI全局设置以避免安全警告\n    webui.setConfig(.show_wait_connection, true);\n    webui.setConfig(.use_cookies, true);\n    webui.setConfig(.multi_client, false); // 单客户端模式更安全\n    \n    // Create multiple windows\n    var main_window = webui.newWindow();\n    var second_window = webui.newWindow();\n\n    // Configure main window\n    main_window.setSize(800, 600);\n    main_window.setPosition(100, 100);\n    main_window.setCenter();\n    main_window.setIcon(\"<svg>...</svg>\", \"image/svg+xml\");\n\n    // Configure second window\n    second_window.setSize(400, 300);\n    second_window.setPosition(500, 200);\n    second_window.setKiosk(false);\n    second_window.setResizable(true);\n\n    // Bind window control functions\n    _ = try main_window.binding(\"close_window\", closeWindow);\n    _ = try main_window.binding(\"toggle_kiosk\", toggleKiosk);\n    _ = try main_window.binding(\"get_window_info\", getWindowInfo);\n    _ = try main_window.binding(\"open_second_window\", openSecondWindow);\n    _ = try main_window.binding(\"set_window_size\", setWindowSize);\n    _ = try main_window.binding(\"center_window\", centerWindow);\n    _ = try main_window.binding(\"show_browser_info\", showBrowserInfo);\n\n    // Bind second window controls\n    _ = try second_window.binding(\"close_second\", closeSecondWindow);\n\n\n    // Show main window\n    // 使用普通浏览器模式\n    try main_window.show(html);\n\n    // Wait for all windows to close\n    webui.wait();\n\n    // Clean up\n    webui.clean();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn closeWindow(e: *webui.Event) void {\n    const win = e.getWindow();\n    win.close();\n    std.debug.print(\"Window closed\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "closeWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toggleKiosk from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn toggleKiosk(e: *webui.Event) void {\n    // 使用WebUI原生API设置kiosk模式\n    const win = e.getWindow();\n    is_kiosk = !is_kiosk;\n    win.setKiosk(is_kiosk);\n    \n    const response = if (is_kiosk) \"Kiosk mode enabled\" else \"Kiosk mode disabled\";\n    e.returnString(response);\n    std.debug.print(\"Kiosk mode toggled: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "toggleKiosk",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getWindowInfo from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn getWindowInfo(e: *webui.Event) void {\n    const win = e.getWindow();\n    \n    const port = win.getPort() catch 0;\n    const url = win.getUrl() catch \"\";\n    const is_shown = win.isShown();\n    \n    var buffer: [512]u8 = undefined;\n    const info = std.fmt.bufPrint(buffer[0..], \n        \"Port: {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "getWindowInfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to openSecondWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn openSecondWindow(e: *webui.Event) void {\n    // 检查第二个窗口是否存在且仍在运行\n    if (second_win == null or (second_win != null and !second_win.?.isShown())) {\n        // 如果窗口已经被外部关闭，重置为null\n        if (second_win != null and !second_win.?.isShown()) {\n            std.debug.print(\"Detected second window was closed externally, resetting\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "openSecondWindow",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeSecondWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn closeSecondWindow(e: *webui.Event) void {\n    const win = e.getWindow();\n    win.close();\n    second_win = null;\n    std.debug.print(\"Second window closed\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "closeSecondWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleSecondWindowDisconnect from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn handleSecondWindowDisconnect(e: *webui.Event) void {\n    // 当第二个窗口断开连接时（包括用户点击x关闭），清理状态\n    _ = e; // 标记参数已使用\n    second_win = null;\n    std.debug.print(\"Second window disconnected\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "handleSecondWindowDisconnect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setWindowSize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn setWindowSize(e: *webui.Event, width: i64, height: i64) void {\n    const win = e.getWindow();\n    win.setSize(@intCast(width), @intCast(height));\n    \n    var buffer: [128]u8 = undefined;\n    const response = std.fmt.bufPrint(buffer[0..], \n        \"Size set to {}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "setWindowSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to centerWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn centerWindow(e: *webui.Event) void {\n    const win = e.getWindow();\n    win.setCenter();\n    e.returnString(\"Window centered\");\n    std.debug.print(\"Window centered\\n\", .{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "centerWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to showBrowserInfo from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: examples/window_management/main.zig",
+    "response": "fn showBrowserInfo(e: *webui.Event) void {\n    // 显示浏览器和窗口信息\n    e.runClient(\n        \\\\const info = {\n        \\\\    userAgent: navigator.userAgent,\n        \\\\    screenWidth: screen.width,\n        \\\\    screenHeight: screen.height,\n        \\\\    windowWidth: window.innerWidth,\n        \\\\    windowHeight: window.innerHeight,\n        \\\\    isFullscreen: !!document.fullscreenElement\n        \\\\}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "examples/window_management/main.zig",
+      "type": "function",
+      "name": "showBrowserInfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to webui_new_window from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "fn webui_new_window() callconv(.c) usize;\n\n/// @brief Create a new webui window object using a specified window number.\n///\n/// @param window_number The window number (should be > 0, and < WEBUI_MAX_IDS)\n///\n/// @return Returns the same window number if success.\n///\n/// @example const my_window: usize = webui_new_window_id(123);\npub extern fn webui_new_window_id(window_number: usize) callconv(.c) usize;\n\n/// @brief Get a free window number that can be used with `webui_new_window_id()`\n///\n/// @return Returns the first available free window number. Starting from 1.\n///\n/// @example const my_window: usize = webui_get_new_window_id();\npub extern fn webui_get_new_window_id() callconv(.c) usize;\n\n/// @brief Bind an HTML element and a Javascript object with a backend function. Empty\n/// element name means all events.\n///\n/// @param window The window number\n/// @param element The HTML element / Javascript object\n/// @param func The callback function\n///\n/// @return Returns a unique bind ID.\n///\n/// @example webui_bind(my_window, \"myFunction\", myFunction);\npub extern fn webui_bind(\n    window: usize,\n    element: [*:0]const u8,\n    func: *const fn (e: *Event) callconv(.c) void,\n) callconv(.c) usize;\n\n/// @brief Use this API after using `webui_bind()` to add any user data to it that can be\n/// read later using `webui_get_context()`.\n///\n/// @param window The window number\n/// @param element The HTML element / JavaScript object\n/// @param context Any user data\n///\n/// @example\n/// webui_bind(myWindow, \"myFunction\", myFunction);\n///\n/// webui_set_context(myWindow, \"myFunction\", myData);\n///\n/// void myFunction(webui_event_t* e) {\n///   void* myData = webui_get_context(e);\n/// }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "function",
+      "name": "webui_new_window",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to webui_set_context from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "fn webui_set_context(\n    window: usize,\n    element: [*:0]const u8,\n    context: *anyopaque,\n) callconv(.c) void;\n\n/// @brief Get user data that is set using `webui_set_context()`.\n///\n/// @param e The event struct\n///\n/// @return Returns user data pointer.\n///\n/// @example\n/// webui_bind(myWindow, \"myFunction\", myFunction);\n///\n/// webui_set_context(myWindow, \"myFunction\", myData);\n///\n/// void myFunction(webui_event_t* e) {\n///   void* myData = webui_get_context(e);\n/// }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "function",
+      "name": "webui_set_context",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to webui_send_raw from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "fn webui_send_raw(\n    window: usize,\n    function: [*:0]const u8,\n    raw: *const anyopaque,\n    size: usize,\n) callconv(.c) void;\n\n/// @brief Safely send raw data to the UI. Single client.\n///\n/// @param e The event struct\n/// @param function The JavaScript function to receive raw data: `function\n/// myFunc(my_data){}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "function",
+      "name": "webui_send_raw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_window from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_window: usize = webui_new_window();",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_window from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_window: usize = webui_new_window_id(123);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_window from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_window: usize = webui_get_new_window_id();",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to browser_id from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const browser_id: usize = webui_get_best_browser(my_window);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "browser_id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to url from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const url: [*:0]const u8 = webui_start_server(my_window, \"/full/root/path\");",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "url",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to hc from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const hc: bool = webui_is_high_contrast();",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "hc",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to status from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const status: bool = webui_browser_exist(.Chrome);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "status",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to base64 from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const base64: [*:0]u8 = webui_encode(\"Foo Bar\");",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "base64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to str from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const str: [*:0]u8 = webui_decode(\"SGVsbG8=\");",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "str",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to url from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const url: [*:0]const u8 = webui_get_url(my_window);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "url",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to id from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const id: usize = webui_get_parent_process_id(my_window);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to id from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const id: usize = webui_get_child_process_id(my_window);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const port: usize = webui_get_port(my_window);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ret from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const ret: bool = webui_set_port(my_window, 8080);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "ret",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to port from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const port: usize = webui_get_free_port();",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "port",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mime from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const mime: [*:0]const u8 = webui_get_mime_type(\"foo.png\");",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "mime",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ret from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const ret: bool = webui_set_tls_certificate(\"-----BEGIN\n/// CERTIFICATE-----\\n...\", \"-----BEGIN PRIVATE KEY-----\\n...\");",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "ret",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to err from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const err: bool = webui_script(my_window, \"return 4 + 6;",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "err",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to err from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const err: bool = webui_script_client(e, \"return 4 + 6;",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "err",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to count from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const count: usize = webui_get_count(e);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_num from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_num: i64 = webui_get_int_at(e, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_num from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_num: i64 = webui_get_int(e);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_num from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_num: f64 = webui_get_float_at(e, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_num from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_num: f64 = webui_get_float(e);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_str from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_str: [*:0]const u8 = webui_get_string_at(e, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_str",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_str from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_str: [*:0]const u8 = webui_get_string(e);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_str",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_bool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_bool: bool = webui_get_bool_at(e, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_bool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_bool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_bool: bool = webui_get_bool(e);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_bool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to arg_len from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const arg_len: usize = webui_get_size_at(e, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "arg_len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to arg_len from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const arg_len: usize = webui_get_size(e);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "arg_len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to id from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const id: usize = webui_interface_bind(my_window, \"myID\", myCallback);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to status from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const status: bool = webui_interface_is_app_running();",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "status",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to id from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const id: usize = webui_interface_get_window_id(my_window);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_str from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_str: [*:0]const u8 = webui_interface_get_string_at(my_window, e.event_number, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_str",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_num from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_num: i64 = webui_interface_get_int_at(my_window, e.event_number, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_float from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_float: f64 = webui_interface_get_float_at(my_window, e.event_number, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_float",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to my_bool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const my_bool: bool = webui_interface_get_bool_at(my_window, e.event_number, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "my_bool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to arg_len from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/c.zig",
+    "response": "const arg_len: usize = webui_interface_get_size_at(my_window, e.event_number, 0);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/c.zig",
+      "type": "const",
+      "name": "arg_len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getLastError from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getLastError() WebUIErrorInfo {\n    return .{\n        .num = c.webui_get_last_error_number(),\n        .msg = std.mem.span(c.webui_get_last_error_message()),\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getLastError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn newWindow() webui {\n    const window_handle = c.webui_new_window();\n\n    return .{\n        .window_handle = window_handle,\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "newWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newWindowWithId from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn newWindowWithId(id: usize) !webui {\n    if (id == 0 or id >= WEBUI_MAX_IDS) {\n        return WebUIError.CreateWindowError;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "newWindowWithId",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getNewWindowId from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getNewWindowId() usize {\n    const window_id = c.webui_get_new_window_id();\n\n    return window_id;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getNewWindowId",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bind from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn bind(\n    self: webui,\n    element: [:0]const u8,\n    comptime func: fn (e: *Event) void,\n) !usize {\n    const tmp_struct = struct {\n        fn handle(tmp_e: *Event) callconv(.c) void {\n            func(tmp_e);\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "bind",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setContext from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setContext(self: webui, element: [:0]const u8, context: *anyopaque) void {\n    c.webui_set_context(self.window_handle, element.ptr, context);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getBestBrowser from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getBestBrowser(self: webui) Browser {\n    return c.webui_get_best_browser(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getBestBrowser",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to show from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn show(self: webui, content: [:0]const u8) !void {\n    const success = c.webui_show(self.window_handle, content.ptr);\n    if (!success) return WebUIError.ShowError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "show",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to showBrowser from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn showBrowser(self: webui, content: [:0]const u8, browser: Browser) !void {\n    const success = c.webui_show_browser(self.window_handle, content.ptr, browser);\n    if (!success) return WebUIError.ShowError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "showBrowser",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startServer from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn startServer(self: webui, path: [:0]const u8) ![:0]const u8 {\n    const url = c.webui_start_server(self.window_handle, path.ptr);\n    const url_len = std.mem.len(url);\n    if (url_len == 0) return WebUIError.ServerError;\n    return url[0..url_len :0];\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "startServer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to showWv from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn showWv(self: webui, content: [:0]const u8) !void {\n    const success = c.webui_show_wv(self.window_handle, content.ptr);\n    if (!success) return WebUIError.ShowError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "showWv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setKiosk from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setKiosk(self: webui, status: bool) void {\n    c.webui_set_kiosk(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setKiosk",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setCustomParameters from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setCustomParameters(self: webui, params: [:0]const u8) void {\n    c.webui_set_custom_parameters(self.window_handle, params.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setCustomParameters",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setHighContrast from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setHighContrast(self: webui, status: bool) void {\n    c.webui_set_high_contrast(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setHighContrast",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setResizable from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setResizable(self: webui, status: bool) void {\n    c.webui_set_resizable(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setResizable",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isHighConstrast from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn isHighConstrast() bool {\n    return c.webui_is_high_contrast();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "isHighConstrast",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to browserExist from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn browserExist(browser: Browser) bool {\n    return c.webui_browser_exist(browser);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "browserExist",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn close(self: webui) void {\n    c.webui_close(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to minimize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn minimize(self: webui) void {\n    c.webui_minimize(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "minimize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to maximize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn maximize(self: webui) void {\n    c.webui_maximize(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "maximize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroy from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn destroy(self: webui) void {\n    c.webui_destroy(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "destroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setRootFolder from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setRootFolder(self: webui, path: [:0]const u8) !void {\n    const success = c.webui_set_root_folder(self.window_handle, path.ptr);\n    // TODO: replace this error\n    if (!success) return WebUIError.GenericError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setRootFolder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setBrowserFolder from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setBrowserFolder(path: [:0]const u8) void {\n    c.webui_set_browser_folder(path.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setBrowserFolder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setDefaultRootFolder from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setDefaultRootFolder(path: [:0]const u8) !void {\n    const success = c.webui_set_default_root_folder(path.ptr);\n    // TODO: replace this error\n    if (!success) return WebUIError.GenericError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setDefaultRootFolder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setFileHandler from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setFileHandler(self: webui, comptime handler: fn (filename: []const u8) ?[]const u8) void {\n    const tmp_struct = struct {\n        fn handle(tmp_filename: [*:0]const u8, length: *c_int) callconv(.c) ?*const anyopaque {\n            const len = std.mem.len(tmp_filename);\n            const content = handler(tmp_filename[0..len]);\n            if (content) |val| {\n                length.* = @intCast(val.len);\n                return @ptrCast(val.ptr);\n            }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setFileHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setFileHandlerWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setFileHandlerWindow(self: webui, comptime handler: fn (window_handle: usize, filename: []const u8) ?[]const u8) void {\n    const tmp_struct = struct {\n        fn handle(window: usize, tmp_filename: [*:0]const u8, length: *c_int) callconv(.c) ?*const anyopaque {\n            const len = std.mem.len(tmp_filename);\n            const content = handler(window, tmp_filename[0..len]);\n            if (content) |val| {\n                length.* = @intCast(val.len);\n                return @ptrCast(val.ptr);\n            }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setFileHandlerWindow",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceSetResponseFileHandler from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceSetResponseFileHandler(self: webui, response: []u8) void {\n    c.webui_interface_set_response_file_handler(\n        self.window_handle,\n        @ptrCast(response.ptr),\n        response.len,\n    );\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceSetResponseFileHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isShown from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn isShown(self: webui) bool {\n    return c.webui_is_shown(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "isShown",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTimeout from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setTimeout(time: usize) void {\n    c.webui_set_timeout(time);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setTimeout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setIcon from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setIcon(self: webui, icon: [:0]const u8, icon_type: [:0]const u8) void {\n    c.webui_set_icon(self.window_handle, icon.ptr, icon_type);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setIcon",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to encode from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn encode(str: [:0]const u8) ![]u8 {\n    const ptr = c.webui_encode(str.ptr);\n    if (ptr) |valid_ptr| {\n        const len = std.mem.len(valid_ptr);\n        return valid_ptr[0..len];\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "encode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to decode from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn decode(str: [:0]const u8) ![]u8 {\n    const ptr = c.webui_decode(str.ptr);\n    if (ptr) |valid_ptr| {\n        const len = std.mem.len(valid_ptr);\n        return valid_ptr[0..len];\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "decode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to free from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn free(buf: []const u8) void {\n    c.webui_free(@ptrCast(@constCast(buf.ptr)));\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "free",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to malloc from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn malloc(size: usize) ![]u8 {\n    const ptr = c.webui_malloc(size) orelse return WebUIError.AllocateFailed;\n    return @as([*]u8, @ptrCast(ptr))[0..size];\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "malloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to memcpy from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn memcpy(dst: []u8, src: []const u8) void {\n    c.webui_memcpy(@ptrCast(dst.ptr), @ptrCast(@constCast(src.ptr)), src.len);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "memcpy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendRaw from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn sendRaw(self: webui, js_func: [:0]const u8, raw: []u8) void {\n    c.webui_send_raw(self.window_handle, js_func.ptr, raw.ptr, raw.len);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "sendRaw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setHide from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setHide(self: webui, status: bool) void {\n    c.webui_set_hide(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setHide",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setSize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setSize(self: webui, width: u32, height: u32) void {\n    c.webui_set_size(self.window_handle, width, height);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setMinimumSize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setMinimumSize(self: webui, width: u32, height: u32) void {\n    c.webui_set_minimum_size(self.window_handle, width, height);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setMinimumSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setPosition from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setPosition(self: webui, x: u32, y: u32) void {\n    c.webui_set_position(self.window_handle, x, y);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setPosition",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setCenter from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setCenter(self: webui) void {\n    c.webui_set_center(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setCenter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setProfile from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setProfile(self: webui, name: [:0]const u8, path: [:0]const u8) void {\n    c.webui_set_profile(self.window_handle, name.ptr, path.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setProfile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setProxy from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setProxy(self: webui, proxy_server: [:0]const u8) void {\n    c.webui_set_proxy(self.window_handle, proxy_server.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setProxy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getUrl from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getUrl(self: webui) ![:0]const u8 {\n    const ptr = c.webui_get_url(self.window_handle);\n    const len = std.mem.len(ptr);\n    if (len == 0) return WebUIError.UrlError;\n    return ptr[0..len :0];\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getUrl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to openUrl from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn openUrl(url: [:0]const u8) void {\n    c.webui_open_url(url.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "openUrl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setPublic from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setPublic(self: webui, status: bool) void {\n    c.webui_set_public(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setPublic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to navigate from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn navigate(self: webui, url: [:0]const u8) void {\n    c.webui_navigate(self.window_handle, url.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "navigate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteAllProfiles from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn deleteAllProfiles() void {\n    c.webui_delete_all_profiles();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "deleteAllProfiles",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteProfile from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn deleteProfile(self: webui) void {\n    c.webui_delete_profile(self.window_handle);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "deleteProfile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getParentProcessId from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getParentProcessId(self: webui) !usize {\n    const process_id = c.webui_get_parent_process_id(self.window_handle);\n    if (process_id == 0) return WebUIError.ProcessError;\n    return process_id;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getParentProcessId",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getChildProcessId from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getChildProcessId(self: webui) !usize {\n    const process_id = c.webui_get_child_process_id(self.window_handle);\n    if (process_id == 0) return WebUIError.ProcessError;\n    return process_id;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getChildProcessId",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to win32GetHwnd from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn win32GetHwnd(self: webui) !windows.HWND {\n    if (builtin.os.tag != .windows) {\n        @compileError(\"Note: method win32GetHwnd only can call on MS windows!\");\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "win32GetHwnd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPort from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getPort(self: webui) !usize {\n    const port = c.webui_get_port(self.window_handle);\n    if (port == 0) return WebUIError.PortError;\n    return port;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getPort",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setPort from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setPort(self: webui, port: usize) !void {\n    const success = c.webui_set_port(self.window_handle, port);\n    if (!success) return WebUIError.PortError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setPort",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFreePort from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getFreePort() usize {\n    return c.webui_get_free_port();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getFreePort",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setConfig from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setConfig(option: Config, status: bool) void {\n    c.webui_set_config(option, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setEventBlocking from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setEventBlocking(self: webui, status: bool) void {\n    c.webui_set_event_blocking(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setEventBlocking",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setFrameless from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setFrameless(self: webui, status: bool) void {\n    c.webui_set_frameless(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setFrameless",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTransparent from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setTransparent(self: webui, status: bool) void {\n    c.webui_set_transparent(self.window_handle, status);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setTransparent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getMimeType from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getMimeType(file: [:0]const u8) [:0]const u8 {\n    const res = c.webui_get_mime_type(file.ptr);\n    return res[0..std.mem.len(res) :0];\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getMimeType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTlsCertificate from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setTlsCertificate(certificate_pem: [:0]const u8, private_key_pem: [:0]const u8) !void {\n    if (comptime !flags.enableTLS) {\n        @compileError(\"not enable tls\");\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setTlsCertificate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn run(self: webui, script_content: [:0]const u8) void {\n    c.webui_run(self.window_handle, script_content.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to script from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn script(self: webui, script_content: [:0]const u8, timeout: usize, buffer: []u8) !void {\n    const success = c.webui_script(\n        self.window_handle,\n        script_content.ptr,\n        timeout,\n        buffer.ptr,\n        buffer.len,\n    );\n    if (!success) return WebUIError.ScriptError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "script",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setRuntime from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn setRuntime(self: webui, runtime: Runtime) void {\n    c.webui_set_runtime(self.window_handle, runtime);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "setRuntime",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getCount from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getCount(_: *Event) usize {\n    @compileError(\"please use Event.getCount, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getCount",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getIntAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getIntAt(_: *Event, _: usize) i64 {\n    @compileError(\"please use Event.getIntAt, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getIntAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getInt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getInt(_: *Event) i64 {\n    @compileError(\"please use Event.getInt, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getInt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFloatAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getFloatAt(_: *Event, _: usize) f64 {\n    @compileError(\"please use Event.getFloatAt, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getFloatAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFloat from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getFloat(_: *Event) f64 {\n    @compileError(\"please use Event.getFloat, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getFloat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getStringAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getStringAt(_: *Event, _: usize) [:0]const u8 {\n    @compileError(\"please use Event.getStringAt, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getStringAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getString from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getString(_: *Event) [:0]const u8 {\n    @compileError(\"please use Event.getString, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getBoolAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getBoolAt(_: *Event, _: usize) bool {\n    @compileError(\"please use Event.getBoolAt, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getBoolAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getBool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getBool(_: *Event) bool {\n    @compileError(\"please use Event.getBool, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getBool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSizeAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getSizeAt(_: *Event, _: usize) usize {\n    @compileError(\"please use Event.getSizeAt, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getSizeAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getSize(_: *Event) usize {\n    @compileError(\"please use Event.getSize, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnInt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnInt(_: *Event, _: i64) void {\n    @compileError(\"please use Event.returnInt, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnInt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnString from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnString(_: *Event, _: [:0]const u8) void {\n    @compileError(\"please use Event.returnString, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnBool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnBool(_: *Event, _: bool) void {\n    @compileError(\"please use Event.returnBool, this will be removed when zig-webui release\");\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnBool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceBind from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceBind(\n    self: webui,\n    element: [:0]const u8,\n    comptime callback: fn (\n        window_handle: usize,\n        event_type: EventKind,\n        element: []u8,\n        event_number: usize,\n        bind_id: usize,\n    ) void,\n) !usize {\n    const tmp_struct = struct {\n        fn handle(\n            tmp_window: usize,\n            tmp_event_type: EventKind,\n            tmp_element: [*:0]u8,\n            tmp_event_number: usize,\n            tmp_bind_id: usize,\n        ) callconv(.c) void {\n            const len = std.mem.len(tmp_element);\n            callback(tmp_window, tmp_event_type, tmp_element[0..len], tmp_event_number, tmp_bind_id);\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceBind",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceSetResponse from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceSetResponse(self: webui, event_number: usize, response: [:0]const u8) void {\n    c.webui_interface_set_response(self.window_handle, event_number, response.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceSetResponse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceIsAppRunning from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceIsAppRunning() bool {\n    return c.webui_interface_is_app_running();\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceIsAppRunning",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceGetWindowId from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceGetWindowId(self: webui) usize {\n    const window_id = c.webui_interface_get_window_id(self.window_handle);\n    return window_id;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceGetWindowId",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceGetStringAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceGetStringAt(self: webui, event_number: usize, index: usize) [:0]const u8 {\n    const ptr = c.webui_interface_get_string_at(self.window_handle, event_number, index);\n    // TODO: Error handling here.\n    const len = std.mem.len(ptr);\n    return ptr[0..len :0];\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceGetStringAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceGetIntAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceGetIntAt(self: webui, event_number: usize, index: usize) i64 {\n    // TODO: Error handling here\n    return c.webui_interface_get_int_at(self.window_handle, event_number, index);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceGetIntAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceGetFloatAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceGetFloatAt(self: webui, event_number: usize, index: usize) f64 {\n    // TODO: Error handling here\n    return c.webui_interface_get_float_at(self.window_handle, event_number, index);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceGetFloatAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceGetBoolAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceGetBoolAt(self: webui, event_number: usize, index: usize) bool {\n    // TODO: Error handling here\n    return c.webui_interface_get_bool_at(self.window_handle, event_number, index);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceGetBoolAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceGetSizeAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceGetSizeAt(self: webui, event_number: usize, index: usize) usize {\n    return c.webui_interface_get_size_at(self.window_handle, event_number, index);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceGetSizeAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceShowClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceShowClient(self: webui, event_number: usize, content: [:0]const u8) !void {\n    const success = c.webui_interface_show_client(self.window_handle, event_number, content.ptr);\n    if (!success) return WebUIError.ShowError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceShowClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceCloseClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceCloseClient(self: webui, event_number: usize) void {\n    c.webui_interface_close_client(self.window_handle, event_number);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceCloseClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceSendRawClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceSendRawClient(\n    self: webui,\n    event_number: usize,\n    function: [:0]const u8,\n    raw: []const u8,\n) void {\n    c.webui_interface_send_raw_client(self.window_handle, event_number, function.ptr, raw.ptr, raw.len);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceSendRawClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceNavigateClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceNavigateClient(self: webui, event_number: usize, url: [:0]const u8) void {\n    c.webui_interface_navigate_client(self.window_handle, event_number, url.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceNavigateClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceRunClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceRunClient(self: webui, event_number: usize, script_content: [:0]const u8) void {\n    c.webui_interface_run_client(self.window_handle, event_number, script_content.ptr);\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceRunClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to interfaceScriptClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn interfaceScriptClient(self: webui, event_number: usize, script_content: [:0]const u8, timeout: usize, buffer: []u8) !void {\n    const success = c.webui_interface_script_client(self.window_handle, event_number, script_content.ptr, timeout, buffer.ptr, buffer.len);\n    if (!success) return WebUIError.ScriptError;\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "interfaceScriptClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to binding from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn binding(self: webui, element: [:0]const u8, comptime callback: anytype) !usize {\n    const T = @TypeOf(callback);\n    const TInfo = @typeInfo(T);\n\n    // Verify the callback is a function\n    if (TInfo != .@\"fn\") {\n        const err_msg = std.fmt.comptimePrint(\n            \"callback's type ({}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "binding",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handle from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "fn handle(e: *Event) void {\n            var param_tup: tup_t = undefined;\n\n            var index: usize = 0;\n            // Process each parameter of the callback function\n            inline for (fnInfo.params, 0..fnInfo.params.len) |param, i| {\n                if (param.type) |tt| {\n                    const paramTInfo = @typeInfo(tt);\n                    switch (paramTInfo) {\n                        // Handle struct type parameters (only Event is allowed)\n                        .@\"struct\" => {\n                            if (tt == Event) {\n                                param_tup[i] = e.*;\n                                index += 1;\n                            }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fnParamsToTuple from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "fn fnParamsToTuple(comptime params: []const std.builtin.Type.Fn.Param) type {\n    const Type = std.builtin.Type;\n    const fields: [params.len]Type.StructField = blk: {\n        var res: [params.len]Type.StructField = undefined;\n\n        for (params, 0..params.len) |param, i| {\n            res[i] = Type.StructField{\n                .type = param.type.?,\n                .alignment = @alignOf(param.type.?),\n                .default_value_ptr = null,\n                .is_comptime = false,\n                .name = std.fmt.comptimePrint(\"{}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "fnParamsToTuple",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getWindow from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getWindow(self: Event) webui {\n        return .{\n            .window_handle = self.window,\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to showClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn showClient(self: *Event, content: [:0]const u8) bool {\n        return c.webui_show_client(self, content.ptr);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "showClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn closeClient(self: *Event) void {\n        c.webui_close_client(self);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "closeClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendRawClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn sendRawClient(self: *Event, function: [:0]const u8, buffer: []const u8) void {\n        c.webui_send_raw_client(\n            self,\n            function.ptr,\n            buffer.ptr,\n            buffer.len,\n        );\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "sendRawClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to navigateClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn navigateClient(self: *Event, url: [:0]const u8) void {\n        c.webui_navigate_client(self, url.ptr);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "navigateClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn runClient(self: *Event, script_content: [:0]const u8) void {\n        c.webui_run_client(self, script_content.ptr);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "runClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scriptClient from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn scriptClient(\n        self: *Event,\n        script_content: [:0]const u8,\n        timeout: usize,\n        buffer: []u8,\n    ) !void {\n        const success = c.webui_script_client(\n            self,\n            script_content.ptr,\n            timeout,\n            buffer.ptr,\n            buffer.len,\n        );\n        if (!success) return WebUIError.ScriptError;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "scriptClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnInt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnInt(e: *Event, n: i64) void {\n        c.webui_return_int(e, n);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnInt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnFloat from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnFloat(e: *Event, f: f64) void {\n        c.webui_return_float(e, f);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnFloat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnString from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnString(e: *Event, str: [:0]const u8) void {\n        c.webui_return_string(e, str.ptr);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnBool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnBool(e: *Event, b: bool) void {\n        c.webui_return_bool(e, b);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnBool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to returnValue from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn returnValue(e: *Event, val: anytype) void {\n        const T = @TypeOf(val);\n        const type_info = @typeInfo(T);\n\n        switch (type_info) {\n            .pointer => |pointer| {\n                // pointer must be u8 slice\n                if (pointer.child == u8 or pointer.size == .slice) {\n                    // sentinel element must be 0\n                    const sentinel = pointer.sentinel();\n                    if (sentinel != null and sentinel.? == 0) {\n                        return e.returnString(val);\n                    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "returnValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getCount from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getCount(e: *Event) usize {\n        return c.webui_get_count(e);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getCount",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getIntAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getIntAt(e: *Event, index: usize) i64 {\n        return c.webui_get_int_at(e, index);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getIntAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getInt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getInt(e: *Event) i64 {\n        return c.webui_get_int(e);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getInt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFloatAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getFloatAt(e: *Event, index: usize) f64 {\n        return c.webui_get_float_at(e, index);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getFloatAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFloat from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getFloat(e: *Event) f64 {\n        return c.webui_get_float(e);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getFloat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getStringAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getStringAt(e: *Event, index: usize) [:0]const u8 {\n        const ptr = c.webui_get_string_at(e, index);\n        const len = std.mem.len(ptr);\n        return ptr[0..len :0];\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getStringAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getString from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getString(e: *Event) [:0]const u8 {\n        const ptr = c.webui_get_string(e);\n        const len = std.mem.len(ptr);\n        return ptr[0..len :0];\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getRawAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getRawAt(e: *Event, index: usize) [*]const u8 {\n        const ptr = c.webui_get_string_at(e, index);\n        return @ptrCast(ptr);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getRawAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getRaw from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getRaw(e: *Event) [*]const u8 {\n        const ptr = c.webui_get_string(e);\n        return @ptrCast(ptr);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getRaw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getBoolAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getBoolAt(e: *Event, index: usize) bool {\n        return c.webui_get_bool_at(e, index);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getBoolAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getBool from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getBool(e: *Event) bool {\n        return c.webui_get_bool(e);\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getBool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSizeAt from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getSizeAt(e: *Event, index: usize) !usize {\n        const size = c.webui_get_size_at(e, index);\n        if (size == 0) return WebUIError.GenericError;\n        return size;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getSizeAt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSize from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getSize(e: *Event) !usize {\n        const size = c.webui_get_size(e);\n        if (size == 0) return WebUIError.GenericError;\n        return size;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getContext from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub fn getContext(e: *Event) !*anyopaque {\n        const context = c.webui_get_context(e);\n        if (context) |result| return result;\n        return WebUIError.GenericError;\n    }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "function",
+      "name": "getContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to WebUIErrorInfo from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub const WebUIErrorInfo = struct {\n    num: i32,\n    msg: [:0]const u8,\n}",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "struct",
+      "name": "WebUIErrorInfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to tmp_struct from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "const tmp_struct = struct {\n        fn handle(tmp_e: *Event) callconv(.c) void {\n            func(tmp_e);\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "struct",
+      "name": "tmp_struct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to tmp_struct from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "const tmp_struct = struct {\n        fn handle(tmp_filename: [*:0]const u8, length: *c_int) callconv(.c) ?*const anyopaque {\n            const len = std.mem.len(tmp_filename);\n            const content = handler(tmp_filename[0..len]);\n            if (content) |val| {\n                length.* = @intCast(val.len);\n                return @ptrCast(val.ptr);\n            }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "struct",
+      "name": "tmp_struct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to tmp_struct from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "const tmp_struct = struct {\n        fn handle(window: usize, tmp_filename: [*:0]const u8, length: *c_int) callconv(.c) ?*const anyopaque {\n            const len = std.mem.len(tmp_filename);\n            const content = handler(window, tmp_filename[0..len]);\n            if (content) |val| {\n                length.* = @intCast(val.len);\n                return @ptrCast(val.ptr);\n            }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "struct",
+      "name": "tmp_struct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to tmp_struct from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "const tmp_struct = struct {\n        fn handle(\n            tmp_window: usize,\n            tmp_event_type: EventKind,\n            tmp_element: [*:0]u8,\n            tmp_event_number: usize,\n            tmp_bind_id: usize,\n        ) callconv(.c) void {\n            const len = std.mem.len(tmp_element);\n            callback(tmp_window, tmp_event_type, tmp_element[0..len], tmp_event_number, tmp_bind_id);\n        }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "struct",
+      "name": "tmp_struct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to tmp_struct from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "const tmp_struct = struct {\n        const tup_t = fnParamsToTuple(fnInfo.params);\n\n        // Event handler that will convert parameters and call the user's callback\n        fn handle(e: *Event) void {\n            var param_tup: tup_t = undefined;\n\n            var index: usize = 0;\n            // Process each parameter of the callback function\n            inline for (fnInfo.params, 0..fnInfo.params.len) |param, i| {\n                if (param.type) |tt| {\n                    const paramTInfo = @typeInfo(tt);\n                    switch (paramTInfo) {\n                        // Handle struct type parameters (only Event is allowed)\n                        .@\"struct\" => {\n                            if (tt == Event) {\n                                param_tup[i] = e.*;\n                                index += 1;\n                            }",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "struct",
+      "name": "tmp_struct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to u8 from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "const u8: For null-terminated string data from event\n///   * [*]const u8: For raw pointer data from event\n///\n/// Note: Event and *Event parameters do not consume argument indices from the event,\n/// but all other parameter types will consume arguments in the order they appear.\n///\n/// Returns:\n/// - The binding ID that can be used to unbind later\npub fn binding(self: webui, element: [:0]const u8, comptime callback: anytype) !usize {\n    const T = @TypeOf(callback);",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "const",
+      "name": "u8",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fields from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "const fields: [params.len]Type.StructField = blk: {\n        var res: [params.len]Type.StructField = undefined;",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "const",
+      "name": "fields",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to WEBUI_VERSION from webui-dev/zig-webui",
+    "context": "Repository: webui-dev/zig-webui (674 ⭐)\nFile: src/webui.zig",
+    "response": "pub const WEBUI_VERSION: std.SemanticVersion = .{\n    .major = 2,\n    .minor = 5,\n    .patch = 0,\n    .pre = \"beta.2\",\n};",
+    "metadata": {
+      "repo": "webui-dev/zig-webui",
+      "stars": 674,
+      "file": "src/webui.zig",
+      "type": "const",
+      "name": "WEBUI_VERSION",
+      "difficulty": "easy"
+    }
+  }
+]

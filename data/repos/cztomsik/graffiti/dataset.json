@@ -1,0 +1,2589 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cssName from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn cssName(comptime name: []const u8) []const u8 {\n    return comptime blk: {\n        var buf: [name.len]u8 = undefined;\n        for (name, 0..) |c, i| {\n            buf[i] = if (c == '_') '-' else c;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "cssName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator, input: []const u8) Parser {\n        return .{\n            .allocator = allocator,\n            .tokenizer = Tokenizer{ .input = input }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expect from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn expect(self: *Parser, comptime tag: std.meta.FieldEnum(Token)) !std.meta.fieldInfo(Token, tag).type {\n        return switch (try self.tokenizer.next()) {\n            tag => |t| t,\n            else => error.UnexpectedToken,\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "expect",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn parse(self: *Parser, comptime T: anytype) !T {\n        if (comptime std.meta.trait.hasFn(\"parseWith\")(T)) {\n            return T.parseWith(self);\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseInt from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn parseInt(self: *Parser, comptime T: type) !T {\n        const num = try self.expect(.number);\n        return std.math.cast(T, @as(u32, @intFromFloat(num))) orelse error.InvalidInt;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "parseInt",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseFloat from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn parseFloat(self: *Parser, comptime T: type) !T {\n        return @floatCast(try self.expect(.number));\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "parseFloat",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseEnum from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn parseEnum(self: *Parser, comptime T: type) !T {\n        const ident = try self.expect(.ident);\n\n        inline for (std.meta.fields(T)) |f| {\n            if (std.mem.eql(u8, cssName(f.name), ident)) {\n                return @enumFromInt(f.value);\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "parseEnum",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseOptional from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn parseOptional(self: *Parser, comptime T: type) ?T {\n        const prev = self.tokenizer;\n        return self.parse(T) catch {\n            self.tokenizer = prev;\n            return null;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "parseOptional",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseStruct from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn parseStruct(self: *Parser, comptime T: type) !T {\n        var res: T = undefined;\n\n        inline for (std.meta.fields(T)) |f| {\n            if (f.default_value) |ptr| {\n                const v = @as(*const f.type, @ptrCast(@alignCast(ptr))).*;\n                @field(res, f.name) = self.parseOptional(f.type) orelse v;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "parseStruct",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseFnCall from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn parseFnCall(self: *Parser, fun: anytype) !@typeInfo(@TypeOf(fun)).Fn.return_type.? {\n        const Args = std.meta.ArgsTuple(@TypeOf(fun));\n        var args: Args = undefined;\n        inline for (std.meta.fields(Args), 0..) |f, i| {\n            if (i > 0) try self.expect(.comma);\n            @field(args, f.name) = try self.parse(f.type);\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "parseFnCall",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectParse from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub fn expectParse(comptime T: type, input: []const u8, expected: anyerror!T) anyerror!void {\n    var arena = std.heap.ArenaAllocator.init(std.testing.allocator);\n    defer arena.deinit();\n\n    var parser = Parser.init(arena.allocator(), input);\n    const result = parser.parse(T);\n\n    errdefer std.debug.print(\n        \"\\n== EXPECTED ====\\n{any}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "expectParse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sum from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "fn sum(a: f32, b: f32) f32 {\n            return a + b;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "function",
+      "name": "sum",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Parser from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "pub const Parser = struct {\n    allocator: std.mem.Allocator,\n    tokenizer: Tokenizer,\n\n    /// Initialize a new parser.\n    pub fn init(allocator: std.mem.Allocator, input: []const u8) Parser {\n        return .{\n            .allocator = allocator,\n            .tokenizer = Tokenizer{ .input = input }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "struct",
+      "name": "Parser",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Outline from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "const Outline = struct { width: f32 = 3, style: enum { none, solid }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "struct",
+      "name": "Outline",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Shadow from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "const Shadow = struct { x: f32, y: f32, blur: f32 = 0, spread: f32 = 0, color: Color = .black }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "struct",
+      "name": "Shadow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Helper from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/parser.zig",
+    "response": "const Helper = struct {\n        fn sum(a: f32, b: f32) f32 {\n            return a + b;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/parser.zig",
+      "type": "struct",
+      "name": "Helper",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "pub fn deinit(self: *Selector, allocator: std.mem.Allocator) void {\n        for (self.parts) |part| {\n            switch (part) {\n                // TODO: intern strings\n                .local_name, .identifier, .class_name => |s| allocator.free(s),\n                else => {}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "pub fn format(self: Selector, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n        var i = self.parts.len;\n        while (i > 0) {\n            i -= 1;\n\n            try switch (self.parts[i]) {\n                .unsupported => writer.print(\":unsupported\", .{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "pub fn parse(allocator: std.mem.Allocator, selector: []const u8) !Selector {\n        var parser = Parser.init(allocator, selector);\n\n        return try parser.parse(Selector);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseWith from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "pub fn parseWith(parser: *Parser) !Selector {\n        var parts = std.ArrayList(Part).init(parser.allocator);\n        errdefer parts.deinit();\n\n        var combinator: ?Part = null;\n\n        while (parser.tokenizer.next() catch null) |tok| {\n            if (tok == .lcurly) break;\n\n            const component: ?Part = switch (tok) {\n                .star => Part.universal,\n                .ident => |s| Part{ .local_name = try parser.allocator.dupe(u8, s) }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "parseWith",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "pub fn matchElement(self: *const Selector, ctx: anytype, element: anytype) ?Specificity {\n        // state\n        var i: usize = 0;\n        var current = element;\n        var parent = false;\n        var ancestors = false;\n        var specificity: Specificity = 0;\n\n        next_part: while (i < self.parts.len) : (i += 1) {\n            switch (self.parts[i]) {\n                .parent => parent = true,\n                .ancestor => ancestors = true,\n                // end-of-branch and we still have a match, no need to check others\n                .@\"or\" => break :next_part,\n                else => |comp| {\n                    while (true) {\n                        if (parent or ancestors) {\n                            parent = false;\n                            current = ctx.parentElement(current) orelse break;\n                        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "matchElement",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchComponent from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "fn matchComponent(ctx: anytype, el: anytype, comp: Part) bool {\n        return switch (comp) {\n            .universal => true,\n            .local_name => |name| std.mem.eql(u8, ctx.localName(el), name),\n            .identifier => |id| std.mem.eql(u8, ctx.id(el), id),\n            .class_name => |cls| {\n                var parts = std.mem.split(u8, ctx.className(el), \" \");\n                while (parts.next()) |s| if (std.mem.eql(u8, s, cls)) return true;\n                return false;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "matchComponent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectParts from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "fn expectParts(selector: []const u8, parts: []const Selector.Part) !void {\n    try expectParse(Selector, selector, Selector{ .parts = parts }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "expectParts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectMatch from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "fn expectMatch(selector: []const u8, index: usize) !void {\n    var parser = Parser.init(std.testing.allocator, selector);\n    var sel = try parser.parse(Selector);\n    defer sel.deinit(std.testing.allocator);\n\n    const parents = [_]?usize{ null, 0, 1, 2, 3 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "expectMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parentElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "fn parentElement(i: usize) ?usize {\n            return parents[i];\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "parentElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to localName from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "fn localName(i: usize) []const u8 {\n            return local_names[i];\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "localName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to id from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "fn id(i: usize) []const u8 {\n            return ids[i];\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to className from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "fn className(i: usize) []const u8 {\n            return class_names[i];\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "function",
+      "name": "className",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Selector from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "pub const Selector = struct {\n    parts: []const Part,\n\n    const Part = union(enum) {\n        // components\n        unsupported,\n        universal,\n        local_name: []const u8,\n        identifier: []const u8,\n        class_name: []const u8,\n\n        // combinators\n        parent,\n        ancestor,\n        @\"or\",\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "struct",
+      "name": "Selector",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Ctx from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "const Ctx = struct {\n        fn parentElement(i: usize) ?usize {\n            return parents[i];\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "struct",
+      "name": "Ctx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to component from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/selector.zig",
+    "response": "const component: ?Part = switch (tok) {\n                .star => Part.universal,\n                .ident => |s| Part{ .local_name = try parser.allocator.dupe(u8, s) },\n                .hash => |s| Part{ .identifier = try parser.allocator.dupe(u8, s) },\n                .class_name => |s| Part{ .class_name = try parser.allocator.dupe(u8, s) },\n                .colon => Part.unsupported,\n                else => null,\n            };",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/selector.zig",
+      "type": "const",
+      "name": "component",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to StyleDeclaration from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn StyleDeclaration(comptime Property: type, comptime Shorthand: type) type {\n    return struct {\n        properties: std.ArrayList(Property),\n\n        const Self = @This();\n\n        /// Init a new instance.\n        pub fn init(allocator: std.mem.Allocator) Self {\n            return .{\n                .properties = std.ArrayList(Property).init(allocator),\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "StyleDeclaration",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn deinit(self: *Self) void {\n            self.properties.deinit();\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cssText from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn cssText(self: *Self, allocator: std.mem.Allocator) ![]const u8 {\n            return std.fmt.allocPrint(allocator, \"{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "cssText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setCssText from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn setCssText(self: *Self, css_text: []const u8) !void {\n            var new = try Self.parse(self.properties.allocator, css_text);\n\n            self.deinit();\n            self.* = new;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "setCssText",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to length from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn length(self: *Self) u32 {\n            return @intCast(self.properties.items.len);\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "length",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to item from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn item(self: *Self, index: u32) []const u8 {\n            if (index >= self.length()) return \"\";\n\n            return propName(self.properties.items[index]);\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "item",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPropertyValue from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn getPropertyValue(self: *Self, allocator: std.mem.Allocator, prop_name: []const u8) ![]const u8 {\n            inline for (std.meta.fields(Property)) |f| {\n                if (std.mem.eql(u8, cssName(f.name), prop_name)) {\n                    const prop = self.properties.items[self.find(@field(Property, f.name)) orelse return \"\"];\n                    return std.fmt.allocPrint(allocator, \"{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "getPropertyValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setProperty from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn setProperty(self: *Self, prop_name: []const u8, value: []const u8) !void {\n            var parser = Parser.init(self.properties.allocator, value);\n\n            inline for (std.meta.fields(Property)) |f| {\n                if (std.mem.eql(u8, cssName(f.name), prop_name)) {\n                    const val = try parser.parse(f.type);\n                    return self.add(@unionInit(Property, f.name, val));\n                }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "setProperty",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeProperty from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn removeProperty(self: *Self, prop_name: []const u8) void {\n            inline for (std.meta.fields(Property)) |f| {\n                if (std.mem.eql(u8, cssName(f.name), prop_name)) {\n                    self.remove(@field(Property, f.name));\n                }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "removeProperty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn format(self: Self, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n            for (self.properties.items, 0..) |prop, i| {\n                if (i > 0) try writer.writeAll(\"; \");\n\n                try writer.print(\"{s}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn parse(allocator: std.mem.Allocator, css_text: []const u8) !Self {\n            var parser = Parser.init(allocator, css_text);\n            return try parser.parse(Self);\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseWith from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "pub fn parseWith(parser: *Parser) !Self {\n            var res = Self.init(parser.allocator);\n\n            while (parser.expect(.ident) catch null) |prop_name| {\n                try parser.expect(.colon);\n\n                const val_start = parser.tokenizer.pos;\n                while (parser.tokenizer.next() catch null) |t2| if (t2 == .semi or t2 == .rcurly) break;\n\n                res.setProperty(prop_name, parser.tokenizer.input[val_start..parser.tokenizer.pos]) catch continue;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "parseWith",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to propName from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "fn propName(prop: Property) []const u8 {\n            switch (prop) {\n                inline else => |_, tag| return cssName(@tagName(tag)),\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "propName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to find from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "fn find(self: *Self, tag: std.meta.Tag(Property)) ?usize {\n            for (self.properties.items, 0..) |prop, i| {\n                if (prop == tag) return i;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "find",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "fn add(self: *Self, prop: Property) !void {\n            if (self.find(prop)) |i| {\n                self.properties.items[i] = prop;\n                return;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "fn remove(self: *Self, tag: std.meta.Tag(Property)) void {\n            if (self.find(tag)) |i| {\n                _ = self.properties.orderedRemove(i);\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fmtPropValue from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "fn fmtPropValue(prop: Property) std.fmt.Formatter(formatPropValue) {\n            return .{ .data = prop }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "fmtPropValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to formatPropValue from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "fn formatPropValue(prop: Property, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n            switch (prop) {\n                inline else => |v| try switch (@typeInfo(@TypeOf(v))) {\n                    .Enum => writer.writeAll(@tagName(v)),\n                    .Int, .Float => writer.print(\"{d}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "function",
+      "name": "formatPropValue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestShorthand from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_declaration.zig",
+    "response": "const TestShorthand = struct {\n    flex: struct {\n        flex_grow: f32 = 0,\n        flex_shrink: f32 = 1,\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_declaration.zig",
+      "type": "struct",
+      "name": "TestShorthand",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to StyleRule from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_rule.zig",
+    "response": "pub fn StyleRule(comptime StyleDeclaration: type) type {\n    return struct {\n        selector: Selector,\n        style: StyleDeclaration,\n\n        const Self = @This();\n\n        pub fn parseWith(parser: *Parser) !Self {\n            return .{\n                .selector = try parser.parse(Selector),\n                .style = try parser.parse(StyleDeclaration),\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_rule.zig",
+      "type": "function",
+      "name": "StyleRule",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_rule.zig",
+    "response": "pub fn format(self: Self, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n            return writer.print(\"{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_rule.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Style from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_rule.zig",
+    "response": "const Style = struct { border_radius: f32 = 0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_rule.zig",
+      "type": "struct",
+      "name": "Style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Style from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_rule.zig",
+    "response": "const Style = struct { opacity: f32 = 1 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_rule.zig",
+      "type": "struct",
+      "name": "Style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to StyleSheet from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_sheet.zig",
+    "response": "pub fn StyleSheet(comptime StyleRule: type) type {\n    return struct {\n        rules: std.ArrayList(StyleRule),\n        owner_node: ?*anyopaque = null,\n\n        const Self = @This();\n\n        /// Creates a new, empty style sheet.\n        pub fn init(allocator: std.mem.Allocator) Self {\n            return .{\n                .rules = std.ArrayList(StyleRule).init(allocator),\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_sheet.zig",
+      "type": "function",
+      "name": "StyleSheet",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_sheet.zig",
+    "response": "pub fn deinit(self: *Self) void {\n            self.rules.deinit();\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_sheet.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_sheet.zig",
+    "response": "pub fn format(self: Self, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n            for (self.rules.items) |r| {\n                try writer.print(\"{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_sheet.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_sheet.zig",
+    "response": "pub fn parse(allocator: std.mem.Allocator, input: []const u8) !Self {\n            var parser = Parser.init(allocator, input);\n            var sheet = Self.init(allocator);\n            errdefer sheet.deinit();\n\n            while (parser.parse(StyleRule) catch null) |r| {\n                try sheet.rules.append(r);\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_sheet.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to insertRule from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_sheet.zig",
+    "response": "pub fn insertRule(self: *Self, rule: []const u8, index: usize) !usize {\n            if (index > self.rules.items.len) return error.IndexSizeError;\n\n            var parser = Parser.init(self.rules.allocator, rule);\n            var res = try parser.parse(StyleRule);\n\n            try self.rules.insert(index, res);\n            return index;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_sheet.zig",
+      "type": "function",
+      "name": "insertRule",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteRule from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/style_sheet.zig",
+    "response": "pub fn deleteRule(self: *Self, index: usize) void {\n            if (index >= self.rules.len) return error.IndexSizeError;\n\n            var rule = self.rules.orderedRemove(index);\n            rule.deinit(self.rules.allocator);\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/style_sheet.zig",
+      "type": "function",
+      "name": "deleteRule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rest from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "pub fn rest(self: *Tokenizer) []const u8 {\n        return self.input[self.pos..];\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "rest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to peek from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "pub fn peek(self: *Tokenizer) Error!u8 {\n        return if (self.pos < self.input.len) self.input[self.pos] else error.Eof;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "peek",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "pub fn next(self: *Tokenizer) Error!Token {\n        self.space_before = false;\n\n        if (self.consumeNumber()) |num| {\n            if (self.consumeSeq(\"%\")) {\n                return Token{ .dimension = .{ .value = num, .unit = \"percent\" }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consumeNumber from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn consumeNumber(self: *Tokenizer) ?f32 {\n        const prev = self.pos;\n        const s = self.consume(isNumStart, isNumeric) orelse return null;\n        return std.fmt.parseFloat(f32, s) catch {\n            self.pos = prev;\n            return null;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "consumeNumber",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consumeIdent from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn consumeIdent(self: *Tokenizer) ?[]const u8 {\n        return self.consume(isIdentStart, isIdent);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "consumeIdent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consumeHash from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn consumeHash(self: *Tokenizer) ?[]const u8 {\n        return self.consume(isIdent, isIdent);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "consumeHash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consumeSeq from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn consumeSeq(self: *Tokenizer, needle: []const u8) bool {\n        if (std.mem.startsWith(u8, self.rest(), needle)) {\n            self.pos += needle.len;\n            return true;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "consumeSeq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consume from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn consume(self: *Tokenizer, f1: anytype, f2: anytype) ?[]const u8 {\n        const start = self.pos;\n\n        if (f1(self.peek() catch return null)) {\n            self.pos += 1;\n\n            while (self.peek() catch null) |ch2| : (self.pos += 1) {\n                if (!f2(ch2)) break;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "consume",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consumeString from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn consumeString(self: *Tokenizer, quote: u8) ![]const u8 {\n        const start = self.pos;\n        var prev: u8 = '\\\\';\n        self.pos += 1;\n\n        while (self.peek() catch null) |ch| {\n            if (ch == quote and prev != '\\\\') break;\n\n            prev = ch;\n            self.pos += 1;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "consumeString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextCharSkipComments from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn nextCharSkipComments(self: *Tokenizer) Error!u8 {\n        while (self.consumeSeq(\"/*\")) {\n            while (!self.consumeSeq(\"*/\")) self.pos += 1;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "nextCharSkipComments",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isIdentStart from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn isIdentStart(ch: u8) bool {\n    return std.ascii.isAlphabetic(ch) or ch == '_' or ch == '-';\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "isIdentStart",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isIdent from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn isIdent(ch: u8) bool {\n    return isIdentStart(ch) or std.ascii.isDigit(ch);\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "isIdent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isNumStart from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn isNumStart(ch: u8) bool {\n    return isNumeric(ch) or ch == '-' or ch == '+';\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "isNumStart",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isNumeric from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn isNumeric(ch: u8) bool {\n    return std.ascii.isDigit(ch) or ch == '.';\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "isNumeric",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectTokens from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "fn expectTokens(input: []const u8, tokens: []const std.meta.Tag(Token)) !void {\n    var tokenizer = Tokenizer{ .input = input }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "function",
+      "name": "expectTokens",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Tokenizer from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/tokenizer.zig",
+    "response": "pub const Tokenizer = struct {\n    input: []const u8,\n    pos: usize = 0,\n    space_before: bool = false,\n    semi_before: bool = false,\n\n    pub const Error = error{ Eof, InvalidCharacter }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/tokenizer.zig",
+      "type": "struct",
+      "name": "Tokenizer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/angle.zig",
+    "response": "pub fn format(self: Angle, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n        return switch (self) {\n            .percent => |v| writer.print(\"{d}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/angle.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseWith from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/angle.zig",
+    "response": "pub fn parseWith(parser: *Parser) !Angle {\n        switch (try parser.tokenizer.next()) {\n            .number => |n| return .{ .deg = n }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/angle.zig",
+      "type": "function",
+      "name": "parseWith",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to value from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/angle.zig",
+    "response": "pub fn value(self: Angle) f32 {\n        var v = switch (self) {\n            .deg => |v| v / 360.0,\n            .grad => |v| v / 400.0,\n            .rad => |v| v / std.math.tau,\n            .turn => |v| v,\n            .percent => |v| v / 100.0,\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/angle.zig",
+      "type": "function",
+      "name": "value",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgb from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub fn rgb(r: u8, g: u8, b: u8) Color {\n        return rgba(r, g, b, .{ .value = 1.0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "rgb",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgba from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub fn rgba(r: u8, g: u8, b: u8, a: NumberOrPercentage) Color {\n        return .{ .r = r, .g = g, .b = b, .a = f32_to_u8_clamped(a.value * 255.0) }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "rgba",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hsl from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub fn hsl(h: Angle, s: NumberOrPercentage, l: NumberOrPercentage) Color {\n        return hsla(h, s, l, .{ .value = 1.0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "hsl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hsla from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub fn hsla(hue: Angle, saturation: NumberOrPercentage, lightness: NumberOrPercentage, alpha: NumberOrPercentage) Color {\n        var h = @mod(hue.value(), 1.0);\n        if (h < 0.0) h += 1.0;\n\n        var s = std.math.clamp(saturation.value, 0, 1);\n        var l = std.math.clamp(lightness.value, 0, 1);\n\n        var a = f32_to_u8_clamped(alpha.value * 255.0);\n\n        if (s == 0) {\n            var v = f32_to_u8_clamped(l * 255.0);\n            return .{\n                .r = v,\n                .g = v,\n                .b = v,\n                .a = a,\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "hsla",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to named from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub fn named(name: []const u8) ?Color {\n        inline for (NAMED_COLORS) |tuple| {\n            if (std.mem.eql(u8, name, tuple.@\"0\")) {\n                return tuple.@\"1\";\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "named",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub fn format(self: Color, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n        try writer.print(\"rgba({}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseWith from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub fn parseWith(parser: *Parser) !Color {\n        const tok = try parser.tokenizer.next();\n\n        switch (tok) {\n            .ident => if (named(tok.ident)) |c| return c,\n            .function => inline for (.{ \"rgb\", \"rgba\", \"hsl\", \"hsla\" }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "parseWith",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hex from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "fn hex(s: []const u8) u8 {\n    return std.fmt.parseInt(u8, s, 16) catch 0;\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "hex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hue_to_rgb from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "fn hue_to_rgb(hue: f32, m1: f32, m2: f32) f32 {\n    var h = if (hue < 0.0) hue + 1.0 else if (hue > 1.0) hue - 1.0 else hue;\n\n    if (h * 6.0 < 1.0) {\n        return m1 + (m2 - m1) * h * 6.0;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "hue_to_rgb",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to f32_to_u8_clamped from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "fn f32_to_u8_clamped(f: f32) u8 {\n    return @intFromFloat(std.math.clamp(f, 0, 255));\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "function",
+      "name": "f32_to_u8_clamped",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Color from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/color.zig",
+    "response": "pub const Color = struct {\n    r: u8,\n    g: u8,\n    b: u8,\n    a: u8,\n\n    pub fn rgb(r: u8, g: u8, b: u8) Color {\n        return rgba(r, g, b, .{ .value = 1.0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/color.zig",
+      "type": "struct",
+      "name": "Color",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/dimension.zig",
+    "response": "pub fn format(self: Dimension, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n        return switch (self) {\n            .auto, .vmin, .vmax => writer.print(\"{s}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/dimension.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseWith from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/dimension.zig",
+    "response": "pub fn parseWith(parser: *Parser) !Dimension {\n        switch (try parser.tokenizer.next()) {\n            .number => |n| if (n == 0) return .{ .px = 0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/dimension.zig",
+      "type": "function",
+      "name": "parseWith",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/percentage.zig",
+    "response": "pub fn format(self: NumberOrPercentage, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n        return writer.print(\"{d}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/percentage.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseWith from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/percentage.zig",
+    "response": "pub fn parseWith(parser: *Parser) !NumberOrPercentage {\n        switch (try parser.tokenizer.next()) {\n            .number => |n| return .{ .value = n }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/percentage.zig",
+      "type": "function",
+      "name": "parseWith",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to NumberOrPercentage from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/css/values/percentage.zig",
+    "response": "pub const NumberOrPercentage = struct {\n    value: f32,\n\n    pub fn format(self: NumberOrPercentage, comptime _: []const u8, _: std.fmt.FormatOptions, writer: anytype) !void {\n        return writer.print(\"{d}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/css/values/percentage.zig",
+      "type": "struct",
+      "name": "NumberOrPercentage",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setData from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/character_data.zig",
+    "response": "pub fn setData(self: *CharacterData, data: []const u8) !void {\n        self.node.owner_document.allocator.free(self.data);\n        self.data = try self.node.owner_document.allocator.dupe(u8, data);\n        self.node.markDirty();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/character_data.zig",
+      "type": "function",
+      "name": "setData",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CharacterData from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/character_data.zig",
+    "response": "pub const CharacterData = struct {\n    node: Node,\n    data: []const u8,\n\n    pub fn setData(self: *CharacterData, data: []const u8) !void {\n        self.node.owner_document.allocator.free(self.data);\n        self.data = try self.node.owner_document.allocator.dupe(u8, data);\n        self.node.markDirty();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/character_data.zig",
+      "type": "struct",
+      "name": "CharacterData",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) !*Document {\n        var document = try allocator.create(Document);\n        document.* = .{\n            .node = .{\n                .owner_document = document,\n                .node_type = .document,\n                .layout = .{\n                    .style = .{ .display = .block, .width = .{ .percent = 100 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to documentElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn documentElement(self: *Document) ?*Element {\n        return if (self.node.first_child) |node| node.element() else null;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "documentElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to head from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn head(self: *Document) ?*Element {\n        var root = self.documentElement() orelse return null;\n        var iter = root.childrenByLocalName(\"head\");\n        return iter.next();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "head",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to body from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn body(self: *Document) ?*Element {\n        var root = self.documentElement() orelse return null;\n        var iter = root.childrenByLocalName(\"body\");\n        return iter.next();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "body",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn createElement(self: *Document, local_name: []const u8) !*Element {\n        return Element.init(self, local_name);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "createElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createTextNode from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn createTextNode(self: *Document, data: []const u8) !*CharacterData {\n        const Cx = struct {\n            fn measure(node: *std.meta.FieldType(Node, .layout), _: [2]f32) [2]f32 {\n                // TODO: use node.context.parent_node to get the parent element and use font size from the computed style\n                const text = @as(*CharacterData, @ptrCast(@alignCast(node.context)));\n                return .{ @as(f32, @floatFromInt(text.data.len)) * 7, 19.5 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "createTextNode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createComment from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn createComment(self: *Document, data: []const u8) !*CharacterData {\n        var text = try self.allocator.create(CharacterData);\n        text.* = .{\n            .node = .{\n                .owner_document = self,\n                .node_type = .comment,\n                .layout = .{\n                    .style = .{ .display = .none }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "createComment",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to elementFromPoint from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn elementFromPoint(self: *Document, x: f32, y: f32) !*Node {\n        try self.update();\n\n        var res = self.node.first_child orelse @panic(\"no root element\");\n        var next: ?*Node = res;\n        var cur: [2]f32 = .{ x, y }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "elementFromPoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to update from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub fn update(self: *Document) !void {\n        if (self.node.has_dirty) {\n            const force = try self.updateStyleSheets();\n            self.updateTree(&self.node, force);\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "update",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateStyleSheets from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "fn updateStyleSheets(self: *Document) !bool {\n        const head_el = self.head() orelse return false;\n        if (!head_el.node.has_dirty) return false;\n\n        var changed = false;\n        var style_els = head_el.childrenByLocalName(\"style\");\n        var i: usize = 1;\n\n        while (style_els.next()) |el| : (i += 1) {\n            if (el.node.is_dirty or el.node.has_dirty) {\n                var buf = std.ArrayList(u8).init(self.allocator);\n                defer buf.deinit();\n                defer changed = true;\n\n                var writer = buf.writer();\n                var childNodes = el.node.childNodes();\n\n                while (childNodes.next()) |child| {\n                    if (child.node_type == .text) {\n                        try writer.writeAll(@as(*CharacterData, @ptrCast(child)).data);\n                    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "updateStyleSheets",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findStyleSheet from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "fn findStyleSheet(self: *Document, element: *Element) ?*StyleSheet {\n        for (self.style_sheets.items) |*sheet| {\n            if (sheet.owner_node == @as(*anyopaque, element)) return sheet;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "findStyleSheet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateTree from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "fn updateTree(self: *Document, node: *Node, force: bool) void {\n        if (force or node.is_dirty) {\n            switch (node.node_type) {\n                .element => updateElement(self, @ptrCast(node)),\n                .text => {}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "updateTree",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "fn updateElement(self: *Document, element: *Element) void {\n        // clear\n        element.node.layout.style = .{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "updateElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateLayout from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "fn updateLayout(self: *Document) void {\n        self.node.layout.compute(self.node.layout.size);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "function",
+      "name": "updateLayout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Document from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "pub const Document = struct {\n    node: Node,\n    allocator: std.mem.Allocator,\n    style_sheets: std.ArrayList(StyleSheet),\n\n    /// Creates a new document.\n    pub fn init(allocator: std.mem.Allocator) !*Document {\n        var document = try allocator.create(Document);\n        document.* = .{\n            .node = .{\n                .owner_document = document,\n                .node_type = .document,\n                .layout = .{\n                    .style = .{ .display = .block, .width = .{ .percent = 100 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "struct",
+      "name": "Document",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Cx from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/document.zig",
+    "response": "const Cx = struct {\n            fn measure(node: *std.meta.FieldType(Node, .layout), _: [2]f32) [2]f32 {\n                // TODO: use node.context.parent_node to get the parent element and use font size from the computed style\n                const text = @as(*CharacterData, @ptrCast(@alignCast(node.context)));\n                return .{ @as(f32, @floatFromInt(text.data.len)) * 7, 19.5 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/document.zig",
+      "type": "struct",
+      "name": "Cx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn init(document: *Document, local_name: []const u8) !*Element {\n        var element = try document.allocator.create(Element);\n        element.* = .{\n            .node = .{\n                .owner_document = document,\n                .node_type = .element,\n                .layout = .{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn deinit(self: *Element) void {\n        self.node.owner_document.allocator.free(self.local_name);\n        self.attributes.deinit();\n        self.style.deinit();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to children from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn children(self: *Element) ChildrenIterator {\n        return .{ .nodes = self.node.childNodes() }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "children",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to childrenByLocalName from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn childrenByLocalName(self: *Element, local_name: []const u8) ChildrenByLocalName {\n        return .{ .children = self.children(), .local_name = local_name }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "childrenByLocalName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasAttributes from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn hasAttributes(self: *Element) bool {\n        return self.attributes.hash_map.count() > 0;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "hasAttributes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasAttribute from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn hasAttribute(self: *Element, name: []const u8) bool {\n        return self.attributes.hash_map.contains(name);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "hasAttribute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAttributeNames from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn getAttributeNames(self: *Element) AttributeNamesIterator {\n        return .{ .attributes = self.attributes.hash_map.iterator() }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "getAttributeNames",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAttribute from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn getAttribute(self: *Element, name: []const u8) ?[]const u8 {\n        return self.attributes.get(name);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "getAttribute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setAttribute from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn setAttribute(self: *Element, name: []const u8, value: []const u8) !void {\n        try self.attributes.put(name, value);\n        self.node.markDirty();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "setAttribute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeAttribute from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn removeAttribute(self: *Element, name: []const u8) void {\n        self.attributes.remove(name);\n        self.node.markDirty();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "removeAttribute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matches from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn matches(self: *Element, selector: *const Selector) bool {\n        const Cx = struct {\n            pub fn parentElement(el: *Element) ?*Element {\n                const parent = el.node.parent_node orelse return null;\n                return parent.element();\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "matches",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to localName from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn localName(el: *Element) []const u8 {\n                return el.local_name;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "localName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to id from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn id(el: *Element) []const u8 {\n                return el.getAttribute(\"id\") orelse \"\";\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to className from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn className(el: *Element) []const u8 {\n                return el.getAttribute(\"class\") orelse \"\";\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "className",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to applyStyle from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn applyStyle(self: *Element, style: *const StyleDeclaration) void {\n        for (style.properties.items) |p| {\n            switch (p) {\n                inline else => |value, tag| {\n                    const v = if (comptime @TypeOf(value) == css.Dimension) convertDim(value) else value;\n\n                    if (comptime @hasField(emlay.Style, @tagName(tag))) {\n                        @field(self.node.layout.style, @tagName(tag)) = v;\n                    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "applyStyle",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn next(self: *ChildrenIterator) ?*Element {\n            const node = self.nodes.next() orelse return null;\n            return node.element() orelse self.next();\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn next(self: *AttributeNamesIterator) ?[]const u8 {\n            const entry = self.attributes.next() orelse return null;\n            return entry.key_ptr.*;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub fn next(self: *ChildrenByLocalName) ?*Element {\n            const el = self.children.next() orelse return null;\n            if (std.mem.eql(u8, el.local_name, self.local_name)) return el;\n            return self.next();\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to convertDim from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "fn convertDim(value: css.Dimension) emlay.Dimension {\n    return switch (value) {\n        .auto => .auto,\n        .px => |v| .{ .px = v }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "function",
+      "name": "convertDim",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Element from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub const Element = struct {\n    node: Node,\n    local_name: []const u8,\n    attributes: std.BufMap,\n    style: StyleDeclaration,\n    layer_style: LayerStyle,\n\n    pub fn init(document: *Document, local_name: []const u8) !*Element {\n        var element = try document.allocator.create(Element);\n        element.* = .{\n            .node = .{\n                .owner_document = document,\n                .node_type = .element,\n                .layout = .{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "struct",
+      "name": "Element",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Cx from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "const Cx = struct {\n            pub fn parentElement(el: *Element) ?*Element {\n                const parent = el.node.parent_node orelse return null;\n                return parent.element();\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "struct",
+      "name": "Cx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ChildrenIterator from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub const ChildrenIterator = struct {\n        nodes: Node.ChildNodesIterator,\n\n        pub fn next(self: *ChildrenIterator) ?*Element {\n            const node = self.nodes.next() orelse return null;\n            return node.element() orelse self.next();\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "struct",
+      "name": "ChildrenIterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AttributeNamesIterator from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub const AttributeNamesIterator = struct {\n        attributes: std.StringHashMap([]const u8).Iterator,\n\n        pub fn next(self: *AttributeNamesIterator) ?[]const u8 {\n            const entry = self.attributes.next() orelse return null;\n            return entry.key_ptr.*;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "struct",
+      "name": "AttributeNamesIterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ChildrenByLocalName from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/element.zig",
+    "response": "pub const ChildrenByLocalName = struct {\n        children: ChildrenIterator,\n        local_name: []const u8,\n\n        pub fn next(self: *ChildrenByLocalName) ?*Element {\n            const el = self.children.next() orelse return null;\n            if (std.mem.eql(u8, el.local_name, self.local_name)) return el;\n            return self.next();\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/element.zig",
+      "type": "struct",
+      "name": "ChildrenByLocalName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to element from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn element(self: *Node) ?*Element {\n        return if (self.node_type == .element) @ptrCast(self) else null;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "element",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasChildNodes from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn hasChildNodes(self: *Node) bool {\n        return self.first_child != null;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "hasChildNodes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to childNodes from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn childNodes(self: *Node) ChildNodesIterator {\n        return .{ .next_child = self.first_child }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "childNodes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to appendChild from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn appendChild(self: *Node, child: *Node) !void {\n        try self.checkParent(child, null);\n\n        if (self.last_child) |last| {\n            last.next_sibling = child;\n            last.layout.next_sibling = &child.layout;\n            child.previous_sibling = last;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "appendChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to insertBefore from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn insertBefore(self: *Node, child: *Node, before: *Node) !void {\n        try self.checkParent(child, null);\n        try self.checkParent(before, self);\n\n        if (before.previous_sibling) |prev| {\n            prev.next_sibling = child;\n            prev.layout.next_sibling = &child.layout;\n            child.previous_sibling = prev;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "insertBefore",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeChild from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn removeChild(self: *Node, child: *Node) !void {\n        try self.checkParent(child, self);\n\n        if (child.previous_sibling) |prev| {\n            prev.next_sibling = child.next_sibling;\n            prev.layout.next_sibling = child.layout.next_sibling;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "removeChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to querySelector from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn querySelector(self: *Node, selector: *const Selector) ?*Element {\n        var iter = self.querySelectorAll(selector);\n        return iter.next();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "querySelector",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to querySelectorAll from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn querySelectorAll(self: *Node, selector: *const Selector) QuerySelectorIterator {\n        return .{\n            .selector = selector,\n            .descendants = .{ .start = self, .pos = self }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "querySelectorAll",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkParent from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "fn checkParent(self: *Node, node: *Node, parent: ?*Node) !void {\n        if (node.owner_document != self.owner_document or node.parent_node != parent) {\n            return error.InvalidChild;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "checkParent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to markDirty from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn markDirty(self: *Node) void {\n        self.is_dirty = true;\n\n        // propagate up, so we can then go in-order but skip up-to-date subtrees\n        // we always recompute whole subtree so we don't need to mark descendants\n        var next = self.parent_node;\n        while (next) |n| : (next = n.parent_node) {\n            if (n.is_dirty or n.has_dirty) break;\n            n.has_dirty = true;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "markDirty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn next(self: *ChildNodesIterator) ?*Node {\n            const ch = self.next_child orelse return null;\n            self.next_child = ch.next_sibling;\n            return ch;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn next(self: *DescendantsIterator) ?*Node {\n            if (self.pos.first_child) |ch| {\n                self.pos = ch;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub fn next(self: *QuerySelectorIterator) ?*Element {\n            while (self.descendants.next()) |node| {\n                if (node.element()) |el| {\n                    if (el.matches(self.selector)) return el;\n                }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Node from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub const Node = struct {\n    // tree\n    owner_document: *Document,\n    node_type: enum { element, text, comment, document }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "struct",
+      "name": "Node",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ChildNodesIterator from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub const ChildNodesIterator = struct {\n        next_child: ?*Node,\n\n        pub fn next(self: *ChildNodesIterator) ?*Node {\n            const ch = self.next_child orelse return null;\n            self.next_child = ch.next_sibling;\n            return ch;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "struct",
+      "name": "ChildNodesIterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DescendantsIterator from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub const DescendantsIterator = struct {\n        start: *Node,\n        pos: *Node,\n\n        pub fn next(self: *DescendantsIterator) ?*Node {\n            if (self.pos.first_child) |ch| {\n                self.pos = ch;\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "struct",
+      "name": "DescendantsIterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to QuerySelectorIterator from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/dom/node.zig",
+    "response": "pub const QuerySelectorIterator = struct {\n        selector: *const Selector,\n        descendants: DescendantsIterator,\n\n        pub fn next(self: *QuerySelectorIterator) ?*Element {\n            while (self.descendants.next()) |node| {\n                if (node.element()) |el| {\n                    if (el.matches(self.selector)) return el;\n                }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/dom/node.zig",
+      "type": "struct",
+      "name": "QuerySelectorIterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initModule from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/napi.zig",
+    "response": "fn initModule(js: *napigen.JsContext, exports: napigen.napi_value) anyerror!napigen.napi_value {\n    // export init() function which will init native window, and return the globals for JS\n    try js.setNamedProperty(exports, \"init\", try js.createFunction(init));\n\n    // function wrappers and field getters we want to generate\n    // `&` means we want to get a pointer to the field\n    const defs = .{\n        .Node = .{ .appendChild, .insertBefore, .removeChild, .querySelector, .querySelectorAll, .markDirty }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/napi.zig",
+      "type": "function",
+      "name": "initModule",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to valGetter from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/napi.zig",
+    "response": "fn valGetter(comptime T: type, comptime field: std.meta.FieldEnum(T)) fn (*T) std.meta.fieldInfo(T, field).type {\n    return (struct {\n        fn get(ptr: *T) std.meta.fieldInfo(T, field).type {\n            return @field(ptr, @tagName(field));\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/napi.zig",
+      "type": "function",
+      "name": "valGetter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to refGetter from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/napi.zig",
+    "response": "fn refGetter(comptime T: type, comptime field: std.meta.FieldEnum(T)) fn (*T) *std.meta.fieldInfo(T, field).type {\n    return (struct {\n        fn get(ptr: *T) *std.meta.fieldInfo(T, field).type {\n            return &@field(ptr, @tagName(field));\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/napi.zig",
+      "type": "function",
+      "name": "refGetter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/napi.zig",
+    "response": "fn init(js: *napigen.JsContext) !napigen.napi_value {\n    try platform.init();\n\n    window = try platform.Window.init(\"Hello\", 800, 600);\n    document = try lib.Document.init(napigen.allocator);\n    renderer = try lib.Renderer.init(napigen.allocator);\n\n    // hook into libuv\n    try uv_hook.init(js);\n\n    return js.write(.{\n        .document = document,\n        .window = window,\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/napi.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to napigenRead from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/napi.zig",
+    "response": "pub fn napigenRead(js: *napigen.JsContext, comptime T: type, value: napigen.napi_value) !T {\n    return switch (T) {\n        *const lib.Selector => {\n            var ptr = try js.arena.allocator().create(lib.Selector);\n            ptr.* = lib.Selector.parse(js.arena.allocator(), try js.readString(value)) catch return error.napi_invalid_arg;\n            return ptr;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/napi.zig",
+      "type": "function",
+      "name": "napigenRead",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to napigenWrite from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/napi.zig",
+    "response": "pub fn napigenWrite(js: *napigen.JsContext, value: anytype) !napigen.napi_value {\n    const T = @TypeOf(value);\n\n    // support writing iterators as arrays\n    if (@typeInfo(T) == .Struct and @hasDecl(T, \"next\")) {\n        var iter = value;\n        var list = std.ArrayList(@TypeOf(iter.next().?)).init(js.arena.allocator());\n        while (iter.next()) |it| try list.append(it);\n        return js.createArrayFrom(list.items);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/napi.zig",
+      "type": "function",
+      "name": "napigenWrite",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to update from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/napi.zig",
+    "response": "pub fn update() !void {\n    document.node.layout.size = window.size();\n    try document.update();\n    renderer.render(document, window.size(), window.scale());\n    window.swapBuffers();\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/napi.zig",
+      "type": "function",
+      "name": "update",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn init(title: [*:0]const u8, width: i32, height: i32) !*Self {\n        if (builtin.is_test) return undefined;\n\n        // requested GL features\n        c.glfwWindowHint(c.GLFW_CONTEXT_VERSION_MAJOR, 2);\n        c.glfwWindowHint(c.GLFW_CONTEXT_VERSION_MINOR, 0);\n\n        const window = c.glfwCreateWindow(width, height, title, null, null) orelse return error.GlfwCreateWindowFailed;\n        _ = c.glfwSetWindowCloseCallback(window, &handleGlfwWindowClose);\n        _ = c.glfwSetCursorPosCallback(window, &handleGlfwCursorPos);\n        _ = c.glfwSetScrollCallback(window, &handleGlfwScroll);\n        _ = c.glfwSetMouseButtonCallback(window, &handleGlfwMouseButton);\n        _ = c.glfwSetCharCallback(window, &handleGlfwChar);\n        _ = c.glfwSetKeyCallback(window, &handleGlfwKey);\n\n        c.glfwMakeContextCurrent(window);\n        _ = gladLoadGL();\n\n        return @ptrCast(window);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handle from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn handle(self: *Self) *c.GLFWwindow {\n        return @ptrCast(self);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn deinit(self: *Self) void {\n        c.glfwDestroyWindow(self.handle());\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to shouldClose from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn shouldClose(self: *Self) bool {\n        return c.glfwWindowShouldClose(self.handle()) == c.GLFW_TRUE;\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "shouldClose",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to size from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn size(self: *Self) [2]f32 {\n        var res: [2]i32 = .{ 0, 0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scale from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn scale(self: *Self) [2]f32 {\n        var res: [2]f32 = .{ 0, 0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "scale",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to swapBuffers from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn swapBuffers(self: *Self) void {\n        if (!builtin.is_test) c.glfwSwapBuffers(self.handle());\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "swapBuffers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn init() !void {\n    if (c.glfwInit() == 0) return error.GlfwInitFailed;\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pollEvents from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn pollEvents() void {\n    c.glfwPollEvents();\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "pollEvents",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitEvents from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn waitEvents() void {\n    c.glfwWaitEvents();\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "waitEvents",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitEventsTimeout from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn waitEventsTimeout(timeout: f64) void {\n    c.glfwWaitEventsTimeout(timeout);\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "waitEventsTimeout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wakeUp from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn wakeUp() void {\n    c.glfwPostEmptyEvent();\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "wakeUp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextEvent from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub fn nextEvent() ?Event {\n    return events.popOrNull();\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "nextEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gladLoadGL from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn gladLoadGL() callconv(.C) c_int;\n\nfn handleGlfwWindowClose(w: ?*c.GLFWwindow) callconv(.C) void {\n    pushEvent(.{ .target = w, .kind = .close }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "gladLoadGL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleGlfwCursorPos from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn handleGlfwCursorPos(w: ?*c.GLFWwindow, x: f64, y: f64) callconv(.C) void {\n    pushEvent(.{ .target = w, .kind = .mouse_move, .x = x, .y = y }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "handleGlfwCursorPos",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleGlfwScroll from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn handleGlfwScroll(w: ?*c.GLFWwindow, x: f64, y: f64) callconv(.C) void {\n    pushEvent(.{ .target = w, .kind = .scroll, .x = x, .y = y }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "handleGlfwScroll",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleGlfwMouseButton from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn handleGlfwMouseButton(w: ?*c.GLFWwindow, _: c_int, action: c_int, _: c_int) callconv(.C) void {\n    var pos: [2]f64 = .{ 0, 0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "handleGlfwMouseButton",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleGlfwKey from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn handleGlfwKey(w: ?*c.GLFWwindow, key: c_int, _: c_int, action: c_int, _: c_int) callconv(.C) void {\n    // TODO: key -> which\n    pushEvent(.{ .target = w, .kind = if (action == c.GLFW_PRESS) .key_down else .key_up, .which = @intCast(key) }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "handleGlfwKey",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleGlfwChar from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn handleGlfwChar(w: ?*c.GLFWwindow, char: c_uint) callconv(.C) void {\n    pushEvent(.{ .target = w, .kind = .key_press, .char = char }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "handleGlfwChar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pushEvent from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "fn pushEvent(event: Event) void {\n    events.insert(0, event) catch @panic(\"OOM\");\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "function",
+      "name": "pushEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Event from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/platform.zig",
+    "response": "pub const Event = struct {\n    kind: enum { close, mouse_move, scroll, mouse_down, mouse_up, click, key_down, key_press, key_up }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/platform.zig",
+      "type": "struct",
+      "name": "Event",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) anyerror!Renderer {\n        var vg = try nvg.gl.init(allocator, .{\n            .antialias = true,\n            .stencil_strokes = false,\n            .debug = true,\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "pub fn deinit(self: *Renderer) void {\n        self.vg.deinit();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to render from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "pub fn render(self: *Renderer, document: *Document, size: [2]f32, scale: [2]f32) void {\n        self.vg.beginFrame(size[0], size[1], scale[0]);\n        defer self.vg.endFrame();\n\n        // white bg\n        self.drawShape(&Shape{ .rect = .{ 0, 0, size[0], size[1] }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "render",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderNode from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn renderNode(self: *Renderer, node: *Node) void {\n        switch (node.node_type) {\n            .element => self.renderElement(@ptrCast(node)),\n            .text => self.renderText(@ptrCast(node)),\n            else => return,\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "renderNode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderText from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn renderText(self: *Renderer, text: *CharacterData) void {\n        self.vg.fontFace(\"sans\");\n        self.vg.fontSize(16);\n        self.vg.fillColor(nvg.rgb(0, 0, 0));\n        _ = self.vg.text(text.node.layout.pos[0], text.node.layout.pos[1] + 16, text.data);\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "renderText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn renderElement(self: *Renderer, element: *Element) void {\n        // split open/close so we can skip invisibles AND we can also reduce the stack usage per each recursion\n        if (self.openElement(element)) {\n            self.vg.translate(element.node.layout.pos[0], element.node.layout.pos[1]);\n\n            var iter = element.node.childNodes();\n            while (iter.next()) |ch| {\n                self.renderNode(ch);\n            }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "renderElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to openElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn openElement(self: *Renderer, element: *Element) bool {\n        // TODO: const rect = element.paddingRect(), element.borderRect(), ...\n        const style = &element.layer_style;\n\n        // we don't have to save/restore() if we can skip the whole subtree\n        if (style.visibility == .hidden or style.opacity == 0) {\n            return false;\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "openElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeElement from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn closeElement(self: *Renderer) void {\n        // TODO: optional border\n\n        self.vg.restore();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "closeElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawBgColor from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn drawBgColor(self: *Renderer, shape: *const Shape, color: Color) void {\n        self.drawShape(shape);\n        self.vg.fillColor(nvgColor(color));\n        self.vg.fill();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "drawBgColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawBackgroundImage from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn drawBackgroundImage(_: *Renderer, _: *const BackgroundImage) void {\n        std.debug.print(\"TODO: drawBackgroundImage\", .{}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "drawBackgroundImage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawOutline from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn drawOutline(self: *Renderer, shape: *const Shape, width: f32, color: Color) void {\n        self.drawShape(shape);\n\n        self.vg.strokeWidth(width);\n        self.vg.strokeColor(nvgColor(color));\n        self.vg.stroke();\n    }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "drawOutline",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawShadow from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn drawShadow(self: *Renderer, shape: *const Shape, x: f32, y: f32, blur: f32, spread: f32, color: Color) void {\n        _ = spread;\n        _ = y;\n        _ = x;\n\n        const rect = shape.rect;\n        var out_rect: [4]f32 = .{\n            rect[0] - blur,\n            rect[1] - blur,\n            rect[2] + 2 * blur,\n            rect[3] + 2 * blur,\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "drawShadow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drawShape from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn drawShape(self: *Renderer, shape: *const Shape) void {\n        self.vg.beginPath();\n\n        if (std.meta.eql(shape.radii, .{ 0, 0, 0, 0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "drawShape",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nvgColor from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "fn nvgColor(color: Color) nvg.Color {\n    return nvg.rgba(color.r, color.g, color.b, color.a);\n}",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "function",
+      "name": "nvgColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Shape from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "const Shape = struct {\n    rect: [4]f32,\n    radii: [4]f32 = .{ 0, 0, 0, 0 }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "struct",
+      "name": "Shape",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Renderer from cztomsik/graffiti",
+    "context": "Repository: cztomsik/graffiti (935 ⭐)\nFile: src/renderer.zig",
+    "response": "pub const Renderer = struct {\n    allocator: std.mem.Allocator,\n    vg: nvg,\n    font: nvg.Font,\n\n    pub fn init(allocator: std.mem.Allocator) anyerror!Renderer {\n        var vg = try nvg.gl.init(allocator, .{\n            .antialias = true,\n            .stencil_strokes = false,\n            .debug = true,\n        }",
+    "metadata": {
+      "repo": "cztomsik/graffiti",
+      "stars": 935,
+      "file": "src/renderer.zig",
+      "type": "struct",
+      "name": "Renderer",
+      "difficulty": "medium"
+    }
+  }
+]

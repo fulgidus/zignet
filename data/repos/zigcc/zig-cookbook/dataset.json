@@ -1,0 +1,457 @@
+[
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/01-01.zig",
+    "response": "pub fn main() !void {\n    const file = try fs.cwd().openFile(\"tests/zig-zen.txt\", .{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/01-01.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/01-02.zig",
+    "response": "pub fn main() !void {\n    if (.windows == @import(\"builtin\").os.tag) {\n        std.debug.print(\"MMap is not supported in Windows\\n\", .{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/01-02.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/01-03.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/01-03.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/01-04.zig",
+    "response": "pub fn main() !void {\n    const filename = \"build.zig\";\n    var found = true;\n    fs.cwd().access(filename, .{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/01-04.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/01-05.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/01-05.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sha256_digest from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/02-01.zig",
+    "response": "fn sha256_digest(\n    file: fs.File,\n) ![Sha256.digest_length]u8 {\n    var sha256 = Sha256.init(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/02-01.zig",
+      "type": "function",
+      "name": "sha256_digest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/02-01.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/02-01.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/02-02.zig",
+    "response": "pub fn main() !void {\n    const salt = [_]u8{ 'a', 'b', 'c' }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/02-02.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/02-03.zig",
+    "response": "pub fn main() !void {\n    var dbg = std.heap.DebugAllocator(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/02-03.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dk_len from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/02-03.zig",
+    "response": "const dk_len: usize = 16;",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/02-03.zig",
+      "type": "const",
+      "name": "dk_len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expensive_function from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/03-01.zig",
+    "response": "fn expensive_function() void {\n    // sleep 500ms\n    std.Thread.sleep(time.ns_per_ms * 500);\n}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/03-01.zig",
+      "type": "function",
+      "name": "expensive_function",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/03-01.zig",
+    "response": "pub fn main() !void {\n    // Method 1: Instant\n    const start = try Instant.now();\n    expensive_function();\n    const end = try Instant.now();\n    const elapsed1: f64 = @floatFromInt(end.since(start));\n    print(\"Time elapsed is: {d:.3}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/03-01.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to elapsed1 from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/03-01.zig",
+    "response": "const elapsed1: f64 = @floatFromInt(end.since(start));",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/03-01.zig",
+      "type": "const",
+      "name": "elapsed1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to elapsed2 from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/03-01.zig",
+    "response": "const elapsed2: f64 = @floatFromInt(timer.read());",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/03-01.zig",
+      "type": "const",
+      "name": "elapsed2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/04-01.zig",
+    "response": "pub fn main() !void {\n    const loopback = try net.Ip4Address.parse(\"127.0.0.1\", 0);\n    const localhost = net.Address{ .in = loopback }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/04-01.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleClient from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/04-01.zig",
+    "response": "fn handleClient(client: net.Server.Connection) !void {\n    print(\"Accepted connection from {f}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/04-01.zig",
+      "type": "function",
+      "name": "handleClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/04-02.zig",
+    "response": "pub fn main() !void {\n    var args = std.process.args();\n    // The first (0 index) Argument is the path to the program.\n    _ = args.skip();\n    const port_value = args.next() orelse {\n        print(\"expect port as command line argument\\n\", .{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/04-02.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/04-03.zig",
+    "response": "pub fn main() !void {\n    // adjust the ip/port here as needed\n    const addr = try net.Address.parseIp(\"127.0.0.1\", 32100);\n\n    // get a socket and set domain, type and protocol flags\n    const sock = try posix.socket(\n        posix.AF.INET,\n        posix.SOCK.DGRAM,\n        posix.IPPROTO.UDP,\n    );\n\n    // for completeness, we defer closing the socket. In practice, if this is\n    // a one-shot program, we could omit this and let the OS do the cleanup\n    defer posix.close(sock);\n\n    try posix.bind(sock, &addr.any, addr.getOsSockLen());\n\n    var other_addr: posix.sockaddr = undefined;\n    var other_addrlen: posix.socklen_t = @sizeOf(posix.sockaddr);\n\n    var buf: [1024]u8 = undefined;\n\n    print(\"Listen on {f}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/04-03.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/05-01.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/05-01.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/05-02.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/05-02.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/05-03.zig",
+    "response": "pub fn main() !void {\n    const addr = try std.net.Address.parseIp(\"127.0.0.1\", 8080);\n    var server = try std.net.Address.listen(addr, .{ .reuse_address = true }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/05-03.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to accept from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/05-03.zig",
+    "response": "fn accept(conn: Connection) !void {\n    defer conn.stream.close();\n\n    log.info(\"Got new client({f}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/05-03.zig",
+      "type": "function",
+      "name": "accept",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serveHTTP from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/05-03.zig",
+    "response": "fn serveHTTP(request: *Request) !void {\n    try request.respond(\n        \"Hello World from Zig HTTP server\",\n        .{\n            .extra_headers = &.{\n                .{ .name = \"custom-header\", .value = \"custom value\" }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/05-03.zig",
+      "type": "function",
+      "name": "serveHTTP",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serveWebSocket from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/05-03.zig",
+    "response": "fn serveWebSocket(ws: *std.http.Server.WebSocket) !void {\n    try ws.writeMessage(\"Hello from Zig WebSocket server\", .text);\n    while (true) {\n        const msg = try ws.readSmallMessage();\n        if (msg.opcode == .connection_close) {\n            log.info(\"Client closed the WebSocket\", .{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/05-03.zig",
+      "type": "function",
+      "name": "serveWebSocket",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/06-01.zig",
+    "response": "pub fn main() !void {\n    const rand = std.crypto.random;\n\n    print(\"Random u8: {}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/06-01.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-01.zig",
+    "response": "pub fn main() !void {\n    var arr = [_]i32{ 1, 25, -4, 10, 100, 200, -100, -200 }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-01.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findMax from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-01.zig",
+    "response": "fn findMax(max_value: *i32, values: []i32) !void {\n    const THRESHOLD: usize = 2;\n\n    if (values.len <= THRESHOLD) {\n        var res = values[0];\n        for (values) |it| {\n            res = @max(res, it);\n        }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-01.zig",
+      "type": "function",
+      "name": "findMax",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to THRESHOLD from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-01.zig",
+    "response": "const THRESHOLD: usize = 2;",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-01.zig",
+      "type": "const",
+      "name": "THRESHOLD",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateValue from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-02.zig",
+    "response": "pub fn updateValue(self: *SharedData, increment: i32) void {\n        // Use `tryLock` if you don't want to block\n        self.mutex.lock();\n        defer self.mutex.unlock();\n\n        for (0..10000) |_| {\n            self.value += increment;\n        }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-02.zig",
+      "type": "function",
+      "name": "updateValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-02.zig",
+    "response": "pub fn main() !void {\n    var shared_data = SharedData{ .mutex = Mutex{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-02.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SharedData from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-02.zig",
+    "response": "const SharedData = struct {\n    mutex: Mutex,\n    value: i32,\n\n    pub fn updateValue(self: *SharedData, increment: i32) void {\n        // Use `tryLock` if you don't want to block\n        self.mutex.lock();\n        defer self.mutex.unlock();\n\n        for (0..10000) |_| {\n            self.value += increment;\n        }",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-02.zig",
+      "type": "struct",
+      "name": "SharedData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-03.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-03.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-03.zig",
+    "response": "fn run(id: usize) void {\n                print(\"I'm from {d}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-03.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onceIncr from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-04.zig",
+    "response": "fn onceIncr() void {\n    // The invocations of `call` are thread-safe.\n    once_incr.call();\n    once_incr.call();\n}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-04.zig",
+      "type": "function",
+      "name": "onceIncr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from zigcc/zig-cookbook",
+    "context": "Repository: zigcc/zig-cookbook (1019 ⭐)\nFile: assets/src/07-04.zig",
+    "response": "pub fn main() !void {\n    {\n        const t1 = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "file": "assets/src/07-04.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  }
+]

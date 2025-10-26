@@ -1,0 +1,1302 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    dest_directory = b.option([]const u8, \"dest_directory\", \"Specify a destination directory for installation\") orelse \"\";\n    config_directory = b.option([]const u8, \"config_directory\", \"Specify a default config directory (default is /etc). This path gets embedded into the binary\") orelse \"/etc\";\n    prefix_directory = b.option([]const u8, \"prefix_directory\", \"Specify a default prefix directory (default is /usr)\") orelse \"/usr\";\n    executable_name = b.option([]const u8, \"name\", \"Specify installed executable file name (default is ly)\") orelse \"ly\";\n    init_system = b.option(InitSystem, \"init_system\", \"Specify the target init system (default is systemd)\") orelse .systemd;\n\n    const build_options = b.addOptions();\n    const version_str = try getVersionStr(b, \"ly\", ly_version);\n    const enable_x11_support = b.option(bool, \"enable_x11_support\", \"Enable X11 support (default is on)\") orelse true;\n    const default_tty = b.option(u8, \"default_tty\", \"Set the TTY (default is 2)\") orelse 2;\n    const fallback_tty = b.option(u8, \"fallback_tty\", \"Set the fallback TTY (default is 2). This value gets embedded into the binary\") orelse 2;\n\n    default_tty_str = try std.fmt.allocPrint(b.allocator, \"{d}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Installer from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "pub fn Installer(install_config: bool) type {\n    return struct {\n        pub fn make(step: *std.Build.Step, _: std.Build.Step.MakeOptions) !void {\n            const allocator = step.owner.allocator;\n\n            var patch_map = PatchMap.init(allocator);\n            defer patch_map.deinit();\n\n            try patch_map.put(\"$DEFAULT_TTY\", default_tty_str);\n            try patch_map.put(\"$CONFIG_DIRECTORY\", config_directory);\n            try patch_map.put(\"$PREFIX_DIRECTORY\", prefix_directory);\n            try patch_map.put(\"$EXECUTABLE_NAME\", executable_name);\n\n            // The \"-a\" argument doesn't exist on FreeBSD, so we use \"-p\"\n            // instead to shutdown the system.\n            try patch_map.put(\"$PLATFORM_SHUTDOWN_ARG\", if (init_system == .freebsd) \"-p\" else \"-a\");\n\n            try install_ly(allocator, patch_map, install_config);\n            try install_service(allocator, patch_map);\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "Installer",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to install_ly from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn install_ly(allocator: std.mem.Allocator, patch_map: PatchMap, install_config: bool) !void {\n    const ly_config_directory = try std.fs.path.join(allocator, &[_][]const u8{ dest_directory, config_directory, \"/ly\" }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "install_ly",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to install_service from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn install_service(allocator: std.mem.Allocator, patch_map: PatchMap) !void {\n    switch (init_system) {\n        .systemd => {\n            const service_path = try std.fs.path.join(allocator, &[_][]const u8{ dest_directory, prefix_directory, \"/lib/systemd/system\" }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "install_service",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Uninstaller from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "pub fn Uninstaller(uninstall_config: bool) type {\n    return struct {\n        pub fn make(step: *std.Build.Step, _: std.Build.Step.MakeOptions) !void {\n            const allocator = step.owner.allocator;\n\n            if (uninstall_config) {\n                try deleteTree(allocator, config_directory, \"/ly\", \"ly config directory not found\");\n            }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "Uninstaller",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getVersionStr from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn getVersionStr(b: *std.Build, name: []const u8, version: std.SemanticVersion) ![]const u8 {\n    const version_str = b.fmt(\"{d}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getVersionStr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to installFile from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn installFile(\n    source_file: []const u8,\n    destination_directory: std.fs.Dir,\n    destination_directory_path: []const u8,\n    destination_file: []const u8,\n    options: std.fs.Dir.CopyFileOptions,\n) !void {\n    try std.fs.cwd().copyFile(source_file, destination_directory, destination_file, options);\n    std.debug.print(\"info: installed {s}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "installFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to patchFile from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn patchFile(allocator: std.mem.Allocator, source_file: []const u8, patch_map: PatchMap) ![]const u8 {\n    var file = try std.fs.cwd().openFile(source_file, .{}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "patchFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to installText from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn installText(\n    text: []const u8,\n    destination_directory: std.fs.Dir,\n    destination_directory_path: []const u8,\n    destination_file: []const u8,\n    options: std.fs.File.CreateFlags,\n) !void {\n    var file = try destination_directory.createFile(destination_file, options);\n    defer file.close();\n\n    var buffer: [1024]u8 = undefined;\n    var writer = file.writer(&buffer);\n    try writer.interface.writeAll(text);\n    try writer.interface.flush();\n\n    std.debug.print(\"info: installed {s}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "installText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteFile from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn deleteFile(\n    allocator: std.mem.Allocator,\n    prefix: []const u8,\n    file: []const u8,\n    warning: []const u8,\n) !void {\n    const path = try std.fs.path.join(allocator, &[_][]const u8{ dest_directory, prefix, file }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "deleteFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteTree from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: build.zig",
+    "response": "fn deleteTree(\n    allocator: std.mem.Allocator,\n    prefix: []const u8,\n    directory: []const u8,\n    warning: []const u8,\n) !void {\n    const path = try std.fs.path.join(allocator, &[_][]const u8{ dest_directory, prefix, directory }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "build.zig",
+      "type": "function",
+      "name": "deleteTree",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DesktopEntry from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/Environment.zig",
+    "response": "pub const DesktopEntry = struct {\n    Exec: []const u8 = \"\",\n    Name: []const u8 = \"\",\n    DesktopNames: ?[]u8 = null,\n    Terminal: ?bool = null,\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/Environment.zig",
+      "type": "struct",
+      "name": "DesktopEntry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Entry from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/Environment.zig",
+    "response": "pub const Entry = struct { @\"Desktop Entry\": DesktopEntry = .{}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/Environment.zig",
+      "type": "struct",
+      "name": "Entry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/LogFile.zig",
+    "response": "pub fn init(path: []const u8, buffer: []u8) !LogFile {\n    var log_file = LogFile{ .path = path, .buffer = buffer }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/LogFile.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reinit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/LogFile.zig",
+    "response": "pub fn reinit(self: *LogFile) !void {\n    self.could_open_log_file = try openLogFile(self.path, self);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/LogFile.zig",
+      "type": "function",
+      "name": "reinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/LogFile.zig",
+    "response": "pub fn deinit(self: *LogFile) void {\n    self.file_writer.interface.flush() catch {}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/LogFile.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to openLogFile from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/LogFile.zig",
+    "response": "fn openLogFile(path: []const u8, log_file: *LogFile) !bool {\n    var could_open_log_file = true;\n    open_log_file: {\n        log_file.file = std.fs.cwd().openFile(path, .{ .mode = .write_only }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/LogFile.zig",
+      "type": "function",
+      "name": "openLogFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/SharedError.zig",
+    "response": "pub fn init() !SharedError {\n    const data = try std.posix.mmap(null, @sizeOf(ErrorHandler), std.posix.PROT.READ | std.posix.PROT.WRITE, .{ .TYPE = .SHARED, .ANONYMOUS = true }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/SharedError.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/SharedError.zig",
+    "response": "pub fn deinit(self: *SharedError) void {\n    std.posix.munmap(self.data);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/SharedError.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeError from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/SharedError.zig",
+    "response": "pub fn writeError(self: SharedError, err: anyerror) void {\n    var buf_stream = std.io.fixedBufferStream(self.data);\n    const writer = buf_stream.writer();\n    writer.writeStruct(ErrorHandler{ .has_error = true, .err_int = @intFromError(err) }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/SharedError.zig",
+      "type": "function",
+      "name": "writeError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readError from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/SharedError.zig",
+    "response": "pub fn readError(self: SharedError) ?anyerror {\n    var buf_stream = std.io.fixedBufferStream(self.data);\n    const reader = buf_stream.reader();\n    const err_handler = try reader.readStruct(ErrorHandler);\n\n    if (err_handler.has_error)\n        return @errorFromInt(err_handler.err_int);\n\n    return null;\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/SharedError.zig",
+      "type": "function",
+      "name": "readError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to length from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "fn length(vec: Vec2) f32 {\n    return math.sqrt(vec[0] * vec[0] + vec[1] * vec[1]);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "function",
+      "name": "length",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "pub fn init(terminal_buffer: *TerminalBuffer, col1: u32, col2: u32, col3: u32) ColorMix {\n    return .{\n        .terminal_buffer = terminal_buffer,\n        .frames = 0,\n        .pattern_cos_mod = terminal_buffer.random.float(f32) * math.pi * 2.0,\n        .pattern_sin_mod = terminal_buffer.random.float(f32) * math.pi * 2.0,\n        .palette = [palette_len]Cell{\n            Cell.init(0x2588, col1, col2),\n            Cell.init(0x2593, col1, col2),\n            Cell.init(0x2592, col1, col2),\n            Cell.init(0x2591, col1, col2),\n            Cell.init(0x2588, col2, col3),\n            Cell.init(0x2593, col2, col3),\n            Cell.init(0x2592, col2, col3),\n            Cell.init(0x2591, col2, col3),\n            Cell.init(0x2588, col3, col1),\n            Cell.init(0x2593, col3, col1),\n            Cell.init(0x2592, col3, col1),\n            Cell.init(0x2591, col3, col1),\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to animation from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "pub fn animation(self: *ColorMix) Animation {\n    return Animation.init(self, deinit, realloc, draw);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "function",
+      "name": "animation",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "fn draw(self: *ColorMix) void {\n    self.frames +%= 1;\n    const time: f32 = @as(f32, @floatFromInt(self.frames)) * time_scale;\n\n    for (0..self.terminal_buffer.width) |x| {\n        for (0..self.terminal_buffer.height) |y| {\n            const xi: i32 = @intCast(x);\n            const yi: i32 = @intCast(y);\n            const wi: i32 = @intCast(self.terminal_buffer.width);\n            const hi: i32 = @intCast(self.terminal_buffer.height);\n\n            var uv: Vec2 = .{\n                @as(f32, @floatFromInt(xi * 2 - wi)) / @as(f32, @floatFromInt(self.terminal_buffer.height * 2)),\n                @as(f32, @floatFromInt(yi * 2 - hi)) / @as(f32, @floatFromInt(self.terminal_buffer.height)),\n            }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to time_scale from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "const time_scale: f32 = 0.01;",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "const",
+      "name": "time_scale",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to palette_len from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "const palette_len: usize = 12;",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "const",
+      "name": "palette_len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to time from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "const time: f32 = @as(f32, @floatFromInt(self.frames)) * time_scale;",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "const",
+      "name": "time",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to xi from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "const xi: i32 = @intCast(x);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "const",
+      "name": "xi",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to yi from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "const yi: i32 = @intCast(y);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "const",
+      "name": "yi",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to wi from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "const wi: i32 = @intCast(self.terminal_buffer.width);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "const",
+      "name": "wi",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to hi from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/ColorMix.zig",
+    "response": "const hi: i32 = @intCast(self.terminal_buffer.height);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/ColorMix.zig",
+      "type": "const",
+      "name": "hi",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Doom.zig",
+    "response": "pub fn init(allocator: Allocator, terminal_buffer: *TerminalBuffer, top_color: u32, middle_color: u32, bottom_color: u32, fire_height: u8, fire_spread: u8) !Doom {\n    const buffer = try allocator.alloc(u8, terminal_buffer.width * terminal_buffer.height);\n    initBuffer(buffer, terminal_buffer.width);\n\n    const levels =\n        [_]Cell{\n            Cell.init(' ', terminal_buffer.bg, terminal_buffer.bg),\n            Cell.init(0x2591, top_color, terminal_buffer.bg),\n            Cell.init(0x2592, top_color, terminal_buffer.bg),\n            Cell.init(0x2593, top_color, terminal_buffer.bg),\n            Cell.init(0x2588, top_color, terminal_buffer.bg),\n            Cell.init(0x2591, middle_color, top_color),\n            Cell.init(0x2592, middle_color, top_color),\n            Cell.init(0x2593, middle_color, top_color),\n            Cell.init(0x2588, middle_color, top_color),\n            Cell.init(0x2591, bottom_color, middle_color),\n            Cell.init(0x2592, bottom_color, middle_color),\n            Cell.init(0x2593, bottom_color, middle_color),\n            Cell.init(0x2588, bottom_color, middle_color),\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Doom.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to animation from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Doom.zig",
+    "response": "pub fn animation(self: *Doom) Animation {\n    return Animation.init(self, deinit, realloc, draw);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Doom.zig",
+      "type": "function",
+      "name": "animation",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Doom.zig",
+    "response": "fn deinit(self: *Doom) void {\n    self.allocator.free(self.buffer);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Doom.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to realloc from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Doom.zig",
+    "response": "fn realloc(self: *Doom) anyerror!void {\n    const buffer = try self.allocator.realloc(self.buffer, self.terminal_buffer.width * self.terminal_buffer.height);\n    initBuffer(buffer, self.terminal_buffer.width);\n    self.buffer = buffer;\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Doom.zig",
+      "type": "function",
+      "name": "realloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Doom.zig",
+    "response": "fn draw(self: *Doom) void {\n    for (0..self.terminal_buffer.width) |x| {\n        // We start from 1 so that we always have the topmost line when spreading fire\n        for (1..self.terminal_buffer.height) |y| {\n            // Get index of current cell in fire level buffer\n            const from = y * self.terminal_buffer.width + x;\n\n            // Generate random data for fire propagation\n            const rand_loss = self.terminal_buffer.random.intRangeAtMost(u8, 0, HEIGHT_MAX);\n            const rand_spread = self.terminal_buffer.random.intRangeAtMost(u8, 0, self.spread * 2);\n\n            // Select semi-random target cell\n            const to = from -| self.terminal_buffer.width + self.spread -| rand_spread;\n            const to_x = to % self.terminal_buffer.width;\n            const to_y = to / self.terminal_buffer.width;\n\n            // Get fire level of current cell\n            const level_buf_from = self.buffer[from];\n\n            // Choose new fire level and store in level buffer\n            const level_buf_to = level_buf_from -| @intFromBool(rand_loss >= self.height);\n            self.buffer[to] = level_buf_to;\n\n            // Send known fire levels to terminal buffer\n            const from_cell = self.fire[level_buf_from];\n            const to_cell = self.fire[level_buf_to];\n            from_cell.put(x, y);\n            to_cell.put(to_x, to_y);\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Doom.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initBuffer from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Doom.zig",
+    "response": "fn initBuffer(buffer: []u8, width: usize) void {\n    const length = buffer.len - width;\n    const slice_start = buffer[0..length];\n    const slice_end = buffer[length..];\n\n    // Initialize the framebuffer in black, except for the \"fire source\" as the\n    // last color\n    @memset(slice_start, 0);\n    @memset(slice_end, STEPS);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Doom.zig",
+      "type": "function",
+      "name": "initBuffer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to animation from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Dummy.zig",
+    "response": "pub fn animation(self: *Dummy) Animation {\n    return Animation.init(self, deinit, realloc, draw);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Dummy.zig",
+      "type": "function",
+      "name": "animation",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "pub fn init(allocator: Allocator, terminal_buffer: *TerminalBuffer, fg_color: u32, entropy_interval: usize, frame_delay: usize, initial_density: f32) !GameOfLife {\n    const width = terminal_buffer.width;\n    const height = terminal_buffer.height;\n    const grid_size = width * height;\n\n    const current_grid = try allocator.alloc(bool, grid_size);\n    const next_grid = try allocator.alloc(bool, grid_size);\n\n    var game = GameOfLife{\n        .allocator = allocator,\n        .terminal_buffer = terminal_buffer,\n        .current_grid = current_grid,\n        .next_grid = next_grid,\n        .frame_counter = 0,\n        .generation = 0,\n        .fg_color = fg_color,\n        .entropy_interval = entropy_interval,\n        .frame_delay = frame_delay,\n        .initial_density = initial_density,\n        .dead_cell = .{ .ch = DEAD_CHAR, .fg = @intCast(TerminalBuffer.Color.DEFAULT), .bg = terminal_buffer.bg }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to animation from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "pub fn animation(self: *GameOfLife) Animation {\n    return Animation.init(self, deinit, realloc, draw);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "animation",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "fn deinit(self: *GameOfLife) void {\n    self.allocator.free(self.current_grid);\n    self.allocator.free(self.next_grid);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to realloc from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "fn realloc(self: *GameOfLife) anyerror!void {\n    const new_width = self.terminal_buffer.width;\n    const new_height = self.terminal_buffer.height;\n    const new_size = new_width * new_height;\n\n    const current_grid = try self.allocator.realloc(self.current_grid, new_size);\n    const next_grid = try self.allocator.realloc(self.next_grid, new_size);\n\n    self.current_grid = current_grid;\n    self.next_grid = next_grid;\n    self.width = new_width;\n    self.height = new_height;\n\n    self.initializeGrid();\n    self.generation = 0;\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "realloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "fn draw(self: *GameOfLife) void {\n    // Update game state at controlled frame rate\n    self.frame_counter += 1;\n    if (self.frame_counter >= self.frame_delay) {\n        self.frame_counter = 0;\n        self.updateGeneration();\n        self.generation += 1;\n\n        // Add entropy based on configuration (0 = disabled, >0 = interval)\n        if (self.entropy_interval > 0 and self.generation % self.entropy_interval == 0) {\n            self.addEntropy();\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateGeneration from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "fn updateGeneration(self: *GameOfLife) void {\n    // Conway's Game of Life rules with optimized neighbor counting\n    for (0..self.height) |y| {\n        const row_offset = y * self.width;\n        for (0..self.width) |x| {\n            const index = row_offset + x;\n            const neighbors = self.countNeighborsOptimized(x, y);\n            const is_alive = self.current_grid[index];\n\n            // Optimized rule application\n            self.next_grid[index] = switch (neighbors) {\n                2 => is_alive,\n                3 => true,\n                else => false,\n            }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "updateGeneration",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to countNeighborsOptimized from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "fn countNeighborsOptimized(self: *GameOfLife, x: usize, y: usize) u8 {\n    var count: u8 = 0;\n\n    for (NEIGHBOR_DIRS) |dir| {\n        const neighbor_x = @as(i32, @intCast(x)) + dir[0];\n        const neighbor_y = @as(i32, @intCast(y)) + dir[1];\n        const width_i32: i32 = @intCast(self.width);\n        const height_i32: i32 = @intCast(self.height);\n\n        // Toroidal wrapping with modular arithmetic\n        const wx: usize = @intCast(@mod(neighbor_x + width_i32, width_i32));\n        const wy: usize = @intCast(@mod(neighbor_y + height_i32, height_i32));\n\n        if (self.current_grid[wy * self.width + wx]) {\n            count += 1;\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "countNeighborsOptimized",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initializeGrid from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "fn initializeGrid(self: *GameOfLife) void {\n    const total_cells = self.width * self.height;\n\n    // Clear grid\n    @memset(self.current_grid, false);\n    @memset(self.next_grid, false);\n\n    // Random initialization with configurable density\n    for (0..total_cells) |i| {\n        self.current_grid[i] = self.terminal_buffer.random.float(f32) < self.initial_density;\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "initializeGrid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addEntropy from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "fn addEntropy(self: *GameOfLife) void {\n    // Add fewer random cells but in clusters for more interesting patterns\n    const clusters = 2;\n    for (0..clusters) |_| {\n        const cx = self.terminal_buffer.random.intRangeAtMost(usize, 1, self.width - 2);\n        const cy = self.terminal_buffer.random.intRangeAtMost(usize, 1, self.height - 2);\n\n        // Small cluster around center point\n        for (0..3) |dy| {\n            for (0..3) |dx| {\n                if (self.terminal_buffer.random.float(f32) < 0.4) {\n                    const x = (cx + dx) % self.width;\n                    const y = (cy + dy) % self.height;\n                    self.current_grid[y * self.width + x] = true;\n                }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "function",
+      "name": "addEntropy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ALIVE_CHAR from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "const ALIVE_CHAR: u21 = 0x2588;",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "const",
+      "name": "ALIVE_CHAR",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to DEAD_CHAR from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "const DEAD_CHAR: u21 = ' ';",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "const",
+      "name": "DEAD_CHAR",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to width_i32 from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "const width_i32: i32 = @intCast(self.width);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "const",
+      "name": "width_i32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to height_i32 from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "const height_i32: i32 = @intCast(self.height);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "const",
+      "name": "height_i32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to wx from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "const wx: usize = @intCast(@mod(neighbor_x + width_i32, width_i32));",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "const",
+      "name": "wx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to wy from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/GameOfLife.zig",
+    "response": "const wy: usize = @intCast(@mod(neighbor_y + height_i32, height_i32));",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/GameOfLife.zig",
+      "type": "const",
+      "name": "wy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "pub fn init(allocator: Allocator, terminal_buffer: *TerminalBuffer, fg: u32, head_col: u32, min_codepoint: u16, max_codepoint: u16) !Matrix {\n    const dots = try allocator.alloc(Dot, terminal_buffer.width * (terminal_buffer.height + 1));\n    const lines = try allocator.alloc(Line, terminal_buffer.width);\n\n    initBuffers(dots, lines, terminal_buffer.width, terminal_buffer.height, terminal_buffer.random);\n\n    return .{\n        .allocator = allocator,\n        .terminal_buffer = terminal_buffer,\n        .dots = dots,\n        .lines = lines,\n        .frame = 3,\n        .count = 0,\n        .fg = fg,\n        .head_col = head_col,\n        .min_codepoint = min_codepoint,\n        .max_codepoint = max_codepoint - min_codepoint,\n        .default_cell = .{ .ch = ' ', .fg = fg, .bg = terminal_buffer.bg }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to animation from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "pub fn animation(self: *Matrix) Animation {\n    return Animation.init(self, deinit, realloc, draw);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "function",
+      "name": "animation",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "fn deinit(self: *Matrix) void {\n    self.allocator.free(self.dots);\n    self.allocator.free(self.lines);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to realloc from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "fn realloc(self: *Matrix) anyerror!void {\n    const dots = try self.allocator.realloc(self.dots, self.terminal_buffer.width * (self.terminal_buffer.height + 1));\n    const lines = try self.allocator.realloc(self.lines, self.terminal_buffer.width);\n\n    initBuffers(dots, lines, self.terminal_buffer.width, self.terminal_buffer.height, self.terminal_buffer.random);\n\n    self.dots = dots;\n    self.lines = lines;\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "function",
+      "name": "realloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to draw from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "fn draw(self: *Matrix) void {\n    const buf_height = self.terminal_buffer.height;\n    const buf_width = self.terminal_buffer.width;\n    self.count += 1;\n    if (self.count > FRAME_DELAY) {\n        self.frame += 1;\n        if (self.frame > 4) self.frame = 1;\n        self.count = 0;\n\n        var x: usize = 0;\n        while (x < self.terminal_buffer.width) : (x += 2) {\n            var tail: usize = 0;\n            var line = &self.lines[x];\n            if (self.frame <= line.update) continue;\n\n            if (self.dots[x].value == null and self.dots[self.terminal_buffer.width + x].value == ' ') {\n                if (line.space > 0) {\n                    line.space -= 1;\n                }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "function",
+      "name": "draw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initBuffers from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "fn initBuffers(dots: []Dot, lines: []Line, width: usize, height: usize, random: Random) void {\n    var y: usize = 0;\n    while (y <= height) : (y += 1) {\n        var x: usize = 0;\n        while (x < width) : (x += 2) {\n            dots[y * width + x].value = null;\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "function",
+      "name": "initBuffers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Dot from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "pub const Dot = struct {\n    value: ?usize,\n    is_head: bool,\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "struct",
+      "name": "Dot",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Line from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "pub const Line = struct {\n    space: usize,\n    length: usize,\n    update: usize,\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "struct",
+      "name": "Line",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to FRAME_DELAY from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/animations/Matrix.zig",
+    "response": "pub const FRAME_DELAY: usize = 8;",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/animations/Matrix.zig",
+      "type": "const",
+      "name": "FRAME_DELAY",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to xorgSignalHandler from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "pub fn xorgSignalHandler(i: c_int) callconv(.c) void {\n    if (xorg_pid > 0) _ = std.c.kill(xorg_pid, i);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "xorgSignalHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sessionSignalHandler from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "pub fn sessionSignalHandler(i: c_int) callconv(.c) void {\n    if (child_pid > 0) _ = std.c.kill(child_pid, i);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "sessionSignalHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to authenticate from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "pub fn authenticate(allocator: std.mem.Allocator, log_file: *LogFile, options: AuthOptions, current_environment: Environment, login: []const u8, password: []const u8) !void {\n    var tty_buffer: [3]u8 = undefined;\n    const tty_str = try std.fmt.bufPrint(&tty_buffer, \"{d}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "authenticate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startSession from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn startSession(\n    log_file: *LogFile,\n    allocator: std.mem.Allocator,\n    options: AuthOptions,\n    tty_str: []u8,\n    user_entry: interop.UsernameEntry,\n    handle: ?*interop.pam.pam_handle,\n    current_environment: Environment,\n) !void {\n    // Set the user's GID & PID\n    try interop.setUserContext(allocator, user_entry);\n\n    // Set up the environment\n    try initEnv(allocator, user_entry, options.path);\n\n    // Reset the XDG environment variables\n    try setXdgEnv(allocator, tty_str, current_environment);\n\n    // Set the PAM variables\n    const pam_env_vars: ?[*:null]?[*:0]u8 = interop.pam.pam_getenvlist(handle);\n    if (pam_env_vars == null) return error.GetEnvListFailed;\n\n    const env_list = std.mem.span(pam_env_vars.?);\n    for (env_list) |env_var| try interop.putEnvironmentVariable(env_var);\n\n    // Change to the user's home directory\n    std.posix.chdir(user_entry.home.?) catch return error.ChangeDirectoryFailed;\n\n    // Signal to the session process to give up control on the TTY\n    std.posix.kill(options.session_pid, std.posix.SIG.CHLD) catch return error.TtyControlTransferFailed;\n\n    // Execute what the user requested\n    switch (current_environment.display_server) {\n        .wayland, .shell, .custom => try executeCmd(log_file, allocator, user_entry.shell.?, options, current_environment.is_terminal, current_environment.cmd),\n        .xinitrc, .x11 => if (build_options.enable_x11_support) {\n            var vt_buf: [5]u8 = undefined;\n            const vt = try std.fmt.bufPrint(&vt_buf, \"vt{d}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "startSession",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initEnv from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn initEnv(allocator: std.mem.Allocator, entry: interop.UsernameEntry, path_env: ?[]const u8) !void {\n    if (entry.home) |home| {\n        try interop.setEnvironmentVariable(allocator, \"HOME\", home, true);\n        try interop.setEnvironmentVariable(allocator, \"PWD\", home, true);\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "initEnv",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setXdgEnv from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn setXdgEnv(allocator: std.mem.Allocator, tty_str: []u8, environment: Environment) !void {\n    try interop.setEnvironmentVariable(allocator, \"XDG_SESSION_TYPE\", switch (environment.display_server) {\n        .wayland => \"wayland\",\n        .shell => \"tty\",\n        .xinitrc, .x11 => \"x11\",\n        .custom => if (environment.is_terminal) \"tty\" else \"unspecified\",\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "setXdgEnv",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loginConv from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn loginConv(\n    num_msg: c_int,\n    msg: ?[*]?*const interop.pam.pam_message,\n    resp: ?*?[*]interop.pam.pam_response,\n    appdata_ptr: ?*anyopaque,\n) callconv(.c) c_int {\n    const message_count: u32 = @intCast(num_msg);\n    const messages = msg.?;\n\n    const allocator = std.heap.c_allocator;\n    const response = allocator.alloc(interop.pam.pam_response, message_count) catch return interop.pam.PAM_BUF_ERR;\n\n    // Initialise allocated memory to 0\n    // This ensures memory can be freed by pam on success\n    @memset(response, std.mem.zeroes(interop.pam.pam_response));\n\n    var username: ?[:0]u8 = null;\n    var password: ?[:0]u8 = null;\n    var status: c_int = interop.pam.PAM_SUCCESS;\n\n    for (0..message_count) |i| set_credentials: {\n        switch (messages[i].?.msg_style) {\n            interop.pam.PAM_PROMPT_ECHO_ON => {\n                const data: [*][*:0]u8 = @ptrCast(@alignCast(appdata_ptr));\n                username = allocator.dupeZ(u8, std.mem.span(data[0])) catch {\n                    status = interop.pam.PAM_BUF_ERR;\n                    break :set_credentials;\n                }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "loginConv",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFreeDisplay from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn getFreeDisplay() !u8 {\n    var buf: [15]u8 = undefined;\n    var i: u8 = 0;\n    while (i < 200) : (i += 1) {\n        const xlock = try std.fmt.bufPrint(&buf, \"/tmp/.X{d}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "getFreeDisplay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getXPid from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn getXPid(display_num: u8) !i32 {\n    var buf: [15]u8 = undefined;\n    const file_name = try std.fmt.bufPrint(&buf, \"/tmp/.X{d}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "getXPid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createXauthFile from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn createXauthFile(pwd: []const u8, buffer: []u8) ![]const u8 {\n    var xauth_buf: [100]u8 = undefined;\n    var xauth_dir: []const u8 = undefined;\n    const xdg_rt_dir = std.posix.getenv(\"XDG_RUNTIME_DIR\");\n    var xauth_file: []const u8 = \"lyxauth\";\n\n    if (xdg_rt_dir == null) no_rt_dir: {\n        const xdg_cfg_home = std.posix.getenv(\"XDG_CONFIG_HOME\");\n        if (xdg_cfg_home == null) no_cfg_home: {\n            xauth_dir = try std.fmt.bufPrint(&xauth_buf, \"{s}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "createXauthFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mcookie from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn mcookie() [Md5.digest_length * 2]u8 {\n    var buf: [4096]u8 = undefined;\n    std.crypto.random.bytes(&buf);\n\n    var out: [Md5.digest_length]u8 = undefined;\n    Md5.hash(&buf, &out, .{}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "mcookie",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to xauth from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn xauth(log_file: *LogFile, allocator: std.mem.Allocator, display_name: []u8, shell: [*:0]const u8, home: []const u8, xauth_buffer: []u8, options: AuthOptions) !void {\n    const xauthority = try createXauthFile(home, xauth_buffer);\n    try interop.setEnvironmentVariable(allocator, \"XAUTHORITY\", xauthority, true);\n    try interop.setEnvironmentVariable(allocator, \"DISPLAY\", display_name, true);\n\n    const magic_cookie = mcookie();\n\n    const pid = try std.posix.fork();\n    if (pid == 0) {\n        var cmd_buffer: [1024]u8 = undefined;\n        const cmd_str = std.fmt.bufPrintZ(&cmd_buffer, \"{s}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "xauth",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to executeX11Cmd from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn executeX11Cmd(log_file: *LogFile, allocator: std.mem.Allocator, shell: []const u8, home: []const u8, options: AuthOptions, desktop_cmd: []const u8, vt: []const u8) !void {\n    var log_writer = &log_file.file_writer.interface;\n    var xauth_buffer: [256]u8 = undefined;\n\n    try log_writer.writeAll(\"[x11] getting free display\\n\");\n    const display_num = try getFreeDisplay();\n    var buf: [4]u8 = undefined;\n    const display_name = try std.fmt.bufPrint(&buf, \":{d}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "executeX11Cmd",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to executeCmd from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn executeCmd(global_log_file: *LogFile, allocator: std.mem.Allocator, shell: []const u8, options: AuthOptions, is_terminal: bool, exec_cmd: ?[]const u8) !void {\n    var maybe_log_file: ?std.fs.File = null;\n    if (!is_terminal) {\n        // For custom desktop entries, the \"Terminal\" value here determines if\n        // we redirect standard output & error or not. That is, we redirect only\n        // if it's equal to false (so if it's not running in a TTY).\n        if (options.session_log) |log_path| {\n            maybe_log_file = try redirectStandardStreams(global_log_file, log_path, true);\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "executeCmd",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to redirectStandardStreams from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn redirectStandardStreams(global_log_file: *LogFile, session_log: []const u8, create: bool) !std.fs.File {\n    const log_file = if (create) (std.fs.cwd().createFile(session_log, .{ .mode = 0o666 }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "redirectStandardStreams",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addUtmpEntry from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn addUtmpEntry(entry: *Utmp, username: []const u8, pid: c_int) !void {\n    entry.ut_type = utmp.USER_PROCESS;\n    entry.ut_pid = pid;\n\n    var buf: [std.fs.max_path_bytes]u8 = undefined;\n    const tty_path = try std.os.getFdPath(std.posix.STDIN_FILENO, &buf);\n\n    // Get the TTY name (i.e. without the /dev/ prefix)\n    var ttyname_buf: [@sizeOf(@TypeOf(entry.ut_line))]u8 = undefined;\n    _ = try std.fmt.bufPrintZ(&ttyname_buf, \"{s}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "addUtmpEntry",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to removeUtmpEntry from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn removeUtmpEntry(entry: *Utmp) void {\n    entry.ut_type = utmp.DEAD_PROCESS;\n    entry.ut_line[0] = 0;\n    entry.ut_user[0] = 0;\n    utmp.setutxent();\n    _ = utmp.pututxline(entry);\n    utmp.endutxent();\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "removeUtmpEntry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pamDiagnose from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "fn pamDiagnose(status: c_int) anyerror {\n    return switch (status) {\n        interop.pam.PAM_ACCT_EXPIRED => return error.PamAccountExpired,\n        interop.pam.PAM_AUTH_ERR => return error.PamAuthError,\n        interop.pam.PAM_AUTHINFO_UNAVAIL => return error.PamAuthInfoUnavailable,\n        interop.pam.PAM_BUF_ERR => return error.PamBufferError,\n        interop.pam.PAM_CRED_ERR => return error.PamCredentialsError,\n        interop.pam.PAM_CRED_EXPIRED => return error.PamCredentialsExpired,\n        interop.pam.PAM_CRED_INSUFFICIENT => return error.PamCredentialsInsufficient,\n        interop.pam.PAM_CRED_UNAVAIL => return error.PamCredentialsUnavailable,\n        interop.pam.PAM_MAXTRIES => return error.PamMaximumTries,\n        interop.pam.PAM_NEW_AUTHTOK_REQD => return error.PamNewAuthTokenRequired,\n        interop.pam.PAM_PERM_DENIED => return error.PamPermissionDenied,\n        interop.pam.PAM_SESSION_ERR => return error.PamSessionError,\n        interop.pam.PAM_SYSTEM_ERR => return error.PamSystemError,\n        interop.pam.PAM_USER_UNKNOWN => return error.PamUserUnknown,\n        else => return error.PamAbort,\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "function",
+      "name": "pamDiagnose",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AuthOptions from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "pub const AuthOptions = struct {\n    tty: u8,\n    service_name: [:0]const u8,\n    path: ?[]const u8,\n    session_log: ?[]const u8,\n    xauth_cmd: []const u8,\n    setup_cmd: []const u8,\n    login_cmd: ?[]const u8,\n    x_cmd: []const u8,\n    session_pid: std.posix.pid_t,\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "struct",
+      "name": "AuthOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pam_env_vars from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "const pam_env_vars: ?[*:null]?[*:0]u8 = interop.pam.pam_getenvlist(handle);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "const",
+      "name": "pam_env_vars",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to message_count from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "const message_count: u32 = @intCast(num_msg);",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "const",
+      "name": "message_count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to data from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "const data: [*][*:0]u8 = @ptrCast(@alignCast(appdata_ptr));",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "const",
+      "name": "data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to data from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "const data: [*][*:0]u8 = @ptrCast(@alignCast(appdata_ptr));",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "const",
+      "name": "data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to xauthority from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/auth.zig",
+    "response": "const xauthority: []u8 = try std.fmt.bufPrint(buffer, \"{s}/{s}\", .{ trimmed_xauth_dir, xauth_file });",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/auth.zig",
+      "type": "const",
+      "name": "xauthority",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clockCell from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/bigclock.zig",
+    "response": "pub fn clockCell(animate: bool, char: u8, fg: u32, bg: u32, bigclock: Bigclock) ![SIZE]Cell {\n    var cells: [SIZE]Cell = undefined;\n\n    const time = try interop.getTimeOfDay();\n    const clock_chars = toBigNumber(if (animate and char == ':' and @divTrunc(time.microseconds, 500000) != 0) ' ' else char, bigclock);\n    for (0..cells.len) |i| cells[i] = Cell.init(clock_chars[i], fg, bg);\n\n    return cells;\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/bigclock.zig",
+      "type": "function",
+      "name": "clockCell",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to alphaBlit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/bigclock.zig",
+    "response": "pub fn alphaBlit(x: usize, y: usize, tb_width: usize, tb_height: usize, cells: [SIZE]Cell) void {\n    if (x + WIDTH >= tb_width or y + HEIGHT >= tb_height) return;\n\n    for (0..HEIGHT) |yy| {\n        for (0..WIDTH) |xx| {\n            const cell = cells[yy * WIDTH + xx];\n            cell.put(x + xx, y + yy);\n        }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/bigclock.zig",
+      "type": "function",
+      "name": "alphaBlit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toBigNumber from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/bigclock.zig",
+    "response": "fn toBigNumber(char: u8, bigclock: Bigclock) [SIZE]u21 {\n    const locale_chars = switch (bigclock) {\n        .fa => fa.locale_chars,\n        .en => en.locale_chars,\n        .none => unreachable,\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/bigclock.zig",
+      "type": "function",
+      "name": "toBigNumber",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to LocaleChars from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/bigclock/Lang.zig",
+    "response": "pub const LocaleChars = struct {\n    ZERO:   [SIZE]u21,\n    ONE:    [SIZE]u21,\n    TWO:    [SIZE]u21,\n    THREE:  [SIZE]u21,\n    FOUR:   [SIZE]u21,\n    FIVE:   [SIZE]u21,\n    SIX:    [SIZE]u21,\n    SEVEN:  [SIZE]u21,\n    EIGHT:  [SIZE]u21,\n    NINE:   [SIZE]u21,\n    S:      [SIZE]u21,\n    E:      [SIZE]u21,\n    P:      [SIZE]u21,\n    A:      [SIZE]u21,\n    M:      [SIZE]u21,\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/bigclock/Lang.zig",
+      "type": "struct",
+      "name": "LocaleChars",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to X from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/bigclock/Lang.zig",
+    "response": "pub const X: u32 = if (interop.supportsUnicode()) 0x2593 else '#';",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/bigclock/Lang.zig",
+      "type": "const",
+      "name": "X",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to O from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/bigclock/Lang.zig",
+    "response": "pub const O: u32 = 0;",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/bigclock/Lang.zig",
+      "type": "const",
+      "name": "O",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/config/SavedUsers.zig",
+    "response": "pub fn init() SavedUsers {\n    return .{\n        .user_list = .empty,\n        .last_username_index = null,\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/config/SavedUsers.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/config/SavedUsers.zig",
+    "response": "pub fn deinit(self: *SavedUsers, allocator: std.mem.Allocator) void {\n    self.user_list.deinit(allocator);\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/config/SavedUsers.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to User from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/config/SavedUsers.zig",
+    "response": "const User = struct {\n    username: []const u8,\n    session_index: usize,\n}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/config/SavedUsers.zig",
+      "type": "struct",
+      "name": "User",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to configFieldHandler from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/config/migrator.zig",
+    "response": "pub fn configFieldHandler(_: std.mem.Allocator, field: ini.IniField) ?ini.IniField {\n    if (std.mem.eql(u8, field.key, \"animate\")) {\n        // The option doesn't exist anymore, but we save its value for \"animation\"\n        maybe_animate = std.mem.eql(u8, field.value, \"true\");\n\n        return null;\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/config/migrator.zig",
+      "type": "function",
+      "name": "configFieldHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lateConfigFieldHandler from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/config/migrator.zig",
+    "response": "pub fn lateConfigFieldHandler(config: *Config) void {\n    if (maybe_animate) |animate| {\n        if (!animate) config.*.animation = .none;\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/config/migrator.zig",
+      "type": "function",
+      "name": "lateConfigFieldHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tryMigrateFirstSaveFile from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/config/migrator.zig",
+    "response": "pub fn tryMigrateFirstSaveFile(user_buf: *[32]u8) OldSave {\n    var save = OldSave{}",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/config/migrator.zig",
+      "type": "function",
+      "name": "tryMigrateFirstSaveFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tryMigrateIniSaveFile from fairyglade/ly",
+    "context": "Repository: fairyglade/ly (6555 ⭐)\nFile: src/config/migrator.zig",
+    "response": "pub fn tryMigrateIniSaveFile(allocator: std.mem.Allocator, save_ini: *ini.Ini(OldSave), path: []const u8, saved_users: *SavedUsers, usernames: [][]const u8) !bool {\n    var old_save_file_exists = true;\n\n    var user_buf: [32]u8 = undefined;\n    const save = save_ini.readFileToStruct(path, .{\n        .fieldHandler = null,\n        .comment_characters = \"#\",\n    }",
+    "metadata": {
+      "repo": "fairyglade/ly",
+      "stars": 6555,
+      "file": "src/config/migrator.zig",
+      "type": "function",
+      "name": "tryMigrateIniSaveFile",
+      "difficulty": "medium"
+    }
+  }
+]

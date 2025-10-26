@@ -1,0 +1,9 @@
+{
+  "name": "buzz",
+  "fullName": "buzz-language/buzz",
+  "owner": "buzz-language",
+  "stars": 1414,
+  "description": "👨‍🚀  buzz, A small/lightweight statically typed scripting language",
+  "url": "https://github.com/buzz-language/buzz",
+  "defaultBranch": "main"
+}

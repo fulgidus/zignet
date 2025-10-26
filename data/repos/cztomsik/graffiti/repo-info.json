@@ -1,0 +1,9 @@
+{
+  "name": "graffiti",
+  "fullName": "cztomsik/graffiti",
+  "owner": "cztomsik",
+  "stars": 935,
+  "description": "HTML/CSS engine for node.js and deno.",
+  "url": "https://github.com/cztomsik/graffiti",
+  "defaultBranch": "master"
+}

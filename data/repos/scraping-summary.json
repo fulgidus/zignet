@@ -1,0 +1,257 @@
+{
+  "timestamp": "2025-10-26T13:30:58.410Z",
+  "totalRepos": 50,
+  "totalExamples": 14052,
+  "repositories": [
+    {
+      "name": "oven-sh/bun",
+      "stars": 81759,
+      "examples": 425
+    },
+    {
+      "name": "ziglang/zig",
+      "stars": 41797,
+      "examples": 42
+    },
+    {
+      "name": "ghostty-org/ghostty",
+      "stars": 37413,
+      "examples": 41
+    },
+    {
+      "name": "tigerbeetle/tigerbeetle",
+      "stars": 14142,
+      "examples": 567
+    },
+    {
+      "name": "lightpanda-io/browser",
+      "stars": 10112,
+      "examples": 291
+    },
+    {
+      "name": "fairyglade/ly",
+      "stars": 6555,
+      "examples": 100
+    },
+    {
+      "name": "NilsIrl/dockerc",
+      "stars": 4820,
+      "examples": 28
+    },
+    {
+      "name": "hexops/mach",
+      "stars": 4289,
+      "examples": 278
+    },
+    {
+      "name": "zigtools/zls",
+      "stars": 4263,
+      "examples": 885
+    },
+    {
+      "name": "riverwm/river",
+      "stars": 3752,
+      "examples": 255
+    },
+    {
+      "name": "mitchellh/libxev",
+      "stars": 3095,
+      "examples": 430
+    },
+    {
+      "name": "zml/zml",
+      "stars": 2827,
+      "examples": 433
+    },
+    {
+      "name": "PixelGuys/Cubyz",
+      "stars": 2757,
+      "examples": 585
+    },
+    {
+      "name": "zig-gamedev/zig-gamedev",
+      "stars": 2703,
+      "examples": 91
+    },
+    {
+      "name": "dmtrKovalenko/odiff",
+      "stars": 2626,
+      "examples": 140
+    },
+    {
+      "name": "capy-ui/capy",
+      "stars": 2356,
+      "examples": 277
+    },
+    {
+      "name": "pedropark99/zig-book",
+      "stars": 1944,
+      "examples": 72
+    },
+    {
+      "name": "electric-capital/crypto-ecosystems",
+      "stars": 1900,
+      "examples": 67
+    },
+    {
+      "name": "ZigEmbeddedGroup/microzig",
+      "stars": 1852,
+      "examples": 325
+    },
+    {
+      "name": "andrewrk/poop",
+      "stars": 1708,
+      "examples": 37
+    },
+    {
+      "name": "Vexu/arocc",
+      "stars": 1509,
+      "examples": 574
+    },
+    {
+      "name": "buzz-language/buzz",
+      "stars": 1414,
+      "examples": 828
+    },
+    {
+      "name": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "examples": 65
+    },
+    {
+      "name": "fubark/cyber",
+      "stars": 1357,
+      "examples": 1106
+    },
+    {
+      "name": "Hejsil/zig-clap",
+      "stars": 1343,
+      "examples": 81
+    },
+    {
+      "name": "zfl9/chinadns-ng",
+      "stars": 1310,
+      "examples": 468
+    },
+    {
+      "name": "rockorager/libvaxis",
+      "stars": 1301,
+      "examples": 251
+    },
+    {
+      "name": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "examples": 71
+    },
+    {
+      "name": "neurocyte/flow",
+      "stars": 1255,
+      "examples": 538
+    },
+    {
+      "name": "karlseguin/http.zig",
+      "stars": 1217,
+      "examples": 255
+    },
+    {
+      "name": "kristoff-it/zine",
+      "stars": 1176,
+      "examples": 242
+    },
+    {
+      "name": "kristoff-it/superhtml",
+      "stars": 1127,
+      "examples": 337
+    },
+    {
+      "name": "foxnne/pixi",
+      "stars": 1115,
+      "examples": 121
+    },
+    {
+      "name": "marler8997/zigup",
+      "stars": 1061,
+      "examples": 126
+    },
+    {
+      "name": "zigcc/zig-cookbook",
+      "stars": 1019,
+      "examples": 35
+    },
+    {
+      "name": "jcalabro/uscope",
+      "stars": 1003,
+      "examples": 223
+    },
+    {
+      "name": "david-vanderson/dvui",
+      "stars": 960,
+      "examples": 280
+    },
+    {
+      "name": "cztomsik/graffiti",
+      "stars": 935,
+      "examples": 199
+    },
+    {
+      "name": "judofyr/spice",
+      "stars": 895,
+      "examples": 60
+    },
+    {
+      "name": "nektro/zigmod",
+      "stars": 891,
+      "examples": 100
+    },
+    {
+      "name": "Snektron/vulkan-zig",
+      "stars": 720,
+      "examples": 319
+    },
+    {
+      "name": "ZystemOS/pluto",
+      "stars": 692,
+      "examples": 405
+    },
+    {
+      "name": "zigimg/zigimg",
+      "stars": 690,
+      "examples": 561
+    },
+    {
+      "name": "webui-dev/zig-webui",
+      "stars": 674,
+      "examples": 303
+    },
+    {
+      "name": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "examples": 188
+    },
+    {
+      "name": "tardy-org/zzz",
+      "stars": 664,
+      "examples": 110
+    },
+    {
+      "name": "mewz-project/mewz",
+      "stars": 637,
+      "examples": 160
+    },
+    {
+      "name": "orhun/linuxwave",
+      "stars": 611,
+      "examples": 32
+    },
+    {
+      "name": "ikskuh/zig-network",
+      "stars": 592,
+      "examples": 164
+    },
+    {
+      "name": "Vexu/toy-lang",
+      "stars": 584,
+      "examples": 481
+    }
+  ]
+}

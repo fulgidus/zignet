@@ -1,0 +1,3603 @@
+[
+  {
+    "instruction": "Write a Zig function similar to sdkRootIntern from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn sdkRootIntern() []const u8 {\n    return std.fs.path.dirname(@src().file) orelse \".\";\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "sdkRootIntern",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sdkRoot from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn sdkRoot() *const [sdkRootIntern().len]u8 {\n    comptime var buffer = sdkRootIntern();\n    return buffer[0..buffer.len];\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "sdkRoot",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toolchainHostTag from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn toolchainHostTag() []const u8 {\n    const os = builtin.os.tag;\n    const arch = builtin.cpu.arch;\n    return @tagName(os) ++ \"-\" ++ @tagName(arch);\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "toolchainHostTag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn init(b: *Builder, user_config: ?UserConfig, toolchains: ToolchainVersions) *Sdk {\n    const actual_user_config_err = user_config orelse auto_detect.findUserConfig(b, toolchains);\n    const actual_user_config = actual_user_config_err catch |err| @panic(@errorName(err));\n    // const actual_user_config = user_config orelse auto_detect.findUserConfig(b, toolchains) catch |err| @panic(@errorName(err));\n\n    const system_tools = blk: {\n        const exe = if (builtin.os.tag == .windows) \".exe\" else \"\";\n        const bat = if (builtin.os.tag == .windows) \".bat\" else \"\";\n\n        const zipalign = std.fs.path.join(b.allocator, &[_][]const u8{ actual_user_config.android_sdk_root, \"build-tools\", toolchains.build_tools_version, \"zipalign\" ++ exe }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getTargetConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn getTargetConfig(self: Target) TargetConfig {\n        const config: TargetConfig = switch (self) {\n            .aarch64 => TargetConfig{\n                .lib_dir = \"aarch64-linux-android\",\n                .include_dir = \"aarch64-linux-android\",\n                .out_dir = \"arm64\",\n                .target = zig_targets.aarch64,\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "getTargetConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAndroidPackage from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn getAndroidPackage(self: @This(), name: []const u8) std.Build.Pkg {\n        return self.sdk.b.dupePkg(std.Build.Pkg{\n            .name = name,\n            .source = self.sdk.b.path(sdkRoot() ++ \"/src/android-support.zig\"),\n            .dependencies = &[_]std.Build.Pkg{\n                self.build_options.getPackage(\"build_options\"),\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "getAndroidPackage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to install from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn install(self: @This()) *Step {\n        return self.sdk.installApp(self.apk_file);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "install",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn run(self: @This()) *Step {\n        return self.sdk.startApp(self.package_name);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to validate from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn validate(range: []const NdkVersionRange, ndk: []const u8, api: u16) void {\n        const ndk_version = std.SemanticVersion.parse(ndk) catch {\n            std.debug.print(\"Could not parse NDK version {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "validate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createApp from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn createApp(\n    sdk: *Sdk,\n    apk_filename: []const u8,\n    src_file: []const u8,\n    java_files_opt: ?[]const []const u8,\n    app_config: AppConfig,\n    mode: std.builtin.Mode,\n    wanted_targets: AppTargetConfig,\n    key_store: KeyStore,\n) CreateAppStep {\n    const write_xml_step = sdk.b.addWriteFiles();\n    const write_xml_file_source = write_xml_step.add(\"strings.xml\", blk: {\n        var buf = std.ArrayList(u8).init(sdk.b.allocator);\n        errdefer buf.deinit();\n\n        var writer = buf.writer();\n\n        writer.writeAll(\n            \\\\<?xml version=\"1.0\" encoding=\"utf-8\"?>\n            \\\\<resources>\n            \\\\\n        ) catch unreachable;\n\n        writer.print(\n            \\\\    <string name=\"app_name\">{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "createApp",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn create(b: *std.Build) *Self {\n        const self = b.allocator.create(Self) catch @panic(\"out of memory\");\n        self.* = Self{\n            .builder = b,\n            .step = Step.init(.{\n                .id = .custom,\n                .name = \"populate resource directory\",\n                .owner = b,\n                .makeFn = CreateResourceDirectory.make,\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn add(self: *Self, resource: Resource) void {\n        self.resources.append(Resource{\n            .path = self.builder.dupe(resource.path),\n            .content = resource.content.dupe(self.builder),\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOutputDirectory from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn getOutputDirectory(self: *Self) std.Build.LazyPath {\n        return .{ .generated = .{ .file = &self.directory }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "getOutputDirectory",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to make from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn make(step: *Step, progress: std.Progress.Node) !void {\n        _ = progress;\n        const self: *Self = @fieldParentPtr(\"step\", step);\n\n        // if (std.fs.path.dirname(strings_xml)) |dir| {\n        //     std.fs.cwd().makePath(dir) catch unreachable;\n        // }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "make",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run_copy_to_zip from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn run_copy_to_zip(sdk: *Sdk, input_file: std.Build.LazyPath, apk_file: std.Build.LazyPath, target_file: []const u8) *std.Build.RunStep {\n    const run_cp = sdk.b.addRunArtifact(sdk.host_tools.zip_add);\n\n    run_cp.addFileArg(apk_file);\n    run_cp.addFileArg(input_file);\n    run_cp.addArg(target_file);\n\n    return run_cp;\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "run_copy_to_zip",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn init(sdk: *Sdk, zip_file: std.Build.LazyPath, out_name: []const u8) WriteToZip {\n        const run_cp = sdk.b.addRunArtifact(sdk.host_tools.zip_add);\n\n        run_cp.addFileArg(zip_file);\n        const output_source = run_cp.addOutputFileArg(out_name);\n\n        return WriteToZip{\n            .output_source = output_source,\n            .run_step = run_cp,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addFile from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn addFile(step: *const WriteToZip, input_file: std.Build.LazyPath, target_file: []const u8) void {\n        step.run_step.addFileArg(input_file);\n        step.run_step.addArg(target_file);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "addFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to configureModule from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn configureModule(\n    sdk: *const Sdk,\n    module: *std.Build.Module,\n    app_config: AppConfig,\n    target: Target,\n) void {\n    const ndk_root = sdk.b.pathFromRoot(sdk.folders.android_ndk_root);\n\n    const config = target.getTargetConfig();\n    const lib_dir = sdk.b.fmt(\"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "configureModule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to configureStep from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn configureStep(\n    sdk: *const Sdk,\n    exe: *std.Build.Step.Compile,\n    app_config: AppConfig,\n    target: Target,\n) void {\n    const ndk_root = sdk.b.pathFromRoot(sdk.folders.android_ndk_root);\n\n    const config = target.getTargetConfig();\n    const lib_dir = sdk.b.fmt(\"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "configureStep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compileAppLibrary from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn compileAppLibrary(\n    sdk: *const Sdk,\n    src_file: []const u8,\n    app_config: AppConfig,\n    mode: std.builtin.Mode,\n    target: Target,\n    // build_options: std.Build.Pkg,\n) *std.Build.Step.Compile {\n    const exe = sdk.b.addSharedLibrary(.{\n        .name = app_config.app_name,\n        .root_source_file = sdk.b.path(src_file),\n        .target = sdk.b.resolveTargetQuery(target.getTargetConfig().target),\n        .optimize = mode,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "compileAppLibrary",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createLibCFile from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn createLibCFile(sdk: *const Sdk, version: AndroidVersion, folder_name: []const u8, include_dir: []const u8, sys_include_dir: []const u8, crt_dir: []const u8) !std.Build.LazyPath {\n    const fname = sdk.b.fmt(\"android-{d}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "createLibCFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compressApk from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn compressApk(sdk: Sdk, input_apk_file: []const u8, output_apk_file: []const u8) *Step {\n    const temp_folder = sdk.b.pathFromRoot(\"zig-cache/apk-compress-folder\");\n\n    const mkdir_cmd = sdk.b.addSystemCommand(&[_][]const u8{\n        sdk.system_tools.mkdir,\n        temp_folder,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "compressApk",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to installApp from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn installApp(sdk: Sdk, apk_file: std.Build.LazyPath) *Step {\n    const step = sdk.b.addSystemCommand(&[_][]const u8{ sdk.system_tools.adb, \"install\" }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "installApp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startApp from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn startApp(sdk: Sdk, package_name: []const u8) *Step {\n    const command: []const []const u8 = switch (sdk.launch_using) {\n        .am => &.{\n            sdk.system_tools.adb,\n            \"shell\",\n            \"am\",\n            \"start\",\n            \"-n\",\n            sdk.b.fmt(\"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "startApp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initKeystore from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn initKeystore(sdk: Sdk, key_store: KeyStore, key_config: KeyConfig) *Step {\n    if (auto_detect.fileExists(key_store.file)) {\n        std.log.warn(\"keystore already exists: {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "initKeystore",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn create(b: *Builder) *Self {\n        const options = b.allocator.create(Self) catch @panic(\"out of memory\");\n\n        options.* = Self{\n            .builder = b,\n            .step = Step.init(.{\n                .id = .custom,\n                .name = \"render build options\",\n                .owner = b,\n                .makeFn = make,\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getModule from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn getModule(self: *Self) *std.Build.Module {\n        return self.builder.modules.get(\"build_options\") orelse unreachable;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "getModule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPackage from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn getPackage(self: *Self, name: []const u8) std.Build.Pkg {\n        return self.builder.dupePkg(std.Build.Pkg{\n            .name = name,\n            .source = .{ .generated = &self.package_file }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "getPackage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn add(self: *Self, comptime T: type, name: []const u8, value: T) void {\n        const out = self.file_content.writer();\n        switch (T) {\n            []const []const u8 => {\n                out.print(\"pub const {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to make from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn make(step: *Step, progress: std.Progress.Node) !void {\n        _ = progress;\n        const self: *Self = @fieldParentPtr(\"step\", step);\n\n        var cacher = createCacheBuilder(self.builder);\n        cacher.addBytes(self.file_content.items);\n\n        const root_path = try cacher.createAndGetPath();\n\n        self.package_file.path = try std.fs.path.join(self.builder.allocator, &[_][]const u8{\n            root_path,\n            \"build_options.zig\",\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "make",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createCacheBuilder from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn createCacheBuilder(b: *std.Build) CacheBuilder {\n    return CacheBuilder.init(b, \"android-sdk\");\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "createCacheBuilder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn init(builder: *std.Build, subdir: ?[]const u8) Self {\n        return Self{\n            .builder = builder,\n            .hasher = std.crypto.hash.Sha1.init(.{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addBytes from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn addBytes(self: *Self, bytes: []const u8) void {\n        self.hasher.update(bytes);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "addBytes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addFile from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn addFile(self: *Self, file: std.Build.LazyPath) !void {\n        const path = file.getPath(self.builder);\n\n        const data = try std.fs.cwd().readFileAlloc(self.builder.allocator, path, 1 << 32); // 4 GB\n        defer self.builder.allocator.free(data);\n\n        self.addBytes(data);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "addFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createPath from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "fn createPath(self: *Self) ![]const u8 {\n        var hash: [20]u8 = undefined;\n        self.hasher.final(&hash);\n\n        const path = if (self.subdir) |subdir|\n            try std.fmt.allocPrint(\n                self.builder.allocator,\n                \"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "createPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createAndGetDir from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn createAndGetDir(self: *Self) !DirAndPath {\n        const path = try self.createPath();\n        return DirAndPath{\n            .path = path,\n            .dir = try std.fs.cwd().makeOpenPath(path, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "createAndGetDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createAndGetPath from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn createAndGetPath(self: *Self) ![]const u8 {\n        const path = try self.createPath();\n        try std.fs.cwd().makePath(path);\n        return path;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "createAndGetPath",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toString from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub fn toString(self: Permission) []const u8 {\n        @setEvalBranchQuota(10_000);\n        inline for (std.meta.fields(Permission)) |fld| {\n            if (self == @field(Permission, fld.name)) {\n                return comptime blk: {\n                    var name: [fld.name.len]u8 = undefined;\n                    break :blk \"android.permission.\" ++ std.ascii.upperString(&name, fld.name);\n                }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "function",
+      "name": "toString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ToolchainVersions from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const ToolchainVersions = struct {\n    build_tools_version: []const u8 = \"33.0.1\",\n    ndk_version: []const u8 = \"25.1.8937393\",\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "ToolchainVersions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to UserConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const UserConfig = struct {\n    android_sdk_root: []const u8 = \"\",\n    android_ndk_root: []const u8 = \"\",\n    java_home: []const u8 = \"\",\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "UserConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Config from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const Config = struct {\n    /// Path to the SDK root folder.\n    /// Example: `/home/ziggy/android-sdk`.\n    sdk_root: []const u8,\n\n    /// Path to the NDK root folder.\n    /// Example: `/home/ziggy/android-sdk/ndk/21.1.6352462`.\n    ndk_root: []const u8,\n\n    /// Path to the build tools folder.\n    /// Example: `/home/ziggy/android-sdk/build-tools/28.0.3`.\n    build_tools: []const u8,\n\n    /// A key store. This is required when an APK is created and signed.\n    /// If you don't care for production code, just use the default here\n    /// and it will work. This needs to be changed to a *proper* key store\n    /// when you want to publish the app.\n    key_store: KeyStore = KeyStore{\n        .file = \".zig-cache/\",\n        .alias = \"default\",\n        .password = \"ziguana\",\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "Config",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Resource from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const Resource = struct {\n    /// This is the relative path to the resource root\n    path: []const u8,\n    /// This is the content of the file.\n    content: std.Build.LazyPath,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "Resource",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AppConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const AppConfig = struct {\n    /// The display name of the application. This is shown to the users.\n    display_name: []const u8,\n\n    /// Application name, only lower case letters and underscores are allowed.\n    app_name: []const u8,\n\n    /// Java package name, usually the reverse top level domain + app name.\n    /// Only lower case letters, dots and underscores are allowed.\n    package_name: []const u8,\n\n    /// The android version which is embedded in the manifset.\n    /// The default is Android 9, it's more than 4 years old by now and should be widespread enough\n    /// to be a reasonable default.\n    target_version: AndroidVersion = .android9,\n\n    /// The resource directory that will contain the manifest and other app resources.\n    /// This should be a distinct directory per app.\n    resources: []const Resource = &[_]Resource{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "AppConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TargetConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const TargetConfig = struct {\n    lib_dir: []const u8,\n    include_dir: []const u8,\n    out_dir: []const u8,\n    target: std.Target.Query,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "TargetConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to KeyStore from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const KeyStore = struct {\n    file: []const u8,\n    alias: []const u8,\n    password: []const u8,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "KeyStore",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to HostTools from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const HostTools = struct {\n    zip_add: *std.Build.Step.Compile,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "HostTools",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SystemTools from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const SystemTools = struct {\n    mkdir: []const u8 = \"mkdir\",\n    rm: []const u8 = \"rm\",\n\n    zipalign: []const u8 = \"zipalign\",\n    aapt: []const u8 = \"aapt\",\n    adb: []const u8 = \"adb\",\n    apksigner: []const u8 = \"apksigner\",\n    keytool: []const u8 = \"keytool\",\n    javac: []const u8 = \"javac\",\n    d8: []const u8 = \"d8\",\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "SystemTools",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AppTargetConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const AppTargetConfig = struct {\n    aarch64: ?bool = null,\n    arm: ?bool = null,\n    x86_64: ?bool = null,\n    x86: ?bool = null,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "AppTargetConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CreateAppStep from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const CreateAppStep = struct {\n    sdk: *Sdk,\n    first_step: *std.Build.Step,\n    final_step: *std.Build.Step,\n\n    libraries: []const *std.Build.Step.Compile,\n    build_options: *BuildOptionStep,\n\n    apk_file: std.Build.LazyPath,\n\n    package_name: []const u8,\n\n    pub fn getAndroidPackage(self: @This(), name: []const u8) std.Build.Pkg {\n        return self.sdk.b.dupePkg(std.Build.Pkg{\n            .name = name,\n            .source = self.sdk.b.path(sdkRoot() ++ \"/src/android-support.zig\"),\n            .dependencies = &[_]std.Build.Pkg{\n                self.build_options.getPackage(\"build_options\"),\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "CreateAppStep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to NdkVersionRange from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const NdkVersionRange = struct {\n    ndk: []const u8,\n    min: u16,\n    max: u16,\n\n    pub fn validate(range: []const NdkVersionRange, ndk: []const u8, api: u16) void {\n        const ndk_version = std.SemanticVersion.parse(ndk) catch {\n            std.debug.print(\"Could not parse NDK version {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "NdkVersionRange",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CreateResourceDirectory from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const CreateResourceDirectory = struct {\n    const Self = @This();\n    builder: *std.Build,\n    step: std.Build.Step,\n\n    resources: std.ArrayList(Resource),\n    directory: std.Build.GeneratedFile,\n\n    pub fn create(b: *std.Build) *Self {\n        const self = b.allocator.create(Self) catch @panic(\"out of memory\");\n        self.* = Self{\n            .builder = b,\n            .step = Step.init(.{\n                .id = .custom,\n                .name = \"populate resource directory\",\n                .owner = b,\n                .makeFn = CreateResourceDirectory.make,\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "CreateResourceDirectory",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to WriteToZip from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const WriteToZip = struct {\n    output_source: std.Build.LazyPath,\n    run_step: *std.Build.Step.Run,\n\n    pub fn init(sdk: *Sdk, zip_file: std.Build.LazyPath, out_name: []const u8) WriteToZip {\n        const run_cp = sdk.b.addRunArtifact(sdk.host_tools.zip_add);\n\n        run_cp.addFileArg(zip_file);\n        const output_source = run_cp.addOutputFileArg(out_name);\n\n        return WriteToZip{\n            .output_source = output_source,\n            .run_step = run_cp,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "WriteToZip",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to KeyConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const KeyConfig = struct {\n    pub const Algorithm = enum { RSA }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "KeyConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to zig_targets from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const zig_targets = struct {\n    const aarch64 = std.Target.Query{\n        .cpu_arch = .aarch64,\n        .os_tag = android_os,\n        .abi = android_abi,\n        .cpu_model = .baseline,\n        .cpu_features_add = std.Target.aarch64.featureSet(&.{.v8a}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "zig_targets",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to BuildOptionStep from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const BuildOptionStep = struct {\n    const Self = @This();\n\n    step: Step,\n    builder: *std.Build,\n    file_content: std.ArrayList(u8),\n    package_file: std.Build.GeneratedFile,\n\n    pub fn create(b: *Builder) *Self {\n        const options = b.allocator.create(Self) catch @panic(\"out of memory\");\n\n        options.* = Self{\n            .builder = b,\n            .step = Step.init(.{\n                .id = .custom,\n                .name = \"render build options\",\n                .owner = b,\n                .makeFn = make,\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "BuildOptionStep",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CacheBuilder from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const CacheBuilder = struct {\n    const Self = @This();\n\n    builder: *std.Build,\n    hasher: std.crypto.hash.Sha1,\n    subdir: ?[]const u8,\n\n    pub fn init(builder: *std.Build, subdir: ?[]const u8) Self {\n        return Self{\n            .builder = builder,\n            .hasher = std.crypto.hash.Sha1.init(.{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "CacheBuilder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DirAndPath from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "pub const DirAndPath = struct {\n        dir: std.fs.Dir,\n        path: []const u8,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "struct",
+      "name": "DirAndPath",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const self: *Self = @fieldParentPtr(\"step\", step);",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to command from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const command: []const []const u8 = switch (sdk.launch_using) {\n        .am => &.{\n            sdk.system_tools.adb,\n            \"shell\",\n            \"am\",\n            \"start\",\n            \"-n\",\n            sdk.b.fmt(\"{s}/android.app.NativeActivity\", .{package_name}),\n        },\n        .monkey => &.{\n            sdk.system_tools.adb,\n            \"shell\",\n            \"monkey\",\n            \"-p\",\n            package_name,\n            \"1\",\n        },\n    };",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "const",
+      "name": "command",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/Sdk.zig",
+    "response": "const self: *Self = @fieldParentPtr(\"step\", step);",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/Sdk.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build.zig",
+    "response": "pub fn build(b: *std.build.Builder) !void {\n    // Default-initialize SDK\n    const sdk = Sdk.init(b, null, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dex from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build.zig",
+    "response": "const dex: ?[]const [:0]const u8 = switch (example) {\n        .invocationhandler => &[_][:0]const u8{\"src/NativeInvocationHandler.java\"},\n        else => null,\n    };",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build.zig",
+      "type": "const",
+      "name": "dex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findUserConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "pub fn findUserConfig(b: *Builder, versions: Sdk.ToolchainVersions) !UserConfig {\n    // var str_buf: [5]u8 = undefined;\n\n    var config = UserConfig{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "findUserConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to RegOpenKeyA from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "fn RegOpenKeyA(key: HKEY, subKey: [*:0]const u8, result: *HKEY) LSTATUS;\n            extern \"Advapi32\" fn RegCloseKey(key: HKEY) LSTATUS;\n            extern \"Advapi32\" fn RegGetValueA(key: HKEY, subKey: ?[*:0]const u8, value: [*:0]const u8, flags: DWORD, type: ?*DWORD, data: ?*anyopaque, len: ?*DWORD) LSTATUS;\n\n            fn getStringAlloc(allocator: std.mem.Allocator, key: HKEY, value: [*:0]const u8) ?[]const u8 {\n                // query the length\n                var len: DWORD = 0;\n                var res = RegGetValueA(key, null, value, RRF_RT_REG_SZ, null, null, &len);\n                if (res == ERROR_SUCCESS) {\n                    if (len == 0) {\n                        return &[_]u8{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "RegOpenKeyA",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findProgramPath from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "pub fn findProgramPath(allocator: std.mem.Allocator, program: []const u8) ?[]const u8 {\n    const args: []const []const u8 = if (builtin.os.tag == .windows)\n        &[_][]const u8{ \"where\", program }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "findProgramPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findProblemWithAndroidSdk from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "fn findProblemWithAndroidSdk(b: *Builder, versions: Sdk.ToolchainVersions, path: []const u8) ?[]const u8 {\n    std.fs.cwd().access(path, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "findProblemWithAndroidSdk",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findProblemWithAndroidNdk from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "fn findProblemWithAndroidNdk(b: *Builder, versions: Sdk.ToolchainVersions, path: []const u8) ?[]const u8 {\n    std.fs.cwd().access(path, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "findProblemWithAndroidNdk",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findProblemWithJdk from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "fn findProblemWithJdk(b: *Builder, path: []const u8) ?[]const u8 {\n    std.fs.cwd().access(path, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "findProblemWithJdk",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pathConcat from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "fn pathConcat(b: *Builder, left: []const u8, right: []const u8) []const u8 {\n    return std.fs.path.join(b.allocator, &[_][]const u8{ left, right }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "pathConcat",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fileExists from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "pub fn fileExists(path: []const u8) bool {\n    std.fs.cwd().access(path, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "function",
+      "name": "fileExists",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to reg from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const reg = struct {\n            extern \"Advapi32\" fn RegOpenKeyA(key: HKEY, subKey: [*:0]const u8, result: *HKEY) LSTATUS;\n            extern \"Advapi32\" fn RegCloseKey(key: HKEY) LSTATUS;\n            extern \"Advapi32\" fn RegGetValueA(key: HKEY, subKey: ?[*:0]const u8, value: [*:0]const u8, flags: DWORD, type: ?*DWORD, data: ?*anyopaque, len: ?*DWORD) LSTATUS;\n\n            fn getStringAlloc(allocator: std.mem.Allocator, key: HKEY, value: [*:0]const u8) ?[]const u8 {\n                // query the length\n                var len: DWORD = 0;\n                var res = RegGetValueA(key, null, value, RRF_RT_REG_SZ, null, null, &len);\n                if (res == ERROR_SUCCESS) {\n                    if (len == 0) {\n                        return &[_]u8{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "struct",
+      "name": "reg",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_ANY from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_ANY: DWORD = 0xFFFF;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_ANY",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_REG_BINARY from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_REG_BINARY: DWORD = 0x08;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_REG_BINARY",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_REG_DWORD from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_REG_DWORD: DWORD = 0x10;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_REG_DWORD",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_REG_EXPAND_SZ from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_REG_EXPAND_SZ: DWORD = 0x04;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_REG_EXPAND_SZ",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_REG_MULTI_SZ from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_REG_MULTI_SZ: DWORD = 0x20;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_REG_MULTI_SZ",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_REG_NONE from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_REG_NONE: DWORD = 0x01;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_REG_NONE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_REG_QWORD from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_REG_QWORD: DWORD = 0x40;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_REG_QWORD",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_RT_REG_SZ from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_RT_REG_SZ: DWORD = 0x02;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_RT_REG_SZ",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_NOEXPAND from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_NOEXPAND: DWORD = 0x10000000;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_NOEXPAND",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_ZEROONFAILURE from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_ZEROONFAILURE: DWORD = 0x20000000;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_ZEROONFAILURE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_SUBKEY_WOW6464KEY from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_SUBKEY_WOW6464KEY: DWORD = 0x00010000;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_SUBKEY_WOW6464KEY",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to RRF_SUBKEY_WOW6432KEY from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const RRF_SUBKEY_WOW6432KEY: DWORD = 0x00020000;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "RRF_SUBKEY_WOW6432KEY",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ERROR_SUCCESS from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const ERROR_SUCCESS: LSTATUS = 0;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "ERROR_SUCCESS",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ERROR_MORE_DATA from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const ERROR_MORE_DATA: LSTATUS = 234;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "ERROR_MORE_DATA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to android_studio_key from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const android_studio_key: HKEY = for ([_]HKEY{ HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE }) |root_key| {\n            var software: HKEY = null;",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "android_studio_key",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to args from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/build/auto-detect.zig",
+    "response": "const args: []const []const u8 = if (builtin.os.tag == .windows)\n        &[_][]const u8{ \"where\", program }\n    else\n        &[_][]const u8{ \"which\", program };",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/build/auto-detect.zig",
+      "type": "const",
+      "name": "args",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator, activity: *android.ANativeActivity, stored_state: ?[]const u8) !Self {\n        _ = stored_state;\n\n        return Self{\n            .allocator = allocator,\n            .activity = activity,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn start(self: *Self) !void {\n        self.thread = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn deinit(self: *Self) void {\n        @atomicStore(bool, &self.running, false, .SeqCst);\n        if (self.thread) |thread| {\n            thread.join();\n            self.thread = null;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onNativeWindowCreated from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn onNativeWindowCreated(self: *Self, window: *android.ANativeWindow) void {\n        self.egl_lock.lock();\n        defer self.egl_lock.unlock();\n\n        if (self.egl) |*old| {\n            old.deinit();\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "onNativeWindowCreated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onNativeWindowDestroyed from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn onNativeWindowDestroyed(self: *Self, window: *android.ANativeWindow) void {\n        _ = window;\n        self.egl_lock.lock();\n        defer self.egl_lock.unlock();\n\n        if (self.egl) |*old| {\n            old.deinit();\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "onNativeWindowDestroyed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onInputQueueCreated from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn onInputQueueCreated(self: *Self, input: *android.AInputQueue) void {\n        self.input_lock.lock();\n        defer self.input_lock.unlock();\n\n        self.input = input;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "onInputQueueCreated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onInputQueueDestroyed from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn onInputQueueDestroyed(self: *Self, input: *android.AInputQueue) void {\n        _ = input;\n\n        self.input_lock.lock();\n        defer self.input_lock.unlock();\n\n        self.input = null;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "onInputQueueDestroyed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn printConfig(config: *android.AConfiguration) void {\n        var lang: [2]u8 = undefined;\n        var country: [2]u8 = undefined;\n\n        android.AConfiguration_getLanguage(config, &lang);\n        android.AConfiguration_getCountry(config, &country);\n\n        app_log.debug(\n            \\\\App Configuration:\n            \\\\  MCC:         {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "printConfig",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to processKeyEvent from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn processKeyEvent(self: *Self, event: *android.AInputEvent) !bool {\n        const event_type = @as(android.AKeyEventActionType, @enumFromInt(android.AKeyEvent_getAction(event)));\n        std.log.scoped(.input).debug(\n            \\\\Key Press Event: {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "processKeyEvent",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to insertPoint from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn insertPoint(self: *Self, point: TouchPoint) void {\n        std.debug.assert(point.index != null);\n        var oldest: *TouchPoint = undefined;\n\n        if (point.index) |index| {\n            self.simple_synth.oscillators[@as(usize, @intCast(index))].setWaveOn(true);\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "insertPoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to processMotionEvent from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn processMotionEvent(self: *Self, event: *android.AInputEvent) !bool {\n        const event_type = @as(android.AMotionEventActionType, @enumFromInt(android.AMotionEvent_getAction(event)));\n\n        {\n            var native_activity = NativeActivity.init(self.activity);\n            defer native_activity.deinit();\n\n            // Show/Hide keyboard\n            // _ = native_activity.AndroidDisplayKeyboard(true);\n\n            // this allows you to send the app in the background\n            // const success = native_activity.AndroidSendToBack(true);\n            // _ = success;\n            // std.log.scoped(.input).debug(\"SendToBack() = {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "processMotionEvent",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mainLoop from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn mainLoop(self: *Self) !void {\n        // This code somehow crashes yet. Needs more investigations\n        var native_activity = NativeActivity.init(self.activity);\n        defer native_activity.deinit();\n\n        // Must be called from main thread…\n        _ = try native_activity.AndroidMakeFullscreen();\n\n        var loop: usize = 0;\n        app_log.info(\"mainLoop() started\\n\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "mainLoop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readFromSlice from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn readFromSlice(slice: []const u8) Vector4 {\n        return Vector4{\n            .x = @as(f32, @bitCast(std.mem.readIntLittle(u32, slice[0..4]))),\n            .y = @as(f32, @bitCast(std.mem.readIntLittle(u32, slice[4..8]))),\n            .z = @as(f32, @bitCast(std.mem.readIntLittle(u32, slice[8..12]))),\n            .w = 1.0,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "readFromSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to glProgramInfoLog from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn glProgramInfoLog(program: c.GLuint) void {\n    var buffer: [4096]u8 = undefined;\n    var size: c.GLsizei = undefined;\n    c.glGetProgramInfoLog(program, 4096, &size, &buffer);\n    if (size == 0) return;\n    app_log.info(\"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "glProgramInfoLog",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to glShaderInfoLog from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn glShaderInfoLog(shader: c.GLuint) void {\n    var buffer: [4096]u8 = undefined;\n    var size: c.GLsizei = undefined;\n    c.glGetShaderInfoLog(shader, 4096, &size, &buffer);\n    if (size == 0) return;\n    app_log.info(\"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "glShaderInfoLog",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to glCheckError from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn glCheckError(res: i64) void {\n    switch (res) {\n        c.GL_INVALID_ENUM => app_log.err(\"GL error code {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "glCheckError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to glDrainErrors from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn glDrainErrors() void {\n    var res = c.glGetError();\n    while (res != c.GL_NO_ERROR) : (res = c.glGetError()) {\n        glCheckError(res);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "glDrainErrors",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enableDebug from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn enableDebug() void {\n    const extensions = std.mem.span(c.glGetString(c.GL_EXTENSIONS));\n    if (std.mem.indexOf(u8, extensions, \"GL_KHR_debug\") != null) {\n        c.glEnable(c.GL_DEBUG_OUTPUT_KHR);\n        c.glEnable(c.GL_DEBUG_OUTPUT_SYNCHRONOUS_KHR);\n\n        const glDebugMessageControl = @as(c.PFNGLDEBUGMESSAGECONTROLKHRPROC, @ptrCast(c.eglGetProcAddress(\"glDebugMessageControl\"))).?;\n        glDebugMessageControl(c.GL_DONT_CARE, c.GL_DONT_CARE, c.GL_DEBUG_SEVERITY_NOTIFICATION_KHR, 0, null, c.GL_TRUE);\n\n        const glDebugMessageCallback = @as(c.PFNGLDEBUGMESSAGECALLBACKKHRPROC, @ptrCast(c.eglGetProcAddress(\"glDebugMessageCallback\"))).?;\n        glDebugMessageCallback(debugMessageCallback, null);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "enableDebug",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to debugMessageCallback from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub fn debugMessageCallback(\n    source: c.GLenum,\n    logtype: c.GLenum,\n    id: c.GLuint,\n    severity: c.GLenum,\n    length: c.GLsizei,\n    message_c: ?[*]const c.GLchar,\n    user_param: ?*const anyopaque,\n) callconv(.C) void {\n    _ = user_param;\n    const message = message: {\n        if (message_c) |message_ptr| {\n            break :message if (length > 0) message_ptr[0..@as(usize, @intCast(length))] else \"\";\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "debugMessageCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setWaveOn from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn setWaveOn(self: *@This(), isWaveOn: bool) void {\n        @atomicStore(bool, &self.isWaveOn, isWaveOn, .SeqCst);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "setWaveOn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setSampleRate from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn setSampleRate(self: *@This(), sample_rate: i32) void {\n        self.phaseIncrement = (std.math.tau * self.frequency) / @as(f64, @floatFromInt(sample_rate));\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "setSampleRate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderf32 from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn renderf32(self: *@This(), audio_data: []f32) void {\n        if (!@atomicLoad(bool, &self.isWaveOn, .SeqCst)) self.phase = 0;\n\n        for (audio_data) |*frame| {\n            if (@atomicLoad(bool, &self.isWaveOn, .SeqCst)) {\n                frame.* += @as(f32, @floatCast(std.math.sin(self.phase) * self.amplitude));\n                self.phase += self.phaseIncrement;\n                if (self.phase > std.math.tau) self.phase -= std.math.tau;\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "renderf32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderi16 from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn renderi16(self: *@This(), audio_data: []i16) void {\n        if (!@atomicLoad(bool, &self.isWaveOn, .SeqCst)) self.phase = 0;\n\n        for (audio_data) |*frame| {\n            if (@atomicLoad(bool, &self.isWaveOn, .SeqCst)) {\n                frame.* +|= @as(i16, @intFromFloat(@as(f32, @floatCast(std.math.sin(self.phase) * self.amplitude)) * std.math.maxInt(i16)));\n                self.phase += self.phaseIncrement;\n                if (self.phase > std.math.tau) self.phase -= std.math.tau;\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "renderi16",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn init() SimpleSynth {\n        var synth = SimpleSynth{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to audioCallback from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "fn audioCallback(stream: audio.StreamLayout, user_data: *anyopaque) void {\n        var synth = @as(*SimpleSynth, @ptrCast(@alignCast(@alignOf(SimpleSynth), user_data)));\n        std.debug.assert(stream.buffer == .Int16);\n\n        for (&synth.oscillators) |*osc| {\n            osc.setSampleRate(@as(i32, @intCast(stream.sample_rate)));\n            osc.renderi16(stream.buffer.Int16);\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "function",
+      "name": "audioCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AndroidApp from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "pub const AndroidApp = struct {\n    const Self = @This();\n\n    const TouchPoint = struct {\n        /// if null, then fade out\n        index: ?i32,\n        intensity: f32,\n        x: f32,\n        y: f32,\n        age: i64,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "struct",
+      "name": "AndroidApp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Oscillator from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "const Oscillator = struct {\n    isWaveOn: bool = false,\n    phase: f64 = 0.0,\n    phaseIncrement: f64 = 0,\n    frequency: f64 = 440,\n    amplitude: f64 = 0.1,\n\n    fn setWaveOn(self: *@This(), isWaveOn: bool) void {\n        @atomicStore(bool, &self.isWaveOn, isWaveOn, .SeqCst);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "struct",
+      "name": "Oscillator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SimpleSynth from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/egl/main.zig",
+    "response": "const SimpleSynth = struct {\n    oscillators: [10]Oscillator = [1]Oscillator{.{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/egl/main.zig",
+      "type": "struct",
+      "name": "SimpleSynth",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to timerInvoke from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "pub fn timerInvoke(data: ?*anyopaque, jni: *android.JNI, method: android.jobject, args: android.jobjectArray) !android.jobject {\n    var btn_data = @as(*ButtonData, @ptrCast(@alignCast(@alignOf(*ButtonData), data)));\n    btn_data.count += 1;\n    std.log.info(\"Running invoke!\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "timerInvoke",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator, activity: *android.ANativeActivity, stored_state: ?[]const u8) !AndroidApp {\n        _ = stored_state;\n\n        return AndroidApp{\n            .allocator = allocator,\n            .activity = activity,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "pub fn start(self: *AndroidApp) !void {\n        // Initialize the variables we need to execute functions on the UI thread\n        self.uiThreadLooper = android.ALooper_forThread().?;\n        self.uiThreadId = std.Thread.getCurrentId();\n        self.pipe = try std.os.pipe();\n        android.ALooper_acquire(self.uiThreadLooper);\n\n        var native_activity = android.NativeActivity.init(self.activity);\n        var jni = native_activity.jni;\n        self.uiJni = native_activity;\n\n        // Get the window object attached to our activity\n        const ActivityClass = try jni.findClass(\"android/app/NativeActivity\");\n        const activityWindow = try ActivityClass.callObjectMethod(self.activity.clazz, \"getWindow\", \"()Landroid/view/Window;\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runOnUiThread from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "pub fn runOnUiThread(self: *AndroidApp, comptime func: anytype, args: anytype) !void {\n        if (std.Thread.getCurrentId() == self.uiThreadId) {\n            // runOnUiThread has been called from the UI thread.\n            @call(.auto, func, args);\n            return;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "runOnUiThread",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callback from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "fn callback(_: c_int, _: c_int, data: ?*anyopaque) callconv(.C) c_int {\n                const data_struct = @as(*Data, @ptrCast(@alignCast(@alignOf(Data), data.?)));\n                const self_ptr = data_struct.self;\n                defer self_ptr.allocator.destroy(data_struct);\n\n                @call(.auto, func, data_struct.args);\n                std.Thread.Futex.wake(&self_ptr.uiThreadCondition, 1);\n                return 0;\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "callback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getJni from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "pub fn getJni(self: *AndroidApp) JNI {\n        return JNI.get(self.activity);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "getJni",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "pub fn deinit(self: *AndroidApp) void {\n        @atomicStore(bool, &self.running, false, .SeqCst);\n        if (self.thread) |thread| {\n            thread.join();\n            self.thread = null;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setAppContentView from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "fn setAppContentView(self: *AndroidApp) void {\n        setAppContentViewImpl(self) catch |e| {\n            app_log.err(\"Encountered error while setting app content view: {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "setAppContentView",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setAppContentViewImpl from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "fn setAppContentViewImpl(self: *AndroidApp) !void {\n        const native_activity = android.NativeActivity.get(self.activity);\n        const jni = native_activity.jni;\n\n        std.log.warn(\"Creating android.widget.Button\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "setAppContentViewImpl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mainLoop from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "fn mainLoop(self: *AndroidApp) !void {\n        self.mainJni = android.NativeActivity.init(self.activity);\n        defer self.mainJni.deinit();\n\n        try self.runOnUiThread(setAppContentView, .{self}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "mainLoop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOnClickListener from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "fn getOnClickListener(self: *AndroidApp, jni: *JNI) !android.jobject {\n        // Get class loader instance\n        const ActivityClass = try jni.findClass(\"android/app/NativeActivity\");\n        const cls = try ActivityClass.callObjectMethod(self.activity.clazz, \"getClassLoader\", \"()Ljava/lang/ClassLoader;\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "function",
+      "name": "getOnClickListener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ButtonData from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "const ButtonData = struct {\n    count: usize = 0,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "struct",
+      "name": "ButtonData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AndroidApp from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "pub const AndroidApp = struct {\n    allocator: std.mem.Allocator,\n    activity: *android.ANativeActivity,\n    thread: ?std.Thread = null,\n    running: bool = true,\n\n    // The JNIEnv of the UI thread\n    uiJni: android.NativeActivity = undefined,\n    // The JNIEnv of the app thread\n    mainJni: android.NativeActivity = undefined,\n\n    invocation_handler: NativeInvocationHandler = undefined,\n\n    // This is needed because to run a callback on the UI thread Looper you must\n    // react to a fd change, so we use a pipe to force it\n    pipe: [2]std.os.fd_t = undefined,\n    // This is used with futexes so that runOnUiThread waits until the callback is completed\n    // before returning.\n    uiThreadCondition: std.atomic.Value(u32) = std.atomic.Value(u32).init(0),\n    uiThreadLooper: *android.ALooper = undefined,\n    uiThreadId: std.Thread.Id = undefined,\n\n    btn_data: ButtonData = .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "struct",
+      "name": "AndroidApp",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Data from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "const Data = struct { args: Args, self: *AndroidApp }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "struct",
+      "name": "Data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Instance from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/invocationhandler/main.zig",
+    "response": "const Instance = struct {\n            fn callback(_: c_int, _: c_int, data: ?*anyopaque) callconv(.C) c_int {\n                const data_struct = @as(*Data, @ptrCast(@alignCast(@alignOf(Data), data.?)));\n                const self_ptr = data_struct.self;\n                defer self_ptr.allocator.destroy(data_struct);\n\n                @call(.auto, func, data_struct.args);\n                std.Thread.Futex.wake(&self_ptr.uiThreadCondition, 1);\n                return 0;\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/invocationhandler/main.zig",
+      "type": "struct",
+      "name": "Instance",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/minimal/main.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator, activity: *android.ANativeActivity, stored_state: ?[]const u8) !Self {\n        _ = stored_state;\n\n        return Self{\n            .allocator = allocator,\n            .activity = activity,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/minimal/main.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/minimal/main.zig",
+    "response": "pub fn start(self: *Self) !void {\n        _ = self;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/minimal/main.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/minimal/main.zig",
+    "response": "pub fn deinit(self: *Self) void {\n        self.* = undefined;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/minimal/main.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AndroidApp from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/minimal/main.zig",
+    "response": "pub const AndroidApp = struct {\n    const Self = @This();\n\n    allocator: std.mem.Allocator,\n    activity: *android.ANativeActivity,\n\n    /// This is the entry point which initializes a application\n    /// that has stored its previous state.\n    /// `stored_state` is that state, the memory is only valid for this function.\n    pub fn init(allocator: std.mem.Allocator, activity: *android.ANativeActivity, stored_state: ?[]const u8) !Self {\n        _ = stored_state;\n\n        return Self{\n            .allocator = allocator,\n            .activity = activity,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/minimal/main.zig",
+      "type": "struct",
+      "name": "AndroidApp",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator, activity: *android.ANativeActivity, stored_state: ?[]const u8) !AndroidApp {\n        _ = stored_state;\n\n        return AndroidApp{\n            .allocator = allocator,\n            .activity = activity,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "pub fn start(self: *AndroidApp) !void {\n        // Initialize the variables we need to execute functions on the UI thread\n        self.uiThreadLooper = android.ALooper_forThread().?;\n        self.uiThreadId = std.Thread.getCurrentId();\n        self.pipe = try std.os.pipe();\n        android.ALooper_acquire(self.uiThreadLooper);\n\n        var native_activity = NativeActivity.init(self.activity);\n        self.uiJni = native_activity;\n        const jni = native_activity.jni;\n\n        // Get the window object attached to our activity\n        const activityWindow = try native_activity.activity_class.callObjectMethod(self.activity.clazz, \"getWindow\", \"()Landroid/view/Window;\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runOnUiThread from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "pub fn runOnUiThread(self: *AndroidApp, comptime func: anytype, args: anytype) !void {\n        if (std.Thread.getCurrentId() == self.uiThreadId) {\n            // runOnUiThread has been called from the UI thread.\n            @call(.auto, func, args);\n            return;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "runOnUiThread",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callback from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "fn callback(_: c_int, _: c_int, data: ?*anyopaque) callconv(.C) c_int {\n                const data_struct = @as(*Data, @ptrCast(@alignCast(@alignOf(Data), data.?)));\n                const self_ptr = data_struct.self;\n                defer self_ptr.allocator.destroy(data_struct);\n\n                @call(.auto, func, data_struct.args);\n                std.Thread.Futex.wake(&self_ptr.uiThreadCondition, 1);\n                return 0;\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "callback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getActivity from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "pub fn getActivity(self: *AndroidApp) NativeActivity {\n        return NativeActivity.get(self.activity);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "getActivity",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "pub fn deinit(self: *AndroidApp) void {\n        @atomicStore(bool, &self.running, false, .SeqCst);\n        if (self.thread) |thread| {\n            thread.join();\n            self.thread = null;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setAppContentView from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "fn setAppContentView(self: *AndroidApp) void {\n        self.setAppContentViewImpl() catch |e| {\n            app_log.err(\"Error occured while running setAppContentView: {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "setAppContentView",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setAppContentViewImpl from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "fn setAppContentViewImpl(self: *AndroidApp) !void {\n        const native_activity = self.getActivity();\n        const jni = native_activity.jni;\n\n        // We create a new TextView..\n        std.log.warn(\"Creating android.widget.TextView\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "setAppContentViewImpl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mainLoop from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "fn mainLoop(self: *AndroidApp) !void {\n        self.mainJni = NativeActivity.init(self.activity);\n        defer self.mainJni.deinit();\n\n        try self.runOnUiThread(setAppContentView, .{self}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "function",
+      "name": "mainLoop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AndroidApp from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "pub const AndroidApp = struct {\n    allocator: std.mem.Allocator,\n    activity: *android.ANativeActivity,\n    thread: ?std.Thread = null,\n    running: bool = true,\n\n    // The JNIEnv of the UI thread\n    uiJni: NativeActivity = undefined,\n    // The JNIEnv of the app thread\n    mainJni: NativeActivity = undefined,\n\n    // This is needed because to run a callback on the UI thread Looper you must\n    // react to a fd change, so we use a pipe to force it\n    pipe: [2]std.os.fd_t = undefined,\n    // This is used with futexes so that runOnUiThread waits until the callback is completed\n    // before returning.\n    uiThreadCondition: std.atomic.Value(u32) = std.atomic.Value(u32).init(0),\n    uiThreadLooper: *android.ALooper = undefined,\n    uiThreadId: std.Thread.Id = undefined,\n\n    pub fn init(allocator: std.mem.Allocator, activity: *android.ANativeActivity, stored_state: ?[]const u8) !AndroidApp {\n        _ = stored_state;\n\n        return AndroidApp{\n            .allocator = allocator,\n            .activity = activity,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "struct",
+      "name": "AndroidApp",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Data from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "const Data = struct { args: Args, self: *AndroidApp }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "struct",
+      "name": "Data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Instance from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/examples/textview/main.zig",
+    "response": "const Instance = struct {\n            fn callback(_: c_int, _: c_int, data: ?*anyopaque) callconv(.C) c_int {\n                const data_struct = @as(*Data, @ptrCast(@alignCast(@alignOf(Data), data.?)));\n                const self_ptr = data_struct.self;\n                defer self_ptr.allocator.destroy(data_struct);\n\n                @call(.auto, func, data_struct.args);\n                std.Thread.Futex.wake(&self_ptr.uiThreadCondition, 1);\n                return 0;\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/examples/textview/main.zig",
+      "type": "struct",
+      "name": "Instance",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn init(activity: *android.ANativeActivity) Self {\n    var env: *android.JNIEnv = undefined;\n    _ = activity.vm.*.AttachCurrentThread(activity.vm, &env, null);\n    return fromJniEnv(activity, env);\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn get(activity: *android.ANativeActivity) Self {\n    var nullable_env: ?*android.JNIEnv = null;\n    _ = activity.vm.*.GetEnv(activity.vm, @as(*?*anyopaque, @ptrCast(&nullable_env)), android.JNI_VERSION_1_6);\n    if (nullable_env) |env| {\n        return fromJniEnv(activity, env);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromJniEnv from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "fn fromJniEnv(activity: *android.ANativeActivity, env: *android.JNIEnv) Self {\n    var jni = @as(*android.JNI, @ptrCast(env));\n    var activityClass = jni.findClass(\"android/app/NativeActivity\") catch @panic(\"Could not get NativeActivity class\");\n\n    return Self{\n        .activity = activity,\n        .jni = jni,\n        .activity_class = activityClass,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "fromJniEnv",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn deinit(self: *Self) void {\n    _ = self.activity.vm.*.DetachCurrentThread(self.activity.vm);\n    self.* = undefined;\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AndroidGetUnicodeChar from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn AndroidGetUnicodeChar(self: *Self, keyCode: c_int, metaState: c_int) !u21 {\n    // https://stackoverflow.com/questions/21124051/receive-complete-android-unicode-input-in-c-c/43871301\n    const eventType = android.AKEY_EVENT_ACTION_DOWN;\n\n    const KeyEvent = try self.jni.findClass(\"android/view/KeyEvent\");\n\n    const event_obj = try KeyEvent.newObject(\"(II)V\", .{ eventType, keyCode }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "AndroidGetUnicodeChar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AndroidMakeFullscreen from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn AndroidMakeFullscreen(self: *Self) !void {\n    // Partially based on\n    // https://stackoverflow.com/questions/47507714/how-do-i-enable-full-screen-immersive-mode-for-a-native-activity-ndk-app\n\n    // Get android.app.NativeActivity, then get getWindow method handle, returns\n    // view.Window type\n    const ActivityClass = try self.jni.findClass(\"android/app/NativeActivity\");\n    const window = try ActivityClass.callObjectMethod(self.activity.clazz, \"getWindow\", \"()Landroid/view/Window;\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "AndroidMakeFullscreen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AndroidDisplayKeyboard from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn AndroidDisplayKeyboard(self: *Self, show: bool) !bool {\n    // Based on\n    // https://stackoverflow.com/questions/5864790/how-to-show-the-soft-keyboard-on-native-activity\n    var lFlags: android.jint = 0;\n\n    // Retrieves Context.INPUT_METHOD_SERVICE.\n    const ClassContext = try self.jni.findClass(\"android/content/Context\");\n    const INPUT_METHOD_SERVICE = try ClassContext.getStaticObjectField(\"INPUT_METHOD_SERVICE\", \"Ljava/lang/String;\");\n\n    // Runs getSystemService(Context.INPUT_METHOD_SERVICE).\n    const ClassInputMethodManager = try self.jni.findClass(\"android/view/inputmethod/InputMethodManager\");\n    const lInputMethodManager = try ClassInputMethodManager.callObjectMethod(self.activity.clazz, \"getSystemService\", \"(Ljava/lang/String;)Ljava/lang/Object;\", .{INPUT_METHOD_SERVICE}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "AndroidDisplayKeyboard",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AndroidSendToBack from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn AndroidSendToBack(self: *Self, nonRoot: bool) !bool {\n    const ClassActivity = try self.jni.findClass(\"android/app/Activity\");\n    return ClassActivity.callBooleanMethod(self.activity.clazz, \"moveTaskToBack\", \"(Z)Z\", .{if (nonRoot) @as(c_int, 1) else 0}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "AndroidSendToBack",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AndroidHasPermissions from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn AndroidHasPermissions(self: *Self, perm_name: [:0]const u8) !bool {\n    if (android.sdk_version < 23) {\n        log.err(\n            \"Android SDK version {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "AndroidHasPermissions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AndroidRequestAppPermissions from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn AndroidRequestAppPermissions(self: *Self, perm_name: [:0]const u8) !void {\n    if (android.sdk_version < 23) {\n        log.err(\n            \"Android SDK version {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "AndroidRequestAppPermissions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFilesDir from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeActivity.zig",
+    "response": "pub fn getFilesDir(self: *Self, allocator: std.mem.Allocator) ![:0]const u8 {\n    const files_dir = try self.activity_class.callVoidMethod(self.activity.clazz, \"getFilesDir\", \"()Ljava/io/File;\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeActivity.zig",
+      "type": "function",
+      "name": "getFilesDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeInvocationHandler.zig",
+    "response": "pub fn init(jni: *android.JNI, class: android.jobject) !Self {\n    const methods = [_]android.JNINativeMethod{\n        .{\n            .name = \"invoke0\",\n            .signature = \"(Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)Ljava/lang/Object;\",\n            .fnPtr = InvocationHandler.invoke0,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeInvocationHandler.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createAlloc from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeInvocationHandler.zig",
+    "response": "pub fn createAlloc(self: Self, jni: *android.JNI, alloc: std.mem.Allocator, pointer: ?*anyopaque, function: InvokeFn) !android.jobject {\n    // Create a InvocationHandler struct\n    var handler = try alloc.create(InvocationHandler);\n    errdefer alloc.destroy(handler);\n    handler.* = .{\n        .pointer = pointer,\n        .function = function,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeInvocationHandler.zig",
+      "type": "function",
+      "name": "createAlloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to invoke0 from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeInvocationHandler.zig",
+    "response": "pub fn invoke0(jni: *android.JNI, this: android.jobject, proxy: android.jobject, method: android.jobject, args: android.jobjectArray) android.jobject {\n        return invoke_impl(jni, this, proxy, method, args) catch |e| switch (e) {\n            else => @panic(@errorName(e)),\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeInvocationHandler.zig",
+      "type": "function",
+      "name": "invoke0",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to invoke_impl from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeInvocationHandler.zig",
+    "response": "fn invoke_impl(jni: *android.JNI, this: android.jobject, proxy: android.jobject, method: android.jobject, args: android.jobjectArray) anyerror!android.jobject {\n        _ = proxy; // This is the proxy object. Calling anything on it will cause invoke to be called. If this isn't explicitly handled, it will recurse infinitely\n        const Class = try jni.invokeJni(.GetObjectClass, .{this}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeInvocationHandler.zig",
+      "type": "function",
+      "name": "invoke_impl",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to InvocationHandler from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/NativeInvocationHandler.zig",
+    "response": "const InvocationHandler = struct {\n    pointer: ?*anyopaque,\n    function: InvokeFn,\n\n    /// Called by java class NativeInvocationHandler\n    pub fn invoke0(jni: *android.JNI, this: android.jobject, proxy: android.jobject, method: android.jobject, args: android.jobjectArray) android.jobject {\n        return invoke_impl(jni, this, proxy, method, args) catch |e| switch (e) {\n            else => @panic(@errorName(e)),\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/NativeInvocationHandler.zig",
+      "type": "struct",
+      "name": "InvocationHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "pub fn start(output_stream: *@This()) !void {\n            try checkResult(c.AAudioStream_requestStart(output_stream.stream));\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stop from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "pub fn stop(output_stream: *@This()) void {\n            checkResult(c.AAudioStream_requestStop(output_stream.stream)) catch |e| {\n                audio_log.err(\"Error stopping stream {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "function",
+      "name": "stop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "pub fn deinit(output_stream: *@This()) void {\n            checkResult(c.AAudioStream_close(output_stream.stream)) catch |e| {\n                audio_log.err(\"Error deiniting stream {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dataCallback from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "fn dataCallback(\n        stream: ?*c.AAudioStream,\n        user_data: ?*anyopaque,\n        audio_data: ?*anyopaque,\n        num_frames: i32,\n    ) callconv(.C) c.aaudio_data_callback_result_t {\n        _ = stream;\n        const output_stream = @as(*OutputStream, @ptrCast(@alignCast(@alignOf(OutputStream), user_data.?)));\n        // TODO:\n        // const audio_slice = @ptrCast([*]f32, @alignCast(@alignOf(f32), audio_data.?))[0..@intCast(usize, num_frames)];\n        const audio_slice = @as([*]i16, @ptrCast(@alignCast(@alignOf(i16), audio_data.?)))[0..@as(usize, @intCast(num_frames))];\n\n        for (audio_slice) |*frame| {\n            frame.* = 0;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "function",
+      "name": "dataCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to errorCallback from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "fn errorCallback(\n        stream: ?*c.AAudioStream,\n        user_data: ?*anyopaque,\n        err: c.aaudio_result_t,\n    ) callconv(.C) void {\n        _ = stream;\n        audio_log.err(\"AAudio Stream error! {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "function",
+      "name": "errorCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOutputStream from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "pub fn getOutputStream(allocator: std.mem.Allocator, config: OutputStreamConfig) !*OutputStream {\n        errdefer audio_log.err(\"Encountered an error with getting output stream\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "function",
+      "name": "getOutputStream",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkResult from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "pub fn checkResult(result: c.aaudio_result_t) AAudioError!void {\n        return switch (result) {\n            c.AAUDIO_OK => {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "function",
+      "name": "checkResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AAudio from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/aaudio.zig",
+    "response": "pub const AAudio = struct {\n    pub const OutputStream = struct {\n        config: OutputStreamConfig,\n        stream: ?*c.AAudioStream,\n\n        pub fn start(output_stream: *@This()) !void {\n            try checkResult(c.AAudioStream_requestStart(output_stream.stream));\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/aaudio.zig",
+      "type": "struct",
+      "name": "AAudio",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __android_log_write from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn __android_log_write(prio: c_int, tag: [*c]const u8, text: [*c]const u8) c_int;\npub extern fn __android_log_print(prio: c_int, tag: [*c]const u8, fmt: [*c]const u8, ...) c_int;\npub extern fn __android_log_vprint(prio: c_int, tag: [*c]const u8, fmt: [*c]const u8, ap: va_list) c_int;\npub extern fn __android_log_assert(cond: [*c]const u8, tag: [*c]const u8, fmt: [*c]const u8, ...) noreturn;\npub const LOG_ID_MIN = @intFromEnum(enum_log_id.LOG_ID_MIN);\npub const LOG_ID_MAIN = @intFromEnum(enum_log_id.LOG_ID_MAIN);\npub const LOG_ID_RADIO = @intFromEnum(enum_log_id.LOG_ID_RADIO);\npub const LOG_ID_EVENTS = @intFromEnum(enum_log_id.LOG_ID_EVENTS);\npub const LOG_ID_SYSTEM = @intFromEnum(enum_log_id.LOG_ID_SYSTEM);\npub const LOG_ID_CRASH = @intFromEnum(enum_log_id.LOG_ID_CRASH);\npub const LOG_ID_STATS = @intFromEnum(enum_log_id.LOG_ID_STATS);\npub const LOG_ID_SECURITY = @intFromEnum(enum_log_id.LOG_ID_SECURITY);\npub const LOG_ID_KERNEL = @intFromEnum(enum_log_id.LOG_ID_KERNEL);\npub const LOG_ID_MAX = @intFromEnum(enum_log_id.LOG_ID_MAX);\npub const enum_log_id = enum(c_int) {\n    LOG_ID_MIN = 0,\n    LOG_ID_MAIN = 0,\n    LOG_ID_RADIO = 1,\n    LOG_ID_EVENTS = 2,\n    LOG_ID_SYSTEM = 3,\n    LOG_ID_CRASH = 4,\n    LOG_ID_STATS = 5,\n    LOG_ID_SECURITY = 6,\n    LOG_ID_KERNEL = 7,\n    LOG_ID_MAX = 8,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "__android_log_write",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __android_log_buf_write from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn __android_log_buf_write(bufID: c_int, prio: c_int, tag: [*c]const u8, text: [*c]const u8) c_int;\npub extern fn __android_log_buf_print(bufID: c_int, prio: c_int, tag: [*c]const u8, fmt: [*c]const u8, ...) c_int;\npub extern fn android_get_application_target_sdk_version(...) c_int;\npub extern fn android_get_device_api_level(...) c_int;\npub const ptrdiff_t = c_long;\npub const wchar_t = c_uint;\nconst struct_unnamed_1 = extern struct {\n    __clang_max_align_nonce1: c_longlong align(8),\n    __clang_max_align_nonce2: c_longdouble align(16),\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "__android_log_buf_write",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AAssetManager_openDir from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn AAssetManager_openDir(mgr: ?*AAssetManager, dirName: [*c]const u8) ?*AAssetDir;\npub extern fn AAssetManager_open(mgr: ?*AAssetManager, filename: [*c]const u8, mode: c_int) ?*AAsset;\npub extern fn AAssetDir_getNextFileName(assetDir: ?*AAssetDir) [*c]const u8;\npub extern fn AAssetDir_rewind(assetDir: ?*AAssetDir) void;\npub extern fn AAssetDir_close(assetDir: ?*AAssetDir) void;\npub extern fn AAsset_read(asset: ?*AAsset, buf: ?*anyopaque, count: usize) c_int;\npub extern fn AAsset_seek(asset: ?*AAsset, offset: off_t, whence: c_int) off_t;\npub extern fn AAsset_seek64(asset: ?*AAsset, offset: off64_t, whence: c_int) off64_t;\npub extern fn AAsset_close(asset: ?*AAsset) void;\npub extern fn AAsset_getBuffer(asset: ?*AAsset) ?*const anyopaque;\npub extern fn AAsset_getLength(asset: ?*AAsset) off_t;\npub extern fn AAsset_getLength64(asset: ?*AAsset) off64_t;\npub extern fn AAsset_getRemainingLength(asset: ?*AAsset) off_t;\npub extern fn AAsset_getRemainingLength64(asset: ?*AAsset) off64_t;\npub extern fn AAsset_openFileDescriptor(asset: ?*AAsset, outStart: [*c]off_t, outLength: [*c]off_t) c_int;\npub extern fn AAsset_openFileDescriptor64(asset: ?*AAsset, outStart: [*c]off64_t, outLength: [*c]off64_t) c_int;\npub extern fn AAsset_isAllocated(asset: ?*AAsset) c_int;\n\npub const AConfiguration = opaque {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "AAssetManager_openDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ALooper_forThread from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn ALooper_forThread(...) ?*ALooper;\npub const ALOOPER_PREPARE_ALLOW_NON_CALLBACKS = @intFromEnum(enum_unnamed_12.ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);\nconst enum_unnamed_12 = enum(c_int) {\n    ALOOPER_PREPARE_ALLOW_NON_CALLBACKS = 1,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "ALooper_forThread",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ALooper_prepare from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn ALooper_prepare(opts: c_int) ?*ALooper;\npub const ALOOPER_POLL_WAKE = @intFromEnum(enum_unnamed_13.ALOOPER_POLL_WAKE);\npub const ALOOPER_POLL_CALLBACK = @intFromEnum(enum_unnamed_13.ALOOPER_POLL_CALLBACK);\npub const ALOOPER_POLL_TIMEOUT = @intFromEnum(enum_unnamed_13.ALOOPER_POLL_TIMEOUT);\npub const ALOOPER_POLL_ERROR = @intFromEnum(enum_unnamed_13.ALOOPER_POLL_ERROR);\nconst enum_unnamed_13 = enum(c_int) {\n    ALOOPER_POLL_WAKE = -1,\n    ALOOPER_POLL_CALLBACK = -2,\n    ALOOPER_POLL_TIMEOUT = -3,\n    ALOOPER_POLL_ERROR = -4,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "ALooper_prepare",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ALooper_acquire from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn ALooper_acquire(looper: ?*ALooper) void;\npub extern fn ALooper_release(looper: ?*ALooper) void;\npub const ALOOPER_EVENT_INPUT = @intFromEnum(enum_unnamed_14.ALOOPER_EVENT_INPUT);\npub const ALOOPER_EVENT_OUTPUT = @intFromEnum(enum_unnamed_14.ALOOPER_EVENT_OUTPUT);\npub const ALOOPER_EVENT_ERROR = @intFromEnum(enum_unnamed_14.ALOOPER_EVENT_ERROR);\npub const ALOOPER_EVENT_HANGUP = @intFromEnum(enum_unnamed_14.ALOOPER_EVENT_HANGUP);\npub const ALOOPER_EVENT_INVALID = @intFromEnum(enum_unnamed_14.ALOOPER_EVENT_INVALID);\nconst enum_unnamed_14 = enum(c_int) {\n    ALOOPER_EVENT_INPUT = 1,\n    ALOOPER_EVENT_OUTPUT = 2,\n    ALOOPER_EVENT_ERROR = 4,\n    ALOOPER_EVENT_HANGUP = 8,\n    ALOOPER_EVENT_INVALID = 16,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "ALooper_acquire",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ALooper_pollOnce from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn ALooper_pollOnce(timeoutMillis: c_int, outFd: [*c]c_int, outEvents: [*c]c_int, outData: [*c]?*anyopaque) c_int;\npub extern fn ALooper_pollAll(timeoutMillis: c_int, outFd: [*c]c_int, outEvents: [*c]c_int, outData: [*c]?*anyopaque) c_int;\npub extern fn ALooper_wake(looper: ?*ALooper) void;\npub extern fn ALooper_addFd(looper: ?*ALooper, fd: c_int, ident: c_int, events: c_int, callback: ALooper_callbackFunc, data: ?*anyopaque) c_int;\npub extern fn ALooper_removeFd(looper: ?*ALooper, fd: c_int) c_int;\npub const jboolean = u8;\npub const jbyte = i8;\npub const jchar = u16;\npub const jshort = i16;\npub const jint = i32;\npub const jlong = i64;\npub const jfloat = f32;\npub const jdouble = f64;\npub const jsize = jint;\npub const jobject = ?*anyopaque;\npub const jclass = jobject;\npub const jstring = jobject;\npub const jarray = jobject;\npub const jobjectArray = jarray;\npub const jbooleanArray = jarray;\npub const jbyteArray = jarray;\npub const jcharArray = jarray;\npub const jshortArray = jarray;\npub const jintArray = jarray;\npub const jlongArray = jarray;\npub const jfloatArray = jarray;\npub const jdoubleArray = jarray;\npub const jthrowable = jobject;\npub const jweak = jobject;\npub const struct__jfieldID = opaque {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "ALooper_pollOnce",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AInputQueue_attachLooper from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn AInputQueue_attachLooper(queue: ?*AInputQueue, looper: ?*ALooper, ident: c_int, callback: ALooper_callbackFunc, data: ?*anyopaque) void;\npub extern fn AInputQueue_detachLooper(queue: ?*AInputQueue) void;\npub extern fn AInputQueue_hasEvents(queue: ?*AInputQueue) i32;\npub extern fn AInputQueue_getEvent(queue: ?*AInputQueue, outEvent: *?*AInputEvent) i32;\npub extern fn AInputQueue_preDispatchEvent(queue: ?*AInputQueue, event: ?*AInputEvent) i32;\npub extern fn AInputQueue_finishEvent(queue: ?*AInputQueue, event: ?*AInputEvent, handled: c_int) void;\nconst struct_unnamed_32 = extern struct {\n    quot: intmax_t,\n    rem: intmax_t,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "AInputQueue_attachLooper",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to imaxabs from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn imaxabs(__i: intmax_t) intmax_t;\npub extern fn imaxdiv(__numerator: intmax_t, __denominator: intmax_t) imaxdiv_t;\npub extern fn strtoimax(__s: [*c]const u8, __end_ptr: [*c][*c]u8, __base: c_int) intmax_t;\npub extern fn strtoumax(__s: [*c]const u8, __end_ptr: [*c][*c]u8, __base: c_int) uintmax_t;\npub extern fn wcstoimax(__s: [*c]const wchar_t, __end_ptr: [*c][*c]wchar_t, __base: c_int) intmax_t;\npub extern fn wcstoumax(__s: [*c]const wchar_t, __end_ptr: [*c][*c]wchar_t, __base: c_int) uintmax_t;\npub const ADATASPACE_UNKNOWN = @intFromEnum(enum_ADataSpace.ADATASPACE_UNKNOWN);\npub const ADATASPACE_SCRGB_LINEAR = @intFromEnum(enum_ADataSpace.ADATASPACE_SCRGB_LINEAR);\npub const ADATASPACE_SRGB = @intFromEnum(enum_ADataSpace.ADATASPACE_SRGB);\npub const ADATASPACE_SCRGB = @intFromEnum(enum_ADataSpace.ADATASPACE_SCRGB);\npub const ADATASPACE_DISPLAY_P3 = @intFromEnum(enum_ADataSpace.ADATASPACE_DISPLAY_P3);\npub const ADATASPACE_BT2020_PQ = @intFromEnum(enum_ADataSpace.ADATASPACE_BT2020_PQ);\npub const enum_ADataSpace = enum(c_int) {\n    ADATASPACE_UNKNOWN = 0,\n    ADATASPACE_SCRGB_LINEAR = 406913024,\n    ADATASPACE_SRGB = 142671872,\n    ADATASPACE_SCRGB = 411107328,\n    ADATASPACE_DISPLAY_P3 = 143261696,\n    ADATASPACE_BT2020_PQ = 163971072,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "imaxabs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to AHardwareBuffer_allocate from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn AHardwareBuffer_allocate(desc: [*c]const AHardwareBuffer_Desc, outBuffer: [*c]?*AHardwareBuffer) c_int;\npub extern fn AHardwareBuffer_acquire(buffer: ?*AHardwareBuffer) void;\npub extern fn AHardwareBuffer_release(buffer: ?*AHardwareBuffer) void;\npub extern fn AHardwareBuffer_describe(buffer: ?*const AHardwareBuffer, outDesc: [*c]AHardwareBuffer_Desc) void;\npub extern fn AHardwareBuffer_lock(buffer: ?*AHardwareBuffer, usage: u64, fence: i32, rect: [*c]const ARect, outVirtualAddress: [*c]?*anyopaque) c_int;\npub extern fn AHardwareBuffer_lockPlanes(buffer: ?*AHardwareBuffer, usage: u64, fence: i32, rect: [*c]const ARect, outPlanes: [*c]AHardwareBuffer_Planes) c_int;\npub extern fn AHardwareBuffer_unlock(buffer: ?*AHardwareBuffer, fence: [*c]i32) c_int;\npub extern fn AHardwareBuffer_sendHandleToUnixSocket(buffer: ?*const AHardwareBuffer, socketFd: c_int) c_int;\npub extern fn AHardwareBuffer_recvHandleFromUnixSocket(socketFd: c_int, outBuffer: [*c]?*AHardwareBuffer) c_int;\npub extern fn AHardwareBuffer_isSupported(desc: [*c]const AHardwareBuffer_Desc) c_int;\npub extern fn AHardwareBuffer_lockAndGetInfo(buffer: ?*AHardwareBuffer, usage: u64, fence: i32, rect: [*c]const ARect, outVirtualAddress: [*c]?*anyopaque, outBytesPerPixel: [*c]i32, outBytesPerStride: [*c]i32) c_int;\npub const WINDOW_FORMAT_RGBA_8888 = @intFromEnum(enum_ANativeWindow_LegacyFormat.WINDOW_FORMAT_RGBA_8888);\npub const WINDOW_FORMAT_RGBX_8888 = @intFromEnum(enum_ANativeWindow_LegacyFormat.WINDOW_FORMAT_RGBX_8888);\npub const WINDOW_FORMAT_RGB_565 = @intFromEnum(enum_ANativeWindow_LegacyFormat.WINDOW_FORMAT_RGB_565);\npub const enum_ANativeWindow_LegacyFormat = enum(c_int) {\n    WINDOW_FORMAT_RGBA_8888 = 1,\n    WINDOW_FORMAT_RGBX_8888 = 2,\n    WINDOW_FORMAT_RGB_565 = 4,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "AHardwareBuffer_allocate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ANativeActivity_finish from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn ANativeActivity_finish(activity: [*c]ANativeActivity) void;\npub extern fn ANativeActivity_setWindowFormat(activity: [*c]ANativeActivity, format: i32) void;\npub extern fn ANativeActivity_setWindowFlags(activity: [*c]ANativeActivity, addFlags: u32, removeFlags: u32) void;\npub const ANATIVEACTIVITY_SHOW_SOFT_INPUT_IMPLICIT = @intFromEnum(enum_unnamed_33.ANATIVEACTIVITY_SHOW_SOFT_INPUT_IMPLICIT);\npub const ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED = @intFromEnum(enum_unnamed_33.ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);\nconst enum_unnamed_33 = enum(c_int) {\n    ANATIVEACTIVITY_SHOW_SOFT_INPUT_IMPLICIT = 1,\n    ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED = 2,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "ANativeActivity_finish",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ANativeActivity_showSoftInput from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn ANativeActivity_showSoftInput(activity: [*c]ANativeActivity, flags: u32) void;\npub const ANATIVEACTIVITY_HIDE_SOFT_INPUT_IMPLICIT_ONLY = @intFromEnum(enum_unnamed_34.ANATIVEACTIVITY_HIDE_SOFT_INPUT_IMPLICIT_ONLY);\npub const ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS = @intFromEnum(enum_unnamed_34.ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);\nconst enum_unnamed_34 = enum(c_int) {\n    ANATIVEACTIVITY_HIDE_SOFT_INPUT_IMPLICIT_ONLY = 1,\n    ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS = 2,\n    _,\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "ANativeActivity_showSoftInput",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __BIONIC_ALIGN from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn __BIONIC_ALIGN(__value: anytype, __alignment: anytype) @TypeOf((__value + (__alignment - 1)) & ~__alignment - 1) {\n    return (__value + (__alignment - 1)) & ~__alignment - 1;\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "__BIONIC_ALIGN",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __P from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-bind.zig",
+    "response": "fn __P(protos: anytype) @TypeOf(protos) {\n    return protos;\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-bind.zig",
+      "type": "function",
+      "name": "__P",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ANativeActivity_onCreate from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn ANativeActivity_onCreate(activity: *android.ANativeActivity, savedState: ?[*]u8, savedStateSize: usize) callconv(.C) void {\n    {\n        var sdk_ver_str: [92]u8 = undefined;\n        const len = android.__system_property_get(\"ro.build.version.sdk\", &sdk_ver_str);\n        if (len <= 0) {\n            sdk_version = 0;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "ANativeActivity_onCreate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __errno_location from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn __errno_location() *c_int {\n    return &errno;\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "__errno_location",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to panic from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "pub fn panic(message: []const u8, stack_trace: ?*std.builtin.StackTrace, _: ?usize) noreturn {\n    var logger = LogWriter{ .log_level = android.ANDROID_LOG_ERROR }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "panic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn write(self: *LogWriter, buffer: []const u8) Error!usize {\n        for (buffer) |char| {\n            switch (char) {\n                '\\n' => {\n                    self.flush();\n                }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "write",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flush from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn flush(self: *LogWriter) void {\n        if (self.line_len > 0) {\n            // var buf = std.mem.zeroes([129]u8);\n            // const msg = std.fmt.bufPrint(&buf, \"PRINT({}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "flush",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writer from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn writer(self: *LogWriter) Writer {\n        return Writer{ .context = self }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "writer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to logFn from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "pub fn logFn(\n        comptime message_level: std.log.Level,\n        comptime scope: @Type(.EnumLiteral),\n        comptime format: []const u8,\n        args: anytype,\n    ) void {\n        const level = switch (message_level) {\n            //  => .ANDROID_LOG_VERBOSE,\n            .debug => android.ANDROID_LOG_DEBUG,\n            .info => android.ANDROID_LOG_INFO,\n            .warn => android.ANDROID_LOG_WARN,\n            .err => android.ANDROID_LOG_ERROR,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "logFn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to makeNativeActivityGlue from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn makeNativeActivityGlue(comptime App: type) android.ANativeActivityCallbacks {\n    const T = struct {\n        fn invoke(activity: *android.ANativeActivity, comptime func: []const u8, args: anytype) void {\n            if (@hasDecl(App, func)) {\n                if (activity.instance) |instance| {\n                    const result = @call(.auto, @field(App, func), .{@as(*App, @ptrCast(@alignCast(@alignOf(App), instance)))}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "makeNativeActivityGlue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onSaveInstanceState from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onSaveInstanceState(activity: *android.ANativeActivity, outSize: *usize) callconv(.C) ?[*]u8 {\n            outSize.* = 0;\n            if (@hasDecl(App, \"onSaveInstanceState\")) {\n                if (activity.instance) |instance| {\n                    const optional_slice = @as(*App, @ptrCast(@alignCast(@alignOf(App), instance))).onSaveInstanceState(std.heap.c_allocator);\n                    if (optional_slice) |slice| {\n                        outSize.* = slice.len;\n                        return slice.ptr;\n                    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onSaveInstanceState",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onDestroy from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onDestroy(activity: *android.ANativeActivity) callconv(.C) void {\n            if (activity.instance) |instance| {\n                const app = @as(*App, @ptrCast(@alignCast(@alignOf(App), instance)));\n                app.deinit();\n                std.heap.c_allocator.destroy(app);\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onDestroy",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onStart from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onStart(activity: *android.ANativeActivity) callconv(.C) void {\n            invoke(activity, \"onStart\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onStart",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onResume from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onResume(activity: *android.ANativeActivity) callconv(.C) void {\n            invoke(activity, \"onResume\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onResume",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onPause from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onPause(activity: *android.ANativeActivity) callconv(.C) void {\n            invoke(activity, \"onPause\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onPause",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onStop from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onStop(activity: *android.ANativeActivity) callconv(.C) void {\n            invoke(activity, \"onStop\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onStop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onConfigurationChanged from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onConfigurationChanged(activity: *android.ANativeActivity) callconv(.C) void {\n            invoke(activity, \"onConfigurationChanged\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onConfigurationChanged",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onLowMemory from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onLowMemory(activity: *android.ANativeActivity) callconv(.C) void {\n            invoke(activity, \"onLowMemory\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onLowMemory",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onWindowFocusChanged from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onWindowFocusChanged(activity: *android.ANativeActivity, hasFocus: c_int) callconv(.C) void {\n            invoke(activity, \"onWindowFocusChanged\", .{(hasFocus != 0)}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onWindowFocusChanged",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onNativeWindowCreated from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onNativeWindowCreated(activity: *android.ANativeActivity, window: *android.ANativeWindow) callconv(.C) void {\n            invoke(activity, \"onNativeWindowCreated\", .{window}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onNativeWindowCreated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onNativeWindowResized from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onNativeWindowResized(activity: *android.ANativeActivity, window: *android.ANativeWindow) callconv(.C) void {\n            invoke(activity, \"onNativeWindowResized\", .{window}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onNativeWindowResized",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onNativeWindowRedrawNeeded from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onNativeWindowRedrawNeeded(activity: *android.ANativeActivity, window: *android.ANativeWindow) callconv(.C) void {\n            invoke(activity, \"onNativeWindowRedrawNeeded\", .{window}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onNativeWindowRedrawNeeded",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onNativeWindowDestroyed from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onNativeWindowDestroyed(activity: *android.ANativeActivity, window: *android.ANativeWindow) callconv(.C) void {\n            invoke(activity, \"onNativeWindowDestroyed\", .{window}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onNativeWindowDestroyed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onInputQueueCreated from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onInputQueueCreated(activity: *android.ANativeActivity, input_queue: *android.AInputQueue) callconv(.C) void {\n            invoke(activity, \"onInputQueueCreated\", .{input_queue}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onInputQueueCreated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onInputQueueDestroyed from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onInputQueueDestroyed(activity: *android.ANativeActivity, input_queue: *android.AInputQueue) callconv(.C) void {\n            invoke(activity, \"onInputQueueDestroyed\", .{input_queue}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onInputQueueDestroyed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onContentRectChanged from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn onContentRectChanged(activity: *android.ANativeActivity, rect: *const android.ARect) callconv(.C) void {\n            invoke(activity, \"onContentRectChanged\", .{rect}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "onContentRectChanged",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printSymbolInfoAt from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn printSymbolInfoAt(st_index: usize, maybe_debug_info: ?*std.debug.DebugInfo, int_addr: usize) void {\n    var symbol_name_buffer: [1024]u8 = undefined;\n    var symbol_name: ?[]const u8 = null;\n\n    if (maybe_debug_info) |di| {\n        if (di.getModuleForAddress(int_addr)) |module| {\n            var symbol_buffer: [1024]u8 = undefined;\n            var fba = std.heap.FixedBufferAllocator.init(&symbol_buffer);\n\n            if (module.getSymbolAtAddress(fba.allocator(), int_addr)) |symbol| {\n\n                // symbol_name_buffer\n\n                symbol_name = std.fmt.bufPrint(\n                    &symbol_name_buffer,\n                    \"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "printSymbolInfoAt",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to realFmtMaybeLineInfo from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn realFmtMaybeLineInfo(self: ?std.debug.LineInfo, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {\n    _ = fmt;\n    _ = options;\n    if (self) |li| {\n        try writer.print(\"{s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "realFmtMaybeLineInfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fmtMaybeLineInfo from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "fn fmtMaybeLineInfo(li: ?std.debug.LineInfo) std.fmt.Formatter(realFmtMaybeLineInfo) {\n    return std.fmt.Formatter(realFmtMaybeLineInfo){\n        .data = li,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "function",
+      "name": "fmtMaybeLineInfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to LogWriter from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "const LogWriter = struct {\n    log_level: c_int,\n\n    line_buffer: [8192]u8 = undefined,\n    line_len: usize = 0,\n\n    const Error = error{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "struct",
+      "name": "LogWriter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to std_options from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "pub const std_options = struct {\n\n    // Android Logging implementation\n    pub fn logFn(\n        comptime message_level: std.log.Level,\n        comptime scope: @Type(.EnumLiteral),\n        comptime format: []const u8,\n        args: anytype,\n    ) void {\n        const level = switch (message_level) {\n            //  => .ANDROID_LOG_VERBOSE,\n            .debug => android.ANDROID_LOG_DEBUG,\n            .info => android.ANDROID_LOG_INFO,\n            .warn => android.ANDROID_LOG_WARN,\n            .err => android.ANDROID_LOG_ERROR,\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "struct",
+      "name": "std_options",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to T from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/android-support.zig",
+    "response": "const T = struct {\n        fn invoke(activity: *android.ANativeActivity, comptime func: []const u8, args: anytype) void {\n            if (@hasDecl(App, func)) {\n                if (activity.instance) |instance| {\n                    const result = @call(.auto, @field(App, func), .{@as(*App, @ptrCast(@alignCast(@alignOf(App), instance)))}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/android-support.zig",
+      "type": "struct",
+      "name": "T",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to midiToFreq from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn midiToFreq(note: usize) f64 {\n    return std.math.pow(f64, 2, (@as(f64, @floatFromInt(note)) - 49) / 12) * 440;\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "midiToFreq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to amplitudeTodB from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn amplitudeTodB(amplitude: f64) f64 {\n    return 20.0 * std.math.log10(amplitude);\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "amplitudeTodB",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dBToAmplitude from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn dBToAmplitude(dB: f64) f64 {\n    return std.math.pow(f64, 10.0, dB / 20.0);\n}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "dBToAmplitude",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn init() !void {\n    if (build_options.enable_opensl) {\n        try OpenSL.init();\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOutputStream from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn getOutputStream(allocator: std.mem.Allocator, config: OutputStreamConfig) !OutputStream {\n    if (build_options.enable_aaudio) {\n        return .{ .AAudio = try AAudio.getOutputStream(allocator, config) }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "getOutputStream",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stop from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn stop(output_stream: @This()) void {\n        switch (output_stream) {\n            .OpenSL => |opensl| opensl.stop(),\n            .AAudio => |aaudio| aaudio.stop(),\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "stop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn deinit(output_stream: @This()) void {\n        switch (output_stream) {\n            .OpenSL => |opensl| opensl.deinit(),\n            .AAudio => |aaudio| aaudio.deinit(),\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub fn start(output_stream: @This()) !void {\n        switch (output_stream) {\n            .OpenSL => |opensl| try opensl.start(),\n            .AAudio => |aaudio| try aaudio.start(),\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to StreamLayout from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub const StreamLayout = struct {\n    sample_rate: u32,\n    channel_count: usize,\n    buffer: union(enum) {\n        Uint8: []u8,\n        Int16: []i16,\n        Float32: []f32,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "struct",
+      "name": "StreamLayout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AudioManager from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub const AudioManager = struct {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "struct",
+      "name": "AudioManager",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to OutputStreamConfig from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/audio.zig",
+    "response": "pub const OutputStreamConfig = struct {\n    // Leave null to use the the platforms native sampling rate\n    sample_rate: ?u32 = null,\n    sample_format: enum {\n        Uint8,\n        Int16,\n        Float32,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/audio.zig",
+      "type": "struct",
+      "name": "OutputStreamConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOutputStream from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/dummy.zig",
+    "response": "pub fn getOutputStream(allocator: std.mem.Allocator, config: OutputStreamConfig) !OutputStream {\n        _ = allocator;\n        _ = config;\n        return error.Unimplemented;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/dummy.zig",
+      "type": "function",
+      "name": "getOutputStream",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Dummy from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/dummy.zig",
+    "response": "pub const Dummy = struct {\n    pub fn getOutputStream(allocator: std.mem.Allocator, config: OutputStreamConfig) !OutputStream {\n        _ = allocator;\n        _ = config;\n        return error.Unimplemented;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/dummy.zig",
+      "type": "struct",
+      "name": "Dummy",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to OutputStream from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/dummy.zig",
+    "response": "pub const OutputStream = struct {\n        pub fn stop(_: *@This()) void {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/dummy.zig",
+      "type": "struct",
+      "name": "OutputStream",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/egl.zig",
+    "response": "pub fn init(window: *android.ANativeWindow, version: Version) !Self {\n        const EGLint = c.EGLint;\n\n        var egl_display = c.eglGetDisplay(null);\n        if (egl_display == null) {\n            log.err(\"Error: No display found!\\n\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/egl.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/egl.zig",
+    "response": "pub fn deinit(self: *Self) void {\n        _ = c.eglDestroySurface(self.display, self.surface);\n        _ = c.eglDestroyContext(self.display, self.context);\n        self.* = undefined;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/egl.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to swapBuffers from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/egl.zig",
+    "response": "pub fn swapBuffers(self: Self) !void {\n        if (c.eglSwapBuffers(self.display, self.surface) == c.EGL_FALSE) {\n            log.err(\"Error: eglMakeCurrent failed: 0x{X:0>4}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/egl.zig",
+      "type": "function",
+      "name": "swapBuffers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to makeCurrent from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/egl.zig",
+    "response": "pub fn makeCurrent(self: Self) !void {\n        if (c.eglMakeCurrent(self.display, self.surface, self.surface, self.context) == c.EGL_FALSE) {\n            log.err(\"Error: eglMakeCurrent failed: 0x{X:0>4}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/egl.zig",
+      "type": "function",
+      "name": "makeCurrent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to release from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/egl.zig",
+    "response": "pub fn release(self: Self) void {\n        if (c.eglMakeCurrent(self.display, self.surface, self.surface, null) == c.EGL_FALSE) {\n            log.err(\"Error: eglMakeCurrent failed: 0x{X:0>4}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/egl.zig",
+      "type": "function",
+      "name": "release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EGLContext from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/egl.zig",
+    "response": "pub const EGLContext = struct {\n    const Self = @This();\n\n    display: c.EGLDisplay,\n    surface: c.EGLSurface,\n    context: c.EGLContext,\n\n    pub fn init(window: *android.ANativeWindow, version: Version) !Self {\n        const EGLint = c.EGLint;\n\n        var egl_display = c.eglGetDisplay(null);\n        if (egl_display == null) {\n            log.err(\"Error: No display found!\\n\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/egl.zig",
+      "type": "struct",
+      "name": "EGLContext",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to JniReturnType from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn JniReturnType(comptime function: @TypeOf(.literal)) type {\n        @setEvalBranchQuota(10_000);\n        return @typeInfo(@typeInfo(std.meta.fieldInfo(android.JNINativeInterface, function).type).Pointer.child).Fn.return_type.?;\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "JniReturnType",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to invokeJniNoException from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn invokeJniNoException(jni: *JNI, comptime function: @TypeOf(.literal), args: anytype) JniReturnType(function) {\n        const env = @as(*android.JNIEnv, @ptrCast(@alignCast(@alignOf(*android.JNIEnv), jni)));\n        return @call(\n            .auto,\n            @field(env.*, @tagName(function)),\n            .{env}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "invokeJniNoException",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to invokeJni from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn invokeJni(jni: *JNI, comptime function: @TypeOf(.literal), args: anytype) Error!JniReturnType(function) {\n        const value = jni.invokeJniNoException(function, args);\n        if (jni.invokeJniNoException(.ExceptionCheck, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "invokeJni",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findClass from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn findClass(jni: *JNI, class: [:0]const u8) Error!Class {\n        return Class.init(jni, class);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "findClass",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getClassNameString from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn getClassNameString(jni: *JNI, object: android.jobject) Error!String {\n        const object_class = try jni.invokeJni(.GetObjectClass, .{object}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "getClassNameString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printToString from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn printToString(jni: *JNI, object: android.jobject) void {\n        const string = try String.init(jni, try jni.callObjectMethod(object, \"toString\", \"()Ljava/lang/String;\", .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "printToString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newString from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn newString(jni: *JNI, string: [*:0]const u8) Error!android.jstring {\n        return jni.invokeJni(.NewStringUTF, .{string}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "newString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getLongField from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn getLongField(jni: *JNI, object: android.jobject, field_id: android.jfieldID) !android.jlong {\n        return jni.invokeJni(.GetLongField, .{ object, field_id }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "getLongField",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callObjectMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callObjectMethod(jni: *JNI, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!JniReturnType(.CallObjectMethod) {\n        const object_class = try jni.invokeJni(.GetObjectClass, .{object}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callObjectMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to argsToValueArray from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn argsToValueArray(args: anytype) [args.len]android.jvalue {\n        var values: [args.len]android.jvalue = undefined;\n        inline for (args, 0..) |arg, i| {\n            var value: android.jvalue = undefined;\n            switch (@TypeOf(arg)) {\n                android.jint, u32, c_int => value = .{ .i = @as(i32, @bitCast(arg)) }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "argsToValueArray",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn init(jni: *JNI, class_name: [:0]const u8) !Class {\n            const class = jni.invokeJni(.FindClass, .{class_name.ptr}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newObject from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn newObject(class: Class, signature: [:0]const u8, args: anytype) Error!JniReturnType(.NewObject) {\n            const method_id = try class.jni.invokeJni(.GetMethodID, .{ class.class, \"<init>\", signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "newObject",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getStaticIntField from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn getStaticIntField(class: Class, name: [:0]const u8) !android.jint {\n            const field_id = try class.jni.invokeJni(.GetStaticFieldID, .{ class.class, name, \"I\" }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "getStaticIntField",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getStaticObjectField from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn getStaticObjectField(class: Class, name: [:0]const u8, signature: [:0]const u8) !android.jobject {\n            const field_id = try class.jni.invokeJni(.GetStaticFieldID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "getStaticObjectField",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setIntField from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn setIntField(class: Class, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, value: android.jint) !void {\n            const field_id = try class.jni.invokeJni(.GetFieldID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "setIntField",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callVoidMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callVoidMethod(class: Class, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!void {\n            const method_id = try class.jni.invokeJni(.GetMethodID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callVoidMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callIntMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callIntMethod(class: Class, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!android.jint {\n            const method_id = try class.jni.invokeJni(.GetMethodID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callIntMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callFloatMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callFloatMethod(class: Class, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!android.jfloat {\n            const method_id = try class.jni.invokeJni(.GetMethodID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callFloatMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callLongMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callLongMethod(class: Class, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!android.jlong {\n            const method_id = try class.jni.invokeJni(.GetMethodID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callLongMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callBooleanMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callBooleanMethod(class: Class, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!bool {\n            const method_id = try class.jni.invokeJni(.GetMethodID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callBooleanMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callObjectMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callObjectMethod(class: Class, object: android.jobject, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!android.jobject {\n            const method_id = try class.jni.invokeJni(.GetMethodID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callObjectMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callStaticObjectMethod from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "fn callStaticObjectMethod(class: Class, name: [:0]const u8, signature: [:0]const u8, args: anytype) Error!android.jobject {\n            const method_id = try class.jni.invokeJni(.GetStaticMethodID, .{ class.class, name, signature }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "callStaticObjectMethod",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn init(jni: *JNI, string: android.jstring) Error!String {\n            const len = try jni.invokeJni(.GetStringLength, .{string}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub fn deinit(string: String, jni: *JNI) void {\n            jni.invokeJniNoException(.ReleaseStringChars, .{ string.jstring, string.slice.ptr }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Class from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub const Class = struct {\n        jni: *JNI,\n        class: android.jclass,\n\n        pub fn init(jni: *JNI, class_name: [:0]const u8) !Class {\n            const class = jni.invokeJni(.FindClass, .{class_name.ptr}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "struct",
+      "name": "Class",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to String from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/jni.zig",
+    "response": "pub const String = struct {\n        jstring: android.jstring,\n        slice: []const u16,\n\n        pub fn init(jni: *JNI, string: android.jstring) Error!String {\n            const len = try jni.invokeJni(.GetStringLength, .{string}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/jni.zig",
+      "type": "struct",
+      "name": "String",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stop from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn stop(output_stream: *OutputStream) void {\n            checkResult(output_stream.play_itf.*.*.SetPlayState.?(output_stream.play_itf, c.SL_PLAYSTATE_STOPPED)) catch |e| {\n                audio_log.err(\"Error stopping stream {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "stop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn deinit(output_stream: *OutputStream) void {\n            output_stream.player.*.*.Destroy.?(output_stream.player);\n            output_stream.allocator.free(output_stream.buffer);\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn start(output_stream: *OutputStream) !void {\n            // Get player interface\n            try checkResult(output_stream.player.*.*.GetInterface.?(\n                output_stream.player,\n                c.SL_IID_PLAY,\n                @as(*anyopaque, @ptrCast(&output_stream.play_itf)),\n            ));\n\n            // Get buffer queue interface\n            try checkResult(output_stream.player.*.*.GetInterface.?(\n                output_stream.player,\n                c.SL_IID_ANDROIDSIMPLEBUFFERQUEUE,\n                @as(*anyopaque, @ptrCast(&output_stream.buffer_queue_itf)),\n            ));\n\n            // Register callback\n            try checkResult(output_stream.buffer_queue_itf.*.*.RegisterCallback.?(\n                output_stream.buffer_queue_itf,\n                bufferQueueCallback,\n                @as(*anyopaque, @ptrCast(output_stream)),\n            ));\n\n            // Enqueue a few buffers to get the ball rollng\n            var i: usize = 0;\n            while (i < output_stream.config.buffer_count) : (i += 1) {\n                try checkResult(output_stream.buffer_queue_itf.*.*.Enqueue.?(\n                    output_stream.buffer_queue_itf,\n                    &output_stream.buffer[output_stream.buffer_index],\n                    @as(u32, @intCast(output_stream.config.buffer_size.? * (output_stream.pcm.containerSize / 8))),\n                ));\n                output_stream.buffer_index += output_stream.config.buffer_size.?;\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bufferQueueCallback from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn bufferQueueCallback(queue_itf: c.SLAndroidSimpleBufferQueueItf, user_data: ?*anyopaque) callconv(.C) void {\n        var output_stream = @as(*OutputStream, @ptrCast(@alignCast(@alignOf(OutputStream), user_data)));\n\n        // Lock the mutex to prevent race conditions\n        output_stream.mutex.lock();\n        defer output_stream.mutex.unlock();\n\n        var buffer = output_stream.buffer[output_stream.buffer_index .. output_stream.buffer_index + output_stream.config.buffer_size.?];\n\n        for (buffer) |*frame| {\n            frame.* = 0;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "bufferQueueCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn init() SLError!void {\n        init_sl_counter += 1;\n        if (init_sl_counter == 1) {\n            try printInterfaces();\n            errdefer init_sl_counter -= 1; // decrement counter on failure\n\n            // Get engine object\n            try checkResult(c.slCreateEngine(&engine_object, 0, null, 0, null, null));\n\n            // Initialize engine object\n            try checkResult(engine_object.*.*.Realize.?(engine_object, c.SL_BOOLEAN_FALSE));\n            errdefer engine_object.*.*.Destroy.?(engine_object);\n\n            // Get engine interface\n            try checkResult(engine_object.*.*.GetInterface.?(engine_object, c.SL_IID_ENGINE, @as(*anyopaque, @ptrCast(&engine))));\n            try printEngineInterfaces();\n            try printEngineExtensions();\n\n            // Get OutputMix object\n            try checkResult(engine.*.*.CreateOutputMix.?(engine, &output_mix, 0, null, null));\n            try checkResult(output_mix.*.*.Realize.?(output_mix, c.SL_BOOLEAN_FALSE));\n            errdefer output_mix.*.*.Destroy.?(output_mix);\n\n            // Get OutputMix interface\n            try checkResult(output_mix.*.*.GetInterface.?(output_mix, c.SL_IID_OUTPUTMIX, @as(*anyopaque, @ptrCast(&output_mix_itf))));\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn deinit() void {\n        std.debug.assert(init_sl_counter > 0);\n\n        // spinlock lock\n        {\n            init_sl_counter -= 1;\n            if (init_sl_counter == 0) {\n                output_mix.*.*.Destroy.?(output_mix);\n                engine_object.*.*.Destroy.?(engine_object);\n            }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getOutputStream from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn getOutputStream(allocator: std.mem.Allocator, conf: OutputStreamConfig) !*OutputStream {\n        // TODO: support multiple formats\n        std.debug.assert(conf.sample_format == .Int16);\n\n        var config = conf;\n        config.buffer_size = config.buffer_size orelse 256;\n        config.sample_rate = config.sample_rate orelse 44100;\n\n        // Allocate memory for audio buffer\n        // TODO: support other formats\n        var buffers = try allocator.alloc(i16, config.buffer_size.? * config.buffer_count);\n        errdefer allocator.free(buffers);\n\n        for (buffers) |*sample| {\n            sample.* = 0;\n        }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "getOutputStream",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkResult from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub fn checkResult(result: u32) SLError!void {\n        const tag = std.meta.intToEnum(Result, result) catch return error.UnknownError;\n        return switch (tag) {\n            .Success => {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "checkResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printInterfaces from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "fn printInterfaces() !void {\n        var interface_count: c.SLuint32 = undefined;\n        try checkResult(c.slQueryNumSupportedEngineInterfaces(&interface_count));\n        {\n            var i: c.SLuint32 = 0;\n            while (i < interface_count) : (i += 1) {\n                var interface_id: c.SLInterfaceID = undefined;\n                try checkResult(c.slQuerySupportedEngineInterfaces(i, &interface_id));\n                const interface_tag = InterfaceID.fromIid(interface_id);\n                if (interface_tag) |tag| {\n                    audio_log.info(\"OpenSL engine interface id: {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "printInterfaces",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printEngineExtensions from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "fn printEngineExtensions() !void {\n        var extension_count: c.SLuint32 = undefined;\n        try checkResult(engine.*.*.QueryNumSupportedExtensions.?(engine, &extension_count));\n        {\n            var i: c.SLuint32 = 0;\n            while (i < extension_count) : (i += 1) {\n                var extension_ptr: [4096]u8 = undefined;\n                var extension_size: c.SLint16 = 4096;\n                try checkResult(engine.*.*.QuerySupportedExtension.?(engine, i, &extension_ptr, &extension_size));\n                var extension_name = extension_ptr[0..@as(usize, @intCast(extension_size))];\n                audio_log.info(\"OpenSL engine extension {}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "printEngineExtensions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printEngineInterfaces from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "fn printEngineInterfaces() !void {\n        var interface_count: c.SLuint32 = undefined;\n        try checkResult(engine.*.*.QueryNumSupportedInterfaces.?(engine, c.SL_OBJECTID_ENGINE, &interface_count));\n        {\n            var i: c.SLuint32 = 0;\n            while (i < interface_count) : (i += 1) {\n                var interface_id: c.SLInterfaceID = undefined;\n                try checkResult(engine.*.*.QuerySupportedInterfaces.?(engine, c.SL_OBJECTID_ENGINE, i, &interface_id));\n                const interface_tag = InterfaceID.fromIid(interface_id);\n                if (interface_tag) |tag| {\n                    audio_log.info(\"OpenSL engine interface id: {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "printEngineInterfaces",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to iidEq from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "fn iidEq(iid1: c.SLInterfaceID, iid2: c.SLInterfaceID) bool {\n        return iid1.*.time_low == iid2.*.time_low and\n            iid1.*.time_mid == iid2.*.time_mid and\n            iid1.*.time_hi_and_version == iid2.*.time_hi_and_version and\n            iid1.*.clock_seq == iid2.*.clock_seq and\n            iid1.*.time_mid == iid2.*.time_mid and\n            std.mem.eql(u8, &iid1.*.node, &iid2.*.node);\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "function",
+      "name": "iidEq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to OpenSL from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/src/opensl.zig",
+    "response": "pub const OpenSL = struct {\n    // Global variables\n    var init_sl_counter: usize = 0;\n    var engine_object: c.SLObjectItf = undefined;\n    var engine: c.SLEngineItf = undefined;\n\n    var output_mix: c.SLObjectItf = undefined;\n    var output_mix_itf: c.SLOutputMixItf = undefined;\n\n    pub const OutputStream = struct {\n        config: OutputStreamConfig,\n        player: c.SLObjectItf,\n        play_itf: c.SLPlayItf,\n        buffer_queue_itf: c.SLAndroidSimpleBufferQueueItf,\n        state: c.SLAndroidSimpleBufferQueueState,\n\n        audio_sink: c.SLDataSink,\n        locator_outputmix: c.SLDataLocator_OutputMix,\n\n        audio_source: c.SLDataSource,\n        buffer_queue: c.SLDataLocator_BufferQueue,\n        pcm: c.SLDataFormat_PCM,\n\n        buffer: []i16,\n        buffer_index: usize,\n        mutex: std.Thread.Mutex,\n        allocator: std.mem.Allocator,\n\n        // Must be initialized using OpenSL.getOutputStream\n\n        pub fn stop(output_stream: *OutputStream) void {\n            checkResult(output_stream.play_itf.*.*.SetPlayState.?(output_stream.play_itf, c.SL_PLAYSTATE_STOPPED)) catch |e| {\n                audio_log.err(\"Error stopping stream {s}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/src/opensl.zig",
+      "type": "struct",
+      "name": "OpenSL",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: android/tools/zip_add.zig",
+    "response": "pub fn main() Error!u8 {\n    const allocator = std.heap.c_allocator;\n\n    const args = try std.process.argsAlloc(allocator);\n    if (args.len < 5)\n        return 1;\n\n    const zip_file = args[1];\n    const out_file = args[2];\n    const file_args = args[3..];\n\n    if (file_args.len % 2 != 0)\n        return error.InvalidCmdLine;\n\n    // Create a copy of the zip file instead of modifying the old one\n    {\n        const cwd = std.fs.cwd();\n        const old_base = std.fs.path.basename(zip_file);\n        var old_dir = new_dir: {\n            if (std.fs.path.dirname(zip_file)) |in_path| {\n                break :new_dir cwd.openDir(in_path, .{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "android/tools/zip_add.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to installCapyDependencies from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: build.zig",
+    "response": "fn installCapyDependencies(b: *std.Build, module: *std.Build.Module, options: CapyBuildOptions) !void {\n    const target = module.resolved_target.?;\n    const optimize = module.optimize.?;\n\n    const zigimg_dep = b.dependency(\"zigimg\", .{\n        .target = target,\n        .optimize = optimize,\n    }",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "build.zig",
+      "type": "function",
+      "name": "installCapyDependencies",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to exe from capy-ui/capy",
+    "context": "Repository: capy-ui/capy (2356 ⭐)\nFile: build.zig",
+    "response": "const exe: *std.Build.Step.Compile = b.addExecutable(.{\n                .name = name,\n                .root_source_file = programPath,\n                .target = target,\n                .optimize = optimize,\n            });",
+    "metadata": {
+      "repo": "capy-ui/capy",
+      "stars": 2356,
+      "file": "build.zig",
+      "type": "const",
+      "name": "exe",
+      "difficulty": "easy"
+    }
+  }
+]

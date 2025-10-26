@@ -1,0 +1,2134 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/async.zig",
+    "response": "pub fn main() !void {\n    const allocator = std.heap.page_allocator;\n\n    try network.init();\n    defer network.deinit();\n\n    var server = try network.Socket.create(.ipv4, .tcp);\n    defer server.close();\n\n    try server.bind(.{\n        .address = .{ .ipv4 = network.Address.IPv4.any }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/async.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handle from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/async.zig",
+    "response": "fn handle(self: *Client) !void {\n        try self.conn.writer().writeAll(\"server: welcome to the chat server\\n\");\n\n        while (true) {\n            var buf: [100]u8 = undefined;\n            const amt = try self.conn.receive(&buf);\n            if (amt == 0)\n                break; // We're done, end of connection\n            const msg = buf[0..amt];\n            std.debug.print(\"Client wrote: {s}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/async.zig",
+      "type": "function",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Client from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/async.zig",
+    "response": "const Client = struct {\n    conn: network.Socket,\n    handle_frame: @Frame(Client.handle),\n\n    fn handle(self: *Client) !void {\n        try self.conn.writer().writeAll(\"server: welcome to the chat server\\n\");\n\n        while (true) {\n            var buf: [100]u8 = undefined;\n            const amt = try self.conn.receive(&buf);\n            if (amt == 0)\n                break; // We're done, end of connection\n            const msg = buf[0..amt];\n            std.debug.print(\"Client wrote: {s}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/async.zig",
+      "type": "struct",
+      "name": "Client",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "pub fn format(value: Self, writer: anytype) !void {\n        try writer.print(\"Server: {f}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) Self {\n        return Self{\n            .allocator = allocator,\n            .list = .empty,\n            .mutex = std.Thread.Mutex{}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "pub fn deinit(list: *Self) void {\n        list.list.deinit(list.allocator);\n        list.* = undefined;\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to append from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "pub fn append(value: *Self, data: Server) !void {\n        value.mutex.lock();\n        defer value.mutex.unlock();\n        for (value.list.items) |item| {\n            if (std.meta.eql(item.address, data.address)) {\n                // is already in the list, dont add it again\n                return;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "function",
+      "name": "append",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getServers from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "pub fn getServers(value: Self) []Server {\n        return value.list.items;\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "function",
+      "name": "getServers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "pub fn main() !void {\n    const allocator = std.heap.page_allocator;\n\n    try network.init();\n    defer network.deinit();\n\n    var server_list = ServerList.init(allocator);\n    defer server_list.deinit();\n\n    // background task to collect servers via UDP broadcasts\n    var server_thread = try std.Thread.spawn(.{ .stack_size = 1024 }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanServersThread from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "fn scanServersThread(allocator: std.mem.Allocator, server_list: *ServerList) !void {\n    std.debug.print(\"Scanning for Servers to connect to ....\\n\", .{}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "function",
+      "name": "scanServersThread",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Server from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "const Server = struct {\n    const Self = @This();\n    address: network.Address,\n    name: []u8,\n\n    pub fn format(value: Self, writer: anytype) !void {\n        try writer.print(\"Server: {f}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "struct",
+      "name": "Server",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ServerList from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "const ServerList = struct {\n    const Self = @This();\n\n    allocator: std.mem.Allocator,\n    list: std.ArrayList(Server),\n    mutex: std.Thread.Mutex,\n\n    pub fn init(allocator: std.mem.Allocator) Self {\n        return Self{\n            .allocator = allocator,\n            .list = .empty,\n            .mutex = std.Thread.Mutex{}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "struct",
+      "name": "ServerList",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to buflen from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/client.zig",
+    "response": "const buflen: usize = 128;",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/client.zig",
+      "type": "const",
+      "name": "buflen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/discovery/server.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/discovery/server.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/echo.zig",
+    "response": "pub fn main() !void {\n    try network.init();\n    defer network.deinit();\n\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/echo.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runEchoClient from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/echo.zig",
+    "response": "fn runEchoClient(client: network.Socket) !void {\n    while (true) {\n        var buffer: [buffer_size]u8 = undefined;\n\n        const len = try client.receive(&buffer);\n        if (len == 0)\n            break;\n        // we ignore the amount of data sent.\n        _ = try client.send(buffer[0..len]);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/echo.zig",
+      "type": "function",
+      "name": "runEchoClient",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/multicast_udp.zig",
+    "response": "pub fn main() !void {\n    try network.init();\n    defer network.deinit();\n\n    // Create a UDP socket\n    var sock = try network.Socket.create(.ipv4, .udp);\n    defer sock.close();\n\n    // Bind to 224.0.0.1:9999, allow port re-use so that multiple instances\n    // of this program can all subscribe to the UDP broadcasts\n    try sock.enablePortReuse(true);\n    const incoming_endpoint = network.EndPoint{\n        .address = network.Address{ .ipv4 = network.Address.IPv4.multicast_all }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/multicast_udp.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn main() !void {\n    try network.init();\n    defer network.deinit();\n\n    const request = std.mem.zeroInit(NtpHeader, .{\n        .flags = .{ .mode = .client }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getEpochDay from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn getEpochDay(self: EpochSeconds) std.time.epoch.EpochDay {\n        return .{ .day = @as(u47, @intCast(self.secs / secs_per_day)) }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "getEpochDay",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getDaySeconds from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn getDaySeconds(self: EpochSeconds) std.time.epoch.DaySeconds {\n        return .{ .secs = std.math.comptimeMod(self.secs, secs_per_day) }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "getDaySeconds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to convertTimestampToTime from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn convertTimestampToTime(buf: []u8, timestamp: u64) ![]const u8 {\n    const epochSeconds = EpochSeconds{ .secs = timestamp }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "convertTimestampToTime",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_seconds from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn get_seconds(ts: NtpShort) f32 {\n        const secs: f32 = @floatFromInt(ts.seconds);\n        const frac: f32 = @floatFromInt(ts.fraction);\n\n        return secs + frac / std.math.maxInt(u16);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "get_seconds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to formatNumber from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn formatNumber(ts: NtpShort, writer: *std.io.Writer, opt: std.fmt.Number) !void {\n        try writer.printFloat(ts.get_seconds(), opt);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "formatNumber",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_seconds from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn get_seconds(ts: NtpTimestamp) f64 {\n        const secs: f64 = @floatFromInt(ts.seconds);\n        const frac: f64 = @floatFromInt(ts.fraction);\n\n        return secs + frac / std.math.maxInt(u32);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "get_seconds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to formatNumber from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub fn formatNumber(ts: NtpTimestamp, writer: *std.io.Writer, opt: std.fmt.Number) !void {\n        try writer.printFloat(ts.get_seconds(), opt);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "function",
+      "name": "formatNumber",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EpochSeconds from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub const EpochSeconds = struct {\n    secs: u64,\n\n    pub fn getEpochDay(self: EpochSeconds) std.time.epoch.EpochDay {\n        return .{ .day = @as(u47, @intCast(self.secs / secs_per_day)) }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "struct",
+      "name": "EpochSeconds",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to response from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "const response: NtpHeader = blk: {\n        var reader = sock.reader(&work_buf);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "const",
+      "name": "response",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to secs_per_day from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "pub const secs_per_day: u17 = 24 * 60 * 60;",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "const",
+      "name": "secs_per_day",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to secs from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "const secs: f32 = @floatFromInt(ts.seconds);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "const",
+      "name": "secs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to frac from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "const frac: f32 = @floatFromInt(ts.fraction);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "const",
+      "name": "frac",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to secs from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "const secs: f64 = @floatFromInt(ts.seconds);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "const",
+      "name": "secs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to frac from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/ntp_client.zig",
+    "response": "const frac: f64 = @floatFromInt(ts.fraction);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/ntp_client.zig",
+      "type": "const",
+      "name": "frac",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/udp_broadcast.zig",
+    "response": "pub fn main() !void {\n    std.debug.print(\"   UDP broadcast example\\n\\n\", .{}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/udp_broadcast.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dump from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: examples/udp_broadcast.zig",
+    "response": "fn dump(packet: [64]u8) void {\n    const offsets = [_]usize{ 0, 16, 32, 48 }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "examples/udp_broadcast.zig",
+      "type": "function",
+      "name": "dump",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn deinit() void {\n    if (is_windows) {\n        windows.WSACleanup() catch return;\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn parse(string: []const u8) !Address {\n        return if (Address.IPv4.parse(string)) |ip|\n            Address{ .ipv4 = ip }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to jsonParse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn jsonParse(allocator: std.mem.Allocator, source: anytype, options: std.json.ParseOptions) !Address {\n        _ = allocator;\n\n        var buffer: [256]u8 = undefined;\n        var fba = std.heap.FixedBufferAllocator.init(&buffer);\n\n        const str = try std.json.innerParse([]const u8, fba.allocator(), source, options);\n\n        return parse(str) catch return error.UnexpectedToken;\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "jsonParse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn init(a: u8, b: u8, c: u8, d: u8) Self {\n            return Self{\n                .value = [4]u8{ a, b, c, d }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn eql(lhs: Self, rhs: Self) bool {\n            return std.mem.eql(u8, &lhs.value, &rhs.value);\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn format(value: Self, writer: *std.Io.Writer) !void {\n            try writer.print(\"{d}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn parse(string: []const u8) !IPv4 {\n            var dot_it = std.mem.splitScalar(u8, string, '.');\n\n            const d0 = dot_it.next().?; // is always != null\n            const d1 = dot_it.next();\n            const d2 = dot_it.next();\n            const d3 = dot_it.next();\n\n            var ip = IPv4{ .value = undefined }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to jsonParse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn jsonParse(allocator: std.mem.Allocator, source: anytype, options: std.json.ParseOptions) !IPv4 {\n            _ = allocator;\n\n            var buffer: [256]u8 = undefined;\n            var fba = std.heap.FixedBufferAllocator.init(&buffer);\n\n            const str = try std.json.innerParse([]const u8, fba.allocator(), source, options);\n\n            return IPv4.parse(str) catch return error.UnexpectedToken;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "jsonParse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn init(value: [16]u8, scope_id: u32) Self {\n            return Self{ .value = value, .scope_id = scope_id }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn eql(lhs: Self, rhs: Self) bool {\n            return std.mem.eql(u8, &lhs.value, &rhs.value) and\n                lhs.scope_id == rhs.scope_id;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn format(self: Self, writer: *std.Io.Writer) !void {\n            if (std.mem.eql(u8, self.value[0..12], &[_]u8{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn parse(string: []const u8) !IPv6 {\n            if (string.len < 2 or string.len > 39) {\n                return error.InvalidFormat;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn format(value: @This(), writer: *std.Io.Writer) !void {\n        switch (value) {\n            .ipv4 => |a| try a.format(writer),\n            .ipv6 => |a| try a.format(writer),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn eql(lhs: @This(), rhs: @This()) bool {\n        if (@as(AddressFamily, lhs) != @as(AddressFamily, rhs))\n            return false;\n        return switch (lhs) {\n            .ipv4 => |l| l.eql(rhs.ipv4),\n            .ipv6 => |l| l.eql(rhs.ipv6),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toNativeAddressFamily from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn toNativeAddressFamily(af: Self) u32 {\n        return switch (af) {\n            .ipv4 => std.posix.AF.INET,\n            .ipv6 => std.posix.AF.INET6,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "toNativeAddressFamily",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromNativeAddressFamily from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn fromNativeAddressFamily(af: i32) !Self {\n        return switch (af) {\n            std.posix.AF.INET => .ipv4,\n            std.posix.AF.INET6 => .ipv6,\n            else => return error.UnsupportedAddressFamily,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "fromNativeAddressFamily",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toSocketType from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn toSocketType(proto: Self) u32 {\n        return switch (proto) {\n            .tcp => std.posix.SOCK.STREAM,\n            .udp => std.posix.SOCK.DGRAM,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "toSocketType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn parse(string: []const u8) !EndPoint {\n        const colon_index = std.mem.lastIndexOfScalar(u8, string, ':') orelse return error.InvalidFormat;\n\n        const address = try Address.parse(string[0..colon_index]);\n\n        const port = try std.fmt.parseInt(u16, string[colon_index + 1 ..], 10);\n\n        return EndPoint{\n            .address = address,\n            .port = port,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to jsonParse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn jsonParse(allocator: std.mem.Allocator, source: anytype, options: std.json.ParseOptions) !EndPoint {\n        _ = allocator;\n\n        var buffer: [256]u8 = undefined;\n        var fba = std.heap.FixedBufferAllocator.init(&buffer);\n\n        const str = try std.json.innerParse([]const u8, fba.allocator(), source, options);\n\n        return parse(str) catch return error.UnexpectedToken;\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "jsonParse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn format(value: Self, writer: *std.Io.Writer) !void {\n        try writer.print(\"{f}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromSocketAddress from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn fromSocketAddress(src: *const std.posix.sockaddr, size: usize) !Self {\n        switch (src.family) {\n            std.posix.AF.INET => {\n                if (size < @sizeOf(std.posix.sockaddr.in))\n                    return error.InsufficientBytes;\n                const value: *align(4) const std.posix.sockaddr.in = @ptrCast(@alignCast(src));\n                return EndPoint{\n                    .port = std.mem.bigToNative(u16, value.port),\n                    .address = .{\n                        .ipv4 = .{\n                            .value = @bitCast(value.addr),\n                        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "fromSocketAddress",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toSocketAddress from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn toSocketAddress(self: Self) SockAddr {\n        return switch (self.address) {\n            .ipv4 => |addr| SockAddr{\n                .ipv4 = .{\n                    .family = std.posix.AF.INET,\n                    .port = std.mem.nativeToBig(u16, self.port),\n                    .addr = @bitCast(addr.value),\n                    .zero = [_]u8{0}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "toSocketAddress",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stream from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn stream(\n            r: *std.Io.Reader,\n            w: *std.Io.Writer,\n            limit: std.Io.Limit,\n        ) std.Io.Reader.StreamError!usize {\n            const self: *Reader = @fieldParentPtr(\"interface\", r);\n            const dest = limit.slice(try w.writableSliceGreedy(1));\n\n            const received = self.context.receive(dest) catch |e| {\n                self.err = e;\n                return error.ReadFailed;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "stream",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drain from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn drain(\n            w: *std.Io.Writer,\n            data: []const []const u8,\n            splat: usize,\n        ) std.Io.Writer.Error!usize {\n            const self: *Writer = @fieldParentPtr(\"interface\", w);\n\n            const buffered = w.buffered();\n            if (buffered.len > 0) {\n                const drained = self.context.send(buffered) catch |e| {\n                    self.err = e;\n                    return error.WriteFailed;\n                }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "drain",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn create(family: AddressFamily, protocol: Protocol) !Self {\n        const socket_fn = if (is_windows) windows.socket else std.posix.socket;\n\n        // std provides a shim for Darwin to set SOCK_NONBLOCK.\n        // Socket creation will only set the flag if we provide the shim rather than the actual flag.\n        const socket_type = if (is_unix)\n            protocol.toSocketType() | std.posix.SOCK.CLOEXEC\n        else\n            protocol.toSocketType();\n\n        return Self{\n            .family = family,\n            .internal = try socket_fn(family.toNativeAddressFamily(), socket_type, 0),\n            .endpoint = null,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn close(self: Self) void {\n        std.posix.close(self.internal);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bind from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn bind(self: *Self, ep: EndPoint) !void {\n        switch (ep.toSocketAddress()) {\n            .ipv4 => |sockaddr| try std.posix.bind(\n                self.internal,\n                @ptrCast(&sockaddr),\n                @sizeOf(@TypeOf(sockaddr)),\n            ),\n            .ipv6 => |sockaddr| try std.posix.bind(\n                self.internal,\n                @ptrCast(&sockaddr),\n                @sizeOf(@TypeOf(sockaddr)),\n            ),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "bind",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bindToPort from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn bindToPort(self: *Self, port: u16) !void {\n        return switch (self.family) {\n            .ipv4 => self.bind(EndPoint{\n                .address = Address{ .ipv4 = Address.IPv4.any }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "bindToPort",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTimeouts from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn setTimeouts(self: *Self, read: ?u32, write: ?u32) !void {\n        try self.setReadTimeout(read);\n        try self.setWriteTimeout(write);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "setTimeouts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setReadTimeout from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn setReadTimeout(self: *Self, read: ?u32) !void {\n        std.debug.assert(read == null or read.? != 0);\n        const micros = read orelse 0;\n        var opt = if (is_windows) @as(u32, @divTrunc(micros, 1000)) else std.posix.timeval{\n            .sec = @intCast(@divTrunc(micros, std.time.us_per_s)),\n            .usec = @intCast(@mod(micros, std.time.us_per_s)),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "setReadTimeout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setWriteTimeout from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn setWriteTimeout(self: *Self, write: ?u32) !void {\n        std.debug.assert(write == null or write.? != 0);\n        const micros = write orelse 0;\n        var opt = if (is_windows) @as(u32, @divTrunc(micros, 1000)) else std.posix.timeval{\n            .sec = @intCast(@divTrunc(micros, std.time.us_per_s)),\n            .usec = @intCast(@mod(micros, std.time.us_per_s)),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "setWriteTimeout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setBroadcast from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn setBroadcast(self: *Self, enable: bool) !void {\n        std.debug.assert(self.family == .ipv4);\n\n        const val: u32 = if (enable) 1 else 0;\n        try std.posix.setsockopt(self.internal, std.posix.SOL.SOCKET, std.posix.SO.BROADCAST, std.mem.asBytes(&val));\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "setBroadcast",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to connect from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn connect(self: *Self, target: EndPoint) !void {\n        if (target.address != self.family)\n            return error.AddressFamilyMismach;\n\n        // on darwin you set the NOSIGNAl once, rather than for each message\n        if (is_bsd) {\n            // set the options to ON\n            const value: u32 = 1;\n            try std.posix.setsockopt(\n                self.internal,\n                std.posix.SOL.SOCKET,\n                std.c.SO.NOSIGPIPE,\n                std.mem.asBytes(&value),\n            );\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "connect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listen from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn listen(self: Self) !void {\n        try std.posix.listen(self.internal, 0);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "listen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to accept from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn accept(self: Self) !Socket {\n        var addr: std.posix.sockaddr.in6 = undefined;\n        var addr_size: std.posix.socklen_t = @sizeOf(std.posix.sockaddr.in6);\n\n        const flags = 0;\n\n        const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);\n        const fd = try std.posix.accept(self.internal, addr_ptr, &addr_size, flags);\n        errdefer std.posix.close(fd);\n\n        return Socket{\n            .family = try AddressFamily.fromNativeAddressFamily(addr_ptr.family),\n            .internal = fd,\n            .endpoint = null,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "accept",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to send from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn send(self: Self, data: []const u8) SendError!usize {\n        if (self.endpoint) |ep|\n            return try self.sendTo(ep, data);\n        const flags = if (is_windows or is_bsd) 0 else std.os.linux.MSG.NOSIGNAL;\n        return try std.posix.send(self.internal, data, flags);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "send",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to peek from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn peek(self: Self, data: []u8) ReceiveError!usize {\n        const recvfrom_fn = if (is_windows) windows.recvfrom else std.posix.recvfrom;\n        const flags = if (is_windows) 0x2 else std.os.linux.MSG.PEEK;\n        return try recvfrom_fn(self.internal, data, flags, null, null);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "peek",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to receive from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn receive(self: Self, data: []u8) ReceiveError!usize {\n        const recvfrom_fn = if (is_windows) windows.recvfrom else std.posix.recvfrom;\n        const flags = if (is_windows or is_bsd) 0 else std.os.linux.MSG.NOSIGNAL;\n        return try recvfrom_fn(self.internal, data, flags, null, null);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "receive",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to receiveFrom from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn receiveFrom(self: Self, data: []u8) !ReceiveFrom {\n        const recvfrom_fn = if (is_windows) windows.recvfrom else std.posix.recvfrom;\n        const flags = if (is_linux) std.os.linux.MSG.NOSIGNAL else 0;\n\n        // Use the ipv6 sockaddr to guarantee data will fit.\n        var addr: std.posix.sockaddr.in6 align(4) = undefined;\n        var size: std.posix.socklen_t = @sizeOf(std.posix.sockaddr.in6);\n\n        const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);\n        const len = try recvfrom_fn(self.internal, data, flags | if (is_windows) 0 else 4, addr_ptr, &size);\n\n        return ReceiveFrom{\n            .numberOfBytes = len,\n            .sender = try EndPoint.fromSocketAddress(addr_ptr, size),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "receiveFrom",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendTo from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn sendTo(self: Self, receiver: EndPoint, data: []const u8) SendError!usize {\n        const flags = if (is_windows or is_bsd) 0 else std.os.linux.MSG.NOSIGNAL;\n\n        const saddr = receiver.toSocketAddress();\n\n        const len = switch (saddr) {\n            .ipv4 => |sockaddr| try sendto(\n                self.internal,\n                data,\n                flags,\n                @ptrCast(&sockaddr),\n                @sizeOf(@TypeOf(sockaddr)),\n            ),\n            .ipv6 => |sockaddr| try sendto(\n                self.internal,\n                data,\n                flags,\n                @ptrCast(&sockaddr),\n                @sizeOf(@TypeOf(sockaddr)),\n            ),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "sendTo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendto from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn sendto(\n        /// The file descriptor of the sending socket.\n        sockfd: std.posix.socket_t,\n        /// Message to send.\n        buf: []const u8,\n        flags: u32,\n        dest_addr: ?*const std.posix.sockaddr,\n        addrlen: std.posix.socklen_t,\n    ) std.posix.SendToError!usize {\n        if (!is_darwin) {\n            return std.posix.sendto(sockfd, buf, flags, dest_addr, addrlen);\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "sendto",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enablePortReuse from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn enablePortReuse(self: Self, enabled: bool) !void {\n        var opt: c_int = if (enabled) 1 else 0;\n        try std.posix.setsockopt(\n            self.internal,\n            std.posix.SOL.SOCKET,\n            std.posix.SO.REUSEADDR,\n            std.mem.asBytes(&opt),\n        );\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "enablePortReuse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getLocalEndPoint from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn getLocalEndPoint(self: Self) !EndPoint {\n        var addr: std.posix.sockaddr.in6 align(4) = undefined;\n        var size: std.posix.socklen_t = @sizeOf(std.posix.sockaddr.in6);\n\n        const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);\n        try std.posix.getsockname(self.internal, addr_ptr, &size);\n\n        return try EndPoint.fromSocketAddress(addr_ptr, size);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "getLocalEndPoint",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getRemoteEndPoint from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn getRemoteEndPoint(self: Self) !EndPoint {\n        var addr: std.posix.sockaddr.in6 align(4) = undefined;\n        var size: std.posix.socklen_t = @sizeOf(std.posix.sockaddr.in6);\n\n        const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);\n        try std.posix.getpeername(self.internal, addr_ptr, &size);\n\n        return try EndPoint.fromSocketAddress(addr_ptr, size);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "getRemoteEndPoint",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to joinMulticastGroup from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn joinMulticastGroup(self: Self, group: MulticastGroup) !void {\n        const ip_mreq = extern struct {\n            imr_multiaddr: u32,\n            imr_address: u32,\n            imr_ifindex: u32,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "joinMulticastGroup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reader from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn reader(self: Self, buffer: []u8) Reader {\n        return .{\n            .context = self,\n            .interface = .{\n                .buffer = buffer,\n                .seek = 0,\n                .end = 0,\n                .vtable = &.{\n                    .stream = Reader.stream,\n                }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "reader",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writer from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn writer(self: Self, buffer: []u8) Writer {\n        return .{\n            .context = self,\n            .interface = .{\n                .buffer = buffer,\n                .vtable = &.{\n                    .drain = Writer.drain,\n                }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "writer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) !Self {\n        return Self{\n            .internal = try OSLogic.init(allocator),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn deinit(self: *Self) void {\n        self.internal.deinit();\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clear from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn clear(self: *Self) void {\n        self.internal.clear();\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "clear",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn add(self: *Self, sock: Socket, events: SocketEvent) !void {\n        try self.internal.add(sock, events);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn remove(self: *Self, sock: Socket) void {\n        self.internal.remove(sock);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isReadyRead from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn isReadyRead(self: Self, sock: Socket) bool {\n        return self.internal.isReadyRead(sock);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isReadyRead",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isReadyWrite from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn isReadyWrite(self: Self, sock: Socket) bool {\n        return self.internal.isReadyWrite(sock);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isReadyWrite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isFaulted from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn isFaulted(self: Self, sock: Socket) bool {\n        return self.internal.isFaulted(sock);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isFaulted",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn init(allocator: std.mem.Allocator) !Self {\n        return Self{\n            .allocator = allocator,\n            .fds = .empty,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn deinit(self: *Self) void {\n        self.fds.deinit(self.allocator);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clear from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn clear(self: *Self) void {\n        self.fds.shrinkRetainingCapacity(0);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "clear",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn add(self: *Self, sock: Socket, events: SocketEvent) !void {\n        // Always poll for errors as this is done anyways\n        var mask: i16 = std.posix.POLL.ERR;\n\n        if (events.read)\n            mask |= std.posix.POLL.IN;\n        if (events.write)\n            mask |= std.posix.POLL.OUT;\n\n        for (self.fds.items) |*pfd| {\n            if (pfd.fd == sock.internal) {\n                pfd.events |= mask;\n                return;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn remove(self: *Self, sock: Socket) void {\n        const index = for (self.fds.items, 0..) |item, i| {\n            if (item.fd == sock.internal)\n                break i;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkMaskAnyBit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn checkMaskAnyBit(self: Self, sock: Socket, mask: i16) bool {\n        for (self.fds.items) |item| {\n            if (item.fd != sock.internal)\n                continue;\n\n            if ((item.revents & mask) != 0) {\n                return true;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "checkMaskAnyBit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isReadyRead from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn isReadyRead(self: Self, sock: Socket) bool {\n        return self.checkMaskAnyBit(sock, std.posix.POLL.IN);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isReadyRead",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isReadyWrite from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn isReadyWrite(self: Self, sock: Socket) bool {\n        return self.checkMaskAnyBit(sock, std.posix.POLL.OUT);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isReadyWrite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isFaulted from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn isFaulted(self: Self, sock: Socket) bool {\n        return self.checkMaskAnyBit(sock, std.posix.POLL.ERR);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isFaulted",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fdSlice from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn fdSlice(self: *align(8) FdSet) []windows.ws2_32.SOCKET {\n            const ptr: [*]u8 = @ptrCast(self);\n            const socket_ptr: [*]windows.ws2_32.SOCKET = @ptrCast(@alignCast(ptr + 4 * @sizeOf(c_uint)));\n            return socket_ptr[0..self.size];\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "fdSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to make from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn make(allocator: std.mem.Allocator) !*align(8) FdSet {\n            // Initialize with enough space for 8 sockets.\n            const mem = try allocator.alignedAlloc(u8, .@\"8\", 4 * @sizeOf(c_uint) + 8 * @sizeOf(windows.ws2_32.SOCKET));\n\n            const fd_set: *align(8) FdSet = @ptrCast(mem);\n            fd_set.* = .{ .capacity = 8, .size = 0 }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "make",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clear from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn clear(self: *align(8) FdSet) void {\n            self.size = 0;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "clear",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to memSlice from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn memSlice(self: *align(8) FdSet) []u8 {\n            const ptr: [*]u8 = @ptrCast(self);\n            return ptr[0..(4 * @sizeOf(c_uint) + self.capacity * @sizeOf(windows.ws2_32.SOCKET))];\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "memSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn deinit(self: *align(8) FdSet, allocator: std.mem.Allocator) void {\n            const ptr: []align(8) u8 = @alignCast(self.memSlice());\n            allocator.free(ptr);\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to containsFd from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn containsFd(self: *align(8) FdSet, fd: windows.ws2_32.SOCKET) bool {\n            for (self.fdSlice()) |ex_fd| {\n                if (ex_fd == fd) return true;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "containsFd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addFd from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn addFd(fd_set: **align(8) FdSet, allocator: std.mem.Allocator, new_fd: windows.ws2_32.SOCKET) !void {\n            if (fd_set.*.size == fd_set.*.capacity) {\n                // Double our capacity.\n                const new_mem_size = 4 * @sizeOf(c_uint) + 2 * fd_set.*.capacity * @sizeOf(windows.ws2_32.SOCKET);\n                const ptr: []u8 align(8) = @alignCast(fd_set.*.memSlice());\n                fd_set.* = @ptrCast(@alignCast((try allocator.reallocAdvanced(ptr, new_mem_size, @returnAddress())).ptr));\n                fd_set.*.capacity *= 2;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "addFd",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSelectPointer from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn getSelectPointer(self: *align(8) FdSet) ?[*]u8 {\n            if (self.size == 0) return null;\n            const ptr: [*]u8 = @ptrCast(self);\n            return ptr + 2 * @sizeOf(c_uint);\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "getSelectPointer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn init(allocator: std.mem.Allocator) !Self {\n        var list = Self{\n            .allocator = allocator,\n            .read_fds = .empty,\n            .write_fds = .empty,\n            .read_fd_set = try .make(allocator),\n            .write_fd_set = try .make(allocator),\n            .except_fd_set = try .make(allocator),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn deinit(self: *Self) void {\n        self.read_fds.deinit(self.allocator);\n        self.write_fds.deinit(self.allocator);\n\n        self.read_fd_set.deinit(self.allocator);\n        self.write_fd_set.deinit(self.allocator);\n        self.except_fd_set.deinit(self.allocator);\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clear from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn clear(self: *Self) void {\n        self.read_fds.shrinkRetainingCapacity(0);\n        self.write_fds.shrinkRetainingCapacity(0);\n\n        self.read_fd_set.clear();\n        self.write_fd_set.clear();\n        self.except_fd_set.clear();\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "clear",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn add(self: *Self, sock: Socket, events: SocketEvent) !void {\n        if (events.read) read_block: {\n            for (self.read_fds.items) |fd| {\n                if (fd == sock.internal) break :read_block;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn remove(self: *Self, sock: Socket) void {\n        for (self.read_fds.items, 0..) |fd, idx| {\n            if (fd == sock.internal) {\n                _ = self.read_fds.swapRemove(idx);\n                break;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFdSet from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn getFdSet(self: *Self, comptime set_selection: Set) !?[*]u8 {\n        const set_ptr = switch (set_selection) {\n            .read => &self.read_fd_set,\n            .write => &self.write_fd_set,\n            .except => &self.except_fd_set,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "getFdSet",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isReadyRead from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn isReadyRead(self: Self, sock: Socket) bool {\n        if (self.read_fd_set.getSelectPointer()) |ptr| {\n            return windows.funcs.__WSAFDIsSet(sock.internal, ptr) != 0;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isReadyRead",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isReadyWrite from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn isReadyWrite(self: Self, sock: Socket) bool {\n        if (self.write_fd_set.getSelectPointer()) |ptr| {\n            return windows.funcs.__WSAFDIsSet(sock.internal, ptr) != 0;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isReadyWrite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isFaulted from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn isFaulted(self: Self, sock: Socket) bool {\n        if (self.except_fd_set.getSelectPointer()) |ptr| {\n            return windows.funcs.__WSAFDIsSet(sock.internal, ptr) != 0;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "isFaulted",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitForSocketEvent from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn waitForSocketEvent(set: *SocketSet, timeout: ?u64) !usize {\n    switch (builtin.os.tag) {\n        .windows => {\n            const read_set = try set.internal.getFdSet(.read);\n            const write_set = try set.internal.getFdSet(.write);\n            const except_set = try set.internal.getFdSet(.except);\n            if (read_set == null and write_set == null and except_set == null) return 0;\n\n            const tm: windows.timeval = if (timeout) |tout| block: {\n                const secs = @divFloor(tout, std.time.ns_per_s);\n                const usecs = @divFloor(tout - secs * std.time.ns_per_s, 1000);\n                break :block .{ .tv_sec = @intCast(secs), .tv_usec = @intCast(usecs) }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "waitForSocketEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to connectToHost from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn connectToHost(\n    allocator: std.mem.Allocator,\n    name: []const u8,\n    port: u16,\n    protocol: Protocol,\n) !Socket {\n    const endpoint_list = try getEndpointList(allocator, name, port);\n    defer endpoint_list.deinit();\n\n    for (endpoint_list.endpoints) |endpt| {\n        var sock = try Socket.create(@as(AddressFamily, endpt.address), protocol);\n        sock.connect(endpt) catch {\n            sock.close();\n            continue;\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "connectToHost",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn deinit(self: *EndpointList) void {\n        var arena = self.arena;\n        arena.deinit();\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getEndpointList from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub fn getEndpointList(allocator: std.mem.Allocator, name: []const u8, port: u16) !*EndpointList {\n    const result = blk: {\n        var arena = std.heap.ArenaAllocator.init(allocator);\n        errdefer arena.deinit();\n\n        const result = try arena.allocator().create(EndpointList);\n        result.* = EndpointList{\n            .arena = arena,\n            .endpoints = undefined,\n            .canon_name = null,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "getEndpointList",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to libc_getaddrinfo from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn libc_getaddrinfo(\n    name: [*:0]const u8,\n    port: [*:0]const u8,\n    hints: *const std.posix.addrinfo,\n    result: *?*std.posix.addrinfo,\n) GetAddrInfoError!void {\n    const rc = std.posix.system.getaddrinfo(name, port, hints, result);\n    if (rc != @as(std.posix.system.EAI, @enumFromInt(0)))\n        return switch (rc) {\n            .ADDRFAMILY => return error.HostLacksNetworkAddresses,\n            .AGAIN => return error.TemporaryNameServerFailure,\n            .BADFLAGS => unreachable, // Invalid hints\n            .FAIL => return error.NameServerFailure,\n            .FAMILY => return error.AddressFamilyNotSupported,\n            .MEMORY => return error.OutOfMemory,\n            .NODATA => return error.HostLacksNetworkAddresses,\n            .NONAME => return error.UnknownHostName,\n            .SERVICE => return error.ServiceUnavailable,\n            .SOCKTYPE => unreachable, // Invalid socket type requested in hints\n            .SYSTEM => switch (std.posix.errno(-1)) {\n                else => |e| return std.posix.unexpectedErrno(e),\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "libc_getaddrinfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to recvfrom from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn recvfrom(s: ws2_32.SOCKET, buf: [*c]u8, len: c_int, flags: c_int, from: [*c]std.posix.sockaddr, fromlen: [*c]std.posix.socklen_t) callconv(.winapi) c_int;\n        extern \"ws2_32\" fn select(nfds: c_int, readfds: ?*anyopaque, writefds: ?*anyopaque, exceptfds: ?*anyopaque, timeout: [*c]const timeval) callconv(.winapi) c_int;\n        extern \"ws2_32\" fn __WSAFDIsSet(arg0: ws2_32.SOCKET, arg1: [*]u8) c_int;\n        extern \"ws2_32\" fn getaddrinfo(nodename: [*:0]const u8, servicename: [*:0]const u8, hints: *const posix.addrinfo, result: **posix.addrinfo) callconv(.winapi) c_int;\n        extern \"ws2_32\" fn freeaddrinfo(res: *posix.addrinfo) callconv(.winapi) void;\n    };\n\n    // TODO: This can be removed in favor of upstream Zig `std.posix.socket` if the\n    // `std.posix.socket` implementation handles `std.posix.SOCK.DGRAM`.\n    fn socket(addr_family: u32, socket_type: u32, protocol: u32) std.posix.SocketError!ws2_32.SOCKET {\n        const sock = try WSASocketW(\n            @intCast(addr_family),\n            @intCast(socket_type),\n            @intCast(protocol),\n            null,\n            0,\n            ws2_32.WSA_FLAG_OVERLAPPED,\n        );\n\n        // Disable SIO_UDP_CONNRESET behaviour for UDP\n        //\n        // This resolves an issue where \"recvfrom\" can return a WSAECONNRESET error if a previous send\n        // call failed and resulted in an ICMP Port Unreachable message.\n        // https://github.com/ikskuh/zig-network/issues/66\n        if (socket_type == std.posix.SOCK.DGRAM) {\n            // This was based off the following Go code:\n            // https://github.com/golang/go/blob/5c154986094bcc2fb28909cc5f01c9ba1dd9ddd4/src/internal/poll/fd_windows.go#L338\n            const IOC_IN = 0x80000000;\n            const IOC_VENDOR = 0x18000000;\n            const SIO_UDP_CONNRESET = IOC_IN | IOC_VENDOR | 12;\n            const flag = &[_]u8{ 0, 0, 0, 0 }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "recvfrom",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to recvfrom from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn recvfrom(\n        sock: ws2_32.SOCKET,\n        buf: []u8,\n        flags: u32,\n        src_addr: ?*std.posix.sockaddr,\n        addrlen: ?*std.posix.socklen_t,\n    ) std.posix.RecvFromError!usize {\n        while (true) {\n            const result = funcs.recvfrom(sock, buf.ptr, @intCast(buf.len), @intCast(flags), src_addr, addrlen);\n            if (result == ws2_32.SOCKET_ERROR) {\n                return switch (ws2_32.WSAGetLastError()) {\n                    .WSAEFAULT => unreachable,\n                    .WSAEINVAL => unreachable,\n                    .WSAEISCONN => unreachable,\n                    .WSAENOTSOCK => unreachable,\n                    .WSAESHUTDOWN => unreachable,\n                    .WSAEOPNOTSUPP => unreachable,\n                    .WSAETIMEDOUT, .WSAEWOULDBLOCK => error.WouldBlock,\n                    .WSAEINTR => continue,\n                    else => |err| return unexpectedWSAError(err),\n                }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "recvfrom",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to select from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn select(nfds: usize, read_fds: ?[*]u8, write_fds: ?[*]u8, except_fds: ?[*]u8, timeout: ?*const timeval) SelectError!usize {\n        _ = nfds;\n        while (true) {\n            // Windows ignores nfds so we just pass zero here.\n            const result = funcs.select(0, read_fds, write_fds, except_fds, timeout);\n            if (result == ws2_32.SOCKET_ERROR) {\n                return switch (ws2_32.WSAGetLastError()) {\n                    .WSAEFAULT => unreachable,\n                    .WSAEINVAL => unreachable,\n                    .WSAEINTR => continue,\n                    .WSAENOTSOCK => error.FileDescriptorNotASocket,\n                    else => |err| return unexpectedWSAError(err),\n                }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "select",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getaddrinfo from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "fn getaddrinfo(\n        name: [*:0]const u8,\n        port: [*:0]const u8,\n        hints: *const posix.addrinfo,\n        result: *?*posix.addrinfo,\n    ) GetAddrInfoError!void {\n        const rc = funcs.getaddrinfo(name, port, hints, @ptrCast(result));\n        if (rc != 0)\n            return switch (ws2_32.WSAGetLastError()) {\n                .WSATRY_AGAIN => error.TemporaryNameServerFailure,\n                .WSAEINVAL => unreachable,\n                .WSANO_RECOVERY => error.NameServerFailure,\n                .WSAEAFNOSUPPORT => error.AddressFamilyNotSupported,\n                .WSA_NOT_ENOUGH_MEMORY => error.OutOfMemory,\n                .WSAHOST_NOT_FOUND => error.UnknownHostName,\n                .WSATYPE_NOT_FOUND => error.ServiceUnavailable,\n                .WSAESOCKTNOSUPPORT => unreachable,\n                else => |err| return unexpectedWSAError(err),\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "function",
+      "name": "getaddrinfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IPv4 from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const IPv4 = struct {\n        const Self = @This();\n\n        pub const any = IPv4.init(0, 0, 0, 0);\n        pub const broadcast = IPv4.init(255, 255, 255, 255);\n        pub const loopback = IPv4.init(127, 0, 0, 1);\n        pub const multicast_all = IPv4.init(224, 0, 0, 1);\n\n        value: [4]u8,\n\n        pub fn init(a: u8, b: u8, c: u8, d: u8) Self {\n            return Self{\n                .value = [4]u8{ a, b, c, d }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "IPv4",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IPv6 from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const IPv6 = struct {\n        const Self = @This();\n\n        pub const any = std.mem.zeroes(Self);\n        pub const loopback = IPv6.init([1]u8{0}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "IPv6",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EndPoint from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const EndPoint = struct {\n    const Self = @This();\n\n    address: Address,\n    port: u16, // Stored as native, will convert to bigEndian when moving to sockaddr\n\n    pub fn parse(string: []const u8) !EndPoint {\n        const colon_index = std.mem.lastIndexOfScalar(u8, string, ':') orelse return error.InvalidFormat;\n\n        const address = try Address.parse(string[0..colon_index]);\n\n        const port = try std.fmt.parseInt(u16, string[colon_index + 1 ..], 10);\n\n        return EndPoint{\n            .address = address,\n            .port = port,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "EndPoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Socket from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const Socket = struct {\n    pub const SendError = (std.posix.SendError || std.posix.SendToError);\n    pub const ReceiveError = std.posix.RecvFromError;\n\n    pub const Reader = struct {\n        context: Socket,\n        interface: std.Io.Reader,\n        err: ?ReceiveError = null,\n\n        fn stream(\n            r: *std.Io.Reader,\n            w: *std.Io.Writer,\n            limit: std.Io.Limit,\n        ) std.Io.Reader.StreamError!usize {\n            const self: *Reader = @fieldParentPtr(\"interface\", r);\n            const dest = limit.slice(try w.writableSliceGreedy(1));\n\n            const received = self.context.receive(dest) catch |e| {\n                self.err = e;\n                return error.ReadFailed;\n            }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "Socket",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Writer from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const Writer = struct {\n        context: Socket,\n        interface: std.Io.Writer,\n        err: ?SendError = null,\n\n        fn drain(\n            w: *std.Io.Writer,\n            data: []const []const u8,\n            splat: usize,\n        ) std.Io.Writer.Error!usize {\n            const self: *Writer = @fieldParentPtr(\"interface\", w);\n\n            const buffered = w.buffered();\n            if (buffered.len > 0) {\n                const drained = self.context.send(buffered) catch |e| {\n                    self.err = e;\n                    return error.WriteFailed;\n                }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "Writer",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ReceiveFrom from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const ReceiveFrom = struct { numberOfBytes: usize, sender: EndPoint }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "ReceiveFrom",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MulticastGroup from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const MulticastGroup = struct {\n        interface: Address.IPv4,\n        group: Address.IPv4,\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "MulticastGroup",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SocketEvent from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const SocketEvent = struct {\n    /// Wait for data ready to be read.\n    read: bool,\n\n    /// Wait for all pending data to be sent and the socket accepting\n    /// non-blocking writes.\n    write: bool,\n}",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "SocketEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SocketSet from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const SocketSet = struct {\n    const Self = @This();\n\n    internal: OSLogic,\n\n    /// Initialize a new socket set. This can be reused for\n    /// multiple queries without having to reset the set every time.\n    /// Call `deinit()` to free the socket set.\n    pub fn init(allocator: std.mem.Allocator) !Self {\n        return Self{\n            .internal = try OSLogic.init(allocator),\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "SocketSet",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to LinuxOSLogic from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const LinuxOSLogic = struct {\n    const Self = @This();\n    // use poll on linux\n\n    allocator: std.mem.Allocator,\n    fds: std.ArrayList(std.posix.pollfd),\n\n    inline fn init(allocator: std.mem.Allocator) !Self {\n        return Self{\n            .allocator = allocator,\n            .fds = .empty,\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "LinuxOSLogic",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to WindowsOSLogic from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const WindowsOSLogic = struct {\n    // The windows struct fd_set uses a statically size array of 64 sockets by default.\n    // However, it is documented that one can create bigger sets and pass them into the functions that use them.\n    // Instead, we dynamically allocate the sets and reallocate them as needed.\n    // See https://docs.microsoft.com/en-us/windows/win32/winsock/maximum-number-of-sockets-supported-2\n    const FdSet = extern struct {\n        padding1: c_uint = 0, // This is added to guarantee &size is 8 byte aligned\n        capacity: c_uint,\n        size: c_uint,\n        padding2: c_uint = 0, // This is added to guarantee &fds is 8 byte aligned\n        // fds: SOCKET[size]\n\n        fn fdSlice(self: *align(8) FdSet) []windows.ws2_32.SOCKET {\n            const ptr: [*]u8 = @ptrCast(self);\n            const socket_ptr: [*]windows.ws2_32.SOCKET = @ptrCast(@alignCast(ptr + 4 * @sizeOf(c_uint)));\n            return socket_ptr[0..self.size];\n        }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "WindowsOSLogic",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EndpointList from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "pub const EndpointList = struct {\n    arena: std.heap.ArenaAllocator,\n    endpoints: []EndPoint,\n    canon_name: ?[]u8,\n\n    pub fn deinit(self: *EndpointList) void {\n        var arena = self.arena;\n        arena.deinit();\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "EndpointList",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to windows from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const windows = struct {\n    pub const CreateIoCompletionPort = std.os.windows.CreateIoCompletionPort;\n    pub const DWORD = std.os.windows.DWORD;\n    pub const FALSE = std.os.windows.FALSE;\n    pub const kernel32 = std.os.windows.kernel32;\n    pub const ULONG = std.os.windows.ULONG;\n    pub const unexpectedError = std.os.windows.unexpectedError;\n    pub const unexpectedWSAError = std.os.windows.unexpectedWSAError;\n    pub const ws2_32 = std.os.windows.ws2_32;\n    pub const WSACleanup = std.os.windows.WSACleanup;\n    pub const WSASocketW = std.os.windows.WSASocketW;\n    pub const WSAStartup = std.os.windows.WSAStartup;\n\n    const timeval = extern struct {\n        tv_sec: c_long,\n        tv_usec: c_long,\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "windows",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to funcs from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const funcs = struct {\n        extern \"ws2_32\" fn recvfrom(s: ws2_32.SOCKET, buf: [*c]u8, len: c_int, flags: c_int, from: [*c]std.posix.sockaddr, fromlen: [*c]std.posix.socklen_t) callconv(.winapi) c_int;\n        extern \"ws2_32\" fn select(nfds: c_int, readfds: ?*anyopaque, writefds: ?*anyopaque, exceptfds: ?*anyopaque, timeout: [*c]const timeval) callconv(.winapi) c_int;\n        extern \"ws2_32\" fn __WSAFDIsSet(arg0: ws2_32.SOCKET, arg1: [*]u8) c_int;\n        extern \"ws2_32\" fn getaddrinfo(nodename: [*:0]const u8, servicename: [*:0]const u8, hints: *const posix.addrinfo, result: **posix.addrinfo) callconv(.winapi) c_int;\n        extern \"ws2_32\" fn freeaddrinfo(res: *posix.addrinfo) callconv(.winapi) void;\n    }",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "struct",
+      "name": "funcs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to big_endian_parts from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const big_endian_parts: *align(1) const [8]u16 = @ptrCast(&self.value);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "big_endian_parts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to num_groups_copy from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const num_groups_copy: usize = cg_index - index;",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "num_groups_copy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to value from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const value: *align(4) const std.posix.sockaddr.in = @ptrCast(@alignCast(src));",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "value",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to value from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const value: *align(4) const std.posix.sockaddr.in6 = @ptrCast(@alignCast(src));",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "value",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const self: *Reader = @fieldParentPtr(\"interface\", r);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const self: *Writer = @fieldParentPtr(\"interface\", w);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to val from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const val: u32 = if (enable) 1 else 0;",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "val",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to value from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const value: u32 = 1;",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "value",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to addr_ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "addr_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to addr_ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "addr_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to addr_ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "addr_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to addr_ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const addr_ptr: *std.posix.sockaddr = @ptrCast(&addr);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "addr_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const ptr: [*]u8 = @ptrCast(self);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to socket_ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const socket_ptr: [*]windows.ws2_32.SOCKET = @ptrCast(@alignCast(ptr + 4 * @sizeOf(c_uint)));",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "socket_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fd_set from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const fd_set: *align(8) FdSet = @ptrCast(mem);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "fd_set",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const ptr: [*]u8 = @ptrCast(self);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const ptr: []align(8) u8 = @alignCast(self.memSlice());",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const ptr: []u8 align(8) = @alignCast(fd_set.*.memSlice());",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ptr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const ptr: [*]u8 = @ptrCast(self);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tm from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const tm: windows.timeval = if (timeout) |tout| block: {\n                const secs = @divFloor(tout, std.time.ns_per_s);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "tm",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to hints from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const hints: posix.addrinfo = .{\n            .flags = .{ .NUMERICSERV = true },\n            .family = posix.AF.UNSPEC,\n            .socktype = posix.SOCK.STREAM,\n            .protocol = posix.IPPROTO.TCP,\n            .canonname = null,\n            .addr = null,\n            .addrlen = 0,\n            .next = null,\n        };",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "hints",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to addr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const addr: Address = switch (sockaddr.family) {\n                std.posix.AF.INET => block: {\n                    const bytes: *const [4]u8 = @ptrCast(sockaddr.data[2..]);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "addr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sockaddr_in6 from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const sockaddr_in6: *align(1) const std.posix.sockaddr.in6 = @ptrCast(sockaddr);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "sockaddr_in6",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to count from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const count: usize = address_list.addrs.len;",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to addr from ikskuh/zig-network",
+    "context": "Repository: ikskuh/zig-network (592 ⭐)\nFile: network.zig",
+    "response": "const addr: Address = switch (net_addr.any.family) {\n                std.posix.AF.INET => block: {\n                    const bytes: *const [4]u8 = @ptrCast(&net_addr.in.sa.addr);",
+    "metadata": {
+      "repo": "ikskuh/zig-network",
+      "stars": 592,
+      "file": "network.zig",
+      "type": "const",
+      "name": "addr",
+      "difficulty": "easy"
+    }
+  }
+]

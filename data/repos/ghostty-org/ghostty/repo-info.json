@@ -1,0 +1,9 @@
+{
+  "name": "ghostty",
+  "fullName": "ghostty-org/ghostty",
+  "owner": "ghostty-org",
+  "stars": 37413,
+  "description": "👻 Ghostty is a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.",
+  "url": "https://github.com/ghostty-org/ghostty",
+  "defaultBranch": "main"
+}

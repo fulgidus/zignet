@@ -1,0 +1,3317 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn index(_: *httpz.Request, res: *httpz.Response) !void {\n    res.body =\n        \\\\<!DOCTYPE html>\n        \\\\ <ul>\n        \\\\ <li><a href=\"/hello?name=Teg\">Querystring + text output</a>\n        \\\\ <li><a href=\"/writer/hello/Ghanima\">Path parameter + serialize json object</a>\n        \\\\ <li><a href=\"/json/hello/Duncan\">Path parameter + json writer</a>\n        \\\\ <li><a href=\"/metrics\">Internal metrics</a>\n        \\\\ <li><a href=\"/form_data\">Form Data</a>\n        \\\\ <li><a href=\"/explicit_write\">Explicit Write</a>\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hello from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn hello(req: *httpz.Request, res: *httpz.Response) !void {\n    const query = try req.query();\n    const name = query.get(\"name\") orelse \"stranger\";\n\n    // Could also see res.writer(), see the writer endpoint for an example\n    res.body = try std.fmt.allocPrint(res.arena, \"Hello {s}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "hello",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to json from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn json(req: *httpz.Request, res: *httpz.Response) !void {\n    const name = req.param(\"name\").?;\n\n    // the last parameter to res.json is an std.json.StringifyOptions\n    try res.json(.{ .hello = name }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "json",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writer from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn writer(req: *httpz.Request, res: *httpz.Response) !void {\n    res.content_type = httpz.ContentType.JSON;\n\n    const name = req.param(\"name\").?;\n\n    try std.json.Stringify.value(\n        .{ .name = name }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "writer",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to metrics from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn metrics(_: *httpz.Request, res: *httpz.Response) !void {\n    // httpz exposes some prometheus-style metrics\n    return httpz.writeMetrics(res.writer());\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "metrics",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to formShow from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn formShow(_: *httpz.Request, res: *httpz.Response) !void {\n    res.body =\n        \\\\ <html>\n        \\\\ <form method=post>\n        \\\\    <p><input name=name value=goku></p>\n        \\\\    <p><input name=power value=9001></p>\n        \\\\    <p><input type=submit value=submit></p>\n        \\\\ </form>\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "formShow",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to formPost from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn formPost(req: *httpz.Request, res: *httpz.Response) !void {\n    var it = (try req.formData()).iterator();\n\n    res.content_type = .TEXT;\n\n    const w = res.writer();\n    while (it.next()) |kv| {\n        try w.print(\"{s}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "formPost",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to explicitWrite from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/01_basic.zig",
+    "response": "fn explicitWrite(_: *httpz.Request, res: *httpz.Response) !void {\n    res.body =\n        \\\\ There may be cases where your response is tied to data which\n        \\\\ required cleanup. If `res.arena` and `res.writer()` can't solve\n        \\\\ the issue, you can always call `res.write()` explicitly\n    ;\n    return res.write();\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/01_basic.zig",
+      "type": "function",
+      "name": "explicitWrite",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/02_handler.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/02_handler.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to notFound from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/02_handler.zig",
+    "response": "pub fn notFound(_: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n        res.status = 404;\n        res.body = \"NOPE!\";\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/02_handler.zig",
+      "type": "function",
+      "name": "notFound",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to uncaughtError from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/02_handler.zig",
+    "response": "pub fn uncaughtError(_: *Handler, req: *httpz.Request, res: *httpz.Response, err: anyerror) void {\n        std.debug.print(\"uncaught http error at {s}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/02_handler.zig",
+      "type": "function",
+      "name": "uncaughtError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/02_handler.zig",
+    "response": "fn index(_: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n    res.body =\n        \\\\<!DOCTYPE html>\n        \\\\ <p>Except in very simple cases, you'll want to use a custom Handler.\n        \\\\ <p>A custom Handler is how you share app-specific data with your actions (like a DB pool)\n        \\\\    and define a custom not found and error function.\n        \\\\ <p>Other examples show more advanced things you can do with a custom Handler.\n        \\\\ <ul>\n        \\\\ <li><a href=\"/hits\">Shared global hit counter</a>\n        \\\\ <li><a href=\"/not_found\">Custom not found handler</a>\n        \\\\ <li><a href=\"/error\">Custom error  handler</a>\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/02_handler.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hits from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/02_handler.zig",
+    "response": "pub fn hits(h: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n    const count = @atomicRmw(usize, &h._hits, .Add, 1, .monotonic);\n\n    // @atomicRmw returns the previous version so we need to +1 it\n    // to display the count includin this hit\n    return res.json(.{ .hits = count + 1 }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/02_handler.zig",
+      "type": "function",
+      "name": "hits",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Handler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/02_handler.zig",
+    "response": "const Handler = struct {\n    _hits: usize = 0,\n\n    // If the handler defines a special \"notFound\" function, it'll be called\n    // when a request is made and no route matches.\n    pub fn notFound(_: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n        res.status = 404;\n        res.body = \"NOPE!\";\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/02_handler.zig",
+      "type": "struct",
+      "name": "Handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/03_dispatch.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/03_dispatch.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/03_dispatch.zig",
+    "response": "pub fn dispatch(self: *Handler, action: httpz.Action(*Handler), req: *httpz.Request, res: *httpz.Response) !void {\n        // Our custom dispatch lets us add a log + timing for every request\n        // httpz supports middlewares, but in many cases, having a dispatch is good\n        // enough and is much more straightforward.\n\n        var start = try std.time.Timer.start();\n        // We don't _have_ to call the action if we don't want to. For example\n        // we could do authentication and set the response directly on error.\n        try action(self, req, res);\n\n        std.debug.print(\"ts={d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/03_dispatch.zig",
+      "type": "function",
+      "name": "dispatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/03_dispatch.zig",
+    "response": "fn index(_: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n    res.body =\n        \\\\ If defied, the dispatch method will be invoked for every request with a matching route.\n        \\\\ It is up to dispatch to decide how/if the action should be called. While httpz\n        \\\\ supports middleware, most cases can be more easily and cleanly handled with\n        \\\\ a custom dispatch alone (you can always use both middlewares and a custom dispatch though).\n        \\\\\n        \\\\ Check out the console, our custom dispatch function times & logs each request.\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/03_dispatch.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Handler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/03_dispatch.zig",
+    "response": "const Handler = struct {\n    // In addition to the special \"notFound\" and \"uncaughtError\" shown in example 2\n    // the special \"dispatch\" method can be used to gain more control over request handling.\n    pub fn dispatch(self: *Handler, action: httpz.Action(*Handler), req: *httpz.Request, res: *httpz.Response) !void {\n        // Our custom dispatch lets us add a log + timing for every request\n        // httpz supports middlewares, but in many cases, having a dispatch is good\n        // enough and is much more straightforward.\n\n        var start = try std.time.Timer.start();\n        // We don't _have_ to call the action if we don't want to. For example\n        // we could do authentication and set the response directly on error.\n        try action(self, req, res);\n\n        std.debug.print(\"ts={d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/03_dispatch.zig",
+      "type": "struct",
+      "name": "Handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "pub fn dispatch(self: *Handler, action: httpz.Action(*Env), req: *httpz.Request, res: *httpz.Response) !void {\n        const user = (try req.query()).get(\"auth\");\n\n        // RouteData can be anything, but since it's stored as a *const anyopaque\n        // you'll need to restore the type/alignment.\n\n        // (You could also use a per-route handler, or middleware, to achieve\n        // the same thing. Using route data is a bit ugly due to the type erasure\n        // but it can be convenient!).\n        if (req.route_data) |rd| {\n            const route_data: *const RouteData = @ptrCast(@alignCast(rd));\n            if (route_data.restricted and (user == null or user.?.len == 0)) {\n                res.status = 401;\n                res.body = \"permission denied\";\n                return;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "function",
+      "name": "dispatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "fn index(_: *Env, _: *httpz.Request, res: *httpz.Response) !void {\n    res.content_type = .HTML;\n    res.body =\n        \\\\<!DOCTYPE html>\n        \\\\ <p>The <code>Handler.dispatch</code> method takes an <code>httpz.Action(*Env)</code>.\n        \\\\ <p>This allows the handler method to create a request-specific value to pass into actions.\n        \\\\ <p>For example, dispatch might load a User (using a request header value maybe) and make it available to the action.\n        \\\\ <p>Goto <a href=\"/admin?auth=superuser\">admin</a> to simulate a (very insecure) authentication.\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to admin from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "fn admin(env: *Env, _: *httpz.Request, res: *httpz.Response) !void {\n    res.body = try std.fmt.allocPrint(res.arena, \"Welcome to the admin portal, {s}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "function",
+      "name": "admin",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Handler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "const Handler = struct {\n    // In example_3, our action type was: httpz.Action(*Handler).\n    // In this example, we've changed it to:  httpz.Action(*Env)\n    // This allows our handler to be a general app-wide \"state\" while our actions\n    // received a request-specific context\n    pub fn dispatch(self: *Handler, action: httpz.Action(*Env), req: *httpz.Request, res: *httpz.Response) !void {\n        const user = (try req.query()).get(\"auth\");\n\n        // RouteData can be anything, but since it's stored as a *const anyopaque\n        // you'll need to restore the type/alignment.\n\n        // (You could also use a per-route handler, or middleware, to achieve\n        // the same thing. Using route data is a bit ugly due to the type erasure\n        // but it can be convenient!).\n        if (req.route_data) |rd| {\n            const route_data: *const RouteData = @ptrCast(@alignCast(rd));\n            if (route_data.restricted and (user == null or user.?.len == 0)) {\n                res.status = 401;\n                res.body = \"permission denied\";\n                return;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "struct",
+      "name": "Handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RouteData from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "const RouteData = struct {\n    restricted: bool,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "struct",
+      "name": "RouteData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Env from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "const Env = struct {\n    handler: *Handler,\n    user: ?[]const u8,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "struct",
+      "name": "Env",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to route_data from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/04_action_context.zig",
+    "response": "const route_data: *const RouteData = @ptrCast(@alignCast(rd));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/04_action_context.zig",
+      "type": "const",
+      "name": "route_data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/05_request_takeover.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/05_request_takeover.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handle from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/05_request_takeover.zig",
+    "response": "pub fn handle(_: *Handler, _: *httpz.Request, res: *httpz.Response) void {\n        res.body =\n            \\\\ If defined, the \"handle\" function is called early in httpz' request\n            \\\\ processing. Routing, middlewares, not found and error handling are all skipped.\n            \\\\ This is an advanced option and is used by frameworks like JetZig to provide\n            \\\\ their own flavor and enhancement ontop of httpz.\n            \\\\ If you define this, the special \"dispatch\", \"notFound\" and \"uncaughtError\"\n            \\\\ functions have no meaning as far as httpz is concerned.\n        ;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/05_request_takeover.zig",
+      "type": "function",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Handler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/05_request_takeover.zig",
+    "response": "const Handler = struct {\n    pub fn handle(_: *Handler, _: *httpz.Request, res: *httpz.Response) void {\n        res.body =\n            \\\\ If defined, the \"handle\" function is called early in httpz' request\n            \\\\ processing. Routing, middlewares, not found and error handling are all skipped.\n            \\\\ This is an advanced option and is used by frameworks like JetZig to provide\n            \\\\ their own flavor and enhancement ontop of httpz.\n            \\\\ If you define this, the special \"dispatch\", \"notFound\" and \"uncaughtError\"\n            \\\\ functions have no meaning as far as httpz is concerned.\n        ;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/05_request_takeover.zig",
+      "type": "struct",
+      "name": "Handler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/06_middleware.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/06_middleware.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/06_middleware.zig",
+    "response": "fn index(_: *httpz.Request, res: *httpz.Response) !void {\n    res.content_type = .HTML;\n    res.body =\n        \\\\<!DOCTYPE html>\n        \\\\<p>There's overlap between a custom dispatch function and middlewares.\n        \\\\<p>This page includes the example Logger middleware, so requesting it logs information.\n        \\\\<p>The <a href=\"/other\">other</a> endpoint uses a custom route config which\n        \\\\   has no middleware, effectively disabling the Logger for that route.\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/06_middleware.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to other from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/06_middleware.zig",
+    "response": "fn other(_: *httpz.Request, res: *httpz.Response) !void {\n    // Called with a custom config which had no middlewares\n    // (effectively disabling the logging middleware)\n    res.body =\n        \\\\ Accessing this endpoint will NOT generate a log line in the console,\n        \\\\ because the Logger middleware is disabled.\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/06_middleware.zig",
+      "type": "function",
+      "name": "other",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/07_advanced_routing.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/07_advanced_routing.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to infoDispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/07_advanced_routing.zig",
+    "response": "pub fn infoDispatch(h: *Handler, action: httpz.Action(*Handler), req: *httpz.Request, res: *httpz.Response) !void {\n        return action(h, req, res);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/07_advanced_routing.zig",
+      "type": "function",
+      "name": "infoDispatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/07_advanced_routing.zig",
+    "response": "pub fn dispatch(h: *Handler, action: httpz.Action(*Handler), req: *httpz.Request, res: *httpz.Response) !void {\n        try action(h, req, res);\n        if (h.log) {\n            std.debug.print(\"ts={d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/07_advanced_routing.zig",
+      "type": "function",
+      "name": "dispatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/07_advanced_routing.zig",
+    "response": "fn index(_: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n    res.content_type = .HTML;\n    res.body =\n        \\\\<!DOCTYPE html>\n        \\\\ <p>It's possible to define a custom dispatch method, custom handler instance and/or custom middleware per-route.\n        \\\\ <p>It's also possible to create a route group, which is a group of routes who share a common prefix and/or a custom configration.\n        \\\\ <ul>\n        \\\\ <li><a href=\"/page1\">page with custom dispatch</a>\n        \\\\ <li><a href=\"/page2\">page with custom handler</a>\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/07_advanced_routing.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to page1 from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/07_advanced_routing.zig",
+    "response": "fn page1(_: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n    // Called with a custom config which specified a custom dispatch method\n    res.body =\n        \\\\ Accessing this endpoint will NOT generate a log line in the console,\n        \\\\ because a custom dispatch method is used\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/07_advanced_routing.zig",
+      "type": "function",
+      "name": "page1",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to page2 from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/07_advanced_routing.zig",
+    "response": "fn page2(_: *Handler, _: *httpz.Request, res: *httpz.Response) !void {\n    // Called with a custom config which specified a custom handler instance\n    res.body =\n        \\\\ Accessing this endpoint will NOT generate a log line in the console,\n        \\\\ because a custom handler instance is used\n    ;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/07_advanced_routing.zig",
+      "type": "function",
+      "name": "page2",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Handler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/07_advanced_routing.zig",
+    "response": "const Handler = struct {\n    log: bool,\n\n    // special dispatch set in the info route\n    pub fn infoDispatch(h: *Handler, action: httpz.Action(*Handler), req: *httpz.Request, res: *httpz.Response) !void {\n        return action(h, req, res);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/07_advanced_routing.zig",
+      "type": "struct",
+      "name": "Handler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "pub fn init(conn: *websocket.Conn, ctx: *const Context) !Client {\n        return .{\n            .conn = conn,\n            .user_id = ctx.user_id,\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to afterInit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "pub fn afterInit(self: *Client) !void {\n        return self.conn.write(\"welcome!\");\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "function",
+      "name": "afterInit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clientMessage from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "pub fn clientMessage(self: *Client, data: []const u8) !void {\n        // echo back to client\n        return self.conn.write(data);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "function",
+      "name": "clientMessage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "fn index(_: Handler, _: *httpz.Request, res: *httpz.Response) !void {\n    res.content_type = .HTML;\n    res.body =\n        \\\\<!DOCTYPE html>\n        \\\\ <p>httpz integrates with my own <a href=\"https://github.com/karlseguin/websocket.zig/\">websocket.zig</a>.\n        \\\\ <p>A websocket connection should already be established.</p>\n        \\\\ <p>Copy and paste the following in your browser console to have the server echo back:</p>\n        \\\\ <pre>ws.send(\"hello from the client!\");</pre>\n        \\\\ <script>\n        \\\\ const ws = new WebSocket(\"ws://localhost:8808/ws\");\n        \\\\ ws.addEventListener(\"message\", (event) => { console.log(\"from server: \", event.data) }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ws from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "fn ws(_: Handler, req: *httpz.Request, res: *httpz.Response) !void {\n    // Could do authentication or anything else before upgrading the connection\n    // The context is any arbitrary data you want to pass to Client.init.\n    const ctx = Client.Context{ .user_id = 9001 }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "function",
+      "name": "ws",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Handler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "const Handler = struct {\n    // or you could define the full structure here\n    pub const WebsocketHandler = Client;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "struct",
+      "name": "Handler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Client from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/08_websocket.zig",
+    "response": "const Client = struct {\n    user_id: u32,\n    conn: *websocket.Conn,\n\n    const Context = struct {\n        user_id: u32,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/08_websocket.zig",
+      "type": "struct",
+      "name": "Client",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/09_shutdown.zig",
+    "response": "pub fn main() !void {\n    if (comptime @import(\"builtin\").os.tag == .windows) {\n        std.debug.print(\"This example does not run on Windows. Sorry\\n\", .{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/09_shutdown.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to shutdown from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/09_shutdown.zig",
+    "response": "fn shutdown(_: c_int) callconv(.c) void {\n    if (server_instance) |server| {\n        server_instance = null;\n        server.stop();\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/09_shutdown.zig",
+      "type": "function",
+      "name": "shutdown",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/09_shutdown.zig",
+    "response": "fn index(_: *httpz.Request, res: *httpz.Response) !void {\n    const writer = res.writer();\n    return writer.print(\"To shutdown, run:\\nkill -s int {d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/09_shutdown.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/middleware/Logger.zig",
+    "response": "pub fn init(config: Config) !Logger {\n    return .{\n        .query = config.query,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/middleware/Logger.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/middleware/Logger.zig",
+    "response": "pub fn execute(self: *const Logger, req: *httpz.Request, res: *httpz.Response, executor: anytype) !void {\n    // Better to use an std.time.Timer to measure elapsed time\n    // but we need the \"start\" time for our log anyways, so while this might occasionally\n    // report wrong/strange \"elapsed\" time, it's simpler to do.\n    const start = std.time.microTimestamp();\n\n    defer {\n        const elapsed = std.time.microTimestamp() - start;\n        std.log.info(\"{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/middleware/Logger.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Config from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: examples/middleware/Logger.zig",
+    "response": "pub const Config = struct {\n   query: bool,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "examples/middleware/Logger.zig",
+      "type": "struct",
+      "name": "Config",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn init(allocator: Allocator, count: usize, buffer_size: usize) !Pool {\n        const buffers = try allocator.alloc(Buffer, count);\n        errdefer allocator.free(buffers);\n\n        var initialized: usize = 0;\n        errdefer {\n            for (0..initialized) |i| {\n                allocator.free(buffers[i].data);\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn deinit(self: *Pool) void {\n        const allocator = self.allocator;\n        for (self.buffers) |buf| {\n            allocator.free(buf.data);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to grow from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn grow(self: *Pool, arena: Allocator, buffer: *Buffer, current_size: usize, new_size: usize) !Buffer {\n        if (buffer.type == .dynamic and arena.resize(buffer.data, new_size)) {\n            buffer.data = buffer.data.ptr[0..new_size];\n            return buffer.*;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "grow",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to static from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn static(self: Pool, size: usize) !Buffer {\n        return .{\n            .type = .static,\n            .data = try self.allocator.alloc(u8, size),\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "static",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to alloc from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn alloc(self: *Pool, size: usize) !Buffer {\n        return self.allocType(self.allocator, .dynamic, size);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "alloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to arenaAlloc from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn arenaAlloc(self: *Pool, arena: Allocator, size: usize) !Buffer {\n        return self.allocType(arena, .arena, size);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "arenaAlloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocType from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "fn allocType(self: *Pool, allocator: Allocator, buffer_type: Buffer.Type, size: usize) !Buffer {\n        if (size > self.buffer_size) {\n            metrics.allocBufferLarge(size);\n            return .{\n                .type = buffer_type,\n                .data = try allocator.alloc(u8, size),\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "allocType",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to free from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn free(self: *Pool, buffer: Buffer) void {\n        switch (buffer.type) {\n            .arena => {}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "free",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to release from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub fn release(self: *Pool, buffer: Buffer) void {\n        switch (buffer.type) {\n            .static, .arena => {}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lock from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "fn lock(self: *Pool) void {\n        if (comptime blockingMode()) {\n            self.mutex.lock();\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "lock",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unlock from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "fn unlock(self: *Pool) void {\n        if (comptime blockingMode()) {\n            self.mutex.unlock();\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "function",
+      "name": "unlock",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Buffer from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub const Buffer = struct {\n    data: []u8,\n    type: Type,\n\n    const Type = enum {\n        arena,\n        static,\n        pooled,\n        dynamic,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "struct",
+      "name": "Buffer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Pool from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/buffer.zig",
+    "response": "pub const Pool = struct {\n    const M = if (blockingMode()) Mutex else void;\n\n    available: usize,\n    buffers: []Buffer,\n    allocator: Allocator,\n    buffer_size: usize,\n    mutex: M,\n\n    pub fn init(allocator: Allocator, count: usize, buffer_size: usize) !Pool {\n        const buffers = try allocator.alloc(Buffer, count);\n        errdefer allocator.free(buffers);\n\n        var initialized: usize = 0;\n        errdefer {\n            for (0..initialized) |i| {\n                allocator.free(buffers[i].data);\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/buffer.zig",
+      "type": "struct",
+      "name": "Pool",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to threadPoolCount from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub fn threadPoolCount(self: *const Config) u32 {\n        return self.thread_pool.count orelse 32;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "function",
+      "name": "threadPoolCount",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to workerCount from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub fn workerCount(self: *const Config) u32 {\n        if (httpz.blockingMode()) {\n            return 1;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "function",
+      "name": "workerCount",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Config from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub const Config = struct {\n    port: ?u16 = null,\n    address: ?[]const u8 = null,\n    unix_path: ?[]const u8 = null,\n    workers: Worker = .{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "struct",
+      "name": "Config",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ThreadPool from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub const ThreadPool = struct {\n        count: ?u16 = null,\n        backlog: ?u32 = null,\n        buffer_size: ?usize = null,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "struct",
+      "name": "ThreadPool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Worker from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub const Worker = struct {\n        count: ?u16 = null,\n        max_conn: ?u16 = null,\n        min_conn: ?u16 = null,\n        large_buffer_count: ?u16 = null,\n        large_buffer_size: ?u32 = null,\n        retain_allocated_bytes: ?usize = null,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "struct",
+      "name": "Worker",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Request from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub const Request = struct {\n        lazy_read_size: ?usize = null,\n        max_body_size: ?usize = null,\n        buffer_size: ?usize = null,\n        max_header_count: ?usize = null,\n        max_param_count: ?usize = null,\n        max_query_count: ?usize = null,\n        max_form_count: ?usize = null,\n        max_multiform_count: ?usize = null,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "struct",
+      "name": "Request",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Response from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub const Response = struct {\n        max_header_count: ?usize = null,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "struct",
+      "name": "Response",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Timeout from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub const Timeout = struct {\n        request: ?u32 = null,\n        keepalive: ?u32 = null,\n        request_count: ?usize = null,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "struct",
+      "name": "Timeout",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Websocket from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/config.zig",
+    "response": "pub const Websocket = struct {\n        max_message_size: ?usize = null,\n        small_buffer_size: ?usize = null,\n        small_buffer_pool: ?usize = null,\n        large_buffer_size: ?usize = null,\n        large_buffer_pool: ?u16 = null,\n        compression: bool = false,\n        compression_retain_writer: bool = true,\n        compression_write_treshold: ?usize = null,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/config.zig",
+      "type": "struct",
+      "name": "Websocket",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeMetrics from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn writeMetrics(writer: *std.Io.Writer) !void {\n    return @import(\"metrics.zig\").write(writer);\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "writeMetrics",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to forExtension from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn forExtension(ext: []const u8) ContentType {\n        if (ext.len == 0) return .UNKNOWN;\n        const temp = if (ext[0] == '.') ext[1..] else ext;\n        if (temp.len > 5) return .UNKNOWN;\n\n        var normalized: [5]u8 = undefined;\n        for (temp, 0..) |c, i| {\n            normalized[i] = std.ascii.toLower(c);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "forExtension",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to forFile from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn forFile(file_name: []const u8) ContentType {\n        return forExtension(std.fs.path.extension(file_name));\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "forFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Action from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn Action(comptime ActionContext: type) type {\n    if (ActionContext == void) {\n        return *const fn (*Request, *Response) anyerror!void;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "Action",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Dispatcher from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn Dispatcher(comptime Handler: type, comptime ActionArg: type) type {\n    if (Handler == void) {\n        return *const fn (Action(void), *Request, *Response) anyerror!void;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "Dispatcher",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to DispatchableAction from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn DispatchableAction(comptime Handler: type, comptime ActionArg: type) type {\n    return struct {\n        data: ?*const anyopaque,\n        handler: Handler,\n        action: ActionArg,\n        dispatcher: Dispatcher(Handler, ActionArg),\n        middlewares: []const Middleware(Handler) = &.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "DispatchableAction",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Middleware from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn Middleware(comptime H: type) type {\n    return struct {\n        ptr: *anyopaque,\n        deinitFn: *const fn (ptr: *anyopaque) void,\n        executeFn: *const fn (ptr: *anyopaque, req: *Request, res: *Response, executor: *Server(H).Executor) anyerror!void,\n\n        const Self = @This();\n\n        pub fn init(ptr: anytype) Self {\n            const T = @TypeOf(ptr);\n            const ptr_info = @typeInfo(T);\n\n            const gen = struct {\n                pub fn deinit(pointer: *anyopaque) void {\n                    const self: T = @ptrCast(@alignCast(pointer));\n                    if (std.meta.hasMethod(T, \"deinit\")) {\n                        return ptr_info.pointer.child.deinit(self);\n                    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "Middleware",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn execute(pointer: *anyopaque, req: *Request, res: *Response, executor: *Server(H).Executor) anyerror!void {\n                    const self: T = @ptrCast(@alignCast(pointer));\n                    return ptr_info.pointer.child.execute(self, req, res, executor);\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn deinit(self: Self) void {\n            self.deinitFn(self.ptr);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn execute(self: Self, req: *Request, res: *Response, executor: *Server(H).Executor) !void {\n            return self.executeFn(self.ptr, req, res, executor);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clientMessage from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn clientMessage(_: DummyWebsocketHandler, _: []const u8) !void {}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "clientMessage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Server from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn Server(comptime H: type) type {\n    const Handler = switch (@typeInfo(H)) {\n        .@\"struct\" => H,\n        .pointer => |ptr| ptr.child,\n        .void => void,\n        else => @compileError(\"Server handler must be a struct, got: \" ++ @tagName(@typeInfo(H))),\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "Server",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn init(allocator: Allocator, config: Config, handler: H) !Self {\n            // Be mindful about where we pass this arena. Most things are able to\n            // do dynamic allocation, and need to be able to free when they're\n            // done with their memory. Only use this for stuff that's created on\n            // startup and won't dynamically need to grow/shrink.\n            const arena = try allocator.create(std.heap.ArenaAllocator);\n            errdefer allocator.destroy(arena);\n            arena.* = std.heap.ArenaAllocator.init(allocator);\n            errdefer arena.deinit();\n\n            const default_dispatcher = if (comptime Handler == void) defaultDispatcher else defaultDispatcherWithHandler;\n\n            // do not pass arena.allocator to WorkerState, it needs to be able to\n            // allocate and free at will.\n            const ws_config = config.websocket;\n            var websocket_state = try websocket.server.WorkerState.init(allocator, .{\n                .max_message_size = ws_config.max_message_size,\n                .buffers = .{\n                    .small_size = if (has_websocket) ws_config.small_buffer_size else 0,\n                    .small_pool = if (has_websocket) ws_config.small_buffer_pool else 0,\n                    .large_size = if (has_websocket) ws_config.large_buffer_size else 0,\n                    .large_pool = if (has_websocket) ws_config.large_buffer_pool else 0,\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn deinit(self: *Self) void {\n            self._websocket_state.deinit();\n\n            var node = self._middleware_registry.first;\n            while (node) |n| {\n                const item: *MiddlewareItem = @fieldParentPtr(\"node\", n);\n                item.middleware.deinit();\n                node = n.next;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listen from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn listen(self: *Self) !void {\n            // incase \"stop\" is waiting\n            defer self._cond.signal();\n            self._mut.lock();\n\n            const config = self.config;\n\n            var no_delay = true;\n            const address = blk: {\n                if (config.unix_path) |unix_path| {\n                    if (comptime std.net.has_unix_sockets == false) {\n                        return error.UnixPathNotSupported;\n                    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "listen",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listenInNewThread from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn listenInNewThread(self: *Self) !std.Thread {\n            self._mut.lock();\n            defer self._mut.unlock();\n            const thrd = try std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "listenInNewThread",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stop from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn stop(self: *Self) void {\n            self._mut.lock();\n            defer self._mut.unlock();\n\n            for (self._workers) |*w| {\n                if (self._listener == null) {\n                    log.err(\"Cannot stop server, .listen() was never called\", .{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "stop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to router from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn router(self: *Self, config: RouterConfig) !*Router(H, ActionArg) {\n            // we store this in self for us when no route is found (these will\n            // still be executed).\n\n            const owned = try self.arena.dupe(Middleware(H), config.middlewares);\n            self._middlewares = owned;\n\n            // we store this in router to append to add/append to created routes\n            self._router.middlewares = owned;\n\n            return &self._router;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "router",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to defaultDispatcher from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn defaultDispatcher(action: ActionArg, req: *Request, res: *Response) !void {\n            return action(req, res);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "defaultDispatcher",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to defaultDispatcherWithHandler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn defaultDispatcherWithHandler(handler: H, action: ActionArg, req: *Request, res: *Response) !void {\n            if (comptime std.meta.hasFn(Handler, \"dispatch\")) {\n                return handler.dispatch(action, req, res);\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "defaultDispatcherWithHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequest from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn handleRequest(self: *Self, conn: *HTTPConn, thread_buf: []u8) void {\n            const aa = conn.req_arena.allocator();\n\n            var fba = FixedBufferAllocator.init(thread_buf);\n            var fb = FallbackAllocator{\n                .fba = &fba,\n                .fallback = aa,\n                .fixed = fba.allocator(),\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "handleRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to middleware from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn middleware(self: *Self, comptime M: type, config: M.Config) !Middleware(H) {\n            const arena = self.arena;\n\n            const node = try arena.create(MiddlewareItem);\n            errdefer arena.destroy(node);\n\n            const m = try arena.create(M);\n            errdefer arena.destroy(m);\n            switch (comptime @typeInfo(@TypeOf(M.init)).@\"fn\".params.len) {\n                1 => m.* = try M.init(config),\n                2 => m.* = try M.init(config, MiddlewareConfig{\n                    .arena = arena,\n                    .allocator = self.allocator,\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "middleware",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn next(self: *Executor) !void {\n                const index = self.index;\n                const middlewares = self.middlewares;\n\n                if (index < middlewares.len) {\n                    self.index = index + 1;\n                    return middlewares[index].execute(self.req, self.res, self);\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to blockingMode from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn blockingMode() bool {\n    if (force_blocking) {\n        return true;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "blockingMode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to upgradeWebsocket from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn upgradeWebsocket(comptime H: type, req: *Request, res: *Response, ctx: anytype) !bool {\n    const upgrade = req.header(\"upgrade\") orelse return false;\n    if (std.ascii.eqlIgnoreCase(upgrade, \"websocket\") == false) {\n        return false;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "upgradeWebsocket",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocator from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn allocator(self: *FallbackAllocator) Allocator {\n        return .{\n            .ptr = self,\n            .vtable = &.{\n                .alloc = alloc,\n                .resize = resize,\n                .free = free,\n                .remap = remap,\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "allocator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to alloc from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn alloc(ctx: *anyopaque, len: usize, alignment: std.mem.Alignment, ra: usize) ?[*]u8 {\n        const self: *FallbackAllocator = @ptrCast(@alignCast(ctx));\n        return self.fixed.rawAlloc(len, alignment, ra) orelse self.fallback.rawAlloc(len, alignment, ra);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "alloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to resize from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn resize(ctx: *anyopaque, buf: []u8, alignment: std.mem.Alignment, new_len: usize, ra: usize) bool {\n        const self: *FallbackAllocator = @ptrCast(@alignCast(ctx));\n        if (self.fba.ownsPtr(buf.ptr)) {\n            if (self.fixed.rawResize(buf, alignment, new_len, ra)) {\n                return true;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "resize",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to free from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn free(ctx: *anyopaque, buf: []u8, alignment: std.mem.Alignment, ra: usize) void {\n        _ = ctx;\n        _ = buf;\n        _ = alignment;\n        _ = ra;\n        // hack.\n        // Always noop since, in our specific usage, we know fallback is an arena.\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "free",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remap from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn remap(ctx: *anyopaque, memory: []u8, alignment: std.mem.Alignment, new_len: usize, ret_addr: usize) ?[*]u8 {\n        if (resize(ctx, memory, alignment, new_len, ret_addr)) {\n            return memory.ptr;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "remap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to drain from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn drain(req: *Request) !void {\n    var r = try req.reader(2000);\n    var buf: [4096]u8 = undefined;\n    while (true) {\n        if (try r.read(&buf) == 0) {\n            return;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "drain",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testStream from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn testStream(port: u16) std.net.Stream {\n    const timeout = std.mem.toBytes(posix.timeval{\n        .sec = 0,\n        .usec = 20_000,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "testStream",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testReadAll from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn testReadAll(stream: std.net.Stream, buf: []u8) []u8 {\n    var pos: usize = 0;\n    var blocked = false;\n    var reader = stream.reader(&.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "testReadAll",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testReadParsed from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn testReadParsed(stream: std.net.Stream) testing.Testing.Response {\n    var buf: [4096]u8 = undefined;\n    const data = testReadAll(stream, &buf);\n    return testing.parse(data) catch unreachable;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "testReadParsed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testReadHeader from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn testReadHeader(stream: std.net.Stream) testing.Testing.Response {\n    var pos: usize = 0;\n    var blocked = false;\n    var buf: [1024]u8 = undefined;\n    var reader = stream.reader(&.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "testReadHeader",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fail from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn fail(_: *Request, _: *Response) !void {\n        return error.Failure;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "fail",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reqQuery from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn reqQuery(req: *Request, res: *Response) !void {\n        res.status = 200;\n        const query = try req.query();\n        res.body = query.get(\"fav\").?;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "reqQuery",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to method from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn method(req: *Request, res: *Response) !void {\n        try res.json(.{ .method = req.method, .string = req.method_string }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "method",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to chunked from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn chunked(_: *Request, res: *Response) !void {\n        res.header(\"Over\", \"9000!\");\n        res.status = 200;\n        try res.chunk(\"Chunk 1\");\n        try res.chunk(\"and another chunk\");\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "chunked",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to jsonRes from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn jsonRes(_: *Request, res: *Response) !void {\n        res.setStatus(.created);\n        try res.json(.{ .over = 9000, .teg = \"soup\" }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "jsonRes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to routeData from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn routeData(req: *Request, res: *Response) !void {\n        const rd: *const RouteData = @ptrCast(@alignCast(req.route_data.?));\n        try res.json(.{ .power = rd.power }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "routeData",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eventStream from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn eventStream(_: *Request, res: *Response) !void {\n        res.status = 818;\n        try res.startEventStream(StreamContext{ .data = \"hello\" }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "eventStream",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eventStreamSync from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn eventStreamSync(_: *Request, res: *Response) !void {\n        res.status = 818;\n        const stream = try res.startEventStreamSync();\n        var w = stream.writer(&.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "eventStreamSync",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reqReader from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn reqReader(req: *Request, res: *Response) !void {\n        var reader = try req.reader(2000);\n\n        var l: usize = 0;\n        var buf: [1024]u8 = undefined;\n        while (true) {\n            const n = try reader.read(&buf);\n            if (n == 0) {\n                break;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "reqReader",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handle from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn handle(self: StreamContext, stream: std.net.Stream) void {\n            var writer = stream.writer(&.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to routeSpecificDispacthcer from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn routeSpecificDispacthcer(action: Action(void), req: *Request, res: *Response) !void {\n        res.header(\"dispatcher\", \"test-dispatcher-1\");\n        return action(req, res);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "routeSpecificDispacthcer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatchedAction from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn dispatchedAction(_: *Request, res: *Response) !void {\n        const writer = res.writer();\n        return writer.writeAll(\"action\");\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "dispatchedAction",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to middlewares from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn middlewares(req: *Request, res: *Response) !void {\n        return res.json(.{\n            .v1 = TestMiddleware.value1(req),\n            .v2 = TestMiddleware.value2(req),\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "middlewares",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reuseWriter from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn reuseWriter(req: *Request, res: *Response) !void {\n        res.status = 200;\n        const query = try req.query();\n        const count = try std.fmt.parseInt(u16, query.get(\"count\").?, 10);\n\n        var data = try res.arena.alloc(TestUser, count);\n        for (0..count) |i| {\n            data[i] = .{\n                .id = try std.fmt.allocPrint(res.arena, \"id-{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "reuseWriter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatch2 from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn dispatch2(h: *TestHandlerDefaultDispatch, action: Action(*TestHandlerDefaultDispatch), req: *Request, res: *Response) !void {\n        res.header(\"dispatcher\", \"test-dispatcher-2\");\n        return action(h, req, res);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "dispatch2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatch3 from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn dispatch3(h: *TestHandlerDefaultDispatch, action: Action(*TestHandlerDefaultDispatch), req: *Request, res: *Response) !void {\n        res.header(\"dispatcher\", \"test-dispatcher-3\");\n        return action(h, req, res);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "dispatch3",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to echo from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn echo(h: *TestHandlerDefaultDispatch, req: *Request, res: *Response) !void {\n        return res.json(.{\n            .state = h.state,\n            .method = @tagName(req.method),\n            .path = req.url.path,\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "echo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to echoWrite from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn echoWrite(h: *TestHandlerDefaultDispatch, req: *Request, res: *Response) !void {\n        const json_writer = std.json.fmt(.{\n            .state = h.state,\n            .method = @tagName(req.method),\n            .path = req.url.path,\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "echoWrite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to params from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn params(_: *TestHandlerDefaultDispatch, req: *Request, res: *Response) !void {\n        const args = .{ req.param(\"version\").?, req.param(\"UserId\").? }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "params",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to headers from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn headers(h: *TestHandlerDefaultDispatch, req: *Request, res: *Response) !void {\n        res.header(\"state\", try std.fmt.allocPrint(res.arena, \"{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "headers",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clBody from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn clBody(_: *TestHandlerDefaultDispatch, req: *Request, res: *Response) !void {\n        res.header(\"Echo-Body\", req.body().?);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "clBody",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fail from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn fail(_: *TestHandlerDefaultDispatch, _: *Request, _: *Response) !void {\n        return error.TestUnhandledError;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "fail",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to notFound from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn notFound(h: *TestHandlerDefaultDispatch, _: *Request, res: *Response) !void {\n        res.status = 404;\n        res.header(\"state\", try std.fmt.allocPrint(res.arena, \"{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "notFound",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to uncaughtError from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn uncaughtError(h: *TestHandlerDefaultDispatch, _: *Request, res: *Response, err: anyerror) void {\n        res.status = 500;\n        res.header(\"state\", std.fmt.allocPrint(res.arena, \"{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "uncaughtError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn dispatch(self: *TestHandlerDispatch, action: Action(*TestHandlerDispatch), req: *Request, res: *Response) !void {\n        res.header(\"dstate\", try std.fmt.allocPrint(res.arena, \"{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "dispatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to root from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn root(h: *TestHandlerDispatch, _: *Request, res: *Response) !void {\n        return res.json(.{ .state = h.state }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "root",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn dispatch(self: *TestHandlerDispatchContext, action: Action(*ActionContext), req: *Request, res: *Response) !void {\n        res.header(\"dstate\", try std.fmt.allocPrint(res.arena, \"{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "dispatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to root from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn root(a: *const ActionContext, _: *Request, res: *Response) !void {\n        return res.json(.{ .other = a.other }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "root",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handle from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn handle(_: TestHandlerHandle, req: *Request, res: *Response) void {\n        const query = req.query() catch unreachable;\n        const writer = res.writer();\n        writer.print(\"hello {s}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "handle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn init(conn: *websocket.Conn, ctx: u32) !WebsocketHandler {\n            return .{\n                .ctx = ctx,\n                .conn = conn,\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to afterInit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn afterInit(self: *WebsocketHandler, ctx: u32) !void {\n            try t.expectEqual(self.ctx, ctx);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "afterInit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clientMessage from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn clientMessage(self: *WebsocketHandler, data: []const u8) !void {\n            if (std.mem.eql(u8, data, \"close\")) {\n                self.conn.close(.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "clientMessage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to upgrade from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn upgrade(_: TestWebsocketHandler, req: *Request, res: *Response) !void {\n        if (try upgradeWebsocket(WebsocketHandler, req, res, 9001) == false) {\n            res.status = 500;\n            res.body = \"invalid websocket\";\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "upgrade",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn init(config: TestMiddleware.Config, mc: MiddlewareConfig) !TestMiddleware {\n        return .{\n            .allocator = mc.allocator,\n            .v1 = try std.fmt.allocPrint(mc.arena, \"tm1-{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub fn deinit(self: *const TestMiddleware) void {\n        self.allocator.free(self.v2);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to value1 from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn value1(req: *const Request) []const u8 {\n        const v: [*]u8 = @ptrCast(req.middlewares.get(\"text_middleware_1\").?);\n        return v[0..7];\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "value1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to value2 from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn value2(req: *const Request) []const u8 {\n        const v: [*]u8 = @ptrCast(req.middlewares.get(\"text_middleware_2\").?);\n        return v[0..7];\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "value2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "fn execute(self: *const TestMiddleware, req: *Request, _: *Response, executor: anytype) !void {\n        try req.middlewares.put(\"text_middleware_1\", (try req.arena.dupe(u8, self.v1)).ptr);\n        try req.middlewares.put(\"text_middleware_2\", (try req.arena.dupe(u8, self.v2)).ptr);\n        return executor.next();\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to gen from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const gen = struct {\n                pub fn deinit(pointer: *anyopaque) void {\n                    const self: T = @ptrCast(@alignCast(pointer));\n                    if (std.meta.hasMethod(T, \"deinit\")) {\n                        return ptr_info.pointer.child.deinit(self);\n                    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "gen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DummyWebsocketHandler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub const DummyWebsocketHandler = struct {\n    pub fn clientMessage(_: DummyWebsocketHandler, _: []const u8) !void {}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "DummyWebsocketHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MiddlewareConfig from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub const MiddlewareConfig = struct {\n    arena: Allocator,\n    allocator: Allocator,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "MiddlewareConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RouterConfig from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const RouterConfig = struct {\n        middlewares: []const Middleware(H) = &.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "RouterConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MiddlewareItem from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const MiddlewareItem = struct {\n        middleware: Middleware(H),\n        node: std.SinglyLinkedList.Node = .{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "MiddlewareItem",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Executor from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "pub const Executor = struct {\n            index: usize,\n            req: *Request,\n            res: *Response,\n            handler: H,\n            // pull this out of da since we'll access it a lot (not really, but w/e)\n            middlewares: []const Middleware(H),\n            dispatchable_action: ?*const DispatchableAction(H, ActionArg),\n\n            pub fn next(self: *Executor) !void {\n                const index = self.index;\n                const middlewares = self.middlewares;\n\n                if (index < middlewares.len) {\n                    self.index = index + 1;\n                    return middlewares[index].execute(self.req, self.res, self);\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "Executor",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FallbackAllocator from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const FallbackAllocator = struct {\n    fixed: Allocator,\n    fallback: Allocator,\n    fba: *FixedBufferAllocator,\n\n    pub fn allocator(self: *FallbackAllocator) Allocator {\n        return .{\n            .ptr = self,\n            .vtable = &.{\n                .alloc = alloc,\n                .resize = resize,\n                .free = free,\n                .remap = remap,\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "FallbackAllocator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestUser from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestUser = struct {\n    id: []const u8,\n    power: usize,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestUser",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestDummyHandler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestDummyHandler = struct {\n    const RouteData = struct {\n        power: usize,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestDummyHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to StreamContext from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const StreamContext = struct {\n        data: []const u8,\n\n        fn handle(self: StreamContext, stream: std.net.Stream) void {\n            var writer = stream.writer(&.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "StreamContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestHandlerDefaultDispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestHandlerDefaultDispatch = struct {\n    state: usize,\n\n    fn dispatch2(h: *TestHandlerDefaultDispatch, action: Action(*TestHandlerDefaultDispatch), req: *Request, res: *Response) !void {\n        res.header(\"dispatcher\", \"test-dispatcher-2\");\n        return action(h, req, res);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestHandlerDefaultDispatch",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestHandlerDispatch from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestHandlerDispatch = struct {\n    state: usize,\n\n    pub fn dispatch(self: *TestHandlerDispatch, action: Action(*TestHandlerDispatch), req: *Request, res: *Response) !void {\n        res.header(\"dstate\", try std.fmt.allocPrint(res.arena, \"{d}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestHandlerDispatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestHandlerDispatchContext from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestHandlerDispatchContext = struct {\n    state: usize,\n\n    const ActionContext = struct {\n        other: usize,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestHandlerDispatchContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestHandlerHandle from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestHandlerHandle = struct {\n    pub fn handle(_: TestHandlerHandle, req: *Request, res: *Response) void {\n        const query = req.query() catch unreachable;\n        const writer = res.writer();\n        writer.print(\"hello {s}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestHandlerHandle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestWebsocketHandler from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestWebsocketHandler = struct {\n    pub const WebsocketHandler = struct {\n        ctx: u32,\n        conn: *websocket.Conn,\n\n        pub fn init(conn: *websocket.Conn, ctx: u32) !WebsocketHandler {\n            return .{\n                .ctx = ctx,\n                .conn = conn,\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestWebsocketHandler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestMiddleware from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const TestMiddleware = struct {\n    const Config = struct {\n        id: i32,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "struct",
+      "name": "TestMiddleware",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to force_blocking from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const force_blocking: bool = if (@hasDecl(build, \"httpz_blocking\")) build.httpz_blocking else false;",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "force_blocking",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const self: T = @ptrCast(@alignCast(pointer));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const self: T = @ptrCast(@alignCast(pointer));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to item from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const item: *MiddlewareItem = @fieldParentPtr(\"node\", n);",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "item",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to arena from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const arena: *std.heap.ArenaAllocator = @ptrCast(@alignCast(self.arena.ptr));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "arena",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ws_worker from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const ws_worker: *websocket.server.Worker(H) = @ptrCast(@alignCast(http_conn.ws_worker));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "ws_worker",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const self: *FallbackAllocator = @ptrCast(@alignCast(ctx));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const self: *FallbackAllocator = @ptrCast(@alignCast(ctx));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to rd from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const rd: *const RouteData = @ptrCast(@alignCast(req.route_data.?));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "rd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to v from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const v: [*]u8 = @ptrCast(req.middlewares.get(\"text_middleware_1\").?);",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "v",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to v from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/httpz.zig",
+    "response": "const v: [*]u8 = @ptrCast(req.middlewares.get(\"text_middleware_2\").?);",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/httpz.zig",
+      "type": "const",
+      "name": "v",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to KeyValue from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "fn KeyValue(V: type, hashFn: fn (key: []const u8) callconv(.@\"inline\") u8) type {\n    return struct {\n        len: usize,\n        keys: [][]const u8,\n        values: []V,\n        hashes: []u8,\n\n        const Self = @This();\n        pub const Value = V;\n\n        const alignment = @max(@alignOf([]const u8), @alignOf(V));\n        const size = @sizeOf([]const u8) + @sizeOf(V) + @sizeOf(u8);\n        const kFirst = @alignOf([]const u8) >= @alignOf(V);\n\n        pub fn init(allocator: Allocator, max: usize) Allocator.Error!Self {\n            // we want type with bigger alignment to be first.\n            // Since alignment is always a power of 2, the second type is guaranteed to have correct alignment.\n\n            const allocation = try allocator.alignedAlloc(u8, std.mem.Alignment.fromByteUnits(alignment), max * size);\n            return .{\n                .len = 0,\n                .keys = @as([*][]const u8, @alignCast(@ptrCast(if (kFirst) allocation.ptr else allocation[max * @sizeOf(V) ..].ptr)))[0..max],\n                .values = @as([*]V, @alignCast(@ptrCast(if (kFirst) allocation[max * @sizeOf([]const u8) ..].ptr else allocation.ptr)))[0..max],\n                .hashes = allocation[max * @sizeOf([]const u8) + max * @sizeOf(V) ..],\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "KeyValue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub fn deinit(self: *Self, allocator: Allocator) void {\n            const allocation = @as([*]align(alignment) u8, @alignCast(@ptrCast(if (kFirst) self.keys.ptr else self.values.ptr)));\n            allocator.free(allocation[0 .. self.keys.len * size]);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub fn add(self: *Self, key: []const u8, value: V) void {\n            const len = self.len;\n            const max = self.keys.len;\n            var keys = self.keys;\n            if (len == max) {\n                return;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub fn get(self: *const Self, key: []const u8) ?V {\n            const hash = hashFn(key);\n            for (self.hashes[0..self.len], 0..) |h, i| {\n                if (h == hash and std.mem.eql(u8, self.keys[i], key)) {\n                    return self.values[i];\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to has from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub fn has(self: *const Self, key: []const u8) bool {\n            return self.get(key) != null;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "has",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub fn reset(self: *Self) void {\n            self.len = 0;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to iterator from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub fn iterator(self: *const Self) Iterator {\n            const len = self.len;\n            return .{\n                .pos = 0,\n                .keys = self.keys[0..len],\n                .values = self.values[0..len],\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "iterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub fn next(self: *Iterator) ?KV {\n                const pos = self.pos;\n                if (pos == self.keys.len) {\n                    return null;\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to strHash from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "fn strHash(key: []const u8) u8 {\n    if (key.len == 0) {\n        return 0;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "function",
+      "name": "strHash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Iterator from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "pub const Iterator = struct {\n            pos: usize,\n            keys: [][]const u8,\n            values: []V,\n\n            const KV = struct {\n                key: []const u8,\n                value: V,\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "struct",
+      "name": "Iterator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MultiForm from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/key_value.zig",
+    "response": "const MultiForm = struct {\n    value: []const u8,\n    filename: ?[]const u8 = null,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/key_value.zig",
+      "type": "struct",
+      "name": "MultiForm",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn write(writer: *std.Io.Writer) !void {\n    try metrics.connections.write(writer);\n    try metrics.requests.write(writer);\n    try metrics.timeout_request.write(writer);\n    try metrics.timeout_keepalive.write(writer);\n    try metrics.alloc_buffer_empty.write(writer);\n    try metrics.alloc_buffer_large.write(writer);\n    try metrics.alloc_unescape.write(writer);\n    try metrics.internal_error.write(writer);\n    try metrics.invalid_request.write(writer);\n    try metrics.header_too_big.write(writer);\n    try metrics.body_too_big.write(writer);\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "write",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocBufferEmpty from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn allocBufferEmpty(size: usize) void {\n    metrics.alloc_buffer_empty.incrBy(size);\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "allocBufferEmpty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocBufferLarge from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn allocBufferLarge(size: usize) void {\n    metrics.alloc_buffer_large.incrBy(size);\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "allocBufferLarge",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocUnescape from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn allocUnescape(size: usize) void {\n    metrics.alloc_unescape.incrBy(size);\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "allocUnescape",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to connection from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn connection() void {\n    metrics.connections.incr();\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "connection",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to request from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn request() void {\n    metrics.requests.incr();\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "request",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to timeoutRequest from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn timeoutRequest(count: usize) void {\n    metrics.timeout_request.incrBy(count);\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "timeoutRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to timeoutKeepalive from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn timeoutKeepalive(count: usize) void {\n    metrics.timeout_keepalive.incrBy(count);\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "timeoutKeepalive",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to internalError from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn internalError() void {\n    metrics.internal_error.incr();\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "internalError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to invalidRequest from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn invalidRequest() void {\n    metrics.invalid_request.incr();\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "invalidRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to headerTooBig from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn headerTooBig() void {\n    metrics.header_too_big.incr();\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "headerTooBig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bodyTooBig from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "pub fn bodyTooBig() void {\n    metrics.body_too_big.incr();\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "function",
+      "name": "bodyTooBig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Metrics from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/metrics.zig",
+    "response": "const Metrics = struct {\n    // number of connections\n    connections: m.Counter(usize).Impl,\n\n    // number of requests (which can be more than # of connections thanks to\n    // keepalive)\n    requests: m.Counter(usize).Impl,\n\n    // number of connections that were timed out while service a request\n    timeout_request: m.Counter(usize).Impl,\n\n    // number of connections that were timed out while in keepalive\n    timeout_keepalive: m.Counter(usize).Impl,\n\n    // size, in bytes, of dynamically allocated memory by our buffer pool,\n    // caused by the large buffer pool being empty.\n    alloc_buffer_empty: m.Counter(usize).Impl,\n\n    // size, in bytes, of dynamically allocated memory by our buffer pool,\n    // caused by the required memory being larger than the large buffer size\n    alloc_buffer_large: m.Counter(usize).Impl,\n\n    // size, in bytes, of dynamically allocated memory used for unescaping URL\n    // or form parameters\n    alloc_unescape: m.Counter(usize).Impl,\n\n    // some internal processing error (should be 0!)\n    internal_error: m.Counter(usize).Impl,\n\n    // requests which could not be parsed\n    invalid_request: m.Counter(usize).Impl,\n\n    // requests which were rejected because the header was too big\n    header_too_big: m.Counter(usize).Impl,\n\n    // requests which were rejected because the body was too big\n    body_too_big: m.Counter(usize).Impl,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/metrics.zig",
+      "type": "struct",
+      "name": "Metrics",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/middleware/Cors.zig",
+    "response": "pub fn init(config: Config) !Cors {\n    return .{\n        .origin = config.origin,\n        .headers = config.headers,\n        .methods = config.methods,\n        .max_age = config.max_age,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/middleware/Cors.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/middleware/Cors.zig",
+    "response": "pub fn execute(self: *const Cors, req: *httpz.Request, res: *httpz.Response, executor: anytype) !void {\n    res.header(\"Access-Control-Allow-Origin\", self.origin);\n    if (req.method != .OPTIONS) {\n        return executor.next();\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/middleware/Cors.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Config from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/middleware/Cors.zig",
+    "response": "pub const Config = struct {\n    origin: []const u8,\n    headers: ?[]const u8 = null,\n    methods: ?[]const u8 = null,\n    max_age: ?[]const u8 = null,\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/middleware/Cors.zig",
+      "type": "struct",
+      "name": "Config",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/params.zig",
+    "response": "pub fn init(allocator: Allocator, max: usize) !Params {\n        const allocation = try allocator.alloc([]const u8, 2 * max);\n        return .{\n            .len = 0,\n            .names = allocation[0..max],\n            .values = allocation[max..],\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/params.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/params.zig",
+    "response": "pub fn deinit(self: *Params, allocator: Allocator) void {\n        allocator.free(self.names.ptr[0 .. 2 * self.names.len]);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/params.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addValue from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/params.zig",
+    "response": "pub fn addValue(self: *Params, value: []const u8) void {\n        if (self.len == self.names.len) {\n            return;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/params.zig",
+      "type": "function",
+      "name": "addValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addNames from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/params.zig",
+    "response": "pub fn addNames(self: *Params, noalias names: [][]const u8) void {\n        std.debug.assert(names.len == self.len);\n        @memcpy(self.names[0..self.len], names);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/params.zig",
+      "type": "function",
+      "name": "addNames",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/params.zig",
+    "response": "pub fn get(self: *const Params, needle: []const u8) ?[]const u8 {\n        const names = self.names[0..self.len];\n        for (names, 0..) |name, i| {\n            if (mem.eql(u8, name, needle)) {\n                return self.values[i];\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/params.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/params.zig",
+    "response": "pub fn reset(self: *Params) void {\n        self.len = 0;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/params.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Params from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/params.zig",
+    "response": "pub const Params = struct {\n    len: usize,\n    names: [][]const u8,\n    values: [][]const u8,\n\n    pub fn init(allocator: Allocator, max: usize) !Params {\n        const allocation = try allocator.alloc([]const u8, 2 * max);\n        return .{\n            .len = 0,\n            .names = allocation[0..max],\n            .values = allocation[max..],\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/params.zig",
+      "type": "struct",
+      "name": "Params",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn init(arena: Allocator, conn: *HTTPConn) Request {\n        const state = &conn.req_state;\n        return .{\n            .conn = conn,\n            .arena = arena,\n            .qs = &state.qs,\n            .fd = &state.fd,\n            .mfd = &state.mfd,\n            .method = state.method.?,\n            .unread_body = state.unread_body,\n            .method_string = state.method_string orelse \"\",\n            .protocol = state.protocol.?,\n            .url = Url.parse(state.url.?),\n            .address = conn.address,\n            .route_data = null,\n            .params = &state.params,\n            .headers = &state.headers,\n            .body_buffer = state.body,\n            .body_len = state.body_len,\n            .spare = state.buf[state.pos..],\n            .middlewares = &state.middlewares,\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to canKeepAlive from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn canKeepAlive(self: *const Request) bool {\n        return switch (self.protocol) {\n            http.Protocol.HTTP11 => {\n                if (self.headers.get(\"connection\")) |conn| {\n                    return !std.mem.eql(u8, conn, \"close\");\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "canKeepAlive",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to body from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn body(self: *const Request) ?[]const u8 {\n        const buf = self.body_buffer orelse return null;\n        return buf.data[0..self.body_len];\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "body",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to header from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn header(self: *const Request, name: []const u8) ?[]const u8 {\n        return self.headers.get(name);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "header",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to param from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn param(self: *const Request, name: []const u8) ?[]const u8 {\n        return self.params.get(name);\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "param",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to query from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn query(self: *Request) !*StringKeyValue {\n        if (self.qs_read) {\n            return self.qs;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "query",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cookies from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn cookies(self: *const Request) Cookie {\n        return .{\n            .header = self.header(\"cookie\") orelse \"\",\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "cookies",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to json from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn json(self: *Request, comptime T: type) !?T {\n        const b = self.body() orelse return null;\n        return try std.json.parseFromSliceLeaky(T, self.arena, b, .{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "json",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to jsonValue from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn jsonValue(self: *Request) !?std.json.Value {\n        const b = self.body() orelse return null;\n        return try std.json.parseFromSliceLeaky(std.json.Value, self.arena, b, .{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "jsonValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to jsonObject from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn jsonObject(self: *Request) !?std.json.ObjectMap {\n        const value = try self.jsonValue() orelse return null;\n        switch (value) {\n            .object => |o| return o,\n            else => return null,\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "jsonObject",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to formData from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn formData(self: *Request) !*StringKeyValue {\n        if (self.fd_read) {\n            return self.fd;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "formData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to multiFormData from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn multiFormData(self: *Request) !*MultiFormKeyValue {\n        if (self.fd_read) {\n            return self.mfd;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "multiFormData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reader from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn reader(self: *Request, timeout_ms: usize) !Reader {\n        var buf: []const u8 = &.{}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "reader",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseQuery from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseQuery(self: *Request) !*StringKeyValue {\n        const raw = self.url.query;\n        if (raw.len == 0) {\n            self.qs_read = true;\n            return self.qs;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseQuery",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseFormData from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseFormData(self: *Request) !*StringKeyValue {\n        const b = self.body() orelse \"\";\n        if (b.len == 0) {\n            self.fd_read = true;\n            return self.fd;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseFormData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseMultiFormData from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseMultiFormData(self: *Request) !*MultiFormKeyValue {\n        const body_ = self.body() orelse \"\";\n        if (body_.len == 0) {\n            self.fd_read = true;\n            return self.mfd;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseMultiFormData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseMultiPartEntry from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseMultiPartEntry(entry: []const u8) !MultiPartField {\n        var pos: usize = 0;\n        var attributes: ?ContentDispositionAttributes = null;\n\n        while (true) {\n            const end_line_pos = std.mem.indexOfScalarPos(u8, entry, pos, '\\n') orelse return error.InvalidMultiPartEncoding;\n            const line = entry[pos..end_line_pos];\n\n            pos = end_line_pos + 1;\n            if (line.len == 0 or line[line.len - 1] != '\\r') return error.InvalidMultiPartEncoding;\n\n            if (line.len == 1) {\n                break;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseMultiPartEntry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getContentDispotionAttributes from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn getContentDispotionAttributes(fields: []u8) !ContentDispositionAttributes {\n        var pos: usize = 0;\n\n        var name: ?[]const u8 = null;\n        var filename: ?[]const u8 = null;\n\n        while (pos < fields.len) {\n            {\n                const b = fields[pos];\n                if (b == ';' or b == ' ' or b == '\\t') {\n                    pos += 1;\n                    continue;\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "getContentDispotionAttributes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stream from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn stream(io_r: *std.Io.Reader, w: *std.Io.Writer, limit: std.Io.Limit) std.Io.Reader.StreamError!usize {\n            const self: *Reader = @alignCast(@fieldParentPtr(\"interface\", io_r));\n            const buf = limit.slice(try w.writableSliceGreedy(1));\n            const n = self.read(buf) catch return error.ReadFailed;\n            w.advance(n);\n            return n;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "stream",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn read(self: *Reader, into: []u8) !usize {\n            const b = self.buffer;\n            if (b.len != 0) {\n                const l = @min(b.len, into.len);\n                @memcpy(into[0..l], b[0..l]);\n                self.buffer = b[l..];\n                return l;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "read",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn get(self: Cookie, name: []const u8) ?[]const u8 {\n            var it = std.mem.splitScalar(u8, self.header, ';');\n            while (it.next()) |kv| {\n                const trimmed = std.mem.trimLeft(u8, kv, \" \");\n                if (name.len >= trimmed.len) {\n                    // need at least an '=' beyond the name\n                    continue;\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn init(arena: Allocator, buffer_pool: *buffer.Pool, config: *const Config) !Request.State {\n        return .{\n            .pos = 0,\n            .len = 0,\n            .url = null,\n            .body = null,\n            .body_pos = 0,\n            .body_len = 0,\n            .method = null,\n            .method_string = \"\",\n            .protocol = null,\n            .unread_body = 0,\n            .buffer_pool = buffer_pool,\n            .lazy_read_size = config.lazy_read_size,\n            .max_body_size = config.max_body_size orelse 1_048_576,\n            .middlewares = std.StringHashMap(*anyopaque).init(arena),\n            .qs = try StringKeyValue.init(arena, config.max_query_count orelse 32),\n            .fd = try StringKeyValue.init(arena, config.max_form_count orelse 0),\n            .mfd = try MultiFormKeyValue.init(arena, config.max_multiform_count orelse 0),\n            .buf = try arena.alloc(u8, config.buffer_size orelse 4_096),\n            .headers = try StringKeyValue.init(arena, config.max_header_count orelse 32),\n            .params = try Params.init(arena, config.max_param_count orelse 10),\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn deinit(self: *State) void {\n        if (self.body) |buf| {\n            self.buffer_pool.release(buf);\n            self.body = null;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn reset(self: *State) void {\n        // not our job to clear the arena!\n        self.pos = 0;\n        self.len = 0;\n        self.url = null;\n        self.method = null;\n        self.unread_body = 0;\n        self.method_string = null;\n        self.protocol = null;\n\n        self.body_pos = 0;\n        self.body_len = 0;\n        if (self.body) |buf| {\n            self.buffer_pool.release(buf);\n            self.body = null;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub fn parse(self: *State, req_arena: Allocator, stream: *std.Io.Reader) !bool {\n        if (self.body != null) {\n            // if we have a body, then we've read the header. We want to read into\n            // self.body, not self.buf.\n            return self.readBody(stream);\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseMethod from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseMethod(self: *State, buf: []u8) !bool {\n        const buf_len = buf.len;\n\n        // Shortest method is only 3 characters (+1 trailing space), so\n        // this seems like it should be: if (buf_len < 4)\n        // But the longest method, OPTIONS, is 7 characters (+1 trailing space).\n        // Now even if we have a short method, like \"GET \", we'll eventually expect\n        // a URL + protocol. The shorter valid line is: e.g. GET / HTTP/1.1\n        // If buf_len < 8, we _might_ have a method, but we still need more data\n        // and might as well break early.\n        // If buf_len > = 8, then we can safely parse any (valid) method without\n        // having to do any other bound-checking.\n        if (buf_len < 8) return false;\n\n        // this approach to matching method name comes from zhp\n        switch (@as(u32, @bitCast(buf[0..4].*))) {\n            asUint(\"GET \") => {\n                self.pos = 4;\n                self.method = .GET;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseMethod",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseUrl from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseUrl(self: *State, buf: []u8) !bool {\n        const buf_len = buf.len;\n        if (buf_len == 0) return false;\n\n        var len: usize = 0;\n        switch (buf[0]) {\n            '/' => {\n                const end_index = std.mem.indexOfScalarPos(u8, buf[1..buf_len], 0, ' ') orelse return false;\n                // +1 since we skipped the leading / in our indexOfScalar and +1 to consume the space\n                len = end_index + 2;\n                const url = buf[0 .. end_index + 1];\n                if (!Url.isValid(url)) return error.InvalidRequestTarget;\n                self.url = url;\n            }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseUrl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseProtocol from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseProtocol(self: *State, buf: []u8) !bool {\n        if (buf.len < 10) return false;\n\n        if (@as(u32, @bitCast(buf[0..4].*)) != asUint(\"HTTP\")) {\n            return error.UnknownProtocol;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseProtocol",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseHeaders from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn parseHeaders(self: *State, req_arena: Allocator, full: []u8) !bool {\n        var buf = full;\n        var headers = &self.headers;\n        line: while (buf.len > 0) {\n            for (buf, 0..) |bn, i| {\n                switch (bn) {\n                    'a'...'z', '0'...'9', '-', '_' => {}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "parseHeaders",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to prepareForBody from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn prepareForBody(self: *State, req_arena: Allocator) !bool {\n        const str = self.headers.get(\"content-length\") orelse return true;\n        const cl = atoi(str) orelse return error.InvalidContentLength;\n\n        self.body_len = cl;\n        if (cl == 0) return true;\n\n        if (self.lazy_read_size == null and cl > self.max_body_size) {\n            return error.BodyTooBig;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "prepareForBody",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readBody from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn readBody(self: *State, stream: *std.Io.Reader) !bool {\n        const buf = self.body.?.data;\n\n        var vecs: [1][]u8 = .{buf[self.body_pos..]}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "readBody",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to trimLeadingSpaceCount from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn trimLeadingSpaceCount(in: []const u8) struct { []const u8, usize }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "trimLeadingSpaceCount",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to trimLeadingSpace from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn trimLeadingSpace(in: []const u8) []const u8 {\n    const out, _ = trimLeadingSpaceCount(in);\n    return out;\n}",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "trimLeadingSpace",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to atoi from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn atoi(str: []const u8) ?usize {\n    if (str.len == 0) {\n        return null;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "atoi",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testParse from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn testParse(input: []const u8, config: Config) !Request {\n    var ctx = t.Context.allocInit(t.arena.allocator(), .{ .request = config }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "testParse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to expectParseError from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn expectParseError(expected: anyerror, input: []const u8, config: Config) !void {\n    var ctx = t.Context.init(.{ .request = config }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "expectParseError",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to randomMethod from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn randomMethod(random: std.Random) []const u8 {\n    return switch (random.uintAtMost(usize, 6)) {\n        0 => \"GET\",\n        1 => \"PUT\",\n        2 => \"POST\",\n        3 => \"PATCH\",\n        4 => \"DELETE\",\n        5 => \"OPTIONS\",\n        6 => \"HEAD\",\n        else => unreachable,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "randomMethod",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildRequest from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "fn buildRequest(header: []const []const u8, body: []const []const u8) []const u8 {\n    var header_len: usize = 0;\n    for (header) |h| {\n        header_len += h.len;\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "function",
+      "name": "buildRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MultiPartField from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "const MultiPartField = struct {\n        name: []const u8,\n        value: MultiFormKeyValue.Value,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "struct",
+      "name": "MultiPartField",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ContentDispositionAttributes from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "const ContentDispositionAttributes = struct {\n        name: []const u8,\n        filename: ?[]const u8 = null,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "struct",
+      "name": "ContentDispositionAttributes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Reader from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub const Reader = struct {\n        buffer: []const u8,\n        unread_body: *usize,\n        socket: std.posix.socket_t,\n        interface: std.Io.Reader,\n\n        pub fn stream(io_r: *std.Io.Reader, w: *std.Io.Writer, limit: std.Io.Limit) std.Io.Reader.StreamError!usize {\n            const self: *Reader = @alignCast(@fieldParentPtr(\"interface\", io_r));\n            const buf = limit.slice(try w.writableSliceGreedy(1));\n            const n = self.read(buf) catch return error.ReadFailed;\n            w.advance(n);\n            return n;\n        }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "struct",
+      "name": "Reader",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Cookie from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "pub const Cookie = struct {\n        header: []const u8,\n\n        pub fn get(self: Cookie, name: []const u8) ?[]const u8 {\n            var it = std.mem.splitScalar(u8, self.header, ';');\n            while (it.next()) |kv| {\n                const trimmed = std.mem.trimLeft(u8, kv, \" \");\n                if (name.len >= trimmed.len) {\n                    // need at least an '=' beyond the name\n                    continue;\n                }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "struct",
+      "name": "Cookie",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Tea from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "const Tea = struct {\n        type: []const u8,\n    }",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "struct",
+      "name": "Tea",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from karlseguin/http.zig",
+    "context": "Repository: karlseguin/http.zig (1217 ⭐)\nFile: src/request.zig",
+    "response": "const self: *Reader = @alignCast(@fieldParentPtr(\"interface\", io_r));",
+    "metadata": {
+      "repo": "karlseguin/http.zig",
+      "stars": 1217,
+      "file": "src/request.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  }
+]

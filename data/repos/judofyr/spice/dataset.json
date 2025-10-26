@@ -1,0 +1,782 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    // Standard target options allows the person running `zig build` to choose\n    // what target to build for. Here we do not override the defaults, which\n    // means any target is allowed, and the default is native. Other options\n    // for restricting supported target set are available.\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sum from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "fn sum(self: *const Node) i64 {\n        var res = self.val;\n        if (self.left) |child| res += child.sum();\n        if (self.right) |child| res += child.sum();\n        return res;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "sum",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to balancedTree from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "fn balancedTree(allocator: std.mem.Allocator, from: i64, to: i64) !*Node {\n    var node = try allocator.create(Node);\n    node.* = .{ .val = from + @divTrunc(to - from, 2) }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "balancedTree",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sum from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "fn sum(t: *spice.Task, node: *Node) i64 {\n    var res: i64 = node.val;\n\n    if (node.left) |left_child| {\n        if (node.right) |right_child| {\n            var fut = spice.Future(*Node, i64).init();\n            fut.fork(t, sum, right_child);\n            res += t.call(i64, sum, left_child);\n            if (fut.join(t)) |val| {\n                res += val;\n            }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "sum",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeName from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn writeName(self: *BaselineTreeSum, writer: anytype) !void {\n        _ = self;\n        try std.fmt.format(writer, \"Baseline\", .{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "writeName",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn init(self: *BaselineTreeSum, allocator: std.mem.Allocator) void {\n        _ = self;\n        _ = allocator;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn deinit(self: *BaselineTreeSum) void {\n        _ = self;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn run(self: *BaselineTreeSum, input: *Node) i64 {\n        _ = self;\n        return input.sum();\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeName from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn writeName(self: *SpiceTreeSum, writer: anytype) !void {\n        if (self.num_threads == 1) {\n            try std.fmt.format(writer, \"Spice 1 thread\", .{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "writeName",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn init(self: *SpiceTreeSum, allocator: std.mem.Allocator) void {\n        self.thread_pool = spice.ThreadPool.init(allocator);\n        self.thread_pool.start(.{ .background_worker_count = self.num_threads - 1 }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn deinit(self: *SpiceTreeSum) void {\n        self.thread_pool.deinit();\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn run(self: *SpiceTreeSum, input: *Node) i64 {\n        return self.thread_pool.call(i64, sum, input);\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn run(self: *Runner, bench: anytype, input: anytype) !void {\n        var out = std.io.getStdOut();\n\n        var name_buf: [255]u8 = undefined;\n        var fbs = std.io.fixedBufferStream(&name_buf);\n        try bench.writeName(fbs.writer());\n        const name = fbs.getWritten();\n\n        try out.writer().print(\"{s}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to memSum from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "fn memSum(comptime T: type, slice: []const T) T {\n    var result: T = 0;\n    for (slice) |val| {\n        result += val;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "memSum",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to failArgs from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "fn failArgs(comptime format: []const u8, args: anytype) noreturn {\n    var err = std.io.getStdErr();\n    err.writer().print(\"invalid arguments: \" ++ format ++ \"\\n\", args) catch @panic(\"failed to print to stderr\");\n    std.process.exit(1);\n}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "failArgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Node from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "const Node = struct {\n    val: i64,\n    left: ?*Node = null,\n    right: ?*Node = null,\n\n    fn sum(self: *const Node) i64 {\n        var res = self.val;\n        if (self.left) |child| res += child.sum();\n        if (self.right) |child| res += child.sum();\n        return res;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "struct",
+      "name": "Node",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to BaselineTreeSum from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "const BaselineTreeSum = struct {\n    pub fn writeName(self: *BaselineTreeSum, writer: anytype) !void {\n        _ = self;\n        try std.fmt.format(writer, \"Baseline\", .{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "struct",
+      "name": "BaselineTreeSum",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SpiceTreeSum from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "const SpiceTreeSum = struct {\n    num_threads: usize,\n    thread_pool: spice.ThreadPool = undefined,\n\n    pub fn writeName(self: *SpiceTreeSum, writer: anytype) !void {\n        if (self.num_threads == 1) {\n            try std.fmt.format(writer, \"Spice 1 thread\", .{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "struct",
+      "name": "SpiceTreeSum",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Runner from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: examples/zig-parallel-example/main.zig",
+    "response": "const Runner = struct {\n    allocator: std.mem.Allocator,\n    n: usize,\n    csv: ?std.fs.File = null,\n\n    pub fn run(self: *Runner, bench: anytype, input: anytype) !void {\n        var out = std.io.getStdOut();\n\n        var name_buf: [255]u8 = undefined;\n        var fbs = std.io.fixedBufferStream(&name_buf);\n        try bench.writeName(fbs.writer());\n        const name = fbs.getWritten();\n\n        try out.writer().print(\"{s}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "examples/zig-parallel-example/main.zig",
+      "type": "struct",
+      "name": "Runner",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator) ThreadPool {\n        return ThreadPool{\n            .allocator = allocator,\n            .execute_state_pool = std.heap.MemoryPool(JobExecuteState).init(allocator),\n            .heartbeat_interval = undefined,\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to start from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn start(self: *ThreadPool, config: ThreadPoolConfig) void {\n        const actual_count = config.background_worker_count orelse (std.Thread.getCpuCount() catch @panic(\"getCpuCount error\")) - 1;\n\n        self.heartbeat_interval = config.heartbeat_interval;\n        self.background_threads.ensureUnusedCapacity(self.allocator, actual_count) catch @panic(\"OOM\");\n        self.workers.ensureUnusedCapacity(self.allocator, actual_count) catch @panic(\"OOM\");\n\n        for (0..actual_count) |_| {\n            const thread = std.Thread.spawn(.{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "start",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn deinit(self: *ThreadPool) void {\n        // Tell all background workers to stop:\n        {\n            self.mutex.lock();\n            defer self.mutex.unlock();\n\n            self.is_stopping = true;\n            self.job_ready.broadcast();\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to backgroundWorker from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn backgroundWorker(self: *ThreadPool) void {\n        var w = Worker{ .pool = self }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "backgroundWorker",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to heartbeatWorker from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn heartbeatWorker(self: *ThreadPool) void {\n        // We try to make sure that each worker is being heartbeat at the\n        // fixed interval by going through the workers-list one by one.\n        var i: usize = 0;\n\n        while (true) {\n            var to_sleep: u64 = self.heartbeat_interval;\n\n            {\n                self.mutex.lock();\n                defer self.mutex.unlock();\n\n                if (self.is_stopping) break;\n\n                const workers = self.workers.items;\n                if (workers.len > 0) {\n                    i %= workers.len;\n                    workers[i].heartbeat.store(true, .monotonic);\n                    i += 1;\n                    to_sleep /= workers.len;\n                }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "heartbeatWorker",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn call(self: *ThreadPool, comptime T: type, func: anytype, arg: anytype) T {\n        // Create an one-off worker:\n\n        var worker = Worker{ .pool = self }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to heartbeat from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn heartbeat(self: *ThreadPool, worker: *Worker) void {\n        @branchHint(.cold);\n\n        self.mutex.lock();\n        defer self.mutex.unlock();\n\n        if (worker.shared_job == null) {\n            if (worker.job_head.shift()) |job| {\n                // Allocate an execute state for it:\n                const execute_state = self.execute_state_pool.create() catch @panic(\"OOM\");\n                execute_state.* = .{\n                    .result = undefined,\n                }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "heartbeat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitForJob from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn waitForJob(self: *ThreadPool, worker: *Worker, job: *Job) bool {\n        const exec_state = job.getExecuteState();\n\n        {\n            self.mutex.lock();\n            defer self.mutex.unlock();\n\n            if (worker.shared_job == job) {\n                // This is the job we attempted to share with someone else, but before someone picked it up.\n                worker.shared_job = null;\n                self.execute_state_pool.destroy(exec_state);\n                return false;\n            }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "waitForJob",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _popReadyJob from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn _popReadyJob(self: *ThreadPool) ?*Job {\n        var best_worker: ?*Worker = null;\n\n        for (self.workers.items) |other_worker| {\n            if (other_worker.shared_job) |_| {\n                if (best_worker) |best| {\n                    if (other_worker.job_time < best.job_time) {\n                        // Pick this one instead if it's older.\n                        best_worker = other_worker;\n                    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "_popReadyJob",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroyExecuteState from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn destroyExecuteState(self: *ThreadPool, exec_state: *JobExecuteState) void {\n        self.mutex.lock();\n        defer self.mutex.unlock();\n\n        self.execute_state_pool.destroy(exec_state);\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "destroyExecuteState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to begin from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn begin(self: *Worker) Task {\n        std.debug.assert(self.job_head.isTail());\n\n        return Task{\n            .worker = self,\n            .job_tail = &self.job_head,\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "begin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to executeJob from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn executeJob(self: *Worker, job: *Job) void {\n        var t = self.begin();\n        job.handler.?(&t, job);\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "executeJob",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn tick(self: *Task) void {\n        if (self.worker.heartbeat.load(.monotonic)) {\n            self.worker.pool.heartbeat(self.worker);\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn call(self: *Task, comptime T: type, func: anytype, arg: anytype) T {\n        return callWithContext(\n            self.worker,\n            self.job_tail,\n            T,\n            func,\n            arg,\n        );\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callWithContext from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn callWithContext(\n    worker: *Worker,\n    job_tail: *Job,\n    comptime T: type,\n    func: anytype,\n    arg: anytype,\n) T {\n    var t = Task{\n        .worker = worker,\n        .job_tail = job_tail,\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "callWithContext",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to head from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn head() Job {\n        return Job{\n            .handler = undefined,\n            .prev_or_null = null,\n            .next_or_state = null,\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "head",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pending from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn pending() Job {\n        return Job{\n            .handler = null,\n            .prev_or_null = undefined,\n            .next_or_state = undefined,\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "pending",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to state from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn state(self: Job) JobState {\n        if (self.handler == null) return .pending;\n        if (self.prev_or_null != null) return .queued;\n        return .executing;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "state",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isTail from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn isTail(self: Job) bool {\n        return self.next_or_state == null;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "isTail",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getExecuteState from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn getExecuteState(self: *Job) *JobExecuteState {\n        std.debug.assert(self.state() == .executing);\n        return @ptrCast(@alignCast(self.next_or_state));\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "getExecuteState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setExecuteState from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn setExecuteState(self: *Job, execute_state: *JobExecuteState) void {\n        std.debug.assert(self.state() == .executing);\n        self.next_or_state = execute_state;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "setExecuteState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to push from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn push(self: *Job, tail: **Job, handler: *const fn (task: *Task, job: *Job) void) void {\n        std.debug.assert(self.state() == .pending);\n        defer std.debug.assert(self.state() == .queued);\n\n        self.handler = handler;\n        tail.*.next_or_state = self; // tail.next = self\n        self.prev_or_null = tail.*; // self.prev = tail\n        self.next_or_state = null; // self.next = null\n        tail.* = self; // tail = self\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "push",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pop from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn pop(self: *Job, tail: **Job) void {\n        std.debug.assert(self.state() == .queued);\n        std.debug.assert(tail.* == self);\n        const prev: *Job = @ptrCast(@alignCast(self.prev_or_null));\n        prev.next_or_state = null; // prev.next = null\n        tail.* = @ptrCast(@alignCast(self.prev_or_null)); // tail = self.prev\n        self.* = undefined;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "pop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to shift from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn shift(self: *Job) ?*Job {\n        const job = @as(?*Job, @ptrCast(@alignCast(self.next_or_state))) orelse return null;\n\n        std.debug.assert(job.state() == .queued);\n\n        const next: ?*Job = @ptrCast(@alignCast(job.next_or_state));\n        // Now we have: self -> job -> next.\n\n        // If there is no `next` then it means that `tail` actually points to `job`.\n        // In this case we can't remove `job` since we're not able to also update the tail.\n        if (next == null) return null;\n\n        defer std.debug.assert(job.state() == .executing);\n\n        next.?.prev_or_null = self; // next.prev = self\n        self.next_or_state = next; // self.next = next\n\n        // Turn the job into \"executing\" state.\n        job.prev_or_null = null;\n        job.next_or_state = undefined;\n        return job;\n    }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "shift",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to resultPtr from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn resultPtr(self: *JobExecuteState, comptime T: type) *T {\n        if (@sizeOf(T) > @sizeOf(ResultType)) {\n            @compileError(\"value is too big to be returned by background thread\");\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "resultPtr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Future from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub fn Future(comptime Input: type, Output: type) type {\n    return struct {\n        const Self = @This();\n\n        job: Job,\n        input: Input,\n\n        pub inline fn init() Self {\n            return Self{ .job = Job.pending(), .input = undefined }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "Future",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fork from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn fork(\n            self: *Self,\n            task: *Task,\n            comptime func: fn (task: *Task, input: Input) Output,\n            input: Input,\n        ) void {\n            const handler = struct {\n                fn handler(t: *Task, job: *Job) void {\n                    const fut: *Self = @fieldParentPtr(\"job\", job);\n                    const exec_state = job.getExecuteState();\n                    const value = t.call(Output, func, fut.input);\n                    exec_state.resultPtr(Output).* = value;\n                    exec_state.done.set();\n                }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "fork",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to join from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn join(\n            self: *Self,\n            task: *Task,\n        ) ?Output {\n            std.debug.assert(self.job.state() != .pending);\n            return self.tryJoin(task);\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "join",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tryJoin from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn tryJoin(\n            self: *Self,\n            task: *Task,\n        ) ?Output {\n            switch (self.job.state()) {\n                .pending => return null,\n                .queued => {\n                    self.job.pop(&task.job_tail);\n                    return null;\n                }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "tryJoin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to joinExecuting from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "fn joinExecuting(self: *Self, task: *Task) ?Output {\n            @branchHint(.cold);\n\n            const w = task.worker;\n            const pool = w.pool;\n            const exec_state = self.job.getExecuteState();\n\n            if (pool.waitForJob(w, &self.job)) {\n                const result = exec_state.resultPtr(Output).*;\n                pool.destroyExecuteState(exec_state);\n                return result;\n            }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "function",
+      "name": "joinExecuting",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ThreadPoolConfig from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub const ThreadPoolConfig = struct {\n    /// The number of background workers. If `null` this chooses a sensible\n    /// default based on your system (i.e. number of cores).\n    background_worker_count: ?usize = null,\n\n    /// How often a background thread is interrupted to find more work.\n    heartbeat_interval: usize = 100 * std.time.ns_per_us,\n}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "struct",
+      "name": "ThreadPoolConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ThreadPool from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub const ThreadPool = struct {\n    allocator: std.mem.Allocator,\n    mutex: std.Thread.Mutex = .{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "struct",
+      "name": "ThreadPool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Worker from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub const Worker = struct {\n    pool: *ThreadPool,\n    job_head: Job = Job.head(),\n\n    /// A job (guaranteed to be in executing state) which other workers can pick up.\n    shared_job: ?*Job = null,\n    /// The time when the job was shared. Used for prioritizing which job to pick up.\n    job_time: usize = 0,\n\n    /// The heartbeat value. This is set to `true` to signal we should do a heartbeat action.\n    heartbeat: std.atomic.Value(bool) = std.atomic.Value(bool).init(true),\n\n    pub fn begin(self: *Worker) Task {\n        std.debug.assert(self.job_head.isTail());\n\n        return Task{\n            .worker = self,\n            .job_tail = &self.job_head,\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "struct",
+      "name": "Worker",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Task from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "pub const Task = struct {\n    worker: *Worker,\n    job_tail: *Job,\n\n    pub inline fn tick(self: *Task) void {\n        if (self.worker.heartbeat.load(.monotonic)) {\n            self.worker.pool.heartbeat(self.worker);\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "struct",
+      "name": "Task",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Job from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "const Job = struct {\n    handler: ?*const fn (t: *Task, job: *Job) void,\n    prev_or_null: ?*anyopaque,\n    next_or_state: ?*anyopaque,\n\n    // This struct gets placed on the stack in _every_ frame so we're very cautious\n    // about the size of it. There's three possible states, but we don't use a union(enum)\n    // since this would actually increase the size.\n    //\n    // 1. pending: handler is null. a/b is undefined.\n    // 2. queued: handler is set. prev_or_null is `prev`, next_or_state is `next`.\n    // 3. executing: handler is set. prev_or_null is null, next_or_state is `*JobExecuteState`.\n\n    /// Returns a new job which can be used for the head of a list.\n    fn head() Job {\n        return Job{\n            .handler = undefined,\n            .prev_or_null = null,\n            .next_or_state = null,\n        }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "struct",
+      "name": "Job",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to JobExecuteState from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "const JobExecuteState = struct {\n    done: std.Thread.ResetEvent = .{}",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "struct",
+      "name": "JobExecuteState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to handler from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "const handler = struct {\n                fn handler(t: *Task, job: *Job) void {\n                    const fut: *Self = @fieldParentPtr(\"job\", job);\n                    const exec_state = job.getExecuteState();\n                    const value = t.call(Output, func, fut.input);\n                    exec_state.resultPtr(Output).* = value;\n                    exec_state.done.set();\n                }",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "struct",
+      "name": "handler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to prev from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "const prev: *Job = @ptrCast(@alignCast(self.prev_or_null));",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "const",
+      "name": "prev",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to next from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "const next: ?*Job = @ptrCast(@alignCast(job.next_or_state));",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "const",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fut from judofyr/spice",
+    "context": "Repository: judofyr/spice (895 ⭐)\nFile: src/root.zig",
+    "response": "const fut: *Self = @fieldParentPtr(\"job\", job);",
+    "metadata": {
+      "repo": "judofyr/spice",
+      "stars": 895,
+      "file": "src/root.zig",
+      "type": "const",
+      "name": "fut",
+      "difficulty": "easy"
+    }
+  }
+]

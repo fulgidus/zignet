@@ -1,0 +1,9 @@
+{
+  "name": "vulkan-zig",
+  "fullName": "Snektron/vulkan-zig",
+  "owner": "Snektron",
+  "stars": 720,
+  "description": "Vulkan binding generator for Zig",
+  "url": "https://github.com/Snektron/vulkan-zig",
+  "defaultBranch": "master"
+}

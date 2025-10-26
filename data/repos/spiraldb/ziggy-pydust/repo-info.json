@@ -1,0 +1,9 @@
+{
+  "name": "ziggy-pydust",
+  "fullName": "spiraldb/ziggy-pydust",
+  "owner": "spiraldb",
+  "stars": 673,
+  "description": "A toolkit for building Python extensions in Zig.",
+  "url": "https://github.com/spiraldb/ziggy-pydust",
+  "defaultBranch": "develop"
+}

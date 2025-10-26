@@ -1,0 +1,2901 @@
+[
+  {
+    "instruction": "Write a Zig function similar to funcE from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigbacktrace/main.zig",
+    "response": "fn funcE() void {\n    std.debug.print(\"funcE\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigbacktrace/main.zig",
+      "type": "function",
+      "name": "funcE",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to funcD from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigbacktrace/main.zig",
+    "response": "fn funcD() void {\n    funcE();\n    std.debug.print(\"funcD\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigbacktrace/main.zig",
+      "type": "function",
+      "name": "funcD",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to funcC from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigbacktrace/main.zig",
+    "response": "fn funcC() void {\n    funcD();\n    std.debug.print(\"funcC\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigbacktrace/main.zig",
+      "type": "function",
+      "name": "funcC",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to funcB from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigbacktrace/main.zig",
+    "response": "fn funcB() void {\n    funcC();\n    std.debug.print(\"funcB\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigbacktrace/main.zig",
+      "type": "function",
+      "name": "funcB",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to funcA from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigbacktrace/main.zig",
+    "response": "fn funcA() void {\n    funcB();\n    std.debug.print(\"funcA\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigbacktrace/main.zig",
+      "type": "function",
+      "name": "funcA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigbacktrace/main.zig",
+    "response": "pub fn main() !void {\n    funcA();\n    funcB();\n    funcC();\n    funcD();\n    funcE();\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigbacktrace/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to inlinedFunc from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/ziginline/main.zig",
+    "response": "fn inlinedFunc() i32 {\n    print(\"inlinedFunc called 1\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/ziginline/main.zig",
+      "type": "function",
+      "name": "inlinedFunc",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to notInlinedFunc from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/ziginline/main.zig",
+    "response": "fn notInlinedFunc() usize {\n    print(\"notInlinedFunc called 1\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/ziginline/main.zig",
+      "type": "function",
+      "name": "notInlinedFunc",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/ziginline/main.zig",
+    "response": "pub fn main() !void {\n    const a = @call(.never_inline, notInlinedFunc, .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/ziginline/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigloop/main.zig",
+    "response": "pub fn main() !void {\n    const pid = std.os.linux.getpid();\n\n    var ndx: usize = 0;\n    while (true) {\n        std.debug.print(\"zig looping (pid {d}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigloop/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigmultithread/main.zig",
+    "response": "pub fn main() !void {\n    print(\"starting zigmultithread\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigmultithread/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sleepThread from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigmultithread/main.zig",
+    "response": "fn sleepThread(wg: *WaitGroup, sleep_secs: u64) void {\n    defer wg.finish();\n\n    print(\"sleeping for {d}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigmultithread/main.zig",
+      "type": "function",
+      "name": "sleepThread",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "pub fn main() !void {\n    const a: i2 = 1;\n    const b: u2 = 2;\n    const c: i3 = 3;\n    const d: u3 = 4;\n    const e: i4 = 5;\n    const f: u4 = 6;\n    const g: i5 = 7;\n    const h: u5 = 8;\n    const i: i6 = 9;\n    const j: u6 = 10;\n    const k: i7 = 11;\n    const l: u7 = 12;\n    const m: i8 = 13;\n    const n: u8 = 14;\n\n    const o: i8 = 15;\n    const p: u8 = 16;\n    const q: i16 = 17;\n    const r: u16 = 18;\n    const s: i32 = 19;\n    const t: u32 = 20;\n    const u: i64 = 21;\n    const v: u64 = 22;\n    const w: i128 = 23;\n    const x: u128 = 24;\n    const y: isize = 25;\n    const z: usize = 26;\n\n    const aa: c_short = 27;\n    const ab: c_ushort = 28;\n    const ac: c_int = 29;\n    const ad: c_uint = 30;\n    const ae: c_long = 31;\n    const af: c_ulong = 32;\n    const ag: c_longlong = 32;\n    const ah: c_ulonglong = 34;\n\n    const ai: f32 = 35.555;\n    const aj: f64 = 36.666;\n    const ak: f128 = 37.777;\n\n    const al: bool = false;\n    const am: bool = true;\n\n    const an = \"hello, world!\";\n    const ao = try std.heap.page_allocator.alloc(u8, 4);\n    @memcpy(ao, \"abcd\");\n\n    var ap = MyStruct{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MyStruct from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const MyStruct = struct {\n    field_a: i32 = 123,\n    field_b: []const u8 = \"this is field_b\",\n\n    fn dontOptimizeMe(_: *@This()) void {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "struct",
+      "name": "MyStruct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to NestedStruct from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const NestedStruct = struct {\n    numeric: i32 = 456,\n    nested: MyStruct,\n\n    fn dontOptimizeMe(_: *@This()) void {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "struct",
+      "name": "NestedStruct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to aa from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const aa: c_short = 27;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "aa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ab from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ab: c_ushort = 28;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ab",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ac from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ac: c_int = 29;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ac",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ad from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ad: c_uint = 30;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ad",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ae from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ae: c_long = 31;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ae",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to af from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const af: c_ulong = 32;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "af",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ag from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ag: c_longlong = 32;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ah from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ah: c_ulonglong = 34;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ah",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ai from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ai: f32 = 35.555;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ai",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to aj from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const aj: f64 = 36.666;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "aj",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ak from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ak: f128 = 37.777;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ak",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to al from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const al: bool = false;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "al",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to am from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const am: bool = true;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "am",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ax from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigprint/main.zig",
+    "response": "const ax: *anyopaque = @ptrFromInt(0x123);",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigprint/main.zig",
+      "type": "const",
+      "name": "ax",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to recursive from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigrecursion/main.zig",
+    "response": "fn recursive(depth: *i32) void {\n    if (depth.* > max_depth) {\n        return;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigrecursion/main.zig",
+      "type": "function",
+      "name": "recursive",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigrecursion/main.zig",
+    "response": "pub fn main() !void {\n    print(\"first call:\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigrecursion/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigsimple/main.zig",
+    "response": "fn print(self: @This(), msg: []const u8) void {\n        std.debug.print(\n            \"{s}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigsimple/main.zig",
+      "type": "function",
+      "name": "print",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to oneStruct from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigsimple/main.zig",
+    "response": "fn oneStruct() !*MyStruct {\n    const s = try alloc.create(MyStruct);\n    s.* = .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigsimple/main.zig",
+      "type": "function",
+      "name": "oneStruct",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to manyStructs from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigsimple/main.zig",
+    "response": "fn manyStructs(num: usize) ![]MyStruct {\n    const arr = try alloc.alloc(MyStruct, num);\n    for (arr, 0..) |*item, ndx| {\n        item.field_a = @intCast(ndx);\n        item.field_b = try std.fmt.allocPrint(alloc, \"str: {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigsimple/main.zig",
+      "type": "function",
+      "name": "manyStructs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to manyInts from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigsimple/main.zig",
+    "response": "fn manyInts(comptime T: type, num: usize) ![]T {\n    const arr = try alloc.alloc(T, num);\n    for (arr, 0..) |*item, ndx| {\n        if (T == f32) {\n            item.* = @floatFromInt(ndx);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigsimple/main.zig",
+      "type": "function",
+      "name": "manyInts",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigsimple/main.zig",
+    "response": "pub fn main() !void {\n    const one = try oneStruct();\n    one.print(\"one\");\n\n    defer {\n        std.debug.print(\"defer two\\n\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigsimple/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MyStruct from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: assets/zigsimple/main.zig",
+    "response": "const MyStruct = struct {\n    field_a: i32 = 123,\n    field_b: []const u8 = \"this is field_b\",\n\n    fn print(self: @This(), msg: []const u8) void {\n        std.debug.print(\n            \"{s}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "assets/zigsimple/main.zig",
+      "type": "struct",
+      "name": "MyStruct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to defineStep from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: build.zig",
+    "response": "fn defineStep(b: *Build, def: stepDef) void {\n    for (def.exes) |exe| {\n        const is_debug = exe.root_module.optimize == .Debug;\n\n        b.installArtifact(exe);\n        exe.root_module.addOptions(\"build_options\", def.opts);\n\n        if (def.flags.tracy or def.flags.spall) {\n            exe.linkLibC();\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "build.zig",
+      "type": "function",
+      "name": "defineStep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ensureCorrectZigVersion from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: build.zig",
+    "response": "fn ensureCorrectZigVersion() void {\n    const version_str = std.mem.trimRight(u8, @embedFile(\"zig_version.txt\"), \"\\n\");\n    const expected = std.SemanticVersion.parse(version_str) catch unreachable;\n    const actual = builtin.zig_version;\n\n    if (actual.major != expected.major or actual.minor != expected.minor) {\n        @compileError(std.fmt.comptimePrint(\n            \"Your Zig version v{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "build.zig",
+      "type": "function",
+      "name": "ensureCorrectZigVersion",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Flags from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: build.zig",
+    "response": "const Flags = struct {\n    /// Whether or not to enable the Spall profiler\n    spall: bool = false,\n\n    /// Whether or not to enable the Tracy profiler\n    tracy: bool = false,\n\n    /// Whether or not to enable TSan for race detection,\n    /// lock inversion reports, thread leaks, etc.\n    race: bool = false,\n\n    /// Indicates that the binary being build will ship to customers\n    /// and should be hardened appropriately\n    release: bool = false,\n\n    /// Whether or not to build the binary with LLVM enabled. We need\n    /// LLVM for TSan.\n    llvm: bool = false,\n\n    /// Whether or not the built test binary is intended to be run under valgrind.\n    /// This changes the timings of certain conditions for our old, slow CI runners\n    /// that are running valgrind with full leak checking.\n    valgrind: bool = false,\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "Flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to stepDef from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: build.zig",
+    "response": "const stepDef = struct {\n    name: []const u8,\n    description: []const u8,\n    exes: []const *Build.Step.Compile,\n    depend_on: ?[]const *Build.Step = null,\n    opts: *Build.Step.Options,\n    flags: Flags,\n    no_caching: bool = false,\n    target: Build.ResolvedTarget,\n    optimize: std.builtin.OptimizeMode,\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "stepDef",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to test_filter from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: build.zig",
+    "response": "const test_filter: ?[]const u8 = b.option([]const u8, \"filter\", \"Filter running tests down to just the given name (default: null)\") orelse null;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "build.zig",
+      "type": "const",
+      "name": "test_filter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/MainAllocator.zig",
+    "response": "fn init() Self {\n    var gpa = heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/MainAllocator.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocator from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/MainAllocator.zig",
+    "response": "pub fn allocator(self: Self) Allocator {\n    return self.alloc;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/MainAllocator.zig",
+      "type": "function",
+      "name": "allocator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/MainAllocator.zig",
+    "response": "pub fn deinit(self: *Self) void {\n    defer assert(self.gpa.deinit() == .ok);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/MainAllocator.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn init(self: *Self, buf: []const u8) void {\n    self.* = Self{ .off = 0, .buf = buf, .io_reader = undefined }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn create(alloc: Allocator, buf: []const u8) error{OutOfMemory}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reader from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn reader(self: *Self) IOReader {\n    return .{ .context = self }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "reader",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readBuf from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn readBuf(self: *Self, dst: []u8) ReadError!usize {\n    if (self.buf.len < (self.off + dst.len)) {\n        // advance the pointer to the end\n        self.off += dst.len;\n        return error.EndOfFile;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "readBuf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn read(self: *Self, comptime T: type) ReadError!T {\n    var subBuf: [@sizeOf(T)]u8 = undefined;\n    _ = try self.readBuf(&subBuf);\n\n    return mem.bytesToValue(T, &subBuf);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "read",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readUntil from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn readUntil(self: *Self, val: u8) ReadError![]const u8 {\n    const start = self.offset();\n\n    const max = std.math.pow(usize, 2, 20);\n    for (0..max) |ndx| {\n        // @PERFORMANCE (jrc): read in chunks and use SIMD\n        const item = try self.read(u8);\n        if (item == val) break;\n\n        assert(ndx < max - 1);\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "readUntil",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to seek from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn seek(self: *Self, off: usize) void {\n    self.off = off;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "seek",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to advanceBy from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn advanceBy(self: *Self, off: usize) void {\n    self.off = self.off + off;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "advanceBy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn reset(self: *Self) void {\n    self.seek(0);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to offset from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn offset(self: *Self) usize {\n    return self.off;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "offset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to atEOF from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn atEOF(self: *Self) bool {\n    return self.off >= self.buf.len;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "atEOF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readSLEB128 from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn readSLEB128(self: *Self) ReadError!i64 {\n    return try leb.readILEB128(i64, self.io_reader);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "readSLEB128",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readULEB128 from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/Reader.zig",
+    "response": "pub fn readULEB128(self: *Self) ReadError!u64 {\n    return try leb.readULEB128(u64, self.io_reader);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/Reader.zig",
+      "type": "function",
+      "name": "readULEB128",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to CircularBuffer from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/circularBuffer.zig",
+    "response": "pub fn CircularBuffer(comptime T: type) type {\n    return struct {\n        const Self = @This();\n\n        /// Not intended to be accessed by callers directly\n        items: []T,\n\n        read_ndx: usize = 0,\n        write_ndx: usize = 0,\n        len: usize = 0,\n\n        pub fn init(alloc: Allocator, size: usize) !Self {\n            return Self{ .items = try alloc.alloc(T, size) }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/circularBuffer.zig",
+      "type": "function",
+      "name": "CircularBuffer",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/circularBuffer.zig",
+    "response": "pub fn deinit(self: *Self, alloc: Allocator) void {\n            alloc.free(self.items);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/circularBuffer.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clearAndReset from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/circularBuffer.zig",
+    "response": "pub fn clearAndReset(self: *Self, alloc: Allocator) !void {\n            self.read_ndx = 0;\n            self.write_ndx = 0;\n            self.len = 0;\n\n            const size = self.items.len;\n            alloc.free(self.items);\n            self.items = try alloc.alloc(T, size);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/circularBuffer.zig",
+      "type": "function",
+      "name": "clearAndReset",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to append from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/circularBuffer.zig",
+    "response": "pub fn append(self: *Self, item: T) void {\n            self.items[self.write_ndx] = item;\n\n            if (self.len > 0 and self.write_ndx <= self.read_ndx) {\n                self.read_ndx += 1;\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/circularBuffer.zig",
+      "type": "function",
+      "name": "append",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/circularBuffer.zig",
+    "response": "pub fn get(self: Self, ndx: usize) T {\n            const i = (self.read_ndx + ndx) % self.items.len;\n            return self.items[i];\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/circularBuffer.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getMaxRss from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn getMaxRss(rus: ResourceUsageStatistics) ?usize {\n        switch (native_os) {\n            .linux => {\n                if (rus.rusage) |ru| {\n                    return @as(usize, @intCast(ru.maxrss)) * 1024;\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "getMaxRss",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn init(argv: []const []const u8, allocator: mem.Allocator) ChildProcess {\n    return .{\n        .allocator = allocator,\n        .argv = argv,\n        .id = undefined,\n        .thread_handle = undefined,\n        .err_pipe = if (native_os == .windows) {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setUserName from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn setUserName(self: *ChildProcess, name: []const u8) !void {\n    const user_info = try process.getUserInfo(name);\n    self.uid = user_info.uid;\n    self.gid = user_info.gid;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "setUserName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to spawn from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn spawn(self: *ChildProcess) SpawnError!void {\n    if (!process.can_spawn) {\n        @compileError(\"the target operating system cannot spawn processes\");\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "spawn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to spawnAndWait from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn spawnAndWait(self: *ChildProcess) SpawnError!Term {\n    try self.spawn();\n    return self.wait();\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "spawnAndWait",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to kill from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn kill(self: *ChildProcess) !Term {\n    if (native_os == .windows) {\n        return self.killWindows(1);\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "kill",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to killWindows from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn killWindows(self: *ChildProcess, exit_code: windows.UINT) !Term {\n    if (self.term) |term| {\n        self.cleanupStreams();\n        return term;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "killWindows",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to killPosix from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn killPosix(self: *ChildProcess) !Term {\n    if (self.term) |term| {\n        self.cleanupStreams();\n        return term;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "killPosix",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to extremeKillPosix from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn extremeKillPosix(self: *ChildProcess) !void {\n    if (self.term != null) {\n        self.cleanupStreams();\n        return;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "extremeKillPosix",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitForSpawn from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn waitForSpawn(self: *ChildProcess) SpawnError!void {\n    if (native_os == .windows) return; // `spawn` reports everything\n    if (self.term) |term| {\n        _ = term catch |spawn_err| return spawn_err;\n        return;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "waitForSpawn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wait from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn wait(self: *ChildProcess) WaitError!Term {\n    try self.waitForSpawn(); // report spawn errors\n    if (self.term) |term| {\n        self.cleanupStreams();\n        return term;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "wait",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeFifoDataToArrayList from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn writeFifoDataToArrayList(allocator: Allocator, list: *std.ArrayListUnmanaged(u8), fifo: *std.io.PollFifo) !void {\n    if (fifo.head != 0) fifo.realign();\n    if (list.capacity == 0) {\n        list.* = .{\n            .items = fifo.buf[0..fifo.count],\n            .capacity = fifo.buf.len,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "writeFifoDataToArrayList",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to collectOutput from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn collectOutput(\n    child: ChildProcess,\n    /// Used for `stdout` and `stderr`.\n    allocator: Allocator,\n    stdout: *std.ArrayListUnmanaged(u8),\n    stderr: *std.ArrayListUnmanaged(u8),\n    max_output_bytes: usize,\n) !void {\n    assert(child.stdout_behavior == .Pipe);\n    assert(child.stderr_behavior == .Pipe);\n\n    var poller = std.io.poll(allocator, enum { stdout, stderr }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "collectOutput",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub fn run(args: struct {\n    allocator: mem.Allocator,\n    argv: []const []const u8,\n    cwd: ?[]const u8 = null,\n    cwd_dir: ?fs.Dir = null,\n    env_map: ?*const EnvMap = null,\n    max_output_bytes: usize = 50 * 1024,\n    expand_arg0: Arg0Expand = .no_expand,\n    progress_node: std.Progress.Node = std.Progress.Node.none,\n}) RunError!RunResult {\n    var child = ChildProcess.init(args.argv, args.allocator);\n    child.stdin_behavior = .Ignore;\n    child.stdout_behavior = .Pipe;\n    child.stderr_behavior = .Pipe;\n    child.cwd = args.cwd;\n    child.cwd_dir = args.cwd_dir;\n    child.env_map = args.env_map;\n    child.expand_arg0 = args.expand_arg0;\n    child.progress_node = args.progress_node;\n\n    var stdout: std.ArrayListUnmanaged(u8) = .empty;\n    errdefer stdout.deinit(args.allocator);\n    var stderr: std.ArrayListUnmanaged(u8) = .empty;\n    errdefer stderr.deinit(args.allocator);\n\n    try child.spawn();\n    errdefer {\n        _ = child.kill() catch {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitUnwrappedWindows from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn waitUnwrappedWindows(self: *ChildProcess) WaitError!void {\n    const result = windows.WaitForSingleObjectEx(self.id, windows.INFINITE, false);\n\n    self.term = @as(SpawnError!Term, x: {\n        var exit_code: windows.DWORD = undefined;\n        if (windows.kernel32.GetExitCodeProcess(self.id, &exit_code) == 0) {\n            break :x Term{ .Unknown = 0 }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "waitUnwrappedWindows",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitUnwrappedPosix from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn waitUnwrappedPosix(self: *ChildProcess) void {\n    const res: posix.WaitPidResult = res: {\n        if (self.request_resource_usage_statistics) {\n            switch (native_os) {\n                .linux, .macos, .ios => {\n                    var ru: posix.rusage = undefined;\n                    const res = posix.wait4(self.id, 0, &ru);\n                    self.resource_usage_statistics.rusage = ru;\n                    break :res res;\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "waitUnwrappedPosix",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleWaitResult from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn handleWaitResult(self: *ChildProcess, status: u32) void {\n    self.term = statusToTerm(status);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "handleWaitResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cleanupStreams from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn cleanupStreams(self: *ChildProcess) void {\n    if (self.stdin) |*stdin| {\n        stdin.close();\n        self.stdin = null;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "cleanupStreams",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to statusToTerm from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn statusToTerm(status: u32) Term {\n    return if (posix.W.IFEXITED(status))\n        Term{ .Exited = posix.W.EXITSTATUS(status) }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "statusToTerm",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to spawnPosix from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn spawnPosix(self: *ChildProcess) SpawnError!void {\n    // The child process does need to access (one end of) these pipes. However,\n    // we must initially set CLOEXEC to avoid a race condition. If another thread\n    // is racing to spawn a different child process, we don't want it to inherit\n    // these FDs in any scenario; that would mean that, for instance, calls to\n    // `poll` from the parent would not report the child's stdout as closing when\n    // expected, since the other child may retain a reference to the write end of\n    // the pipe. So, we create the pipes with CLOEXEC initially. After fork, we\n    // need to do something in the new child to make sure we preserve the reference\n    // we want. We could use `fcntl` to remove CLOEXEC from the FD, but as it\n    // turns out, we `dup2` everything anyway, so there's no need!\n    const pipe_flags: posix.O = .{ .CLOEXEC = true }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "spawnPosix",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to spawnWindows from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn spawnWindows(self: *ChildProcess) SpawnError!void {\n    var saAttr = windows.SECURITY_ATTRIBUTES{\n        .nLength = @sizeOf(windows.SECURITY_ATTRIBUTES),\n        .bInheritHandle = windows.TRUE,\n        .lpSecurityDescriptor = null,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "spawnWindows",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setUpChildIo from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn setUpChildIo(stdio: StdIo, pipe_fd: i32, std_fileno: i32, dev_null_fd: i32) !void {\n    switch (stdio) {\n        .Pipe => try posix.dup2(pipe_fd, std_fileno),\n        .Close => posix.close(std_fileno),\n        .Inherit => {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "setUpChildIo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to destroyPipe from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn destroyPipe(pipe: [2]posix.fd_t) void {\n    if (pipe[0] != -1) posix.close(pipe[0]);\n    if (pipe[0] != pipe[1]) posix.close(pipe[1]);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "destroyPipe",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to forkChildErrReport from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn forkChildErrReport(fd: i32, err: ChildProcess.SpawnError) noreturn {\n    writeIntFd(fd, @as(ErrInt, @intFromError(err))) catch {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "forkChildErrReport",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeIntFd from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn writeIntFd(fd: i32, value: ErrInt) !void {\n    const file: File = .{ .handle = fd }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "writeIntFd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readIntFd from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn readIntFd(fd: i32) !ErrInt {\n    const file: File = .{ .handle = fd }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "readIntFd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowsCreateProcess from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn windowsCreateProcess(\n    app_name: [*:0]u16,\n    cmd_line: [*:0]u16,\n    envp_ptr: ?[*]u16,\n    cwd_ptr: ?[*:0]u16,\n    lpStartupInfo: *windows.STARTUPINFOW,\n    lpProcessInformation: *windows.PROCESS_INFORMATION,\n) !void {\n    // TODO the docs for environment pointer say:\n    // > A pointer to the environment block for the new process. If this parameter\n    // > is NULL, the new process uses the environment of the calling process.\n    // > ...\n    // > An environment block can contain either Unicode or ANSI characters. If\n    // > the environment block pointed to by lpEnvironment contains Unicode\n    // > characters, be sure that dwCreationFlags includes CREATE_UNICODE_ENVIRONMENT.\n    // > If this parameter is NULL and the environment block of the parent process\n    // > contains Unicode characters, you must also ensure that dwCreationFlags\n    // > includes CREATE_UNICODE_ENVIRONMENT.\n    // This seems to imply that we have to somehow know whether our process parent passed\n    // CREATE_UNICODE_ENVIRONMENT if we want to pass NULL for the environment parameter.\n    // Since we do not know this information that would imply that we must not pass NULL\n    // for the parameter.\n    // However this would imply that programs compiled with -DUNICODE could not pass\n    // environment variables to programs that were not, which seems unlikely.\n    // More investigation is needed.\n    return windows.CreateProcessW(\n        app_name,\n        cmd_line,\n        null,\n        null,\n        windows.TRUE,\n        windows.CREATE_UNICODE_ENVIRONMENT,\n        @as(?*anyopaque, @ptrCast(envp_ptr)),\n        cwd_ptr,\n        lpStartupInfo,\n        lpProcessInformation,\n    );\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "windowsCreateProcess",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowsMakePipeIn from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn windowsMakePipeIn(rd: *?windows.HANDLE, wr: *?windows.HANDLE, sattr: *const windows.SECURITY_ATTRIBUTES) !void {\n    var rd_h: windows.HANDLE = undefined;\n    var wr_h: windows.HANDLE = undefined;\n    try windows.CreatePipe(&rd_h, &wr_h, sattr);\n    errdefer windowsDestroyPipe(rd_h, wr_h);\n    try windows.SetHandleInformation(wr_h, windows.HANDLE_FLAG_INHERIT, 0);\n    rd.* = rd_h;\n    wr.* = wr_h;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "windowsMakePipeIn",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowsDestroyPipe from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn windowsDestroyPipe(rd: ?windows.HANDLE, wr: ?windows.HANDLE) void {\n    if (rd) |h| posix.close(h);\n    if (wr) |h| posix.close(h);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "windowsDestroyPipe",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowsMakeAsyncPipe from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn windowsMakeAsyncPipe(rd: *?windows.HANDLE, wr: *?windows.HANDLE, sattr: *const windows.SECURITY_ATTRIBUTES) !void {\n    var tmp_bufw: [128]u16 = undefined;\n\n    // Anonymous pipes are built upon Named pipes.\n    // https://docs.microsoft.com/en-us/windows/win32/api/namedpipeapi/nf-namedpipeapi-createpipe\n    // Asynchronous (overlapped) read and write operations are not supported by anonymous pipes.\n    // https://docs.microsoft.com/en-us/windows/win32/ipc/anonymous-pipe-operations\n    const pipe_path = blk: {\n        var tmp_buf: [128]u8 = undefined;\n        // Forge a random path for the pipe.\n        const pipe_path = std.fmt.bufPrintZ(\n            &tmp_buf,\n            \"\\\\\\\\.\\\\pipe\\\\zig-childprocess-{d}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "windowsMakeAsyncPipe",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowsCreateProcessSupportsExtension from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn windowsCreateProcessSupportsExtension(ext: []const u16) ?WindowsExtension {\n    if (ext.len != 4) return null;\n    const State = enum {\n        start,\n        dot,\n        b,\n        ba,\n        c,\n        cm,\n        co,\n        e,\n        ex,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "windowsCreateProcessSupportsExtension",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn init(allocator: mem.Allocator, argv: []const []const u8) WindowsCommandLineCache {\n        return .{\n            .allocator = allocator,\n            .argv = argv,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn deinit(self: *WindowsCommandLineCache) void {\n        if (self.cmd_line) |cmd_line| self.allocator.free(cmd_line);\n        if (self.script_cmd_line) |script_cmd_line| self.allocator.free(script_cmd_line);\n        if (self.cmd_exe_path) |cmd_exe_path| self.allocator.free(cmd_exe_path);\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to commandLine from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn commandLine(self: *WindowsCommandLineCache) ![:0]u16 {\n        if (self.cmd_line == null) {\n            self.cmd_line = try argvToCommandLineWindows(self.allocator, self.argv);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "commandLine",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scriptCommandLine from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn scriptCommandLine(self: *WindowsCommandLineCache, script_path: []const u16) ![:0]u16 {\n        if (self.script_cmd_line) |v| self.allocator.free(v);\n        self.script_cmd_line = try argvToScriptCommandLineWindows(\n            self.allocator,\n            script_path,\n            self.argv[1..],\n        );\n        return self.script_cmd_line.?;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "scriptCommandLine",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cmdExePath from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn cmdExePath(self: *WindowsCommandLineCache) ![:0]u16 {\n        if (self.cmd_exe_path == null) {\n            self.cmd_exe_path = try windowsCmdExePath(self.allocator);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "cmdExePath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowsCmdExePath from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn windowsCmdExePath(allocator: mem.Allocator) error{ OutOfMemory, Unexpected }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "windowsCmdExePath",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to argvToCommandLineWindows from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn argvToCommandLineWindows(\n    allocator: mem.Allocator,\n    argv: []const []const u8,\n) ArgvToCommandLineError![:0]u16 {\n    var buf = std.ArrayList(u8).init(allocator);\n    defer buf.deinit();\n\n    if (argv.len != 0) {\n        const arg0 = argv[0];\n\n        // The first argument must be quoted if it contains spaces or ASCII control characters\n        // (excluding DEL). It also follows special quoting rules where backslashes have no special\n        // interpretation, which makes it impossible to pass certain first arguments containing\n        // double quotes to a child process without characters from the first argument leaking into\n        // subsequent ones (which could have security implications).\n        //\n        // Empty arguments technically don't need quotes, but we quote them anyway for maximum\n        // compatibility with different implementations of the 'CommandLineToArgvW' algorithm.\n        //\n        // Double quotes are illegal in paths on Windows, so for the sake of simplicity we reject\n        // all first arguments containing double quotes, even ones that we could theoretically\n        // serialize in unquoted form.\n        var needs_quotes = arg0.len == 0;\n        for (arg0) |c| {\n            if (c <= ' ') {\n                needs_quotes = true;\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "argvToCommandLineWindows",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to testArgvToCommandLineWindows from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn testArgvToCommandLineWindows(argv: []const []const u8, expected_cmd_line: []const u8) !void {\n    const cmd_line_w = try argvToCommandLineWindows(std.testing.allocator, argv);\n    defer std.testing.allocator.free(cmd_line_w);\n\n    const cmd_line = try unicode.wtf16LeToWtf8Alloc(std.testing.allocator, cmd_line_w);\n    defer std.testing.allocator.free(cmd_line);\n\n    try std.testing.expectEqualStrings(expected_cmd_line, cmd_line);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "testArgvToCommandLineWindows",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to argvToScriptCommandLineWindows from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "fn argvToScriptCommandLineWindows(\n    allocator: mem.Allocator,\n    /// Path to the `.bat`/`.cmd` script. If this path is relative, it is assumed to be relative to the CWD.\n    /// The script must have been verified to exist at this path before calling this function.\n    script_path: []const u16,\n    /// Arguments, not including the script name itself. Expected to be encoded as WTF-8.\n    script_args: []const []const u8,\n) ArgvToScriptCommandLineError![:0]u16 {\n    var buf = try std.ArrayList(u8).initCapacity(allocator, 64);\n    defer buf.deinit();\n\n    // `/d` disables execution of AutoRun commands.\n    // `/e:ON` and `/v:OFF` are needed for BatBadBut mitigation:\n    // > If delayed expansion is enabled via the registry value DelayedExpansion,\n    // > it must be disabled by explicitly calling cmd.exe with the /V:OFF option.\n    // > Escaping for % requires the command extension to be enabled.\n    // > If it’s disabled via the registry value EnableExtensions, it must be enabled with the /E:ON option.\n    // https://flatt.tech/research/posts/batbadbut-you-cant-securely-execute-commands-on-windows/\n    buf.appendSliceAssumeCapacity(\"cmd.exe /d /e:ON /v:OFF /c \\\"\");\n\n    // Always quote the path to the script arg\n    buf.appendAssumeCapacity('\"');\n    // We always want the path to the batch script to include a path separator in order to\n    // avoid cmd.exe searching the PATH for the script. This is not part of the arbitrary\n    // command execution mitigation, we just know exactly what script we want to execute\n    // at this point, and potentially making cmd.exe re-find it is unnecessary.\n    //\n    // If the script path does not have a path separator, then we know its relative to CWD and\n    // we can just put `.\\` in the front.\n    if (mem.indexOfAny(u16, script_path, &[_]u16{ mem.nativeToLittle(u16, '\\\\'), mem.nativeToLittle(u16, '/') }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "function",
+      "name": "argvToScriptCommandLineWindows",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ResourceUsageStatistics from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub const ResourceUsageStatistics = struct {\n    rusage: @TypeOf(rusage_init) = rusage_init,\n\n    /// Returns the peak resident set size of the child process, in bytes,\n    /// if available.\n    pub inline fn getMaxRss(rus: ResourceUsageStatistics) ?usize {\n        switch (native_os) {\n            .linux => {\n                if (rus.rusage) |ru| {\n                    return @as(usize, @intCast(ru.maxrss)) * 1024;\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "struct",
+      "name": "ResourceUsageStatistics",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RunResult from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "pub const RunResult = struct {\n    term: Term,\n    stdout: []u8,\n    stderr: []u8,\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "struct",
+      "name": "RunResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to WindowsCommandLineCache from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const WindowsCommandLineCache = struct {\n    cmd_line: ?[:0]u16 = null,\n    script_cmd_line: ?[:0]u16 = null,\n    cmd_exe_path: ?[:0]u16 = null,\n    argv: []const []const u8,\n    allocator: mem.Allocator,\n\n    fn init(allocator: mem.Allocator, argv: []const []const u8) WindowsCommandLineCache {\n        return .{\n            .allocator = allocator,\n            .argv = argv,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "struct",
+      "name": "WindowsCommandLineCache",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to child_err from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const child_err: SpawnError = @errorCast(@errorFromInt(child_err_int));",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "child_err",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to res from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const res: posix.WaitPidResult = res: {\n        if (self.request_resource_usage_statistics) {\n            switch (native_os) {\n                .linux, .macos, .ios => {\n                    var ru: posix.rusage = undefined;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "res",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pipe_flags from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const pipe_flags: posix.O = .{ .CLOEXEC = true };",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "pipe_flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to prog_pipe from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const prog_pipe: [2]posix.fd_t = p: {\n        if (self.progress_node.index == .none) {\n            break :p .{ -1, -1 };",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "prog_pipe",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to envp from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const envp: [*:null]const ?[*:0]const u8 = m: {\n        const prog_fd: i32 = if (prog_pipe[1] == -1) -1 else prog_fileno;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "envp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to err_pipe from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const err_pipe: [2]posix.fd_t = try posix.pipe2(.{ .CLOEXEC = true });",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "err_pipe",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pid from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const pid: i32 = @intCast(pid_result);",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "pid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to app_dirname_w from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const app_dirname_w: ?[:0]u16 = x: {\n        if (maybe_app_dirname_wtf8) |app_dirname_wtf8| {\n            break :x try unicode.wtf8ToWtf16LeAllocZ(self.allocator, app_dirname_wtf8);",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "app_dirname_w",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to PATH from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const PATH: [:0]const u16 = process.getenvW(unicode.utf8ToUtf16LeStringLiteral(\"PATH\")) orelse &[_:0]u16{};",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "PATH",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to PATHEXT from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const PATHEXT: [:0]const u16 = process.getenvW(unicode.utf8ToUtf16LeStringLiteral(\"PATHEXT\")) orelse &[_:0]u16{};",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "PATHEXT",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to file from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const file: File = .{ .handle = fd };",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "file",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to file from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/Child.zig",
+    "response": "const file: File = .{ .handle = fd };",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/Child.zig",
+      "type": "const",
+      "name": "file",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn init(alloc: Allocator) !Self {\n        return Self{\n            .strings = try strings.Cache.init(alloc),\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn deinit(self: *Self, alloc: Allocator) void {\n        self.breakpoints.deinit(alloc);\n\n        self.clearAndFreeWatchExpressions(alloc);\n        self.watch_expressions.deinit(alloc);\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextBreakpointID from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn nextBreakpointID(self: *Self) types.BID {\n        return types.BID.from(self.max_breakpoint_id.fetchAdd(1, .seq_cst));\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "nextBreakpointID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addWatchExpression from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn addWatchExpression(self: *Self, alloc: Allocator, expression: String) Allocator.Error!void {\n        const z = trace.zone(@src());\n        defer z.end();\n\n        const e = try strings.clone(alloc, expression);\n        errdefer alloc.free(e);\n\n        try self.watch_expressions.append(alloc, e);\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "addWatchExpression",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clearAndFreeWatchExpressions from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn clearAndFreeWatchExpressions(self: *Self, alloc: Allocator) void {\n        const z = trace.zone(@src());\n        defer z.end();\n\n        for (self.watch_expressions.items) |e| alloc.free(e);\n        self.watch_expressions.clearAndFree(alloc);\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "clearAndFreeWatchExpressions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn init(alloc: Allocator, child: Child) Self {\n        return .{\n            .child = child,\n            .paused_arena = ArenaAllocator.init(alloc),\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clearAndFreePauseData from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn clearAndFreePauseData(self: *Self) void {\n        _ = self.paused_arena.reset(.free_all);\n        self.paused = null;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "clearAndFreePauseData",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn init(tsa: *ThreadSafeAllocator) !Self {\n        return Self{\n            .state = try State.init(tsa.allocator()),\n            .target_arena = ArenaAllocator.init(tsa.allocator()),\n            .subordinate_arena = ArenaAllocator.init(tsa.allocator()),\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn deinit(self: *Self, alloc: Allocator) void {\n        if (self.subordinate) |*sub| {\n            sub.clearAndFreePauseData();\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to DebuggerType from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn DebuggerType(comptime AdapterType: anytype) type {\n    return struct {\n        const Self = @This();\n\n        // Is a ThreadSafeAllocator under the hood\n        perm_alloc: Allocator,\n\n        adapter: *AdapterType = undefined,\n\n        data: Data,\n        file_cache: *file.Cache,\n\n        requests: Queue(proto.Request),\n        responses: Queue(proto.Response),\n\n        pub fn init(thread_safe_alloc: *ThreadSafeAllocator, file_cache: *file.Cache) !*Self {\n            const q_timeout = time.ns_per_ms * 10;\n\n            const perm_alloc = thread_safe_alloc.allocator();\n            const self = try perm_alloc.create(Self);\n            errdefer perm_alloc.destroy(self);\n\n            self.* = .{\n                .perm_alloc = thread_safe_alloc.allocator(),\n                .data = try Data.init(thread_safe_alloc),\n                .file_cache = file_cache,\n                .requests = Queue(proto.Request).init(\n                    thread_safe_alloc,\n                    .{ .timeout_ns = q_timeout }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "DebuggerType",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "pub fn deinit(self: *Self) void {\n            self.data.state.shutting_down.store(true, .seq_cst);\n\n            self.forceKillSubordinate();\n\n            // send a poison pill to the serveRequests loop, even\n            // if other callers have already sent a QuitRequest\n            self.enqueue(proto.QuitRequest{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to shuttingDown from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "pub fn shuttingDown(self: *Self) bool {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            return self.data.state.shutting_down.load(.seq_cst);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "shuttingDown",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serveRequestsForever from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "pub fn serveRequestsForever(self: *Self) !Thread {\n            self.data.state.shutdown_wg.start();\n            const thread = try Thread.spawn(.{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "serveRequestsForever",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serveRequests from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn serveRequests(self: *Self) void {\n            trace.initThread();\n            defer trace.deinitThread();\n\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer self.data.state.shutdown_wg.finish();\n\n            self.adapter.controller_thread_id.store(Thread.getCurrentId(), .seq_cst);\n\n            var scratch_arena = ArenaAllocator.init(self.perm_alloc);\n            defer scratch_arena.deinit();\n            const scratch = scratch_arena.allocator();\n\n            var done = false;\n            while (!done) {\n                const request = self.requests.get() catch continue;\n                logRequest(\"async\", request);\n\n                switch (request) {\n                    .quit => {\n                        self.data.state.shutting_down.store(true, .seq_cst);\n                        done = true;\n                    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "serveRequests",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to logRequest from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn logRequest(comptime loc: String, req: anytype) void {\n            trace.message(@tagName(req));\n\n            switch (req) {\n                // ignore these specific requests that happen too frequently\n                .get_state => log.debugf(\"received {s}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "logRequest",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enqueue from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "pub fn enqueue(self: *Self, req: anytype) void {\n            self.enqueueRequest(req.req());\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "enqueue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enqueueRequest from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "pub fn enqueueRequest(self: *Self, req: proto.Request) void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            trace.message(@tagName(req));\n\n            self.requests.put(req) catch |err| {\n                log.errf(\"unable to enqueue command {s}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "enqueueRequest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleRequest from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "pub fn handleRequest(self: *Self, comptime respT: anytype, req: anytype) !respT {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            logRequest(\"sync\", req.req());\n\n            switch (req.req()) {\n                .get_state => |cmd| return proto.GetStateResponse{\n                    .state = try self.getStateSnapshot(cmd),\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "handleRequest",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendMessage from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn sendMessage(self: *Self, comptime level: proto.MessageLevel, comptime format: String, args: anytype) void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            switch (level) {\n                .debug => log.debugf(format, args),\n                .info => log.infof(format, args),\n                .warning => log.warnf(format, args),\n                .@\"error\" => log.errf(format, args),\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "sendMessage",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendErr from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn sendErr(self: *Self, comptime format: String, args: anytype) void {\n            self.sendMessage(.@\"error\", format, args);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "sendErr",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to forceKillSubordinate from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn forceKillSubordinate(self: *Self) void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            self.resetSubordinateState();\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "forceKillSubordinate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to resetSubordinateState from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn resetSubordinateState(self: *Self) void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            self.adapter.reset();\n\n            if (self.data.subordinate == null) return;\n            var sub = self.data.subordinate.?;\n\n            sub.child.extremeKillPosix() catch {}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "resetSubordinateState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stateUpdated from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "pub fn stateUpdated(self: *Self) void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const resp = proto.StateUpdatedResponse{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "stateUpdated",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sendResetResponse from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn sendResetResponse(self: *Self) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer self.stateUpdated();\n\n            const reset = proto.ResetResponse{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "sendResetResponse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadDebugSymbolsAsync from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn loadDebugSymbolsAsync(self: *Self, req: proto.LoadSymbolsRequest) !void {\n            self.data.state.shutdown_wg.start();\n            const thread = try Thread.spawn(.{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "loadDebugSymbolsAsync",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadDebugSymbolsSync from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn loadDebugSymbolsSync(self: *Self, req: proto.LoadSymbolsRequest) void {\n            trace.initThread();\n            defer trace.deinitThread();\n\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const start = time.microTimestamp();\n            defer {\n                const end = time.microTimestamp();\n                const diff: f32 = @floatFromInt(end - start);\n                log.debugf(\"debug symbols loaded in {d:.3}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "loadDebugSymbolsSync",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadDebugSymbols from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn loadDebugSymbols(self: *Self, req: proto.LoadSymbolsRequest) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer self.data.state.shutdown_wg.finish();\n            defer self.stateUpdated();\n\n            {\n                self.data.mu.lock();\n                defer self.data.mu.unlock();\n\n                if (self.data.subordinate != null) {\n                    log.warn(\"not reloading debug symbols because the subordinate is already running\");\n                    return;\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "loadDebugSymbols",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to launchSubordinate from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn launchSubordinate(\n            self: *Self,\n            scratch: Allocator,\n            req: proto.LaunchSubordinateRequest,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer log.flush();\n            defer self.stateUpdated();\n\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            if (self.data.subordinate != null) {\n                self.sendMessage(.warning, \"not launching subordinate because it is already running\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "launchSubordinate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to captureOutput from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn captureOutput(self: *Self, reader: anytype) void {\n            trace.initThread();\n            defer trace.deinitThread();\n\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer self.data.state.shutdown_wg.finish();\n\n            while (true) {\n                var buf = [_]u8{0}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "captureOutput",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to killSubordinate from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn killSubordinate(self: *Self, _: proto.KillSubordinateRequest) !void {\n            // @ROBUSTNESS (jrc): there is a potential memory leak here between stopping the process\n            // and resetting its self.responses buffer. We should explicitly wait for all suborindate\n            // threads (i.e. captureOutput) to shut down before calling self.resetSubordinateState.\n            // This leak can be reproduced by spawning a subordinate that prints as fast as it can in\n            // an infinite loop.\n            //\n            // In general, I think the captureOutput thread could use a refactor. Perhaps it's wrong\n            // to use the response queue to pass program output at all since it can be very high-volume.\n            self.forceKillSubordinate();\n\n            {\n                self.data.mu.lock();\n                defer self.data.mu.unlock();\n                self.resetSubordinateState();\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "killSubordinate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateBreakpoint from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn updateBreakpoint(\n            self: *Self,\n            scratch: Allocator,\n            req: proto.UpdateBreakpointRequest,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer self.stateUpdated();\n\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            const bp: ?types.Breakpoint = b: {\n                const bp_ndx: ?usize = for (self.data.state.breakpoints.items, 0..) |bp, ndx| {\n                    switch (req.loc) {\n                        .bid => |bid| if (bid == bp.bid) break ndx,\n                        .addr => |addr| if (addr == bp.addr) break ndx,\n                        .source => |r| {\n                            if (bp.source_location) |loc| {\n                                if (loc.file_hash == r.file_hash and loc.line == r.line) {\n                                    break ndx;\n                                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "updateBreakpoint",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addBreakpoint from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn addBreakpoint(\n            self: *Self,\n            scratch: Allocator,\n            req: proto.UpdateBreakpointRequest,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            var source_loc: ?types.SourceLocation = null;\n            const base_addr = switch (req.loc) {\n                .addr => |addr| addr,\n                .source => |r| blk: {\n                    const addr = self.addressForSourceLine(r) orelse return error.BreakpointAddrNotFound;\n                    source_loc = .{\n                        .file_hash = r.file_hash,\n                        .line = r.line,\n                        .column = 0,\n                    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "addBreakpoint",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteBreakpoint from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn deleteBreakpoint(self: *Self, bp: types.Breakpoint) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            if (self.data.subordinate != null) {\n                try self.unsetBreakpointInAllThreads(bp);\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "deleteBreakpoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toggleBreakpoint from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn toggleBreakpoint(\n            self: *Self,\n            scratch: Allocator,\n            req: proto.ToggleBreakpointRequest,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer self.stateUpdated();\n\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            if (self.data.subordinate == null) return;\n\n            const bp = blk: {\n                for (self.data.state.breakpoints.items) |*bp| {\n                    if (req.id != bp.bid) continue;\n\n                    bp.flags.active = !bp.flags.active;\n                    break :blk bp;\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "toggleBreakpoint",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to applyBreakpointToAllThreads from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn applyBreakpointToAllThreads(\n            self: *Self,\n            scratch: Allocator,\n            bp: *types.Breakpoint,\n            launching_subordinate: bool,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const sub = self.data.subordinate.?;\n            const subordinate_pid = types.PID.from(sub.child.id);\n\n            const should_continue = blk: {\n                // the subordinate has been launched but is already paused before its first instruction\n                if (launching_subordinate) break :blk false;\n\n                // execution is already paused, nothing to do\n                if (sub.paused != null) break :blk false;\n\n                // the subordinate has been started and is not already paused\n                for (sub.threads.items) |thread_pid| {\n                    self.adapter.temporarilyPauseSubordinate(subordinate_pid, thread_pid);\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "applyBreakpointToAllThreads",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to applyInternalBreakpoints from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn applyInternalBreakpoints(\n            self: *Self,\n            scratch: Allocator,\n            pid: types.PID,\n            addrs: []types.Address,\n            call_frame_addr: ?types.Address,\n            max_stack_frames: ?usize,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            assert(self.data.subordinate != null);\n            assert(self.data.subordinate.?.paused != null);\n\n            var bps = try ArrayList(types.Breakpoint).initCapacity(scratch, addrs.len);\n            var tbps = try ArrayList(types.ThreadBreakpoint).initCapacity(scratch, addrs.len);\n            for (addrs) |addr| {\n                var bp = types.Breakpoint{\n                    .flags = .{\n                        .active = true,\n                        .internal = true,\n                    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "applyInternalBreakpoints",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unsetBreakpointInAllThreads from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn unsetBreakpointInAllThreads(self: *Self, bp: types.Breakpoint) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const sub = self.data.subordinate.?;\n            const subordinate_pid = types.PID.from(sub.child.id);\n\n            const should_continue = blk: {\n                if (sub.paused != null) {\n                    break :blk false;\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "unsetBreakpointInAllThreads",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clearInternalBreakpoints from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn clearInternalBreakpoints(self: *Self, scratch: Allocator) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const internal_bps = blk: {\n                var bps = ArrayList(types.Breakpoint).init(scratch);\n                var to_remove = ArrayList(usize).init(scratch);\n                for (self.data.state.breakpoints.items, 0..) |bp, ndx| {\n                    if (!bp.flags.internal) continue;\n\n                    try bps.append(bp);\n                    try to_remove.append(ndx);\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "clearInternalBreakpoints",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to continueExecution from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn continueExecution(self: *Self, opts: ContinueExecutionOpts) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            //\n            // @SEARCH: CONTEXE\n            //\n            // If we are paused at a breakpoint that we set ourselves (i.e. we trapped because\n            // of an interrupt instruction we set rather than just any old signal), we immediately\n            // back the PC up by one and reset the instruction byte so that way the register view\n            // shows a consistent view of the world to the user. It makes it appear as though we\n            // actually did pause just before the address at the breakpoint was executed.\n            //\n            // Then, later, when we want to continue execution, we single-step to ensure we actually\n            // execute the instruction, reset the instruction to the interrupt instruction, and\n            // then continue execution.\n            //\n\n            if (self.data.subordinate == null) {\n                self.sendMessage(.warning, \"cannot continue execution: subordinate is not running\", .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "continueExecution",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to step from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn step(self: *Self, scratch: Allocator, req: proto.StepRequest) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            // @NOTE (jrc): All step operations must be atomic,\n            // which is why we take a giant critical section\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            if (self.data.subordinate == null) {\n                log.warn(\"cannot step: subordinate is not running\");\n                return;\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "step",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to singleStep from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn singleStep(self: *Self, bpp: BreakpointAndPID) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            try self.adapter.singleStep(bpp.pid);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "singleStep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stepInto from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn stepInto(self: *Self, scratch: Allocator, bpp: BreakpointAndPID) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            //\n            // @SEARCH: STEPINTO\n            //\n            // Single step zero or many times, up to a limit. Each time, check whether\n            // we've hit a known line of source code. If yes, we're done. If we don't\n            // ever hit a known line of source code, perform a step next operation as\n            // if we were still stopped in the function in which we started.\n            //\n\n            const start_regs = try self.adapter.getRegisters(bpp.pid);\n            const start_pc = start_regs.pc();\n            const load_addr = self.data.subordinate.?.load_addr;\n\n            var found_line_of_code = false;\n            defer {\n                if (!found_line_of_code) {\n                    // We did not find a known line of code, so pretend as though we just did a step\n                    // next in the function in which we started. We have to do this in the defer because\n                    // we have to reset the breakpoint back to its original value before calling\n                    // step next, since step next continues execution.\n                    self.stepOverForPC(scratch, bpp, start_pc) catch |err| {\n                        log.errf(\"unable to perform subordinate step: {!}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "stepInto",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stepOutOf from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn stepOutOf(self: *Self, scratch: Allocator, bpp: BreakpointAndPID) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            //\n            // @SEARCH: STEPOUT\n            //\n            // Find the next source instruction past the caller's frame base address, then continue\n            // until it is hit. This is equivalent to \"pop up the stack one, and step once\". Note\n            // that in the case of recursive functions, this is not sufficient because we may be at\n            // depth 2, but may be recursing until depth 10, which means that the first time we hit\n            // the breakpoint at the base frame address, we will be at max depth. So, when we hit\n            // those breakpoints, we repeatedly ignore them until we're at the correct depth, or we\n            // hit some other breakpoint along the way.\n            //\n\n            const frames = self.data.subordinate.?.paused.?.stack_frames;\n            if (frames.len > 1) {\n                // attempt to find the next line of code\n                var addr = frames[1].address;\n                if (self.functionAtAddr(addr)) |func| {\n                    for (func.func.statements) |stmt| {\n                        if (stmt.breakpoint_addr.int() >= addr.int()) {\n                            addr = stmt.breakpoint_addr;\n                            break;\n                        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "stepOutOf",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stepOver from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn stepOver(self: *Self, scratch: Allocator, bpp: BreakpointAndPID) !void {\n            const regs = try self.adapter.getRegisters(bpp.pid);\n            try self.stepOverForPC(scratch, bpp, regs.pc());\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "stepOver",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to stepOverForPC from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn stepOverForPC(self: *Self, scratch: Allocator, bpp: BreakpointAndPID, pc: types.Address) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            //\n            // @SEARCH: STEPOVER\n            // @REF: https://youtu.be/IKnTr7Zms1k?si=WbeW3KT3BT6kQyhV&t=1936\n            //\n            // Step over (also called \"step next\") is implemented as follows:\n            // 1. Set an internal breakpoint on every line of the function on this thread.\n            //    Don't internal set breakpoints on lines that already have user-specified\n            //    breakpoints or statements that come from inlined function calls.\n            // 2. Set an internal breakpoint on the return address on this thread if one\n            //    is not already set in case the function returns to the caller\n            // 3. Set an internal breakpoint on this thread on the last defer function if\n            //    one is not already set and the language has deferred functions\n            //    (What is the point of this one? Re-watch the talk above and figure out\n            //     why this comment is here.)\n            // 4. Reset the breakpoint instruction and continue execution\n            //\n            // Then, the next time a breakpoint is hit, if it belongs to this thread,\n            // ensure that our stack frame has not changed. This stack frame check is\n            // required in the case of recursive functions. If the breakpoint we hit\n            // doesn't belong to this thread, clear all internal thread breakpoints\n            // because we have changed out execution context.\n            //\n\n            // (1)\n            const current_func = self.functionAtAddr(pc) orelse {\n                log.warn(\"cannot step to next line of code because current function is unknown\");\n                return;\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "stepOverForPC",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to shouldSkipInlinedFunctionStatement from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn shouldSkipInlinedFunctionStatement(\n            _: *const types.CompileUnit,\n            _: *const types.SourceStatement,\n            _: types.FunctionNdx,\n        ) !bool {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            // @TODO (jrc): This needs to be re-implemented. We don't parse\n            // inlined functions from DWARF correctly yet, so we need to\n            // do that first.\n\n            return false;\n\n            // const inline_sym = try cu.symbolAt(inlined_ndx);\n            // const inlined_func = switch (inline_sym) {\n            //     .inlined_function => |f| f,\n            //     else => {\n            //         log.errf(\"symbol at ndx {d}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "shouldSkipInlinedFunctionStatement",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addressForSourceLine from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn addressForSourceLine(self: *Self, loc: types.SourceLocation) ?types.Address {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            if (self.data.target) |target| {\n                for (target.compile_units) |cu| {\n                    var addr: ?types.Address = null;\n                    for (cu.sources) |src| {\n                        if (src.file_hash != loc.file_hash) continue;\n\n                        for (src.statements) |stmt| {\n                            if (stmt.line != loc.line) continue;\n\n                            // @NOTE (jrc): we look up the _last_ known breakpoint because there are many entries\n                            // per deferred line of code in Zig, and we usually want the last one. I'm not sure if\n                            // this is intentional or not in Zig though because all those line entires only occur\n                            // in debug builds. I think that we should actually be using all those addresses, but\n                            // types.Breakpoint only has a single address, and it's really nice that it doesn't need\n                            // any allocations, so it makes serialization much easier, so I'm hesitant to add a\n                            // slice to it. Needs more investigation.\n                            addr = stmt.breakpoint_addr;\n                            if (cu.language != .Zig) return addr;\n                        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "addressForSourceLine",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to functionAtAddr from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn functionAtAddr(self: *Self, addr: types.Address) ?struct {\n            cu_ndx: types.CompileUnitNdx,\n            func: types.Function,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "functionAtAddr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sourceForAddress from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn sourceForAddress(self: *Self, addr: types.Address) ?struct {\n            cu_ndx: types.CompileUnitNdx,\n            stmt: types.SourceStatement,\n            loc: types.SourceLocation,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "sourceForAddress",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getStateSnapshot from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn getStateSnapshot(self: *Self, req: proto.GetStateRequest) !types.StateSnapshot {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            //\n            // Copy all non-internal breakpoints\n            //\n\n            var breakpoints = ArrayList(types.Breakpoint).init(req.alloc);\n            errdefer breakpoints.deinit();\n\n            for (self.data.state.breakpoints.items) |bp| {\n                if (bp.flags.internal) continue;\n                try breakpoints.append(bp);\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "getStateSnapshot",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleSubordinateStopped from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn handleSubordinateStopped(self: *Self, scratch: Allocator, req: proto.SubordinateStoppedRequest) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            try self.handleSubordinateStoppedAlreadyLocked(scratch, req);\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "handleSubordinateStopped",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleSubordinateStoppedAlreadyLocked from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn handleSubordinateStoppedAlreadyLocked(self: *Self, scratch: Allocator, req: proto.SubordinateStoppedRequest) !void {\n            defer self.stateUpdated();\n\n            if (self.data.subordinate == null) return;\n\n            // we received a signal that we don't care about, so don't actually pause the debugger\n            if (!req.flags.should_stop_debugger) {\n                try self.continueExecution(.{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "handleSubordinateStoppedAlreadyLocked",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleThreadSpawned from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn handleThreadSpawned(self: *Self, scratch: Allocator, new_pid: types.PID) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            try self.data.subordinate.?.threads.append(\n                self.data.subordinate_arena.allocator(),\n                new_pid,\n            );\n\n            // apply all active breakpoints to the new subordinate thread\n            const load_addr = self.data.subordinate.?.load_addr;\n            var thread_bps = ArrayList(types.ThreadBreakpoint).init(scratch);\n            for (self.data.state.breakpoints.items) |bp| {\n                if (!bp.flags.active) continue;\n\n                // make a copy to avoid modifying the source slice\n                var bp_copy = bp;\n                const tbp = try self.adapter.setBreakpoint(load_addr, &bp_copy, new_pid);\n                try thread_bps.append(tbp);\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "handleThreadSpawned",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleThreadExited from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn handleThreadExited(self: *Self, scratch: Allocator, pid: types.PID) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const sub = &self.data.subordinate.?;\n\n            {\n                // remove all thread breakpoints\n                var ndx: usize = 0;\n                while (ndx < sub.thread_breakpoints.items.len) : (ndx += 1) {\n                    if (sub.thread_breakpoints.items[ndx].pid.neq(pid)) continue;\n\n                    _ = sub.thread_breakpoints.orderedRemove(ndx);\n                    if (ndx > 0) ndx -= 1;\n                }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "handleThreadExited",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unwindStackWithFramePointer from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn unwindStackWithFramePointer(\n            self: *Self,\n            scratch: Allocator,\n            pid: types.PID,\n            registers: *const arch.Registers,\n        ) !types.UnwindResult {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const endianness = builtin.cpu.arch.endian();\n            const data_size = self.data.target.?.addr_size.bytes();\n\n            const sub = self.data.subordinate.?;\n\n            var frame_addr = registers.bp();\n            var return_addr = registers.pc();\n\n            var stack = ArrayList(types.Address).init(scratch);\n            errdefer stack.deinit();\n            try stack.append(return_addr);\n\n            const max = math.pow(usize, 2, 12);\n            for (0..max) |ndx| {\n                const buf = try scratch.alloc(u8, data_size);\n\n                // find the previous frame's PC\n                try self.adapter.peekData(\n                    pid,\n                    sub.load_addr,\n                    frame_addr.add(types.Address.from(data_size)),\n                    buf,\n                );\n                return_addr = types.Address.from(mem.readInt(u64, @ptrCast(buf), endianness));\n                try stack.append(return_addr);\n\n                // find the address of the next stack frame to search for\n                try self.adapter.peekData(pid, sub.load_addr, frame_addr, buf);\n                frame_addr = types.Address.from(mem.readInt(u64, @ptrCast(buf), endianness));\n\n                // we're at the top of the stack\n                if (frame_addr.int() == 0) break;\n\n                assert(ndx < max - 1);\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "unwindStackWithFramePointer",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findHexWindowContents from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn findHexWindowContents(self: *Self) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            defer self.stateUpdated();\n\n            if (self.data.state.hex_window_address == null or\n                self.data.subordinate == null or\n                self.data.subordinate.?.paused == null)\n            {\n                // nothing to do\n                return;\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "findHexWindowContents",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setWatchExpressions from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn setWatchExpressions(\n            self: *Self,\n            scratch: Allocator,\n            req: proto.SetWatchExpressionsRequest,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            // free the items in the request (they're allocated in the request queue's allocator)\n            defer req.deinit(self.requests.alloc);\n\n            defer self.stateUpdated();\n\n            self.data.mu.lock();\n            defer self.data.mu.unlock();\n\n            // clear existing\n            self.data.state.clearAndFreeWatchExpressions(self.perm_alloc);\n\n            // set new\n            for (req.expressions) |e| try self.data.state.addWatchExpression(self.perm_alloc, e);\n\n            // re-calculate watch expressions if the subordinate is paused\n            if (self.data.subordinate != null and self.data.subordinate.?.paused != null) {\n                try self.calculateWatchExpressions(scratch);\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "setWatchExpressions",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calculateWatchExpressions from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn calculateWatchExpressions(self: *Self, scratch: Allocator) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            var res = try ArrayList(types.ExpressionResult).initCapacity(\n                scratch,\n                self.data.state.watch_expressions.items.len,\n            );\n\n            for (self.data.state.watch_expressions.items) |expr| {\n                const watch = self.calculateExpression(scratch, expr) catch continue;\n                res.appendAssumeCapacity(watch);\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "calculateWatchExpressions",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calculateLocalVariables from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn calculateLocalVariables(self: *Self, scratch: Allocator, locals: []String) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            var res = try ArrayList(types.ExpressionResult).initCapacity(scratch, locals.len);\n\n            for (locals) |expr| {\n                const local = self.calculateExpression(scratch, expr) catch continue;\n                res.appendAssumeCapacity(local);\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "calculateLocalVariables",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calculateExpression from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn calculateExpression(self: *Self, scratch: Allocator, expression: String) !types.ExpressionResult {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            var fields = ArrayListUnmanaged(types.ExpressionRenderField).empty;\n\n            log.debugf(\"calculating expression: {s}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "calculateExpression",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderVariableValue from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn renderVariableValue(\n            self: *Self,\n            fields: *ArrayListUnmanaged(types.ExpressionRenderField),\n            pointers: *AutoHashMapUnmanaged(types.Address, types.ExpressionFieldNdx),\n            params: RenderVariableParams,\n        ) !void {\n            const z = trace.zone(@src());\n            defer z.end();\n\n            const var_name = if (self.data.target.?.strings.get(params.variable.name)) |n| n else return;\n            if (var_name.len == 0) return;\n\n            const var_platform_data = switch (builtin.target.os.tag) {\n                .linux => if (params.variable.platform_data.location_expression) |loc|\n                    self.data.target.?.strings.get(loc) orelse \"\"\n                else\n                    \"\",\n\n                else => @compileError(\"build target not supported\"),\n            }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "renderVariableValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to typedefBaseType from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "fn typedefBaseType(self: Self, type_ndx: types.TypeNdx) struct {\n            data_type: types.DataType,\n            data_type_ndx: types.TypeNdx,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "function",
+      "name": "typedefBaseType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to State from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const State = struct {\n    const Self = @This();\n\n    shutdown_wg: WaitGroup = .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "struct",
+      "name": "State",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Subordinate from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const Subordinate = struct {\n    const Self = @This();\n\n    /// The subordinate process. This is essentially a full fork of the zig stdlib for subprocess\n    /// management, but modified to support calling PTRACE_TRACEME before we exec().\n    child: Child,\n\n    /// If the subordinate is a PIE, this is the starting address of the itss virtual\n    /// address space. We add this number to all the breakpoints we set since our\n    /// Breakpoint objects store their address using only what is present in the debug\n    /// symbols and doesn't take in to account the state of the running process. This\n    /// gets a new value every time we launch the subordinate.\n    load_addr: types.Address = types.Address.from(0),\n\n    threads: ArrayListUnmanaged(types.PID) = .empty,\n    thread_breakpoints: ArrayListUnmanaged(types.ThreadBreakpoint) = .empty,\n\n    /// Stores only the data for `paused`\n    paused_arena: ArenaAllocator,\n    /// Describes the state of the subordinate when it has stopped after a trap\n    paused: ?types.PauseData = null,\n\n    can_use_frame_pointer_stack_unwinding: bool = false,\n    has_checked_for_frame_pointer_stack_unwinding: bool = false,\n\n    fn init(alloc: Allocator, child: Child) Self {\n        return .{\n            .child = child,\n            .paused_arena = ArenaAllocator.init(alloc),\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "struct",
+      "name": "Subordinate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FunctionDeclIndex from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const FunctionDeclIndex = struct {\n    compile_unit_ndx: types.CompileUnitNdx,\n    function_ndx: types.FunctionNdx,\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "struct",
+      "name": "FunctionDeclIndex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Data from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const Data = struct {\n    const Self = @This();\n\n    /// This lock is required to be acquired to access any of the fields in this struct\n    mu: Mutex = .{}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "struct",
+      "name": "Data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ContinueExecutionOpts from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const ContinueExecutionOpts = struct {\n            force: bool = true,\n            step_over: bool = false,\n\n            /// If provided, runs continue on only these thread PIDs\n            /// rather than all known threads\n            pids: ?[]const types.PID = null,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "struct",
+      "name": "ContinueExecutionOpts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to BreakpointAndPID from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const BreakpointAndPID = struct {\n            bp: ?types.Breakpoint,\n            pid: types.PID,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "struct",
+      "name": "BreakpointAndPID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RenderVariableParams from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const RenderVariableParams = struct {\n            scratch: Allocator,\n            encoder: encoding.Encoding,\n            cu: *const types.CompileUnit,\n            pid: types.PID,\n            registers: *const arch.Registers,\n            load_addr: types.Address,\n            frame_base: types.Address,\n            func_frame_base: String,\n            variable: types.Variable,\n            expression: String,\n\n            /// This may be populated if we already know the bytes that represent this\n            /// variable (i.e. we're rendering an item in a slice). If it's not populated,\n            /// it follows the OS-specific mechanism to look up variable values.\n            variable_value_buf: ?[]const u8 = null,\n        }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "struct",
+      "name": "RenderVariableParams",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to diff from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const diff: f32 = @floatFromInt(end - start);",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "const",
+      "name": "diff",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to paused from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const paused: ?types.PauseData = blk: {\n                if (self.data.subordinate) |sub| {\n                    if (sub.paused) |paused| {\n                        // perform a full copy to the target allocator\n                        break :blk try paused.copy(req.alloc);",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "const",
+      "name": "paused",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to unwind_res from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const unwind_res: types.UnwindResult = blk: {\n                // unwind with the frame pointer and return if we know we can\n                if (self.data.subordinate.?.can_use_frame_pointer_stack_unwinding) {\n                    log.info(\"unwinding with base pointer\");",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "const",
+      "name": "unwind_res",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to breakpoint from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const breakpoint: ?types.Breakpoint = blk: {\n                for (self.data.state.breakpoints.items) |*bp| {\n                    if (!bp.flags.active) continue;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "const",
+      "name": "breakpoint",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to name from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/debugger.zig",
+    "response": "const name: String = blk: {\n                    if (addr.eqlInt(0)) break :blk types.Unknown;",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/debugger.zig",
+      "type": "const",
+      "name": "name",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to encoder from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C.zig",
+    "response": "pub fn encoder() encoding.Encoding {\n    return encoding.Encoding{\n        .isOpaquePointer = isOpaquePointer,\n        .isString = isString,\n        .renderString = renderString,\n        .isSlice = isSlice,\n        .renderSlice = renderSlice,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C.zig",
+      "type": "function",
+      "name": "encoder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isOpaquePointer from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C.zig",
+    "response": "fn isOpaquePointer(_: *const encoding.Params) bool {\n    return false;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C.zig",
+      "type": "function",
+      "name": "isOpaquePointer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C.zig",
+    "response": "fn isString(params: *const encoding.Params) ?usize {\n    if (params.data_type.form == .pointer and strings.eql(params.base_data_type_name, \"char\")) {\n        // we don't know the length of null-terminated C strings ahead of time\n        return 0;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C.zig",
+      "type": "function",
+      "name": "isString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C.zig",
+    "response": "fn isSlice(_: *const encoding.Params) bool {\n    return false;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C.zig",
+      "type": "function",
+      "name": "isSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C.zig",
+    "response": "fn renderSlice(_: *const encoding.Params) encoding.EncodeVariableError!encoding.RenderSliceResult {\n    unreachable;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C.zig",
+      "type": "function",
+      "name": "renderSlice",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C.zig",
+    "response": "pub fn renderString(\n    params: *const encoding.Params,\n    len: u64,\n) encoding.EncodeVariableError!encoding.RenderStringResult {\n    const addr = types.Address.from(mem.readInt(u64, @ptrCast(params.val), endian));\n\n    var str = ArrayListUnmanaged(u8).empty;\n    var final_len: ?usize = 0;\n\n    const max_str_len = std.math.pow(usize, 2, 12);\n    for (0..max_str_len) |ndx| {\n        var buf = [_]u8{0}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C.zig",
+      "type": "function",
+      "name": "renderString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to encoder from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C3.zig",
+    "response": "pub fn encoder() encoding.Encoding {\n    return encoding.Encoding{\n        .isOpaquePointer = isOpaquePointer,\n        .isString = isString,\n        .renderString = renderString,\n        .isSlice = isSlice,\n        .renderSlice = renderSlice,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C3.zig",
+      "type": "function",
+      "name": "encoder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isOpaquePointer from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C3.zig",
+    "response": "fn isOpaquePointer(params: *const encoding.Params) bool {\n    return strings.eql(params.data_type_name, \"void*\");\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C3.zig",
+      "type": "function",
+      "name": "isOpaquePointer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C3.zig",
+    "response": "fn isString(params: *const encoding.Params) ?u64 {\n    // string slices\n    if (params.data_type.form == .@\"struct\" and strings.eql(params.data_type_name, \"char[]\")) {\n        const res = encoding.readUsizeStructMember(params, \"len\") catch |err| {\n            log.errf(\"unable to read c3 string length: {!}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C3.zig",
+      "type": "function",
+      "name": "isString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C3.zig",
+    "response": "fn renderString(\n    params: *const encoding.Params,\n    len: u64,\n) encoding.EncodeVariableError!encoding.RenderStringResult {\n    const res = try encoding.renderSlice(\"ptr\", \"len\", params);\n\n    const buf = try params.scratch.alloc(u8, res.item_bufs.len);\n    for (res.item_bufs, 0..) |item, ndx| {\n        buf[ndx] = item[0];\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C3.zig",
+      "type": "function",
+      "name": "renderString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C3.zig",
+    "response": "fn isSlice(params: *const encoding.Params) bool {\n    return switch (params.data_type.form) {\n        .@\"struct\" => |strct| strct.members.len == 2 and\n            encoding.memberNameIs(params, strct.members[0].name, \"ptr\") and\n            encoding.memberNameIs(params, strct.members[1].name, \"len\"),\n        else => false,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C3.zig",
+      "type": "function",
+      "name": "isSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/C3.zig",
+    "response": "fn renderSlice(params: *const encoding.Params) encoding.EncodeVariableError!encoding.RenderSliceResult {\n    return encoding.renderSlice(\"ptr\", \"len\", params);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/C3.zig",
+      "type": "function",
+      "name": "renderSlice",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to encoder from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Odin.zig",
+    "response": "pub fn encoder() encoding.Encoding {\n    return encoding.Encoding{\n        .isOpaquePointer = isOpaquePointer,\n        .isString = isString,\n        .renderString = renderString,\n        .isSlice = isSlice,\n        .renderSlice = renderSlice,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Odin.zig",
+      "type": "function",
+      "name": "encoder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isOpaquePointer from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Odin.zig",
+    "response": "fn isOpaquePointer(params: *const encoding.Params) bool {\n    return strings.eql(params.data_type_name, \"rawptr\");\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Odin.zig",
+      "type": "function",
+      "name": "isOpaquePointer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Odin.zig",
+    "response": "fn isString(params: *const encoding.Params) ?u64 {\n    // null-terminated c strings\n    if (params.data_type.form == .pointer and strings.eql(params.data_type_name, \"cstring\")) {\n        return 0;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Odin.zig",
+      "type": "function",
+      "name": "isString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Odin.zig",
+    "response": "fn renderString(\n    params: *const encoding.Params,\n    len: u64,\n) encoding.EncodeVariableError!encoding.RenderStringResult {\n    return try C.renderString(params, len);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Odin.zig",
+      "type": "function",
+      "name": "renderString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Odin.zig",
+    "response": "fn isSlice(params: *const encoding.Params) bool {\n    return switch (params.data_type.form) {\n        .@\"struct\" => |strct| strct.members.len == 2 and\n            encoding.memberNameIs(params, strct.members[0].name, \"data\") and\n            encoding.memberNameIs(params, strct.members[1].name, \"len\"),\n        else => false,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Odin.zig",
+      "type": "function",
+      "name": "isSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Odin.zig",
+    "response": "fn renderSlice(params: *const encoding.Params) encoding.EncodeVariableError!encoding.RenderSliceResult {\n    return encoding.renderSlice(\"data\", \"len\", params);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Odin.zig",
+      "type": "function",
+      "name": "renderSlice",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to encoder from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Unknown.zig",
+    "response": "pub fn encoder() encoding.Encoding {\n    return encoding.Encoding{\n        .isOpaquePointer = isOpaquePointer,\n        .isString = isString,\n        .renderString = renderString,\n        .isSlice = isSlice,\n        .renderSlice = renderSlice,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Unknown.zig",
+      "type": "function",
+      "name": "encoder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isOpaquePointer from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Unknown.zig",
+    "response": "fn isOpaquePointer(_: *const encoding.Params) bool {\n    return false;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Unknown.zig",
+      "type": "function",
+      "name": "isOpaquePointer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Unknown.zig",
+    "response": "fn isString(_: *const encoding.Params) ?usize {\n    return null;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Unknown.zig",
+      "type": "function",
+      "name": "isString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Unknown.zig",
+    "response": "fn isSlice(_: *const encoding.Params) bool {\n    return false;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Unknown.zig",
+      "type": "function",
+      "name": "isSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Unknown.zig",
+    "response": "fn renderSlice(_: *const encoding.Params) encoding.EncodeVariableError!encoding.RenderSliceResult {\n    unreachable;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Unknown.zig",
+      "type": "function",
+      "name": "renderSlice",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Unknown.zig",
+    "response": "fn renderString(_: *const encoding.Params, _: u64) encoding.EncodeVariableError!encoding.RenderStringResult {\n    unreachable;\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Unknown.zig",
+      "type": "function",
+      "name": "renderString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to encoder from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Zig.zig",
+    "response": "pub fn encoder() encoding.Encoding {\n    return encoding.Encoding{\n        .isOpaquePointer = isOpaquePointer,\n        .isString = isString,\n        .renderString = renderString,\n        .isSlice = isSlice,\n        .renderSlice = renderSlice,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Zig.zig",
+      "type": "function",
+      "name": "encoder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isOpaquePointer from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Zig.zig",
+    "response": "fn isOpaquePointer(params: *const encoding.Params) bool {\n    return strings.eql(params.data_type_name, \"*anyopaque\");\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Zig.zig",
+      "type": "function",
+      "name": "isOpaquePointer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Zig.zig",
+    "response": "fn isString(params: *const encoding.Params) ?u64 {\n    const name = params.data_type_name;\n\n    // string slices\n    if (params.data_type.form == .@\"struct\" and strings.eql(params.data_type_name, \"[]u8\")) {\n        if (encoding.readUsizeStructMember(params, \"len\") catch null) |len| return len.data;\n        return null;\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Zig.zig",
+      "type": "function",
+      "name": "isString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderString from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Zig.zig",
+    "response": "fn renderString(\n    params: *const encoding.Params,\n    len: u64,\n) encoding.EncodeVariableError!encoding.RenderStringResult {\n    const addr = types.Address.from(mem.readInt(u64, @ptrCast(params.val), encoding.endian));\n\n    var str: ArrayListUnmanaged(u8) = .empty;\n    const max_str_len = math.pow(usize, 2, 12);\n    for (0..max_str_len) |ndx| {\n        var buf = [_]u8{0}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Zig.zig",
+      "type": "function",
+      "name": "renderString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Zig.zig",
+    "response": "fn isSlice(params: *const encoding.Params) bool {\n    return switch (params.data_type.form) {\n        .@\"struct\" => |strct| strct.members.len == 2 and\n            encoding.memberNameIs(params, strct.members[0].name, \"ptr\") and\n            encoding.memberNameIs(params, strct.members[1].name, \"len\"),\n        else => false,\n    }",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Zig.zig",
+      "type": "function",
+      "name": "isSlice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderSlice from jcalabro/uscope",
+    "context": "Repository: jcalabro/uscope (1003 ⭐)\nFile: src/debugger/encoding/Zig.zig",
+    "response": "fn renderSlice(params: *const encoding.Params) encoding.EncodeVariableError!encoding.RenderSliceResult {\n    return encoding.renderSlice(\"ptr\", \"len\", params);\n}",
+    "metadata": {
+      "repo": "jcalabro/uscope",
+      "stars": 1003,
+      "file": "src/debugger/encoding/Zig.zig",
+      "type": "function",
+      "name": "renderSlice",
+      "difficulty": "medium"
+    }
+  }
+]

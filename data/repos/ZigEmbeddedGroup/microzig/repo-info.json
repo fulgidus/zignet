@@ -1,0 +1,9 @@
+{
+  "name": "microzig",
+  "fullName": "ZigEmbeddedGroup/microzig",
+  "owner": "ZigEmbeddedGroup",
+  "stars": 1852,
+  "description": "MicroZig is a toolbox for building embedded applications in Zig.",
+  "url": "https://github.com/ZigEmbeddedGroup/microzig",
+  "defaultBranch": "main"
+}

@@ -1,0 +1,1302 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    b.reference_trace = 256;\n\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub fn create(b: *std.Build, url: string, commit: string) *GitExactStep {\n            var result = b.allocator.create(GitExactStep) catch @panic(\"memory\");\n            result.* = GitExactStep{\n                .step = std.Build.Step.init(.{\n                    .id = .custom,\n                    .name = b.fmt(\"git clone {s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to make from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "fn make(step: *std.Build.Step, options: std.Build.Step.MakeOptions) !void {\n            _ = step;\n            _ = options;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "make",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fetch from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub fn fetch(exe: *std.Build.Step.Compile) *std.Build.Step {\n    const b = exe.step.owner;\n    const step = b.step(\"fetch\", \"\");\n    inline for (comptime std.meta.declarations(package_data)) |decl| {\n          const path = &@field(package_data, decl.name).entry;\n          const root = if (@field(package_data, decl.name).store) |_| b.cache_root.path.? else \".\";\n          if (path.* != null) path.* = b.fmt(\"{s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "fetch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to trimPrefix from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "fn trimPrefix(comptime T: type, haystack: []const T, needle: []const T) []const T {\n    if (std.mem.startsWith(T, haystack, needle)) {\n        return haystack[needle.len .. haystack.len];\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "trimPrefix",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flip from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "fn flip(foo: anytype) !void {\n    _ = foo catch return;\n    return error.ExpectedError;\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "flip",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addAllTo from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub fn addAllTo(exe: *std.Build.Step.Compile) void {\n    checkMinZig(builtin.zig_version, exe);\n    const fetch_step = fetch(exe);\n    @setEvalBranchQuota(1_000_000);\n    for (packages) |pkg| {\n        const module = pkg.module(exe, fetch_step);\n        exe.root_module.addImport(pkg.name, module);\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "addAllTo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to module from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub fn module(self: *Package, exe: *std.Build.Step.Compile, fetch_step: *std.Build.Step) *std.Build.Module {\n        if (self.module_memo) |cached| {\n            return cached;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "module",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkMinZig from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "fn checkMinZig(current: std.SemanticVersion, exe: *std.Build.Step.Compile) void {\n    const min = std.SemanticVersion.parse(\"0.14.0\") catch return;\n    if (current.order(min).compare(.lt)) @panic(exe.step.owner.fmt(\"Your Zig version v{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "function",
+      "name": "checkMinZig",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to GitExactStep from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub const GitExactStep = struct {\n    step: std.Build.Step,\n    builder: *std.Build,\n    url: string,\n    commit: string,\n\n        pub fn create(b: *std.Build, url: string, commit: string) *GitExactStep {\n            var result = b.allocator.create(GitExactStep) catch @panic(\"memory\");\n            result.* = GitExactStep{\n                .step = std.Build.Step.init(.{\n                    .id = .custom,\n                    .name = b.fmt(\"git clone {s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "struct",
+      "name": "GitExactStep",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Package from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub const Package = struct {\n    name: string = \"\",\n    entry: ?string = null,\n    store: ?string = null,\n    deps: []const *Package = &.{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "struct",
+      "name": "Package",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to package_data from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub const package_data = struct {\n    pub var _o6ogpor87xc2 = Package{\n        .store = \"/git/github.com/marlersoft/zigwin32/d21b419d808215e1f82605fdaddc49750bfa3bca\",\n        .name = \"win32\",\n        .entry = \"/git/github.com/marlersoft/zigwin32/d21b419d808215e1f82605fdaddc49750bfa3bca/win32.zig\",\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "struct",
+      "name": "package_data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to pkgs from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: deps.zig",
+    "response": "pub const pkgs = struct {\n    pub const zigmod = &package_data._89ujp8gq842x;\n    pub const win32 = &package_data._o6ogpor87xc2;\n    pub const extras = &package_data._f7dubzb7cyqe;\n    pub const ansi = &package_data._s84v9o48ucb0;\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "deps.zig",
+      "type": "struct",
+      "name": "pkgs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aq.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    if (args.len == 0) {\n        std.debug.print(\"{s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aq.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to server_fetch from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aq.zig",
+    "response": "pub fn server_fetch(url: string) !json.Document {\n    const req = try zfetch.Request.init(gpa, url, null);\n    defer req.deinit();\n\n    var headers = zfetch.Headers.init(gpa);\n    defer headers.deinit();\n    try headers.set(\"accept\", \"application/json\");\n\n    try req.do(.GET, headers, null);\n\n    const doc = try json.parse(gpa, \"\", req.reader(), .{ .support_trailing_commas = true, .maximum_depth = 100 }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aq.zig",
+      "type": "function",
+      "name": "server_fetch",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to commands from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aq.zig",
+    "response": "pub const commands = struct {\n    pub const add = @import(\"./aquila/add.zig\");\n    pub const showjson = @import(\"./aquila/showjson.zig\");\n    pub const install = @import(\"./aquila/install.zig\");\n    pub const update = @import(\"./aquila/update.zig\");\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aq.zig",
+      "type": "struct",
+      "name": "commands",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aquila/add.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    const pkg_id = args[0];\n    _ = try do(std.fs.cwd(), pkg_id);\n    std.log.info(\"Successfully added package {s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aquila/add.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to do from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aquila/add.zig",
+    "response": "pub fn do(dir: std.fs.Dir, pkg_id: string) !string {\n    const url = try std.mem.join(gpa, \"/\", &.{ aq.server_root, pkg_id }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aquila/add.zig",
+      "type": "function",
+      "name": "do",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aquila/install.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    const home = try knownfolders.getPath(gpa, .home);\n    const homepath = home.?;\n    const homedir = try std.fs.cwd().openDir(homepath, .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aquila/install.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to argv from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aquila/install.zig",
+    "response": "const argv: []const string = &.{\n        \"zig\",         \"build\",\n        \"--prefix\",    try std.fs.path.join(gpa, &.{ homepath, \".zigmod\" }),\n        \"--cache-dir\", try std.fs.path.join(gpa, &.{ cache.?, \"zigmod\", \"zig\" }),\n    };",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aquila/install.zig",
+      "type": "const",
+      "name": "argv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aquila/showjson.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    const out = std.io.getStdOut().writer();\n\n    const url = try std.mem.join(gpa, \"/\", &.{ aq.server_root, args[0] }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aquila/showjson.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aquila/update.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    const home = try knownfolders.getPath(gpa, .home);\n    const homepath = home.?;\n    const homedir = try std.fs.cwd().openDir(homepath, .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aquila/update.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to argv from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/aquila/update.zig",
+    "response": "const argv: []const string = &.{\n            \"zig\",         \"build\",\n            \"--prefix\",    try std.fs.path.join(gpa, &.{ homepath, \".zigmod\" }),\n            \"--cache-dir\", try std.fs.path.join(gpa, &.{ cache.?, \"zigmod\", \"zig\" }),\n        };",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/aquila/update.zig",
+      "type": "const",
+      "name": "argv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/ci.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n    _ = args;\n\n    const gpa = std.heap.c_allocator;\n    const cachepath = try u.find_cachepath();\n    const dir = std.fs.cwd();\n    try do(gpa, cachepath, dir);\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/ci.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to do from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/ci.zig",
+    "response": "pub fn do(alloc: std.mem.Allocator, cachepath: string, dir: std.fs.Dir) !void {\n    var options = common.CollectOptions{\n        .log = true,\n        .update = false,\n        .lock = try common.parse_lockfile(alloc, dir),\n        .alloc = alloc,\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/ci.zig",
+      "type": "function",
+      "name": "do",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    const gpa = std.heap.c_allocator;\n    const cachepath = try u.find_cachepath();\n    const dir = std.fs.cwd();\n    const should_update = !(args.len >= 1 and std.mem.eql(u8, args[0], \"--no-update\"));\n\n    var options = common.CollectOptions{\n        .log = should_update,\n        .update = should_update,\n        .alloc = gpa,\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create_depszig from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub fn create_depszig(alloc: std.mem.Allocator, cachepath: string, dir: std.fs.Dir, top_module: zigmod.Module, list: *std.ArrayList(zigmod.Module)) !void {\n    const f = try dir.createFile(\"deps.zig\", .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "create_depszig",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addAllTo from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub fn addAllTo(exe: *std.Build.Step.Compile) void {\n        \\\\    checkMinZig(builtin.zig_version, exe);\n        \\\\    @setEvalBranchQuota(1_000_000);\n        \\\\    for (packages) |pkg| {\n        \\\\        const module = pkg.module(exe);\n        \\\\        exe.root_module.addImport(pkg.import.?[0], module);\n        \\\\    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "addAllTo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to module from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub fn module(self: *Package, exe: *std.Build.Step.Compile) *std.Build.Module {\n        \\\\        if (self.module_memo) |cached| {\n        \\\\            return cached;\n        \\\\        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "module",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkMinZig from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn checkMinZig(current: std.SemanticVersion, exe: *std.Build.Step.Compile) void {{\n        \\\\    const min = std.SemanticVersion.parse(\"{?}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "checkMinZig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create_lockfile from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn create_lockfile(alloc: std.mem.Allocator, list: *std.ArrayList(zigmod.Module), path: string, dir: std.fs.Dir) !void {\n    const fl = try dir.createFile(\"zigmod.lock\", .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "create_lockfile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to diff_lockfile from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn diff_lockfile(alloc: std.mem.Allocator) !void {\n    const max = std.math.maxInt(usize);\n\n    if (try extras.doesFolderExist(null, \".git\")) {\n        const result = try u.run_cmd_raw(alloc, null, &.{ \"git\", \"diff\", \"zigmod.lock\" }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "diff_lockfile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to diff_printchange from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn diff_printchange(comptime testt: string, comptime replacement: string, item: std.StringHashMap(DiffChange).Entry) bool {\n    if (std.mem.startsWith(u8, item.key_ptr.*, testt)) {\n        if (std.mem.eql(u8, item.value_ptr.from, item.value_ptr.to)) return true;\n        std.debug.print(replacement, .{ item.key_ptr.*[4..], item.value_ptr.from, item.value_ptr.to }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "diff_printchange",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_dirs from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn print_dirs(w: std.fs.File.Writer, list: []const zigmod.Module, alloc: std.mem.Allocator) !void {\n    for (list) |mod| {\n        if (mod.type == .system_lib or mod.type == .framework) continue;\n        if (std.mem.eql(u8, &mod.id, &zigmod.Module.ROOT)) {\n            try w.writeAll(\"    pub const _root = \\\"\\\";\\n\");\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "print_dirs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_deps from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn print_deps(w: std.fs.File.Writer, m: zigmod.Module) !void {\n    try w.writeAll(\"&[_]*Package{\\n\");\n    for (m.deps) |d| {\n        if (d.main.len == 0) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "print_deps",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_pkg_data_to from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn print_pkg_data_to(w: std.fs.File.Writer, notdone: *std.ArrayList(zigmod.Module), done: *std.ArrayList(zigmod.Module)) !void {\n    var len: usize = notdone.items.len;\n    while (notdone.items.len > 0) {\n        for (notdone.items, 0..) |mod, i| {\n            if (contains_all(mod.deps, done.items)) {\n                try w.print(\n                    \\\\    pub var _{s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "print_pkg_data_to",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to contains_all from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn contains_all(needles: []zigmod.Module, haystack: []const zigmod.Module) bool {\n    for (needles) |item| {\n        if (item.main.len > 0 and !extras.containsAggregate(zigmod.Module, haystack, item)) {\n            return false;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "contains_all",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_pkgs from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn print_pkgs(alloc: std.mem.Allocator, w: std.fs.File.Writer, m: zigmod.Module) !void {\n    try w.writeAll(\"struct {\\n\");\n    for (m.deps) |d| {\n        if (d.main.len == 0) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "print_pkgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_imports from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn print_imports(alloc: std.mem.Allocator, w: std.fs.File.Writer, m: zigmod.Module, path: string) !void {\n    for (m.deps) |d| {\n        if (d.main.len == 0) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "print_imports",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zig_name_from_pkg_name from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "fn zig_name_from_pkg_name(alloc: std.mem.Allocator, name: string) !string {\n    var legal = name;\n    legal = try std.mem.replaceOwned(u8, alloc, legal, \"-\", \"_\");\n    legal = try std.mem.replaceOwned(u8, alloc, legal, \"/\", \"_\");\n    legal = try std.mem.replaceOwned(u8, alloc, legal, \".\", \"_\");\n    return legal;\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "function",
+      "name": "zig_name_from_pkg_name",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Package from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub const Package = struct {\n        \\\\    directory: string,\n        \\\\    import: ?struct { string, std.Build.LazyPath }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "struct",
+      "name": "Package",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to dirs from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub const dirs = struct {\\n\");\n    try print_dirs(w, list.items, alloc);\n    try w.writeAll(\"}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "struct",
+      "name": "dirs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to package_data from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub const package_data = struct {\\n\");\n    var duped = std.ArrayList(zigmod.Module).init(alloc);\n    var done = std.ArrayList(zigmod.Module).init(alloc);\n    for (list.items) |mod| {\n        if (mod.type == .system_lib or mod.type == .framework) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "struct",
+      "name": "package_data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to imports from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "pub const imports = struct {\\n\");\n    try print_imports(alloc, w, top_module, cachepath);\n    try w.writeAll(\"}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "struct",
+      "name": "imports",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DiffChange from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/fetch.zig",
+    "response": "const DiffChange = struct {\n    from: string,\n    to: string,\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/fetch.zig",
+      "type": "struct",
+      "name": "DiffChange",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n    _ = args;\n\n    //\n    const gpa = std.heap.c_allocator;\n    const cachepath = try u.find_cachepath();\n    const dir = std.fs.cwd();\n\n    var options = common.CollectOptions{\n        .log = false,\n        .update = false,\n        .alloc = gpa,\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create_depszig from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub fn create_depszig(alloc: std.mem.Allocator, cachepath: string, dir: std.fs.Dir, top_module: zigmod.Module, list: []const zigmod.Module) !void {\n    const f = try dir.createFile(\"deps.zig\", .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "create_depszig",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub fn create(b: *std.Build, url: string, commit: string) *GitExactStep {\n        \\\\            var result = b.allocator.create(GitExactStep) catch @panic(\"memory\");\n        \\\\            result.* = GitExactStep{\n        \\\\                .step = std.Build.Step.init(.{\n        \\\\                    .id = .custom,\n        \\\\                    .name = b.fmt(\"git clone {s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to make from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn make(step: *std.Build.Step, options: std.Build.Step.MakeOptions) !void {\n        \\\\            _ = step;\n        \\\\            _ = options;\n        \\\\        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "make",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fetch from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub fn fetch(exe: *std.Build.Step.Compile) *std.Build.Step {\n        \\\\    const b = exe.step.owner;\n        \\\\    const step = b.step(\"fetch\", \"\");\n        \\\\    inline for (comptime std.meta.declarations(package_data)) |decl| {\n        \\\\          const path = &@field(package_data, decl.name).entry;\n        \\\\          const root = if (@field(package_data, decl.name).store) |_| b.cache_root.path.? else \".\";\n        \\\\          if (path.* != null) path.* = b.fmt(\"{s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "fetch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to trimPrefix from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn trimPrefix(comptime T: type, haystack: []const T, needle: []const T) []const T {\n        \\\\    if (std.mem.startsWith(T, haystack, needle)) {\n        \\\\        return haystack[needle.len .. haystack.len];\n        \\\\    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "trimPrefix",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flip from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn flip(foo: anytype) !void {\n        \\\\    _ = foo catch return;\n        \\\\    return error.ExpectedError;\n        \\\\}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "flip",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addAllTo from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub fn addAllTo(exe: *std.Build.Step.Compile) void {\n        \\\\    checkMinZig(builtin.zig_version, exe);\n        \\\\    const fetch_step = fetch(exe);\n        \\\\    @setEvalBranchQuota(1_000_000);\n        \\\\    for (packages) |pkg| {\n        \\\\        const module = pkg.module(exe, fetch_step);\n        \\\\        exe.root_module.addImport(pkg.name, module);\n        \\\\    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "addAllTo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to module from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub fn module(self: *Package, exe: *std.Build.Step.Compile, fetch_step: *std.Build.Step) *std.Build.Module {\n        \\\\        if (self.module_memo) |cached| {\n        \\\\            return cached;\n        \\\\        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "module",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to checkMinZig from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn checkMinZig(current: std.SemanticVersion, exe: *std.Build.Step.Compile) void {{\n        \\\\    const min = std.SemanticVersion.parse(\"{?}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "checkMinZig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_dirs from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn print_dirs(w: std.fs.File.Writer, list: []const zigmod.Module) !void {\n    for (list) |mod| {\n        if (mod.type == .system_lib or mod.type == .framework) continue;\n        if (std.mem.eql(u8, mod.id, \"root\")) {\n            try w.writeAll(\"    pub const _root = \\\"\\\";\\n\");\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "print_dirs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_deps from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn print_deps(w: std.fs.File.Writer, m: zigmod.Module) !void {\n    try w.writeAll(\"[_]*Package{\\n\");\n    for (m.deps) |d| {\n        if (d.main.len == 0) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "print_deps",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_pkg_data_to from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn print_pkg_data_to(w: std.fs.File.Writer, alloc: std.mem.Allocator, cachepath: string, notdone: *std.ArrayList(zigmod.Module), done: *std.ArrayList(zigmod.Module)) !void {\n    var len: usize = notdone.items.len;\n    while (notdone.items.len > 0) {\n        for (notdone.items, 0..) |mod, i| {\n            if (contains_all(mod.deps, done.items)) {\n                try w.print(\n                    \\\\    pub var _{s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "print_pkg_data_to",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to contains_all from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn contains_all(needles: []zigmod.Module, haystack: []const zigmod.Module) bool {\n    for (needles) |item| {\n        if (item.main.len > 0 and !extras.containsAggregate(zigmod.Module, haystack, item)) {\n            return false;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "contains_all",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_pkgs from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn print_pkgs(alloc: std.mem.Allocator, w: std.fs.File.Writer, m: zigmod.Module) !void {\n    try w.writeAll(\"struct {\\n\");\n    for (m.deps) |d| {\n        if (d.main.len == 0) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "print_pkgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_imports from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn print_imports(alloc: std.mem.Allocator, w: std.fs.File.Writer, m: zigmod.Module, path: string) !void {\n    for (m.deps) |d| {\n        if (d.main.len == 0) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "print_imports",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zig_name_from_pkg_name from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "fn zig_name_from_pkg_name(alloc: std.mem.Allocator, name: string) !string {\n    var legal = name;\n    legal = try std.mem.replaceOwned(u8, alloc, legal, \"-\", \"_\");\n    legal = try std.mem.replaceOwned(u8, alloc, legal, \"/\", \"_\");\n    legal = try std.mem.replaceOwned(u8, alloc, legal, \".\", \"_\");\n    return legal;\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "function",
+      "name": "zig_name_from_pkg_name",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to GitExactStep from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub const GitExactStep = struct {\n        \\\\    step: std.Build.Step,\n        \\\\    builder: *std.Build,\n        \\\\    url: string,\n        \\\\    commit: string,\n        \\\\\n        \\\\        pub fn create(b: *std.Build, url: string, commit: string) *GitExactStep {\n        \\\\            var result = b.allocator.create(GitExactStep) catch @panic(\"memory\");\n        \\\\            result.* = GitExactStep{\n        \\\\                .step = std.Build.Step.init(.{\n        \\\\                    .id = .custom,\n        \\\\                    .name = b.fmt(\"git clone {s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "struct",
+      "name": "GitExactStep",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Package from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub const Package = struct {\n        \\\\    name: string = \"\",\n        \\\\    entry: ?string = null,\n        \\\\    store: ?string = null,\n        \\\\    deps: []const *Package = &.{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "struct",
+      "name": "Package",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to package_data from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub const package_data = struct {\\n\");\n    var duped = std.ArrayList(zigmod.Module).init(alloc);\n    var done = std.ArrayList(zigmod.Module).init(alloc);\n    for (list) |mod| {\n        if (mod.type == .system_lib or mod.type == .framework) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "struct",
+      "name": "package_data",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to imports from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/generate.zig",
+    "response": "pub const imports = struct {\\n\");\n    try print_imports(alloc, w, top_module, cachepath);\n    try w.writeAll(\"}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/generate.zig",
+      "type": "struct",
+      "name": "imports",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/init.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    std.debug.print(\"This utility will walk you through creating a zigmod.yml file.\\n\", .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/init.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeExeManifest from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/init.zig",
+    "response": "pub fn writeExeManifest(w: std.fs.File.Writer, id: string, name: string, license: ?string, description: ?string) !void {\n    try w.print(\"id: {s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/init.zig",
+      "type": "function",
+      "name": "writeExeManifest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeLibManifest from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/init.zig",
+    "response": "pub fn writeLibManifest(w: std.fs.File.Writer, id: string, name: string, entry: string, license: string, description: string) !void {\n    try w.print(\"id: {s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/init.zig",
+      "type": "function",
+      "name": "writeLibManifest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to guessCopyrightName from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/init.zig",
+    "response": "fn guessCopyrightName() !?string {\n    const home = (try knownfolders.open(gpa, .home, .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/init.zig",
+      "type": "function",
+      "name": "guessCopyrightName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to file from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/init.zig",
+    "response": "const file: std.fs.File = try (if (exists) cwd.openFile(\".gitignore\", .{ .mode = .read_write }) else cwd.createFile(\".gitignore\", .{}));",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/init.zig",
+      "type": "const",
+      "name": "file",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to file from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/init.zig",
+    "response": "const file: std.fs.File = try (if (exists) cwd.openFile(\".gitattributes\", .{ .mode = .read_write }) else cwd.createFile(\".gitattributes\", .{}));",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/init.zig",
+      "type": "const",
+      "name": "file",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/license.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n    _ = args;\n\n    const cachepath = try u.find_cachepath();\n    const dir = std.fs.cwd();\n\n    var options = common.CollectOptions{\n        .log = false,\n        .update = false,\n        .alloc = gpa,\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/license.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to do from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/license.zig",
+    "response": "pub fn do(cachepath: string, dir: std.fs.Dir, options: *common.CollectOptions, outfile: std.fs.File) !void {\n    const top_module = try common.collect_deps_deep(cachepath, dir, options);\n\n    var master_list = List.init(gpa);\n    errdefer master_list.deinit();\n    try common.collect_pkgs(top_module, &master_list);\n    std.mem.sort(zigmod.Module, master_list.items, {}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/license.zig",
+      "type": "function",
+      "name": "do",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/sum.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n    _ = args;\n\n    const cachepath = try u.find_cachepath();\n    const dir = std.fs.cwd();\n\n    var options = common.CollectOptions{\n        .log = false,\n        .update = false,\n        .alloc = gpa,\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/sum.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/version.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n    _ = args;\n\n    const root = @import(\"root\");\n    const build_options = if (@hasDecl(root, \"build_options\")) root.build_options else struct {}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/version.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    if (args.len == 0) {\n        std.debug.print(\"{s}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to server_fetch from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm.zig",
+    "response": "pub fn server_fetch(url: string) !json.Document {\n    const req = try zfetch.Request.init(gpa, url, null);\n    defer req.deinit();\n    try req.do(.GET, null, null);\n    return json.parse(gpa, \"\", req.reader(), .{ .support_trailing_commas = true, .maximum_depth = 100 }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm.zig",
+      "type": "function",
+      "name": "server_fetch",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to server_fetchArray from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm.zig",
+    "response": "pub fn server_fetchArray(url: string) ![]const Package {\n    const doc = try server_fetch(url);\n    doc.acquire();\n    defer doc.release();\n    var list = std.ArrayList(Package).init(gpa);\n    errdefer list.deinit();\n\n    for (doc.root.array()) |item| {\n        const obj = item.object();\n        if (obj.getS(\"root_file\") == null) continue;\n        try list.append(Package{\n            .name = obj.getS(\"name\").?,\n            .author = obj.getS(\"author\").?,\n            .description = obj.getS(\"description\").?,\n            .tags = try valueStrArray(obj.getA(\"tags\").?),\n            .git = obj.getS(\"git\").?,\n            .root_file = obj.getS(\"root_file\").?,\n            .source = obj.getN(\"source\").?.get(u32),\n            .links = try valueLinks(obj.getO(\"links\").?),\n        }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm.zig",
+      "type": "function",
+      "name": "server_fetchArray",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to valueStrArray from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm.zig",
+    "response": "fn valueStrArray(vals: json.Array) ![]string {\n    var list = std.ArrayList(string).init(gpa);\n    errdefer list.deinit();\n\n    for (vals) |item| {\n        if (item.v() != .string) continue;\n        try list.append(item.string());\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm.zig",
+      "type": "function",
+      "name": "valueStrArray",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to valueLinks from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm.zig",
+    "response": "fn valueLinks(vals: json.ObjectIndex) ![]string {\n    var list = std.ArrayList(string).init(gpa);\n    errdefer list.deinit();\n\n    if (vals.getS(\"github\")) |x| try list.append(x);\n    if (vals.getS(\"aquila\")) |x| try list.append(x);\n    if (vals.getS(\"astrolabe\")) |x| try list.append(x);\n    return list.toOwnedSlice();\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm.zig",
+      "type": "function",
+      "name": "valueLinks",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to commands from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm.zig",
+    "response": "pub const commands = struct {\n    pub const add = @import(\"./zpm/add.zig\");\n    pub const showjson = @import(\"./zpm/showjson.zig\");\n    pub const tags = @import(\"./zpm/tags.zig\");\n    pub const search = @import(\"./zpm/search.zig\");\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm.zig",
+      "type": "struct",
+      "name": "commands",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Package from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm.zig",
+    "response": "pub const Package = struct {\n    author: string,\n    name: string,\n    tags: []const string,\n    git: string,\n    root_file: string,\n    description: string,\n    source: u32,\n    links: []const string,\n}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm.zig",
+      "type": "struct",
+      "name": "Package",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm/add.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    const url = try std.mem.join(gpa, \"/\", &.{ zpm.server_root, \"packages\" }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm/add.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm/search.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n    _ = args;\n\n    const out = std.io.getStdOut().writer();\n\n    const url = try std.mem.join(gpa, \"/\", &.{ zpm.server_root, \"packages\" }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm/search.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_c_n from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm/search.zig",
+    "response": "fn print_c_n(out: anytype, c: u8, n: usize) !void {\n    for (0..n) |_| {\n        try out.writeAll(&.{c}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm/search.zig",
+      "type": "function",
+      "name": "print_c_n",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm/showjson.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n\n    const out = std.io.getStdOut().writer();\n\n    const url = try std.mem.join(gpa, \"/\", &.{ zpm.server_root, args[0] }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm/showjson.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to execute from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm/tags.zig",
+    "response": "pub fn execute(self_name: []const u8, args: [][:0]u8) !void {\n    _ = self_name;\n    _ = args;\n\n    const out = std.io.getStdOut().writer();\n\n    const url = try std.mem.join(gpa, \"/\", &.{ zpm.server_root, \"tags\" }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm/tags.zig",
+      "type": "function",
+      "name": "execute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print_c_n from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/cmd/zpm/tags.zig",
+    "response": "fn print_c_n(out: anytype, c: u8, n: usize) !void {\n    for (0..n) |_| {\n        try out.writeAll(&.{c}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/cmd/zpm/tags.zig",
+      "type": "function",
+      "name": "print_c_n",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn init(self: *CollectOptions) !void {\n        self.already_fetched = try self.alloc.create(std.ArrayList(string));\n        self.already_fetched.* = std.ArrayList(string).init(self.alloc);\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to collect_deps_deep from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn collect_deps_deep(cachepath: string, mdir: std.fs.Dir, options: *CollectOptions) !zigmod.Module {\n    try std.fs.cwd().makePath(cachepath);\n\n    const m = try zigmod.ModFile.from_dir(options.alloc, mdir);\n    try options.init();\n    var moduledeps = std.ArrayList(zigmod.Module).init(options.alloc);\n    errdefer moduledeps.deinit();\n    if (m.root_files.len > 0) {\n        try gen_files_package(options.alloc, cachepath, mdir, m.root_files);\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "collect_deps_deep",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to collect_deps from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn collect_deps(cachepath: string, mdir: std.fs.Dir, dtype: zigmod.Dep.Type, options: *CollectOptions) anyerror!zigmod.Module {\n    try std.fs.cwd().makePath(cachepath);\n\n    const m = try zigmod.ModFile.from_dir(options.alloc, mdir);\n    var moduledeps = std.ArrayList(zigmod.Module).init(options.alloc);\n    errdefer moduledeps.deinit();\n    if (m.files.len > 0) {\n        try gen_files_package(options.alloc, cachepath, mdir, m.files);\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "collect_deps",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to collect_pkgs from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn collect_pkgs(mod: zigmod.Module, list: *std.ArrayList(zigmod.Module)) anyerror!void {\n    if (extras.containsAggregate(zigmod.Module, list.items, mod)) {\n        return;\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "collect_pkgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_modpath from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn get_modpath(cachepath: string, d: zigmod.Dep, options: *CollectOptions) !string {\n    const p = try std.fs.path.join(options.alloc, &.{ cachepath, try d.clean_path(options.alloc) }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "get_modpath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_module_from_dep from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn get_module_from_dep(d: *zigmod.Dep, cachepath: string, options: *CollectOptions) anyerror!?zigmod.Module {\n    if (options.lock) |lock| {\n        for (lock) |item| {\n            if (std.mem.eql(u8, item[0], try d.clean_path(options.alloc))) {\n                d.type = std.meta.stringToEnum(zigmod.Dep.Type, item[1]).?;\n                d.path = item[2];\n                d.version = item[3];\n                break;\n            }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "get_module_from_dep",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gen_files_package from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn gen_files_package(alloc: std.mem.Allocator, cachepath: string, mdir: std.fs.Dir, dirs: []const string) !void {\n    var map = std.StringHashMap(string).init(alloc);\n    defer map.deinit();\n\n    for (dirs) |dir_path| {\n        const dir = try mdir.openDir(dir_path, .{ .iterate = true }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "gen_files_package",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse_lockfile from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub fn parse_lockfile(alloc: std.mem.Allocator, dir: std.fs.Dir) ![]const [4]string {\n    var list = std.ArrayList([4]string).init(alloc);\n    const max = std.math.maxInt(usize);\n    if (!try extras.doesFileExist(dir, \"zigmod.lock\")) return &[_][4]string{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "parse_lockfile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTreeReadOnly from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "fn setTreeReadOnly(dir: std.fs.Dir, alloc: std.mem.Allocator) !void {\n    var walker = try dir.walk(alloc);\n    defer walker.deinit();\n\n    while (try walker.next()) |entry| {\n        if (entry.kind != .file) continue;\n        var file = try dir.openFile(entry.path, .{}",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "function",
+      "name": "setTreeReadOnly",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CollectOptions from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "pub const CollectOptions = struct {\n    log: bool,\n    update: bool,\n    lock: ?[]const [4]string = null,\n    alloc: std.mem.Allocator,\n    already_fetched: *std.ArrayList(string) = undefined,\n\n    pub fn init(self: *CollectOptions) !void {\n        self.already_fetched = try self.alloc.create(std.ArrayList(string));\n        self.already_fetched.* = std.ArrayList(string).init(self.alloc);\n    }",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "struct",
+      "name": "CollectOptions",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to trymain from nektro/zigmod",
+    "context": "Repository: nektro/zigmod (891 ⭐)\nFile: src/common.zig",
+    "response": "const trymain: ?string = u.detct_mainfile(options.alloc, d.main, moddirO, tryname) catch |err| switch (err) {\n                        error.CantFindMain => null,\n                        else => |ee| return ee,\n                    };",
+    "metadata": {
+      "repo": "nektro/zigmod",
+      "stars": 891,
+      "file": "src/common.zig",
+      "type": "const",
+      "name": "trymain",
+      "difficulty": "medium"
+    }
+  }
+]

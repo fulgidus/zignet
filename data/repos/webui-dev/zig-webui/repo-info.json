@@ -1,0 +1,9 @@
+{
+  "name": "zig-webui",
+  "fullName": "webui-dev/zig-webui",
+  "owner": "webui-dev",
+  "stars": 674,
+  "description": "Use any web browser or WebView as GUI, with Zig in the backend and modern web technologies in the frontend, all in a lightweight portable library.",
+  "url": "https://github.com/webui-dev/zig-webui",
+  "defaultBranch": "main"
+}

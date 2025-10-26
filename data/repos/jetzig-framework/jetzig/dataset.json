@@ -1,0 +1,925 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to jetzigInit from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "pub fn jetzigInit(b: *std.Build, exe: *std.Build.Step.Compile, options: JetzigInitOptions) !void {\n    if (options.zmpl_version == .v1) {\n        std.debug.print(\"Zmpl v1 has now been removed. Please upgrade to v2.\\n\", .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "jetzigInit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to registerDatabaseSteps from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "fn registerDatabaseSteps(b: *std.Build, exe_database: *std.Build.Step.Compile) void {\n    const commands = .{\n        .{ \"migrate\", \"Migrate your Jetzig app's database.\" }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "registerDatabaseSteps",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to generateMarkdownFragments from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "fn generateMarkdownFragments(b: *std.Build) ![]const u8 {\n    const file = std.fs.cwd().openFile(b.pathJoin(&.{ \"src\", \"main.zig\" }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "generateMarkdownFragments",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getMarkdownFragmentsSource from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "fn getMarkdownFragmentsSource(allocator: std.mem.Allocator, source: [:0]const u8) !?[]const u8 {\n    var ast = try std.zig.Ast.parse(allocator, source, .zig);\n    defer ast.deinit(allocator);\n\n    for (ast.nodes.items(.tag), 0..) |tag, index| {\n        switch (tag) {\n            .simple_var_decl => {\n                const decl = ast.simpleVarDecl(@enumFromInt(index));\n                const identifier = ast.tokenSlice(decl.ast.mut_token + 1);\n                if (std.mem.eql(u8, identifier, \"markdown_fragments\")) {\n                    return ast.getNodeSource(@enumFromInt(index));\n                }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getMarkdownFragmentsSource",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isSourceFile from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "fn isSourceFile(b: *std.Build, path: []const u8) !bool {\n    const dir = try std.fs.openDirAbsolute(b.build_root.path.?, .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "isSourceFile",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanSourceFiles from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "fn scanSourceFiles(b: *std.Build) ![]const []const u8 {\n    var buf = std.array_list.Managed([]const u8).init(b.allocator);\n\n    var src_dir = try std.fs.openDirAbsolute(b.pathFromRoot(\"src\"), .{ .iterate = true }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "scanSourceFiles",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to randomSeed from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "fn randomSeed(b: *std.Build) ![]const u8 {\n    const seed = try b.allocator.alloc(u8, 32);\n    const chars = \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\";\n    for (0..32) |index| {\n        seed[index] = chars[std.crypto.random.intRangeAtMost(u8, 0, chars.len - 1)];\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "function",
+      "name": "randomSeed",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to JetzigInitOptions from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "pub const JetzigInitOptions = struct {\n    zmpl_version: enum { v1, v2 }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "JetzigInitOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to templates_path from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "const templates_path: []const u8 = try std.fs.path.join(\n        b.allocator,\n        &[_][]const u8{ root_path, \"src\", \"app\" },\n    );",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "const",
+      "name": "templates_path",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to views_path from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: build.zig",
+    "response": "const views_path: []const u8 = try std.fs.path.join(\n        b.allocator,\n        &[_][]const u8{ root_path, \"src\", \"app\", \"views\" },\n    );",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "build.zig",
+      "type": "const",
+      "name": "views_path",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getGitHash from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/build.zig",
+    "response": "fn getGitHash(allocator: std.mem.Allocator) ![]const u8 {\n    const args = &[_][]const u8{ \"git\", \"rev-parse\", \"--short=10\", \"HEAD\" }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/build.zig",
+      "type": "function",
+      "name": "getGitHash",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/cli.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/cli.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Options from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/cli.zig",
+    "response": "pub const Options = struct {\n    help: bool = false,\n    environment: Environment = .development,\n\n    pub const shorthands = .{\n        .h = \"help\",\n        .e = \"environment\",\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/cli.zig",
+      "type": "struct",
+      "name": "Options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to colorize from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn colorize(color: std.io.tty.Color, buf: []u8, input: []const u8, is_colorized: bool) ![]const u8 {\n    if (!is_colorized) return input;\n\n    const config: std.io.tty.Config = .escape_codes;\n    var stream = std.io.fixedBufferStream(buf);\n    const writer = stream.writer();\n    try config.setColor(writer, color);\n    try writer.writeAll(input);\n    try config.setColor(writer, .reset);\n\n    return stream.getWritten();\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "colorize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wrap from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "fn wrap(comptime attribute: []const u8, comptime message: []const u8) []const u8 {\n    return codes.escape ++ attribute ++ message ++ codes.escape ++ codes.reset;\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "wrap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeWrap from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "fn runtimeWrap(allocator: std.mem.Allocator, attribute: []const u8, message: []const u8) ![]const u8 {\n    return try std.mem.join(\n        allocator,\n        \"\",\n        &[_][]const u8{ codes.escape, attribute, message, codes.escape, codes.reset }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeWrap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bold from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn bold(comptime message: []const u8) []const u8 {\n    return codes.escape ++ codes.bold ++ message ++ codes.escape ++ codes.reset;\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "bold",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to black from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn black(comptime message: []const u8) []const u8 {\n    return wrap(codes.black, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "black",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeBlack from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeBlack(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.black, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeBlack",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to red from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn red(comptime message: []const u8) []const u8 {\n    return wrap(codes.red, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "red",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeRed from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeRed(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.red, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeRed",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to green from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn green(comptime message: []const u8) []const u8 {\n    return wrap(codes.green, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "green",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeGreen from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeGreen(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.green, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeGreen",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to yellow from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn yellow(comptime message: []const u8) []const u8 {\n    return wrap(codes.yellow, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "yellow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeYellow from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeYellow(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.yellow, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeYellow",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to blue from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn blue(comptime message: []const u8) []const u8 {\n    return wrap(codes.blue, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "blue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeBlue from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeBlue(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.blue, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeBlue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to magenta from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn magenta(comptime message: []const u8) []const u8 {\n    return wrap(codes.magenta, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "magenta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeMagenta from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeMagenta(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.magenta, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeMagenta",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cyan from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn cyan(comptime message: []const u8) []const u8 {\n    return wrap(codes.cyan, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "cyan",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeCyan from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeCyan(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.cyan, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeCyan",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to white from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn white(comptime message: []const u8) []const u8 {\n    return wrap(codes.white, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "white",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runtimeWhite from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn runtimeWhite(allocator: std.mem.Allocator, message: []const u8) ![]const u8 {\n    return try runtimeWrap(allocator, codes.white, message);\n}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "runtimeWhite",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to duration from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "pub fn duration(buf: *[256]u8, delta: i64, is_colorized: bool) ![]const u8 {\n    if (!is_colorized) {\n        return try std.fmt.bufPrint(\n            buf,\n            \"{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "function",
+      "name": "duration",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to config from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "const config: std.io.tty.Config = .escape_codes;",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "const",
+      "name": "config",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to color from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/colors.zig",
+    "response": "const color: std.io.tty.Color = if (delta < 1000000)\n        .green\n    else if (delta < 5000000)\n        .yellow\n    else\n        .red;",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/colors.zig",
+      "type": "const",
+      "name": "color",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/auth.zig",
+    "response": "pub fn run(\n    parent_allocator: std.mem.Allocator,\n    options: Options,\n    writer: anytype,\n    T: type,\n    main_options: T,\n) !void {\n    _ = options;\n    var arena = std.heap.ArenaAllocator.init(parent_allocator);\n    defer arena.deinit();\n    const allocator = arena.allocator();\n\n    const Action = enum { init, create }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/auth.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Options from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/auth.zig",
+    "response": "pub const Options = struct {\n    pub const meta = .{\n        .usage_summary = \"[init|create]\",\n        .full_text =\n        \\\\Manage user authentication. Initialize with `init` to generate a users table migration.\n        \\\\\n        \\\\Example:\n        \\\\\n        \\\\  jetzig auth init\n        \\\\  jetzig auth create bob@jetzig.dev\n        ,\n        .option_docs = .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/auth.zig",
+      "type": "struct",
+      "name": "Options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sub_args from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/auth.zig",
+    "response": "const sub_args: []const []const u8 = if (main_options.positionals.len > 1)\n        main_options.positionals[1..]\n    else\n        &.{};",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/auth.zig",
+      "type": "const",
+      "name": "sub_args",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/bundle.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    options: Options,\n    writer: anytype,\n    T: type,\n    main_options: T,\n) !void {\n    if (builtin.os.tag == .windows) {\n        std.debug.print(\"Bundling on Windows is currently not supported.\\n\", .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/bundle.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to locateMarkdownFiles from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/bundle.zig",
+    "response": "fn locateMarkdownFiles(allocator: std.mem.Allocator, dir: std.fs.Dir, views_path: []const u8, paths: *std.array_list.Managed([]const u8)) !void {\n    var views_dir = try dir.openDir(views_path, .{ .iterate = true }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/bundle.zig",
+      "type": "function",
+      "name": "locateMarkdownFiles",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zig_build_install from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/bundle.zig",
+    "response": "fn zig_build_install(allocator: std.mem.Allocator, path: []const u8, options: Options) !?[]const u8 {\n    var install_argv = std.array_list.Managed([]const u8).init(allocator);\n    defer install_argv.deinit();\n\n    try install_argv.appendSlice(&[_][]const u8{ \"zig\", \"build\", \"-Denvironment=production\" }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/bundle.zig",
+      "type": "function",
+      "name": "zig_build_install",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to copyTree from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/bundle.zig",
+    "response": "fn copyTree(\n    allocator: std.mem.Allocator,\n    src_dir: std.fs.Dir,\n    sub_path: []const u8,\n    dest_path: []const u8,\n) !void {\n    var dir = try src_dir.openDir(sub_path, .{ .iterate = true }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/bundle.zig",
+      "type": "function",
+      "name": "copyTree",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Options from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/bundle.zig",
+    "response": "pub const Options = struct {\n    optimize: enum { Debug, ReleaseFast, ReleaseSmall }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/bundle.zig",
+      "type": "struct",
+      "name": "Options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/completion.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    options: Options,\n    stdout_writer: anytype,\n    stderr_writer: anytype,\n    T: type,\n    main_options: T,\n) !void {\n    _ = options;\n\n    const Shells = enum {\n        fish,\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/completion.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Options from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/completion.zig",
+    "response": "pub const Options = struct {\n    pub const meta = .{\n        .usage_summary = \"[fish]\",\n        .full_text =\n        \\\\Provides shell-completion for jetzig cli tool\n        \\\\\n        \\\\add `eval \"$(jetzig completion SHELL_NAME)\"` to your shell config\n        \\\\\n        \\\\we currently support : fish\n        \\\\\n        ,\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/completion.zig",
+      "type": "struct",
+      "name": "Options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to generate_type from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/completion.zig",
+    "response": "const generate_type: ?Shells = if (main_options.positionals.len > 0)\n        map.get(main_options.positionals[0])\n    else\n        null;",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/completion.zig",
+      "type": "const",
+      "name": "generate_type",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    options: Options,\n    writer: anytype,\n    T: type,\n    main_options: T,\n) !void {\n    var arena = std.heap.ArenaAllocator.init(allocator);\n    defer arena.deinit();\n    const alloc = arena.allocator();\n\n    const Action = enum {\n        migrate,\n        seed,\n        rollback,\n        create,\n        drop,\n        reflect,\n        update,\n        setup,\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Options from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database.zig",
+    "response": "pub const Options = struct {\n    pub const meta = .{\n        .usage_summary = \"[setup|create|drop|migrate|rollback|reflect|update]\",\n        .full_text =\n        \\\\Manage the application's database.\n        \\\\\n        \\\\Pass `--help` to any command for more information, e.g.:\n        \\\\\n        \\\\  jetzig database migrate --help\n        \\\\\n        ,\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database.zig",
+      "type": "struct",
+      "name": "Options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sub_args from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database.zig",
+    "response": "const sub_args: []const []const u8 = if (main_options.positionals.len > 1)\n        main_options.positionals[1..]\n    else\n        &.{};",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database.zig",
+      "type": "const",
+      "name": "sub_args",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/create.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Create a database.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database create\n            \\\\  jetzig --environment=testing database create\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/create.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/drop.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Drop database.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database drop\n            \\\\  jetzig --environment=testing database drop\n            \\\\\n            \\\\To drop a production database, set the environment variable `{s}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/drop.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/migrate.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Run database migrations.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database migrate\n            \\\\  jetzig --environment=testing database migrate\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/migrate.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/reflect.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Generate a JetQuery schema file and save to `src/app/database/Schema.zig`.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database reflect\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/reflect.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/rollback.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Roll back a database migration.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database rollback\n            \\\\  jetzig --environment=testing database rollback\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/rollback.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/seed.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Run database seeders.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database seed\n            \\\\  jetzig --environment=testing database seed\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/seed.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/setup.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Set up a database: create a database, run migrations, reflect schema.\n            \\\\\n            \\\\Convenience wrapper for:\n            \\\\\n            \\\\* jetzig database create\n            \\\\* jetzig database update\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database setup\n            \\\\  jetzig --environment=testing setup\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/setup.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runCommand from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/setup.zig",
+    "response": "fn runCommand(allocator: std.mem.Allocator, environment: anytype, comptime action: []const u8) !void {\n    try util.runCommand(allocator, &.{\n        \"zig\",\n        \"build\",\n        util.environmentBuildOption(environment),\n        \"jetzig:database:\" ++ action,\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/setup.zig",
+      "type": "function",
+      "name": "runCommand",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/database/update.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    cwd: std.fs.Dir,\n    args: []const []const u8,\n    options: cli.database.Options,\n    T: type,\n    main_options: T,\n) !void {\n    _ = cwd;\n    _ = options;\n    if (main_options.options.help or args.len != 0) {\n        std.debug.print(\n            \\\\Update a database: run migrations and reflect schema.\n            \\\\\n            \\\\Convenience wrapper for `jetzig database migrate` and `jetzig database reflect`.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig database update\n            \\\\  jetzig --environment=testing update\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/database/update.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate.zig",
+    "response": "pub fn run(\n    allocator: std.mem.Allocator,\n    options: Options,\n    writer: anytype,\n    T: type,\n    main_options: T,\n) !void {\n    var cwd = try util.detectJetzigProjectDir();\n    defer cwd.close();\n\n    _ = options;\n\n    const Generator = enum {\n        view,\n        partial,\n        layout,\n        mailer,\n        middleware,\n        job,\n        secret,\n        migration,\n        seeder,\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Options from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate.zig",
+    "response": "pub const Options = struct {\n    pub const meta = .{\n        .usage_summary = \"[view|partial|layout|mailer|middleware|job|secret|migration|seeder] [options]\",\n        .full_text =\n        \\\\Generate scaffolding for views, middleware, and other objects.\n        \\\\\n        \\\\Pass `--help` to any generator for more information, e.g.:\n        \\\\\n        \\\\  jetzig generate view --help\n        \\\\\n        ,\n    }",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate.zig",
+      "type": "struct",
+      "name": "Options",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to generate_type from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate.zig",
+    "response": "const generate_type: ?Generator = if (main_options.positionals.len > 0)\n        map.get(main_options.positionals[0])\n    else\n        null;",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate.zig",
+      "type": "const",
+      "name": "generate_type",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate/job.zig",
+    "response": "pub fn run(allocator: std.mem.Allocator, cwd: std.fs.Dir, args: [][]const u8, help: bool) !void {\n    if (help or args.len != 1) {\n        std.debug.print(\n            \\\\Generate a new Job. Jobs can be scheduled to run in the background.\n            \\\\Use a Job when you need to return a request immediately and perform\n            \\\\another task asynchronously.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig generate job iguana\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate/job.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate/job.zig",
+    "response": "pub fn run(allocator: std.mem.Allocator, params: *jetzig.data.Value, env: jetzig.jobs.JobEnv) !void {\n        \\\\    _ = allocator;\n        \\\\    _ = params;\n        \\\\    // Job execution code goes here. Add any code that you would like to run in the background.\n        \\\\    try env.logger.INFO(\"Running a job.\", .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate/job.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate/layout.zig",
+    "response": "pub fn run(allocator: std.mem.Allocator, cwd: std.fs.Dir, args: [][]const u8, help: bool) !void {\n    if (help or args.len != 1) {\n        std.debug.print(\n            \\\\Generate a layout. Layouts encapsulate common boilerplate mark-up.\n            \\\\\n            \\\\Specify a layout name to create a new Zmpl template in src/app/views/layouts/\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig generate layout standard\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate/layout.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate/mailer.zig",
+    "response": "pub fn run(allocator: std.mem.Allocator, cwd: std.fs.Dir, args: [][]const u8, help: bool) !void {\n    if (help or args.len != 1) {\n        std.debug.print(\n            \\\\Generate a new Mailer. Mailers provide an interface for sending emails from a Jetzig application.\n            \\\\\n            \\\\Example:\n            \\\\\n            \\\\  jetzig generate mailer iguana\n            \\\\\n        , .{}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate/mailer.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deliver from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate/mailer.zig",
+    "response": "pub fn deliver(\n        \\\\    allocator: std.mem.Allocator,\n        \\\\    mail: *jetzig.mail.MailParams,\n        \\\\    params: *jetzig.data.Value,\n        \\\\    env: jetzig.jobs.JobEnv,\n        \\\\) !void {\n        \\\\    _ = allocator;\n        \\\\    _ = params;\n        \\\\    try env.logger.INFO(\"Delivering email with subject: '{?s}",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate/mailer.zig",
+      "type": "function",
+      "name": "deliver",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to html_template_file from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate/mailer.zig",
+    "response": "const html_template_file: ?std.fs.File = template_dir.createFile(\n        \"html.zmpl\",\n        .{ .exclusive = true },\n    ) catch |err| blk: {\n        switch (err) {\n            error.PathAlreadyExists => {\n                std.debug.print(\"Template already exists: `{s}/html.zmpl` - skipping.\\n\", .{template_dir_path});",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate/mailer.zig",
+      "type": "const",
+      "name": "html_template_file",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to text_template_file from jetzig-framework/jetzig",
+    "context": "Repository: jetzig-framework/jetzig (1283 ⭐)\nFile: cli/commands/generate/mailer.zig",
+    "response": "const text_template_file: ?std.fs.File = template_dir.createFile(\n        \"text.zmpl\",\n        .{ .exclusive = true },\n    ) catch |err| blk: {\n        switch (err) {\n            error.PathAlreadyExists => {\n                std.debug.print(\"Template already exists: `{s}/text.zmpl` - skipping.\\n\", .{template_dir_path});",
+    "metadata": {
+      "repo": "jetzig-framework/jetzig",
+      "stars": 1283,
+      "file": "cli/commands/generate/mailer.zig",
+      "type": "const",
+      "name": "text_template_file",
+      "difficulty": "easy"
+    }
+  }
+]

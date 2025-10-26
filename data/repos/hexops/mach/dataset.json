@@ -1,0 +1,3616 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const optimize = b.standardOptimizeOption(.{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromTarget from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "pub fn fromTarget(target: std.Target) Platform {\n        if (target.cpu.arch == .wasm32) return .wasm;\n        if (target.os.tag.isDarwin()) return .darwin;\n        if (target.os.tag == .windows) return .windows;\n        if (target.os.tag == .linux) return .linux;\n        return .null;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "function",
+      "name": "fromTarget",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to linkSysgpu from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "fn linkSysgpu(b: *std.Build, module: *std.Build.Module) void {\n    const target = module.resolved_target orelse @panic(\"module must have .target specified\");\n    const optimize = module.optimize orelse @panic(\"module must have .optimize specified\");\n\n    if (target.result.os.tag == .linux) {\n        module.link_libc = true;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "function",
+      "name": "linkSysgpu",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to linkCore from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "fn linkCore(b: *std.Build, module: *std.Build.Module) void {\n    const target = module.resolved_target orelse @panic(\"module must have .target specified\");\n    const optimize = module.optimize orelse @panic(\"module must have .optimize specified\");\n\n    if (target.result.os.tag == .linux) {\n        if (b.lazyDependency(\"wayland_headers\", .{\n            .target = target,\n            .optimize = optimize,\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "function",
+      "name": "linkCore",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to linkSysaudio from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "fn linkSysaudio(b: *std.Build, module: *std.Build.Module) void {\n    const target = module.resolved_target orelse @panic(\"module must have .target specified\");\n    const optimize = module.optimize orelse @panic(\"module must have .optimize specified\");\n\n    if (target.result.os.tag == .linux) {\n        module.link_libc = true;\n\n        if (b.lazyDependency(\"linux_audio_headers\", .{\n            .target = target,\n            .optimize = optimize,\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "function",
+      "name": "linkSysaudio",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addExecutable from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "pub fn addExecutable(\n    mach_builder: *std.Build,\n    options: struct {\n        name: []const u8,\n        app: *std.Build.Module,\n        target: std.Build.ResolvedTarget,\n        optimize: std.builtin.OptimizeMode,\n    },\n) *std.Build.Step.Compile {\n    const entrypoint_mod = mach_builder.addModule(\n        mach_builder.fmt(\"{s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addExecutable",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildExamples from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "fn buildExamples(\n    b: *std.Build,\n    optimize: std.builtin.OptimizeMode,\n    target: std.Build.ResolvedTarget,\n    mach_mod: *std.Build.Module,\n    examples: []Example,\n) void {\n    for (examples) |*example| {\n        const app_mod = b.addModule(example.name, .{\n            .root_source_file = b.path(b.fmt(\"examples/{s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildExamples",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Example from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "const Example = struct {\n    name: []const u8,\n    deps: []const Dependency = &.{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "Example",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SysAudioTest from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: build.zig",
+    "response": "const SysAudioTest = struct {\n    name: []const u8,\n    run_step: *std.Build.Step = undefined,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "SysAudioTest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-custom-entrypoint/App.zig",
+    "response": "pub fn deinit(app: *App) void {\n    app.pipeline.release();\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-custom-entrypoint/App.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-custom-entrypoint/App.zig",
+    "response": "pub fn init(\n    app: *App,\n    core: *mach.Core,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{ .title = \"core-custom-entrypoint\" }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-custom-entrypoint/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupPipeline from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-custom-entrypoint/App.zig",
+    "response": "fn setupPipeline(core: *mach.Core, app: *App, window_id: mach.ObjectID) !void {\n    _ = window_id; // autofix\n    const window = core.windows.getValue(app.window);\n\n    // Create our shader module\n    const shader_module = window.device.createShaderModuleWGSL(\"shader.wgsl\", @embedFile(\"shader.wgsl\"));\n    defer shader_module.release();\n\n    // Blend state describes how rendered colors get blended\n    const blend = gpu.BlendState{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-custom-entrypoint/App.zig",
+      "type": "function",
+      "name": "setupPipeline",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-custom-entrypoint/App.zig",
+    "response": "pub fn tick(core: *mach.Core, app: *App) !void {\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .window_open => |ev| {\n                try setupPipeline(core, app, ev.window_id);\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-custom-entrypoint/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateWindowTitle from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-custom-entrypoint/App.zig",
+    "response": "fn updateWindowTitle(core: *mach.Core) !void {\n//     try core.printTitle(\n//         core.main_window,\n//         \"core-custom-entrypoint [ {d}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-custom-entrypoint/App.zig",
+      "type": "function",
+      "name": "updateWindowTitle",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-custom-entrypoint/main.zig",
+    "response": "pub fn main() !void {\n    const allocator = std.heap.c_allocator;\n\n    // The set of Mach modules our application may use.\n    var mods: Modules = undefined;\n    try mods.init(allocator);\n\n    const app = mods.get(.app);\n    app.run(.main);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-custom-entrypoint/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-transparent-window/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    app: *App,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"core-transparent-window\",\n        .vsync_mode = .double,\n        .transparent = true,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-transparent-window/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupPipeline from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-transparent-window/App.zig",
+    "response": "fn setupPipeline(core: *mach.Core, app: *App, window_id: mach.ObjectID) !void {\n    var window = core.windows.getValue(window_id);\n    defer core.windows.setValueRaw(window_id, window);\n\n    // Create our shader module\n    const shader_module = window.device.createShaderModuleWGSL(\"shader.wgsl\", @embedFile(\"shader.wgsl\"));\n    defer shader_module.release();\n\n    // Blend state describes how rendered colors get blended\n    var blend = gpu.BlendState{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-transparent-window/App.zig",
+      "type": "function",
+      "name": "setupPipeline",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-transparent-window/App.zig",
+    "response": "pub fn tick(app: *App, core: *mach.Core) void {\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .window_open => |ev| {\n                try setupPipeline(core, app, ev.window_id);\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-transparent-window/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-transparent-window/App.zig",
+    "response": "pub fn deinit(app: *App) void {\n    app.pipeline.release();\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-transparent-window/App.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-triangle/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    app: *App,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"core-triangle\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-triangle/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupPipeline from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-triangle/App.zig",
+    "response": "fn setupPipeline(core: *mach.Core, app: *App, window_id: mach.ObjectID) !void {\n    var window = core.windows.getValue(window_id);\n    defer core.windows.setValueRaw(window_id, window);\n\n    // Create our shader module\n    const shader_module = window.device.createShaderModuleWGSL(\"shader.wgsl\", @embedFile(\"shader.wgsl\"));\n    defer shader_module.release();\n\n    // Blend state describes how rendered colors get blended\n    const blend = gpu.BlendState{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-triangle/App.zig",
+      "type": "function",
+      "name": "setupPipeline",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-triangle/App.zig",
+    "response": "pub fn tick(app: *App, core: *mach.Core) void {\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .window_open => |ev| {\n                try setupPipeline(core, app, ev.window_id);\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-triangle/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-triangle/App.zig",
+    "response": "pub fn deinit(app: *App) void {\n    app.pipeline.release();\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-triangle/App.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateWindowTitle from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/core-triangle/App.zig",
+    "response": "fn updateWindowTitle(core: *mach.Core) !void {\n//     try core.printTitle(\n//         core.main_window,\n//         \"core-custom-entrypoint [ {d}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/core-triangle/App.zig",
+      "type": "function",
+      "name": "updateWindowTitle",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/custom-renderer/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    app: *App,\n    app_mod: mach.Mod(App),\n    renderer: *Renderer,\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"custom renderer\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/custom-renderer/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/custom-renderer/App.zig",
+    "response": "pub fn tick(\n    core: *mach.Core,\n    renderer: *Renderer,\n    renderer_mod: mach.Mod(Renderer),\n    app: *App,\n) !void {\n    var direction = app.direction;\n    var spawning = app.spawning;\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .key_press => |ev| {\n                switch (ev.key) {\n                    .left => direction.v[0] -= 1,\n                    .right => direction.v[0] += 1,\n                    .up => direction.v[1] += 1,\n                    .down => direction.v[1] -= 1,\n                    .space => spawning = true,\n                    else => {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/custom-renderer/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/custom-renderer/Renderer.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    renderer: *Renderer,\n) !void {\n    const window = core.windows.getValue(renderer.window);\n    const device = window.device;\n    const shader_module = device.createShaderModuleWGSL(\"shader.wgsl\", @embedFile(\"shader.wgsl\"));\n    defer shader_module.release();\n\n    // Fragment state\n    const blend = gpu.BlendState{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/custom-renderer/Renderer.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/custom-renderer/Renderer.zig",
+    "response": "pub fn deinit(\n    renderer: *Renderer,\n) !void {\n    renderer.pipeline.release();\n    for (renderer.bind_groups) |bind_group| bind_group.release();\n    renderer.uniform_buffer.release();\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/custom-renderer/Renderer.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to renderFrame from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/custom-renderer/Renderer.zig",
+    "response": "pub fn renderFrame(\n    core: *mach.Core,\n    renderer: *Renderer,\n) !void {\n    const window = core.windows.getValue(renderer.window);\n\n    // Grab the back buffer of the swapchain\n    // TODO(Core)\n    const back_buffer_view = window.swap_chain.getCurrentTextureView().?;\n    defer back_buffer_view.release();\n\n    // Create a command encoder\n    const label = @tagName(mach_module) ++ \".tick\";\n    const encoder = window.device.createCommandEncoder(&.{ .label = label }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/custom-renderer/Renderer.zig",
+      "type": "function",
+      "name": "renderFrame",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/glyphs/App.zig",
+    "response": "pub fn init(\n    app: *App,\n    core: *mach.Core,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"glyphs\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/glyphs/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/glyphs/App.zig",
+    "response": "pub fn deinit(app: *App) void {\n    app.texture_atlas.deinit(app.allocator);\n    app.texture.release();\n    app.face.deinit();\n    app.ft.deinit();\n    app.regions.deinit(app.allocator);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/glyphs/App.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupPipeline from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/glyphs/App.zig",
+    "response": "fn setupPipeline(\n    core: *mach.Core,\n    app: *App,\n    sprite: *gfx.Sprite,\n    window_id: mach.ObjectID,\n) !void {\n    const window = core.windows.getValue(app.window);\n\n    // rgba32_pixels\n    const img_size = gpu.Extent3D{ .width = 1024, .height = 1024 }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/glyphs/App.zig",
+      "type": "function",
+      "name": "setupPipeline",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to prepareGlyphs from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/glyphs/App.zig",
+    "response": "fn prepareGlyphs(queue: *gpu.Queue, app: *App) !void {\n    // Prepare which glyphs we will render\n    const codepoints: []const u21 = &[_]u21{ '?', '!', 'a', 'b', '#', '@', '%', '$', '&', '^', '*', '+', '=', '<', '>', '/', ':', ';', 'Q', '~' }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/glyphs/App.zig",
+      "type": "function",
+      "name": "prepareGlyphs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/glyphs/App.zig",
+    "response": "pub fn tick(\n    core: *mach.Core,\n    app: *App,\n    sprite: *gfx.Sprite,\n    sprite_mod: mach.Mod(gfx.Sprite),\n) !void {\n    const label = @tagName(mach_module) ++ \".tick\";\n\n    var direction = app.direction;\n    var spawning = app.spawning;\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .key_press => |ev| {\n                switch (ev.key) {\n                    .left => direction.v[0] -= 1,\n                    .right => direction.v[0] += 1,\n                    .up => direction.v[1] += 1,\n                    .down => direction.v[1] -= 1,\n                    .space => spawning = true,\n                    else => {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/glyphs/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to codepoints from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/glyphs/App.zig",
+    "response": "const codepoints: []const u21 = &[_]u21{ '?', '!', 'a', 'b', '#', '@', '%', '$', '&', '^', '*', '+', '=', '<', '>', '/', ':', ';",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/glyphs/App.zig",
+      "type": "const",
+      "name": "codepoints",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    audio: *mach.Audio,\n    app: *App,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    // Configure the audio module to call our App.audioStateChange function when a sound buffer\n    // finishes playing.\n    audio.on_state_change = app_mod.id.audioStateChange;\n\n    const window = try core.windows.new(.{\n        .title = \"hardware check\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit2 from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "pub fn deinit2(\n    app: *App,\n    text: *gfx.Text,\n) void {\n    // Cleanup here, if desired.\n    text.objects.delete(app.info_text_id);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "function",
+      "name": "deinit2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to audioStateChange from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "pub fn audioStateChange(audio: *mach.Audio, app: *App) !void {\n    audio.buffers.lock();\n    defer audio.buffers.unlock();\n\n    // Find audio objects that are no longer playing\n    var buffers = audio.buffers.slice();\n    while (buffers.next()) |buf_id| {\n        if (audio.buffers.get(buf_id, .playing)) continue;\n\n        // Remove the audio buffer that is no longer playing\n        const samples = audio.buffers.get(buf_id, .samples);\n        audio.buffers.delete(buf_id);\n        app.allocator.free(samples);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "function",
+      "name": "audioStateChange",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupPipeline from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "fn setupPipeline(\n    core: *mach.Core,\n    app: *App,\n    sprite: *gfx.Sprite,\n    text: *gfx.Text,\n    window_id: mach.ObjectID,\n) !void {\n    const window = core.windows.getValue(window_id);\n\n    // Load sfx\n    const sfx_fbs = std.io.fixedBufferStream(assets.sfx.scifi_gun);\n    const sfx_sound_stream = std.io.StreamSource{ .const_buffer = sfx_fbs }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "function",
+      "name": "setupPipeline",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "pub fn tick(\n    core: *mach.Core,\n    app: *App,\n    sprite: *gfx.Sprite,\n    sprite_mod: mach.Mod(gfx.Sprite),\n    text: *gfx.Text,\n    text_mod: mach.Mod(gfx.Text),\n    audio: *mach.Audio,\n) !void {\n    const label = @tagName(mach_module) ++ \".tick\";\n    const window = core.windows.getValue(app.window);\n\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .key_press => |ev| {\n                switch (ev.key) {\n                    .space => app.gotta_go_fast = true,\n                    else => {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadTexture from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "fn loadTexture(device: *gpu.Device, queue: *gpu.Queue, allocator: std.mem.Allocator) !*gpu.Texture {\n    // Load the image from memory\n    var img = try zigimg.Image.fromMemory(allocator, assets.sprites_sheet_png);\n    defer img.deinit();\n    const img_size = gpu.Extent3D{ .width = @as(u32, @intCast(img.width)), .height = @as(u32, @intCast(img.height)) }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "function",
+      "name": "loadTexture",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgb24ToRgba32 from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "fn rgb24ToRgba32(allocator: std.mem.Allocator, in: []zigimg.color.Rgb24) !zigimg.color.PixelStorage {\n    const out = try zigimg.color.PixelStorage.init(allocator, .rgba32, in.len);\n    var i: usize = 0;\n    while (i < in.len) : (i += 1) {\n        out.rgba32[i] = zigimg.color.Rgba32{ .r = in[i].r, .g = in[i].g, .b = in[i].b, .a = 255 }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "function",
+      "name": "rgb24ToRgba32",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to entities_per_second from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "const entities_per_second: f32 = @floatFromInt(\n        app.rand.random().intRangeAtMost(usize, 0, if (app.gotta_go_fast) 50 else 10),\n    );",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "const",
+      "name": "entities_per_second",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to speed from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/hardware-check/App.zig",
+    "response": "const speed: f32 = if (app.gotta_go_fast) 2000 else 100;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/hardware-check/App.zig",
+      "type": "const",
+      "name": "speed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    audio: *mach.Audio,\n    app: *App,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"piano\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to audioStateChange from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "pub fn audioStateChange(audio: *mach.Audio, app: *App) !void {\n    audio.buffers.lock();\n    defer audio.buffers.unlock();\n\n    app.play_after.lock();\n    defer app.play_after.unlock();\n\n    // Find audio objects that are no longer playing\n    var buffers = audio.buffers.slice();\n    while (buffers.next()) |buf_id| {\n        if (audio.buffers.get(buf_id, .playing)) continue;\n\n        // If this object has a play_after child, then play a new sound.\n        if (try app.play_after.getFirstChildOfType(buf_id)) |play_after_id| {\n            const frequency = app.play_after.get(play_after_id, .frequency);\n\n            std.debug.print(\"ghost note!\\n\", .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "function",
+      "name": "audioStateChange",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "pub fn tick(\n    core: *mach.Core,\n    audio: *mach.Audio,\n    app: *App,\n) !void {\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .key_press => |ev| {\n                switch (ev.key) {\n                    // Controls\n                    .space => app.ghost_key_mode = !app.ghost_key_mode,\n                    .down => {\n                        const vol = math.clamp(try audio.player.volume() - 0.1, 0, 1);\n                        try audio.player.setVolume(vol);\n                        std.debug.print(\"[volume] {d:.0}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fillTone from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "fn fillTone(app: *App, audio: *mach.Audio, frequency: f32) ![]align(mach.Audio.alignment) const f32 {\n    const channels = audio.player.channels().len;\n    const sample_rate: f32 = @floatFromInt(audio.player.sampleRate());\n    const duration: f32 = 1.5 * @as(f32, @floatFromInt(channels)) * sample_rate; // play the tone for 1.5s\n    const gain = 0.1;\n\n    const samples = try app.allocator.alignedAlloc(f32, mach.Audio.alignment, @intFromFloat(duration));\n\n    var i: usize = 0;\n    while (i < samples.len) : (i += channels) {\n        const sample_index: f32 = @floatFromInt(i + 1);\n        const sine_wave = math.sin(frequency * 2.0 * math.pi * sample_index / sample_rate) * gain;\n\n        // A number ranging from 0.0 to 1.0 in the first 1/64th of the duration of the tone.\n        const fade_in = @min(sample_index / (duration / 64.0), 1.0);\n\n        // A number ranging from 1.0 to 0.0 over half the duration of the tone.\n        const progression = sample_index / duration; // 0.0 (tone start) to 1.0 (tone end)\n        const fade_out = 1.0 - math.clamp(math.log10(progression * 10.0), 0.0, 1.0);\n\n        for (0..channels) |channel| {\n            samples[i + channel] = sine_wave * fade_in * fade_out;\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "function",
+      "name": "fillTone",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyToFrequency from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "fn keyToFrequency(key: mach.Core.Key) f32 {\n    // The frequencies here just come from a piano frequencies chart. You can google for them.\n    return switch (key) {\n        // First row of piano keys, the highest.\n        .q => 523.25, // C5\n        .w => 587.33, // D5\n        .e => 659.26, // E5\n        .r => 698.46, // F5\n        .t => 783.99, // G5\n        .y => 880.0, // A5\n        .u => 987.77, // B5\n        .i => 1046.5, // C6\n        .o => 1174.7, // D6\n        .p => 1318.5, // E6\n        .left_bracket => 1396.9, // F6\n        .right_bracket => 1568.0, // G6\n\n        // Second row of piano keys, the middle.\n        .a => 261.63, // C4\n        .s => 293.67, // D4\n        .d => 329.63, // E4\n        .f => 349.23, // F4\n        .g => 392.0, // G4\n        .h => 440.0, // A4\n        .j => 493.88, // B4\n        .k => 523.25, // C5\n        .l => 587.33, // D5\n        .semicolon => 659.26, // E5\n        .apostrophe => 698.46, // F5\n\n        // Third row of piano keys, the lowest.\n        .z => 130.81, // C3\n        .x => 146.83, // D3\n        .c => 164.81, // E3\n        .v => 174.61, // F3\n        .b => 196.00, // G3\n        .n => 220.0, // A3\n        .m => 246.94, // B3\n        .comma => 261.63, // C4\n        .period => 293.67, // D4\n        .slash => 329.63, // E5\n        else => 0.0,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "function",
+      "name": "keyToFrequency",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sample_rate from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "const sample_rate: f32 = @floatFromInt(audio.player.sampleRate());",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "const",
+      "name": "sample_rate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to duration from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "const duration: f32 = 1.5 * @as(f32, @floatFromInt(channels)) * sample_rate;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "const",
+      "name": "duration",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sample_index from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/piano/App.zig",
+    "response": "const sample_index: f32 = @floatFromInt(i + 1);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/piano/App.zig",
+      "type": "const",
+      "name": "sample_index",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/play-opus/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    audio: *mach.Audio,\n    app: *App,\n    app_mod: mach.Mod(App),\n) !void {\n    // TODO(allocator): find a better way to get an allocator here\n    const allocator = std.heap.c_allocator;\n\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"play-opus\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/play-opus/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to audioStateChange from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/play-opus/App.zig",
+    "response": "pub fn audioStateChange(audio: *mach.Audio, app: *App) !void {\n    audio.buffers.lock();\n    defer audio.buffers.unlock();\n\n    app.bgm.lock();\n    defer app.bgm.unlock();\n\n    // Find audio objects that are no longer playing\n    var buffers = audio.buffers.slice();\n    while (buffers.next()) |buf_id| {\n        if (audio.buffers.get(buf_id, .playing)) continue;\n\n        // If the buffer has a bgm object as a child, then we consider it background music\n        if (try app.bgm.getFirstChildOfType(buf_id)) |_| {\n            // Repeat background music forever\n            audio.buffers.set(buf_id, .index, 0);\n            audio.buffers.set(buf_id, .playing, true);\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/play-opus/App.zig",
+      "type": "function",
+      "name": "audioStateChange",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/play-opus/App.zig",
+    "response": "pub fn tick(\n    core: *mach.Core,\n    audio: *mach.Audio,\n    app: *App,\n) !void {\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .key_press => |ev| switch (ev.key) {\n                .down => {\n                    const vol = math.clamp(try audio.player.volume() - 0.1, 0, 1);\n                    try audio.player.setVolume(vol);\n                    std.debug.print(\"[volume] {d:.0}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/play-opus/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/sprite/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    app: *App,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"gfx.Sprite\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/sprite/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupPipeline from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/sprite/App.zig",
+    "response": "fn setupPipeline(\n    core: *mach.Core,\n    app: *App,\n    sprite: *gfx.Sprite,\n    window_id: mach.ObjectID,\n) !void {\n    const window = core.windows.getValue(window_id);\n\n    // Create a sprite rendering pipeline\n    app.pipeline_id = try sprite.pipelines.new(.{\n        .window = window_id,\n        .render_pass = undefined,\n        .texture = try loadTexture(window.device, window.queue, app.allocator),\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/sprite/App.zig",
+      "type": "function",
+      "name": "setupPipeline",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/sprite/App.zig",
+    "response": "pub fn tick(\n    core: *mach.Core,\n    app: *App,\n    sprite: *gfx.Sprite,\n    sprite_mod: mach.Mod(gfx.Sprite),\n) !void {\n    const label = @tagName(mach_module) ++ \".tick\";\n\n    var direction = app.direction;\n    var spawning = app.spawning;\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .key_press => |ev| {\n                switch (ev.key) {\n                    .left => direction.v[0] -= 1,\n                    .right => direction.v[0] += 1,\n                    .up => direction.v[1] += 1,\n                    .down => direction.v[1] -= 1,\n                    .space => spawning = true,\n                    else => {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/sprite/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/sprite/App.zig",
+    "response": "pub fn deinit(\n    app: *App,\n    sprite: *gfx.Sprite,\n) void {\n    // Cleanup here, if desired.\n    sprite.objects.delete(app.player_id);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/sprite/App.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loadTexture from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/sprite/App.zig",
+    "response": "fn loadTexture(device: *gpu.Device, queue: *gpu.Queue, allocator: std.mem.Allocator) !*gpu.Texture {\n    // Load the image from memory\n    var img = try zigimg.Image.fromMemory(allocator, assets.sprites_sheet_png);\n    defer img.deinit();\n    const img_size = gpu.Extent3D{ .width = @as(u32, @intCast(img.width)), .height = @as(u32, @intCast(img.height)) }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/sprite/App.zig",
+      "type": "function",
+      "name": "loadTexture",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rgb24ToRgba32 from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/sprite/App.zig",
+    "response": "fn rgb24ToRgba32(allocator: std.mem.Allocator, in: []zigimg.color.Rgb24) !zigimg.color.PixelStorage {\n    const out = try zigimg.color.PixelStorage.init(allocator, .rgba32, in.len);\n    var i: usize = 0;\n    while (i < in.len) : (i += 1) {\n        out.rgba32[i] = zigimg.color.Rgba32{ .r = in[i].r, .g = in[i].g, .b = in[i].b, .a = 255 }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/sprite/App.zig",
+      "type": "function",
+      "name": "rgb24ToRgba32",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/text/App.zig",
+    "response": "pub fn init(\n    core: *mach.Core,\n    app: *App,\n    app_mod: mach.Mod(App),\n) !void {\n    core.on_tick = app_mod.id.tick;\n    core.on_exit = app_mod.id.deinit;\n\n    const window = try core.windows.new(.{\n        .title = \"gfx.Text\",\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/text/App.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setupPipeline from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/text/App.zig",
+    "response": "fn setupPipeline(\n    app: *App,\n    text: *gfx.Text,\n    window_id: mach.ObjectID,\n) !void {\n    // Create a text rendering pipeline\n    app.pipeline_id = try text.pipelines.new(.{\n        .window = window_id,\n        .render_pass = undefined,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/text/App.zig",
+      "type": "function",
+      "name": "setupPipeline",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/text/App.zig",
+    "response": "pub fn tick(\n    core: *mach.Core,\n    app: *App,\n    text: *gfx.Text,\n    text_mod: mach.Mod(gfx.Text),\n) !void {\n    const label = @tagName(mach_module) ++ \".tick\";\n\n    var direction = app.direction;\n    var spawning = app.spawning;\n    while (core.nextEvent()) |event| {\n        switch (event) {\n            .key_press => |ev| {\n                switch (ev.key) {\n                    .left => direction.v[0] -= 1,\n                    .right => direction.v[0] += 1,\n                    .up => direction.v[1] += 1,\n                    .down => direction.v[1] -= 1,\n                    .space => spawning = true,\n                    else => {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/text/App.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/text/App.zig",
+    "response": "pub fn deinit(\n    app: *App,\n    text: *gfx.Text,\n) void {\n    // Cleanup here, if desired.\n    text.objects.delete(app.player_id);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/text/App.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to text1 from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/text/App.zig",
+    "response": "const text1: []const []const u8 = &.{\n    \"Text but with spaces\\n\",\n    \"and\\n\",\n    \"newlines\\n\",\n};",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/text/App.zig",
+      "type": "const",
+      "name": "text1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to text2 from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: examples/text/App.zig",
+    "response": "const text2: []const []const u8 = &.{\"$!?\"};",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "examples/text/App.zig",
+      "type": "const",
+      "name": "text2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "pub fn init(audio: *Audio, audio_mod: mach.Mod(Audio)) !void {\n    // TODO(allocator): find a better way for modules to get allocators\n    const allocator = std.heap.c_allocator;\n\n    const ctx = try sysaudio.Context.init(null, allocator, .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "pub fn deinit(audio: *Audio) void {\n    audio.shutdown.store(true, .release);\n    audio.player.deinit();\n    audio.ctx.deinit();\n    if (audio.mixing_buffer) |*b| b.deinit(audio.allocator);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "pub fn tick(audio: *Audio, audio_mod: mach.Mod(Audio)) !void {\n    // If the other thread called deinit(), return.\n    if (audio.shutdown.load(.acquire)) {\n        return;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeFn from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "fn writeFn(audio_opaque: ?*anyopaque, output: []u8) void {\n    const audio: *Audio = @ptrCast(@alignCast(audio_opaque));\n    const format_size = audio.player.format().size();\n\n    // If the other thread called deinit(), write zeros to the buffer (no sound) and return.\n    if (audio.shutdown.load(.acquire)) {\n        @memset(output, 0);\n        return;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "function",
+      "name": "writeFn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to player_channels from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "const player_channels: u8 = @intCast(player.channels().len);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "const",
+      "name": "player_channels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to render_ahead from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "const render_ahead: u32 = @as(u32, @intFromFloat(@trunc(audio.ms_render_ahead * samples_per_ms))) * player_channels;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "const",
+      "name": "render_ahead",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to audio from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "const audio: *Audio = @ptrCast(@alignCast(audio_opaque));",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "const",
+      "name": "audio",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to volume_vec from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "const volume_vec: Vec = @splat(src_volume);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "const",
+      "name": "volume_vec",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to src_ptr from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "const src_ptr: [*]align(alignment) const f32 = @ptrCast(src.ptr);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "const",
+      "name": "src_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to src_vec from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Audio.zig",
+    "response": "const src_vec: Vec = src[src_offset..][0..simd_vector_length].*;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Audio.zig",
+      "type": "const",
+      "name": "src_vec",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn init(core: *Core) !void {\n    const allocator = std.heap.c_allocator;\n\n    // TODO: fix all leaks and use options.allocator\n    try mach.sysgpu.Impl.init(allocator, .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initWindow from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn initWindow(core: *Core, window_id: mach.ObjectID) !void {\n    var core_window = core.windows.getValue(window_id);\n    defer core.windows.setValueRaw(window_id, core_window);\n\n    core_window.instance = gpu.createInstance(null) orelse {\n        log.err(\"failed to create GPU instance\", .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "initWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn tick(core: *Core, core_mod: mach.Mod(Core)) !void {\n    // TODO(core)(emidoots): consider execution order of mach.Core (e.g. creating a new window\n    // during application execution, rendering to multiple windows, etc.) and how\n    // that relates to Platform.tick being responsible for both handling window updates\n    // (like title/size changes) and window creation, plus multi-threaded rendering.\n    try Platform.tick(core);\n\n    core_mod.run(core.on_tick.?);\n    core_mod.call(.presentFrame);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to presentFrame from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn presentFrame(core: *Core, core_mod: mach.Mod(Core)) !void {\n    var windows = core.windows.slice();\n    while (windows.next()) |window_id| {\n        var core_window = core.windows.getValue(window_id);\n        defer core.windows.setValueRaw(window_id, core_window);\n\n        mach.sysgpu.Impl.deviceTick(core_window.device);\n\n        core_window.swap_chain.present();\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "presentFrame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn main(core: *Core, core_mod: mach.Mod(Core)) !void {\n    if (core.on_tick == null) @panic(\"core.on_tick callback must be set\");\n    if (core.on_exit == null) @panic(\"core.on_exit callback must be set\");\n\n    try Platform.tick(core);\n    core_mod.run(core.on_tick.?);\n    core_mod.call(.presentFrame);\n\n    // Platform drives the main loop.\n    Platform.run(platform_update_callback, .{ core, core_mod }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to platform_update_callback from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn platform_update_callback(core: *Core, core_mod: mach.Mod(Core)) !bool {\n    // TODO(core)(emidoots): consider execution order of mach.Core (e.g. creating a new window\n    // during application execution, rendering to multiple windows, etc.) and how\n    // that relates to Platform.tick being responsible for both handling window updates\n    // (like title/size changes) and window creation, plus multi-threaded rendering.\n    try Platform.tick(core);\n\n    core_mod.run(core.on_tick.?);\n    core_mod.call(.presentFrame);\n\n    return core.state != .exited;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "platform_update_callback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to exit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn exit(core: *Core) void {\n    core.state = .exiting;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "exit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn deinit(core: *Core) !void {\n    core.state = .exited;\n\n    var windows = core.windows.slice();\n    while (windows.next()) |window_id| {\n        var core_window = core.windows.getValue(window_id);\n        core_window.swap_chain.release();\n        core_window.queue.release();\n        core_window.device.release();\n        core_window.surface.release();\n        core_window.adapter.release();\n        core_window.instance.release();\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextEvent from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn nextEvent(core: *@This()) ?Event {\n    return core.events.readItem();\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "nextEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pushEvent from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn pushEvent(core: *@This(), event: Event) void {\n    // Write event\n    core.events.writeItem(event) catch {\n        core.oom.set();\n        return;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "pushEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to outOfMemory from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn outOfMemory(core: *@This()) bool {\n    if (!core.oom.isSet()) return false;\n    core.oom.reset();\n    return true;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "outOfMemory",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyPressed from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn keyPressed(core: *@This(), key: Key) bool {\n    return core.input_state.isKeyPressed(key);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "keyPressed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyReleased from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn keyReleased(core: *@This(), key: Key) bool {\n    return core.input_state.isKeyReleased(key);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "keyReleased",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mousePressed from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn mousePressed(core: *@This(), button: MouseButton) bool {\n    return core.input_state.isMouseButtonPressed(button);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "mousePressed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mouseReleased from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn mouseReleased(core: *@This(), button: MouseButton) bool {\n    return core.input_state.isMouseButtonReleased(button);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "mouseReleased",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mousePosition from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn mousePosition(core: *@This()) Position {\n    return core.input_state.mouse_position;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "mousePosition",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to requestAdapterCallback from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn requestAdapterCallback(\n    context: *RequestAdapterResponse,\n    status: gpu.RequestAdapterStatus,\n    adapter: ?*gpu.Adapter,\n    message: ?[*:0]const u8,\n) void {\n    context.* = RequestAdapterResponse{\n        .status = status,\n        .adapter = adapter,\n        .message = message,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "requestAdapterCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deviceLostCallback from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn deviceLostCallback(reason: gpu.Device.LostReason, msg: [*:0]const u8, userdata: ?*anyopaque) callconv(.C) void {\n    _ = userdata;\n    _ = reason;\n    log.err(\"mach: device lost: {s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "deviceLostCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printUnhandledErrorCallback from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn printUnhandledErrorCallback(_: void, ty: gpu.ErrorType, message: [*:0]const u8) void {\n    switch (ty) {\n        .validation => std.log.err(\"gpu: validation error: {s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "printUnhandledErrorCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to detectBackendType from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub fn detectBackendType(allocator: std.mem.Allocator) !gpu.BackendType {\n    const backend = std.process.getEnvVarOwned(\n        allocator,\n        \"MACH_GPU_BACKEND\",\n    ) catch |err| switch (err) {\n        error.EnvironmentVariableNotFound => {\n            if (builtin.target.isDarwin()) return .metal;\n            if (builtin.target.os.tag == .windows) return .d3d12;\n            return .vulkan;\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "detectBackendType",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isKeyPressed from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn isKeyPressed(input: InputState, key: Key) bool {\n        return input.keys.isSet(@intFromEnum(key));\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "isKeyPressed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isKeyReleased from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn isKeyReleased(input: InputState, key: Key) bool {\n        return !input.isKeyPressed(key);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "isKeyReleased",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isMouseButtonPressed from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn isMouseButtonPressed(input: InputState, button: MouseButton) bool {\n        return input.mouse_buttons.isSet(@intFromEnum(button));\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "isMouseButtonPressed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isMouseButtonReleased from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn isMouseButtonReleased(input: InputState, button: MouseButton) bool {\n        return !input.isMouseButtonPressed(button);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "isMouseButtonReleased",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn eql(a: Size, b: Size) bool {\n        return a.width == b.width and a.height == b.height;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to assertHasDecl from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn assertHasDecl(comptime T: anytype, comptime decl_name: []const u8) void {\n    if (!@hasDecl(T, decl_name)) @compileError(@typeName(T) ++ \" missing declaration: \" ++ decl_name);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "assertHasDecl",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to assertHasField from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "fn assertHasField(comptime T: anytype, comptime field_name: []const u8) void {\n    if (!@hasField(T, field_name)) @compileError(@typeName(T) ++ \" missing field: \" ++ field_name);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "function",
+      "name": "assertHasField",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to InputState from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub const InputState = struct {\n    const KeyBitSet = std.StaticBitSet(@as(u8, @intFromEnum(Key.max)) + 1);\n    const MouseButtonSet = std.StaticBitSet(@as(u4, @intFromEnum(MouseButton.max)) + 1);\n\n    keys: KeyBitSet = KeyBitSet.initEmpty(),\n    mouse_buttons: MouseButtonSet = MouseButtonSet.initEmpty(),\n    mouse_position: Position = .{ .x = 0, .y = 0 }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "InputState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to KeyEvent from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub const KeyEvent = struct {\n    window_id: mach.ObjectID,\n    key: Key,\n    mods: KeyMods,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "KeyEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MouseButtonEvent from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub const MouseButtonEvent = struct {\n    window_id: mach.ObjectID,\n    button: MouseButton,\n    pos: Position,\n    mods: KeyMods,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "MouseButtonEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ResizeEvent from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub const ResizeEvent = struct {\n    window_id: mach.ObjectID,\n    size: Size,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "ResizeEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ZoomGestureEvent from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub const ZoomGestureEvent = struct {\n    window_id: mach.ObjectID,\n    phase: GesturePhase,\n    zoom: f32,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "ZoomGestureEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Size from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub const Size = struct {\n    width: u32,\n    height: u32,\n\n    pub inline fn eql(a: Size, b: Size) bool {\n        return a.width == b.width and a.height == b.height;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "Size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Position from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "pub const Position = struct {\n    x: f64,\n    y: f64,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "Position",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RequestAdapterResponse from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/Core.zig",
+    "response": "const RequestAdapterResponse = struct {\n    status: gpu.RequestAdapterStatus,\n    adapter: ?*gpu.Adapter,\n    message: ?[*:0]const u8,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/Core.zig",
+      "type": "struct",
+      "name": "RequestAdapterResponse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to index from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn index(table: *StringTable, key: []const u8) ?Index {\n    const slice_context: SliceAdapter = .{ .string_bytes = &table.string_bytes }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "index",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to indexOrPut from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn indexOrPut(table: *StringTable, allocator: std.mem.Allocator, key: []const u8) !Index {\n    const slice_context: SliceAdapter = .{ .string_bytes = &table.string_bytes }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "indexOrPut",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to string from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn string(table: *StringTable, idx: Index) [:0]const u8 {\n    return std.mem.span(@as([*:0]const u8, @ptrCast(table.string_bytes.items.ptr)) + idx);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "string",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn deinit(table: *StringTable, allocator: std.mem.Allocator) void {\n    table.string_bytes.deinit(allocator);\n    table.string_table.deinit(allocator);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn eql(ctx: IndexContext, a: u32, b: u32) bool {\n        _ = ctx;\n        return a == b;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hash from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn hash(ctx: IndexContext, x: u32) u64 {\n        const x_slice = std.mem.span(@as([*:0]const u8, @ptrCast(ctx.string_bytes.items.ptr)) + x);\n        return std.hash_map.hashString(x_slice);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "hash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn eql(adapter: SliceAdapter, a_slice: []const u8, b: u32) bool {\n        const b_slice = std.mem.span(@as([*:0]const u8, @ptrCast(adapter.string_bytes.items.ptr)) + b);\n        return std.mem.eql(u8, a_slice, b_slice);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hash from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "pub fn hash(adapter: SliceAdapter, adapted_key: []const u8) u64 {\n        _ = adapter;\n        return std.hash_map.hashString(adapted_key);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "function",
+      "name": "hash",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to IndexContext from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "const IndexContext = struct {\n    string_bytes: *std.ArrayListUnmanaged(u8),\n\n    pub fn eql(ctx: IndexContext, a: u32, b: u32) bool {\n        _ = ctx;\n        return a == b;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "struct",
+      "name": "IndexContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SliceAdapter from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "const SliceAdapter = struct {\n    string_bytes: *std.ArrayListUnmanaged(u8),\n\n    pub fn eql(adapter: SliceAdapter, a_slice: []const u8, b: u32) bool {\n        const b_slice = std.mem.span(@as([*:0]const u8, @ptrCast(adapter.string_bytes.items.ptr)) + b);\n        return std.mem.eql(u8, a_slice, b_slice);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "struct",
+      "name": "SliceAdapter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to slice_context from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "const slice_context: SliceAdapter = .{ .string_bytes = &table.string_bytes };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "const",
+      "name": "slice_context",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to slice_context from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "const slice_context: SliceAdapter = .{ .string_bytes = &table.string_bytes };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "const",
+      "name": "slice_context",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to index_context from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "const index_context: IndexContext = .{ .string_bytes = &table.string_bytes };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "const",
+      "name": "index_context",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to index_context from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/StringTable.zig",
+    "response": "const index_context: IndexContext = .{ .string_bytes = &table.string_bytes };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/StringTable.zig",
+      "type": "const",
+      "name": "index_context",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn run(comptime on_each_update_fn: anytype, args_tuple: std.meta.ArgsTuple(@TypeOf(on_each_update_fn))) noreturn {\n    const Args = @TypeOf(args_tuple);\n    const args_bytes = std.mem.asBytes(&args_tuple);\n    const ArgsBytes = @TypeOf(args_bytes.*);\n    const Helper = struct {\n        // TODO: port libdispatch and use it instead of doing this directly.\n        extern \"System\" fn dispatch_async(queue: *anyopaque, block: *objc.foundation.Block(fn () void)) void;\n        extern \"System\" var _dispatch_main_q: anyopaque;\n        pub fn cCallback(block: *objc.foundation.BlockLiteral(ArgsBytes)) callconv(.C) void {\n            const args: *Args = @ptrCast(&block.context);\n            if (@call(.auto, on_each_update_fn, args.*) catch false) {\n                dispatch_async(&_dispatch_main_q, block.asBlockWithSignature(fn () void));\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn tick(core: *Core) !void {\n    var windows = core.windows.slice();\n    while (windows.next()) |window_id| {\n        const core_window = core.windows.getValue(window_id);\n\n        if (core_window.native) |native| {\n            const native_window: *objc.app_kit.Window = native.window;\n\n            if (core.windows.updated(window_id, .decoration_color)) {\n                if (core_window.decoration_color) |decoration_color| {\n                    const color = objc.app_kit.Color.colorWithRed_green_blue_alpha(\n                        decoration_color.r,\n                        decoration_color.g,\n                        decoration_color.b,\n                        decoration_color.a,\n                    );\n                    native_window.setBackgroundColor(color);\n                    native_window.setTitlebarAppearsTransparent(true);\n                }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initWindow from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "fn initWindow(\n    core: *Core,\n    window_id: mach.ObjectID,\n) !void {\n    var core_window = core.windows.getValue(window_id);\n\n    const context = try core.allocator.create(Context);\n    context.* = .{ .core = core, .window_id = window_id }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "initWindow",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to commandFn from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn commandFn(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) ?*objc.app_kit.Event {\n                const core_: *Core = block.context.core;\n                const window_id_ = block.context.window_id;\n\n                if (core_.windows.get(window_id_, .native)) |native| {\n                    const native_window: *objc.app_kit.Window = native.window;\n\n                    if (event.modifierFlags() & objc.app_kit.EventModifierFlagCommand != 0)\n                        native_window.sendEvent(event);\n                }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "commandFn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowDidResize from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn windowDidResize(block: *objc.foundation.BlockLiteral(*Context)) callconv(.C) void {\n        const core: *Core = block.context.core;\n\n        var core_window = core.windows.getValue(block.context.window_id);\n\n        if (core_window.native) |native| {\n            const native_window: *objc.app_kit.Window = native.window;\n\n            const frame = native_window.frame();\n            const content_rect = native_window.contentRectForFrameRect(frame);\n\n            if (core_window.width != @as(u32, @intFromFloat(content_rect.size.width)) or core_window.height != @as(u32, @intFromFloat(content_rect.size.height))) {\n                core_window.width = @intFromFloat(content_rect.size.width);\n                core_window.height = @intFromFloat(content_rect.size.height);\n\n                const framebuffer_scale: f32 = @floatCast(native_window.backingScaleFactor());\n                const window_width: f32 = @floatFromInt(core_window.width);\n                const window_height: f32 = @floatFromInt(core_window.height);\n\n                core_window.framebuffer_width = @intFromFloat(window_width * framebuffer_scale);\n                core_window.framebuffer_height = @intFromFloat(window_height * framebuffer_scale);\n\n                core_window.swap_chain_descriptor.width = core_window.framebuffer_width;\n                core_window.swap_chain_descriptor.height = core_window.framebuffer_height;\n                core_window.swap_chain.release();\n\n                core_window.swap_chain = core_window.device.createSwapChain(core_window.surface, &core_window.swap_chain_descriptor);\n\n                core.windows.setValueRaw(block.context.window_id, core_window);\n\n                core.pushEvent(.{ .window_resize = .{\n                    .window_id = block.context.window_id,\n                    .size = .{ .width = core_window.width, .height = core_window.height }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "windowDidResize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowShouldClose from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn windowShouldClose(block: *objc.foundation.BlockLiteral(*Context)) callconv(.C) bool {\n        const core: *Core = block.context.core;\n        core.pushEvent(.{ .close = .{ .window_id = block.context.window_id }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "windowShouldClose",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mouseMoved from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn mouseMoved(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        const mouse_location = event.locationInWindow();\n\n        const window_height: f32 = @floatFromInt(core.windows.get(window_id, .height));\n\n        core.pushEvent(.{ .mouse_motion = .{\n            .window_id = window_id,\n            .pos = .{ .x = mouse_location.x, .y = window_height - mouse_location.y }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "mouseMoved",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mouseDown from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn mouseDown(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        core.pushEvent(.{ .mouse_press = .{\n            .window_id = window_id,\n            .button = @enumFromInt(event.buttonNumber()),\n            .pos = .{ .x = event.locationInWindow().x, .y = event.locationInWindow().y }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "mouseDown",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mouseUp from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn mouseUp(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        core.pushEvent(.{ .mouse_release = .{\n            .window_id = window_id,\n            .button = @enumFromInt(event.buttonNumber()),\n            .pos = .{ .x = event.locationInWindow().x, .y = event.locationInWindow().y }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "mouseUp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scrollWheel from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn scrollWheel(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        var scroll_delta_x = event.scrollingDeltaX();\n        var scroll_delta_y = event.scrollingDeltaY();\n\n        if (event.hasPreciseScrollingDeltas()) {\n            scroll_delta_x *= 0.1;\n            scroll_delta_y *= 0.1;\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "scrollWheel",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to magnify from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn magnify(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        core.pushEvent(.{ .zoom_gesture = .{\n            .window_id = window_id,\n            .zoom = @floatCast(event.magnification()),\n            .phase = machPhaseFromPhase(event.phase()),\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "magnify",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyDown from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn keyDown(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n        if (event.isARepeat()) {\n            core.pushEvent(.{ .key_repeat = .{\n                .window_id = window_id,\n                .key = machKeyFromKeycode(event.keyCode()),\n                .mods = machModifierFromModifierFlag(event.modifierFlags()),\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "keyDown",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to insertText from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn insertText(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event, codepoint: u32) callconv(.C) void {\n        _ = event; // autofix\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n        core.pushEvent(.{ .char_input = .{\n            .codepoint = @intCast(codepoint),\n            .window_id = window_id,\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "insertText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyUp from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn keyUp(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        core.pushEvent(.{ .key_release = .{\n            .window_id = window_id,\n            .key = machKeyFromKeycode(event.keyCode()),\n            .mods = machModifierFromModifierFlag(event.modifierFlags()),\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "keyUp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flagsChanged from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub fn flagsChanged(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        const key = machKeyFromKeycode(event.keyCode());\n        const mods = machModifierFromModifierFlag(event.modifierFlags());\n\n        const key_flag = switch (key) {\n            .left_shift, .right_shift => objc.app_kit.EventModifierFlagShift,\n            .left_control, .right_control => objc.app_kit.EventModifierFlagControl,\n            .left_alt, .right_alt => objc.app_kit.EventModifierFlagOption,\n            .left_super, .right_super => objc.app_kit.EventModifierFlagCommand,\n            .caps_lock => objc.app_kit.EventModifierFlagCapsLock,\n            else => 0,\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "flagsChanged",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to machPhaseFromPhase from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "fn machPhaseFromPhase(phase: objc.app_kit.EventPhase) Core.GesturePhase {\n    return switch (phase) {\n        objc.app_kit.EventPhaseBegan => .began,\n        objc.app_kit.EventPhaseEnded => .ended,\n        else => .began,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "machPhaseFromPhase",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to machModifierFromModifierFlag from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "fn machModifierFromModifierFlag(modifier_flag: usize) Core.KeyMods {\n    var modifier: Core.KeyMods = .{\n        .alt = false,\n        .caps_lock = false,\n        .control = false,\n        .num_lock = false,\n        .shift = false,\n        .super = false,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "function",
+      "name": "machModifierFromModifierFlag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Native from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub const Native = struct {\n    window: *objc.app_kit.Window = undefined,\n    view: *objc.mach.View = undefined,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "struct",
+      "name": "Native",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Context from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "pub const Context = struct {\n    core: *Core,\n    window_id: mach.ObjectID,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "struct",
+      "name": "Context",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Helper from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const Helper = struct {\n        // TODO: port libdispatch and use it instead of doing this directly.\n        extern \"System\" fn dispatch_async(queue: *anyopaque, block: *objc.foundation.Block(fn () void)) void;\n        extern \"System\" var _dispatch_main_q: anyopaque;\n        pub fn cCallback(block: *objc.foundation.BlockLiteral(ArgsBytes)) callconv(.C) void {\n            const args: *Args = @ptrCast(&block.context);\n            if (@call(.auto, on_each_update_fn, args.*) catch false) {\n                dispatch_async(&_dispatch_main_q, block.asBlockWithSignature(fn () void));\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "struct",
+      "name": "Helper",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to commandFn from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const commandFn = struct {\n            pub fn commandFn(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) ?*objc.app_kit.Event {\n                const core_: *Core = block.context.core;\n                const window_id_ = block.context.window_id;\n\n                if (core_.windows.get(window_id_, .native)) |native| {\n                    const native_window: *objc.app_kit.Window = native.window;\n\n                    if (event.modifierFlags() & objc.app_kit.EventModifierFlagCommand != 0)\n                        native_window.sendEvent(event);\n                }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "struct",
+      "name": "commandFn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ViewCallbacks from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const ViewCallbacks = struct {\n    pub fn mouseMoved(block: *objc.foundation.BlockLiteral(*Context), event: *objc.app_kit.Event) callconv(.C) void {\n        const core: *Core = block.context.core;\n        const window_id = block.context.window_id;\n\n        const mouse_location = event.locationInWindow();\n\n        const window_height: f32 = @floatFromInt(core.windows.get(window_id, .height));\n\n        core.pushEvent(.{ .mouse_motion = .{\n            .window_id = window_id,\n            .pos = .{ .x = mouse_location.x, .y = window_height - mouse_location.y }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "struct",
+      "name": "ViewCallbacks",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to args from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const args: *Args = @ptrCast(&block.context);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "args",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to native_window from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const native_window: *objc.app_kit.Window = native.window;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "native_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core_ from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core_: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core_",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to native_window from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const native_window: *objc.app_kit.Window = native.window;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "native_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to native_window_opt from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const native_window_opt: ?*objc.app_kit.Window = objc.app_kit.Window.alloc().initWithContentRect_styleMask_backing_defer_screen(\n        rect,\n        window_style,\n        objc.app_kit.BackingStoreBuffered,\n        false,\n        screen,\n    );",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "native_window_opt",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to framebuffer_scale from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const framebuffer_scale: f32 = @floatCast(native_window.backingScaleFactor());",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "framebuffer_scale",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_width from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const window_width: f32 = @floatFromInt(core_window.width);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "window_width",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_height from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const window_height: f32 = @floatFromInt(core_window.height);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "window_height",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to native_window from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const native_window: *objc.app_kit.Window = native.window;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "native_window",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to framebuffer_scale from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const framebuffer_scale: f32 = @floatCast(native_window.backingScaleFactor());",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "framebuffer_scale",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_width from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const window_width: f32 = @floatFromInt(core_window.width);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "window_width",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_height from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const window_height: f32 = @floatFromInt(core_window.height);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "window_height",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_height from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const window_height: f32 = @floatFromInt(core.windows.get(window_id, .height));",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "window_height",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to core from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Darwin.zig",
+    "response": "const core: *Core = block.context.core;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Darwin.zig",
+      "type": "const",
+      "name": "core",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn run(comptime on_each_update_fn: anytype, args_tuple: std.meta.ArgsTuple(@TypeOf(on_each_update_fn))) void {\n    while (@call(.auto, on_each_update_fn, args_tuple) catch false) {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn tick(core: *Core) !void {\n    var windows = core.windows.slice();\n    while (windows.next()) |window_id| {\n        const native_opt: ?Native = core.windows.get(window_id, .native);\n        if (native_opt) |native| {\n            // checks for updates in mach object fields\n            const core_window = core.windows.getValue(window_id);\n            if (core.windows.updated(window_id, .title)) {\n                setTitle(&native, core_window.title);\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initWindow from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn initWindow(\n    core: *Core,\n    window_id: mach.ObjectID,\n) !void {\n    const desired_backend: BackendEnum = blk: {\n        const backend = std.process.getEnvVarOwned(\n            core.allocator,\n            \"MACH_BACKEND\",\n        ) catch |err| switch (err) {\n            error.EnvironmentVariableNotFound => {\n                // default backend\n                break :blk .wayland;\n            }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "initWindow",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to update from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn update(linux: *Linux) !void {\n    switch (linux.backend) {\n        .wayland => try linux.backend.wayland.update(linux),\n        .x11 => try linux.backend.x11.update(linux),\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "update",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTitle from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "fn setTitle(native: *const Native, title: [:0]const u8) void {\n    switch (native.*) {\n        .wayland => |wl| Wayland.setTitle(&wl, title),\n        .x11 => |x| X11.setTitle(&x, title),\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setTitle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setDisplayMode from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn setDisplayMode(linux: *Linux, display_mode: DisplayMode) void {\n    // const old_display_mode = linux.display_mode;\n    linux.display_mode = display_mode;\n    switch (linux.backend) {\n        .wayland => linux.backend.wayland.setDisplayMode(display_mode),\n        .x11 => linux.backend.x11.setDisplayMode(linux, display_mode),\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setDisplayMode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setBorder from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn setBorder(_: *Linux, _: bool) void {\n    return;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setBorder",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setHeadless from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn setHeadless(_: *Linux, _: bool) void {\n    return;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setHeadless",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setVSync from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn setVSync(_: *Linux, _: VSyncMode) void {\n    return;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setVSync",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setSize from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn setSize(_: *Linux, _: Size) void {\n    return;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setCursorMode from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn setCursorMode(_: *Linux, _: CursorMode) void {\n    return;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setCursorMode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setCursorShape from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn setCursorShape(_: *Linux, _: CursorShape) void {\n    return;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "setCursorShape",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wantGamemode from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn wantGamemode(allocator: std.mem.Allocator) error{ OutOfMemory, InvalidWtf8 }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "wantGamemode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initLinuxGamemode from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn initLinuxGamemode() bool {\n    mach.gamemode.start();\n    if (!mach.gamemode.isActive()) return false;\n    gamemode_log.info(\"gamemode: activated\\n\", .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "initLinuxGamemode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinitLinuxGamemode from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "pub fn deinitLinuxGamemode() void {\n    mach.gamemode.stop();\n    gamemode_log.info(\"gamemode: deactivated\\n\", .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "deinitLinuxGamemode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to warnAboutIncompleteFeatures from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "fn warnAboutIncompleteFeatures(backend: BackendEnum, missing_features_x11: []const []const u8, missing_features_wayland: []const []const u8, alloc: std.mem.Allocator) !void {\n    const features_incomplete_message =\n        \\\\You are using the {s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "warnAboutIncompleteFeatures",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to generateFeatureBulletPoints from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "fn generateFeatureBulletPoints(features: []const []const u8, alloc: std.mem.Allocator) !std.ArrayList(u8) {\n    var message = std.ArrayList(u8).init(alloc);\n    for (features, 0..) |str, i| {\n        try message.appendSlice(\"* \");\n        try message.appendSlice(str);\n        if (i < features.len - 1) {\n            try message.appendSlice(\"\\n\");\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "function",
+      "name": "generateFeatureBulletPoints",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to native_opt from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "const native_opt: ?Native = core.windows.get(window_id, .native);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "const",
+      "name": "native_opt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to desired_backend from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Linux.zig",
+    "response": "const desired_backend: BackendEnum = blk: {\n        const backend = std.process.getEnvVarOwned(\n            core.allocator,\n            \"MACH_BACKEND\",\n        ) catch |err| switch (err) {\n            error.EnvironmentVariableNotFound => {\n                // default backend\n                break :blk .wayland;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Linux.zig",
+      "type": "const",
+      "name": "desired_backend",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "pub fn run(comptime on_each_update_fn: anytype, args_tuple: std.meta.ArgsTuple(@TypeOf(on_each_update_fn))) void {\n    while (@call(.auto, on_each_update_fn, args_tuple) catch false) {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "pub fn tick(core: *Core) !void {\n    {\n        var windows = core.windows.slice();\n        while (windows.next()) |window_id| {\n            if (core.windows.get(window_id, .native) != null) {\n                // TODO: propagate window.decorated and all others\n                // Handle resizing the window when the user changes width or height\n                if (core.windows.updated(window_id, .width) or core.windows.updated(window_id, .height)) {\n                    setWindowSize(\n                        core.windows.get(window_id, .native).?.hwnd,\n                        .{\n                            .width = core.windows.get(window_id, .width),\n                            .height = core.windows.get(window_id, .height),\n                        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setWindowSize from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn setWindowSize(hwnd: w.HWND, size_pt: Size) void {\n    const dpi = w.dpiFromHwnd(hwnd);\n    const style = styleFromHwnd(hwnd);\n    var rect: w.RECT = .{\n        .left = 0,\n        .top = 0,\n        .right = w.pxFromPt(i32, @intCast(size_pt.width), dpi),\n        .bottom = w.pxFromPt(i32, @intCast(size_pt.height), dpi),\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "setWindowSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateWindowSize from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn updateWindowSize(\n    dpi: u32,\n    window_style: w.WINDOW_STYLE,\n    hwnd: w.HWND,\n    requested_client_size: w.SIZE,\n) void {\n    const monitor = blk: {\n        var rect: w.RECT = undefined;\n        if (0 == w.GetWindowRect(hwnd, &rect)) fatalWin32(\"GetWindowRect\", w.GetLastError());\n\n        break :blk w.MonitorFromPoint(\n            .{ .x = rect.left, .y = rect.top }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "updateWindowSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initWindow from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn initWindow(\n    core: *Core,\n    window_id: mach.ObjectID,\n) !void {\n    wndproc_core = core;\n\n    var core_window = core.windows.getValue(window_id);\n\n    const hInstance = w.GetModuleHandleW(null);\n    const class_name = w.L(\"mach\");\n    {\n        const class: w.WNDCLASSW = .{\n            .style = .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "initWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to windowIdFromHwnd from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn windowIdFromHwnd(hwnd: w.HWND) mach.ObjectID {\n    const userdata: usize = @bitCast(w.GetWindowLongPtrW(hwnd, @enumFromInt(0)));\n    if (userdata == 0) unreachable;\n    return @bitCast(userdata - 1);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "windowIdFromHwnd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to styleFromHwnd from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn styleFromHwnd(hwnd: w.HWND) w.WINDOW_STYLE {\n    return @bitCast(@as(u32, @truncate(@as(usize, @bitCast(w.GetWindowLongPtrW(hwnd, w.GWL_EXSTYLE))))));\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "styleFromHwnd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getClientSize from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn getClientSize(hwnd: w.HWND) Size {\n    var rect: w.RECT = undefined;\n    if (0 == w.GetClientRect(hwnd, &rect))\n        fatalWin32(\"GetClientRect\", w.GetLastError());\n    std.debug.assert(rect.left == 0);\n    std.debug.assert(rect.top == 0);\n    return .{ .width = @intCast(rect.right), .height = @intCast(rect.bottom) }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "getClientSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getKeyboardModifiers from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn getKeyboardModifiers() mach.Core.KeyMods {\n    return .{\n        .shift = w.GetKeyState(@as(i32, @intFromEnum(w.VK_SHIFT))) < 0, //& 0x8000 == 0x8000,\n        .control = w.GetKeyState(@as(i32, @intFromEnum(w.VK_CONTROL))) < 0, // & 0x8000 == 0x8000,\n        .alt = w.GetKeyState(@as(i32, @intFromEnum(w.VK_MENU))) < 0, // & 0x8000 == 0x8000,\n        .super = (w.GetKeyState(@as(i32, @intFromEnum(w.VK_LWIN)))) < 0 // & 0x8000 == 0x8000)\n        or (w.GetKeyState(@as(i32, @intFromEnum(w.VK_RWIN)))) < 0, // & 0x8000 == 0x8000),\n        .caps_lock = w.GetKeyState(@as(i32, @intFromEnum(w.VK_CAPITAL))) & 1 == 1,\n        .num_lock = w.GetKeyState(@as(i32, @intFromEnum(w.VK_NUMLOCK))) & 1 == 1,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "getKeyboardModifiers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wndProc from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn wndProc(hwnd: w.HWND, msg: u32, wParam: w.WPARAM, lParam: w.LPARAM) callconv(w.WINAPI) w.LRESULT {\n    var msg_node: windowmsg.MessageNode = undefined;\n    if (debug_wndproc_log) msg_node.init(&global_msg_tail, hwnd, msg, wParam, lParam);\n    defer if (debug_wndproc_log) msg_node.deinit();\n    if (debug_wndproc_log) switch (msg) {\n        w.WM_MOUSEMOVE => {}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "wndProc",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fatalWin32 from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "fn fatalWin32(what: []const u8, last_error: u32) noreturn {\n    std.debug.panic(\"{s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "function",
+      "name": "fatalWin32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Native from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "pub const Native = struct {\n    hwnd: w.HWND,\n    surrogate: u16 = 0,\n    // dinput: *w.IDirectInput8W = undefined,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "struct",
+      "name": "Native",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CreateWindowArgs from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const CreateWindowArgs = struct {\n    window_id: mach.ObjectID,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "struct",
+      "name": "CreateWindowArgs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_ex_style from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const window_ex_style: w.WINDOW_EX_STYLE = .{\n    .APPWINDOW = 1,\n    .NOREDIRECTIONBITMAP = 1,\n};",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "window_ex_style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to work_rect from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const work_rect: w.RECT = blk: {\n        var info: w.MONITORINFO = undefined;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "work_rect",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to work_size from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const work_size: w.SIZE = .{\n        .cx = work_rect.right - work_rect.left,\n        .cy = work_rect.bottom - work_rect.top,\n    };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "work_size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to wanted_size from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const wanted_size: w.SIZE = blk: {\n        var rect: w.RECT = .{\n            .left = 0,\n            .top = 0,\n            .right = requested_client_size.cx,\n            .bottom = requested_client_size.cy,\n        };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "wanted_size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_size from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const window_size: w.SIZE = .{\n        .cx = @min(wanted_size.cx, work_size.cx),\n        .cy = @min(wanted_size.cy, work_size.cy),\n    };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "window_size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to class from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const class: w.WNDCLASSW = .{\n            .style = .{},\n            .lpfnWndProc = wndProc,\n            .cbClsExtra = 0,\n            .cbWndExtra = @sizeOf(mach.ObjectID),\n            .hInstance = hInstance,\n            .hIcon = w.LoadIconW(null, w.IDI_APPLICATION),\n            .hCursor = w.LoadCursorW(null, w.IDC_ARROW),\n            .hbrBackground = null,\n            .lpszMenuName = null,\n            .lpszClassName = class_name,\n        };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "class",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to window_style from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const window_style: w.WINDOW_STYLE = if (core_window.decorated) w.WS_OVERLAPPEDWINDOW else w.WS_POPUPWINDOW;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "window_style",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to create_args from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const create_args: CreateWindowArgs = .{\n        .window_id = window_id,\n    };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "create_args",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ptr from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const ptr: ?*?*anyopaque = @ptrCast(&dinput);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to HWND_TOP from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const HWND_TOP: ?w.HWND = null;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "HWND_TOP",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to userdata from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const userdata: usize = @bitCast(w.GetWindowLongPtrW(hwnd, @enumFromInt(0)));",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "userdata",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to create_struct from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const create_struct: *w.CREATESTRUCTW = @ptrFromInt(@as(usize, @bitCast(lParam)));",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "create_struct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to create_args from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const create_args: *CreateWindowArgs = @alignCast(@ptrCast(create_struct.lpCreateParams));",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "create_args",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to client_size_pt from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const client_size_pt: Size = .{\n                .width = w.ptFromPx(u32, client_size_px.width, dpi),\n                .height = w.ptFromPx(u32, client_size_px.height, dpi),\n            };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "client_size_pt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to vkey from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const vkey: w.VIRTUAL_KEY = @enumFromInt(wParam);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "vkey",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to flags from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const flags: WinKeyFlags = @bitCast(@as(u32, @truncate(@as(usize, @bitCast(lParam)))));",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to scancode from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const scancode: u9 = flags.scancode | (@as(u9, if (flags.extended) 1 else 0) << 8);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "scancode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to chars from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const chars: [2]u16 = blk: {\n                var native = core.windows.get(window_id, .native).?;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "chars",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to codepoint from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const codepoint: u21 = blk: {\n                if (std.unicode.utf16IsHighSurrogate(chars[0])) {\n                    if (std.unicode.utf16DecodeSurrogatePair(&chars)) |c| break :blk c else |e| switch (e) {\n                        error.ExpectedSecondSurrogateHalf => {},\n                    }\n                }\n                break :blk chars[1];",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "codepoint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to flags from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const flags: MouseFlags = @bitCast(@as(u8, @truncate(wParam)));",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to button from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const button: MouseButton = switch (msg) {\n                w.WM_LBUTTONDOWN, w.WM_LBUTTONUP => .left,\n                w.WM_RBUTTONDOWN, w.WM_RBUTTONUP => .right,\n                w.WM_MBUTTONDOWN, w.WM_MBUTTONUP => .middle,\n                else => if (flags.xbutton1_down) .four else .five,\n            };",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "button",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to wheel_high_word from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const wheel_high_word: u16 = @truncate((wParam >> 16) & 0xffff);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "wheel_high_word",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to delta_y from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/Windows.zig",
+    "response": "const delta_y: f32 = @as(f32, @floatFromInt(@as(i16, @bitCast(wheel_high_word)))) / WHEEL_DELTA;",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/Windows.zig",
+      "type": "const",
+      "name": "delta_y",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wl_proxy_add_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn wl_proxy_add_listener(proxy: ?*c.struct_wl_proxy, implementation: [*c]?*const fn () callconv(.C) void, data: ?*anyopaque) c_int {\n    return @call(.always_tail, libwaylandclient.?.wl_proxy_add_listener, .{ proxy, implementation, data }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "wl_proxy_add_listener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wl_proxy_get_version from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn wl_proxy_get_version(proxy: ?*c.struct_wl_proxy) u32 {\n    return @call(.always_tail, libwaylandclient.?.wl_proxy_get_version, .{proxy}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "wl_proxy_get_version",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wl_proxy_marshal_flags from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn wl_proxy_marshal_flags(proxy: ?*c.struct_wl_proxy, opcode: u32, interface: [*c]const c.struct_wl_interface, version: u32, flags: u32, ...) ?*c.struct_wl_proxy {\n    var arg_list: std.builtin.VaList = @cVaStart();\n    defer @cVaEnd(&arg_list);\n\n    return @call(.always_tail, libwaylandclient.?.wl_proxy_marshal_flags, .{ proxy, opcode, interface, version, flags, arg_list }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "wl_proxy_marshal_flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wl_proxy_destroy from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn wl_proxy_destroy(proxy: ?*c.struct_wl_proxy) void {\n    return @call(.always_tail, libwaylandclient.?.wl_proxy_destroy, .{proxy}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "wl_proxy_destroy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initWindow from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "pub fn initWindow(\n    core: *Core,\n    window_id: mach.ObjectID,\n) !void {\n    core_ptr = core;\n    var core_window = core.windows.getValue(window_id);\n    libwaylandclient = try LibWaylandClient.load();\n    libxkbcommon = try LibXkbCommon.load();\n\n    core_window.native = .{\n        .wayland = .{\n            .interfaces = Interfaces{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "initWindow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tick from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "pub fn tick(window_id: mach.ObjectID) !void {\n    const wl = &core_ptr.windows.getValue(window_id).native.?.wayland;\n\n    while (libwaylandclient.?.wl_display_flush(wl.display) == -1) {\n        if (std.posix.errno(-1) == std.posix.E.AGAIN) {\n            log.err(\"flush error\", .{}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "tick",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setTitle from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "pub fn setTitle(wl: *const Native, title: [:0]const u8) void {\n    c.xdg_toplevel_set_title(wl.toplevel, title);\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "setTitle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setDisplayMode from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "pub fn setDisplayMode(wl: *Wayland, display_mode: DisplayMode) void {\n    _ = wl;\n    _ = display_mode;\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "setDisplayMode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "pub fn load() !LibXkbCommon {\n        var lib: LibXkbCommon = undefined;\n        lib.handle = std.DynLib.open(lib_name) catch return error.LibraryNotFound;\n        inline for (@typeInfo(LibXkbCommon).@\"struct\".fields[1..]) |field| {\n            const name = std.fmt.comptimePrint(\"{s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to load from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "pub fn load() !LibWaylandClient {\n        var lib: LibWaylandClient = undefined;\n        lib.handle = std.DynLib.open(lib_name) catch return error.LibraryNotFound;\n        inline for (@typeInfo(LibWaylandClient).@\"struct\".fields[1..]) |field| {\n            const name = std.fmt.comptimePrint(\"{s}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "load",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to registryHandleGlobal from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn registryHandleGlobal(window_id: mach.ObjectID, registry: ?*c.struct_wl_registry, name: u32, interface_ptr: [*:0]const u8, version: u32) callconv(.C) void {\n        const interface = std.mem.span(interface_ptr);\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n\n        if (std.mem.eql(u8, \"wl_compositor\", interface)) {\n            wl.interfaces.wl_compositor = @ptrCast(c.wl_registry_bind(\n                registry,\n                name,\n                libwaylandclient.?.wl_compositor_interface,\n                @min(3, version),\n            ) orelse @panic(\"uh idk how to proceed\"));\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "registryHandleGlobal",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to registryHandleGlobalRemove from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn registryHandleGlobalRemove(window_id: mach.ObjectID, registry: ?*c.struct_wl_registry, name: u32) callconv(.C) void {\n        _ = window_id;\n        _ = registry;\n        _ = name;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "registryHandleGlobalRemove",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyboardHandleKeymap from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn keyboardHandleKeymap(window_id: mach.ObjectID, keyboard: ?*c.struct_wl_keyboard, format: u32, fd: i32, keymap_size: u32) callconv(.C) void {\n        _ = keyboard;\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n\n        if (format != c.WL_KEYBOARD_KEYMAP_FORMAT_XKB_V1) {\n            @panic(\"TODO\");\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "keyboardHandleKeymap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyboardHandleEnter from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn keyboardHandleEnter(window_id: mach.ObjectID, keyboard: ?*c.struct_wl_keyboard, serial: u32, surface: ?*c.struct_wl_surface, keys: [*c]c.struct_wl_array) callconv(.C) void {\n        _ = keyboard;\n        _ = serial;\n        _ = surface;\n        _ = keys;\n\n        core_ptr.pushEvent(.{ .focus_gained = .{ .window_id = window_id }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "keyboardHandleEnter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyboardHandleLeave from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn keyboardHandleLeave(window_id: mach.ObjectID, keyboard: ?*c.struct_wl_keyboard, serial: u32, surface: ?*c.struct_wl_surface) callconv(.C) void {\n        _ = keyboard;\n        _ = serial;\n        _ = surface;\n\n        core_ptr.pushEvent(.{ .focus_lost = .{ .window_id = window_id }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "keyboardHandleLeave",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyboardHandleKey from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn keyboardHandleKey(window_id: mach.ObjectID, keyboard: ?*c.struct_wl_keyboard, serial: u32, time: u32, scancode: u32, state: u32) callconv(.C) void {\n        _ = keyboard;\n        _ = serial;\n        _ = time;\n        const wl = &core_ptr.windows.getValue(window_id).native.?.wayland;\n\n        const pressed = state == 1;\n\n        const key_event = KeyEvent{ .key = toMachKey(scancode), .mods = wl.modifiers, .window_id = window_id }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "keyboardHandleKey",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyboardHandleModifiers from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn keyboardHandleModifiers(window_id: mach.ObjectID, keyboard: ?*c.struct_wl_keyboard, serial: u32, mods_depressed: u32, mods_latched: u32, mods_locked: u32, group: u32) callconv(.C) void {\n        _ = keyboard;\n        _ = serial;\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n\n        if (wl.keymap == null)\n            return;\n\n        // TODO: handle this return value\n        _ = libxkbcommon.?.xkb_state_update_mask(\n            wl.xkb_state.?,\n            mods_depressed,\n            mods_latched,\n            mods_locked,\n            0,\n            0,\n            group,\n        );\n\n        //Iterate over all the modifiers\n        inline for (.{\n            .{ wl.modifier_indices.alt_index, \"alt\" }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "keyboardHandleModifiers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keyboardHandleRepeatInfo from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn keyboardHandleRepeatInfo(window_id: mach.ObjectID, keyboard: ?*c.struct_wl_keyboard, rate: i32, delay: i32) callconv(.C) void {\n        _ = window_id;\n        _ = keyboard;\n        _ = rate;\n        _ = delay;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "keyboardHandleRepeatInfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerAxis from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerAxis(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, time: u32, axis: u32, value: c.wl_fixed_t) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = time;\n        _ = axis;\n        _ = value;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerAxis",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerFrame from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerFrame(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerFrame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerAxisSource from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerAxisSource(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, axis_source: u32) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = axis_source;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerAxisSource",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerAxisStop from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerAxisStop(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, time: u32, axis: u32) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = time;\n        _ = axis;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerAxisStop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerAxisDiscrete from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerAxisDiscrete(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, axis: u32, discrete: i32) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = axis;\n        _ = discrete;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerAxisDiscrete",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerAxisValue120 from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerAxisValue120(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, axis: u32, value_120: i32) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = axis;\n        _ = value_120;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerAxisValue120",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerAxisRelativeDirection from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerAxisRelativeDirection(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, axis: u32, direction: u32) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = axis;\n        _ = direction;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerAxisRelativeDirection",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerEnter from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerEnter(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, serial: u32, surface: ?*c.struct_wl_surface, fixed_x: c.wl_fixed_t, fixed_y: c.wl_fixed_t) callconv(.C) void {\n        _ = fixed_x;\n        _ = fixed_y;\n        _ = window_id;\n        _ = pointer;\n        _ = serial;\n        _ = surface;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerEnter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerLeave from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerLeave(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, serial: u32, surface: ?*c.struct_wl_surface) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = serial;\n        _ = surface;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerLeave",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerMotion from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerMotion(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, serial: u32, fixed_x: c.wl_fixed_t, fixed_y: c.wl_fixed_t) callconv(.C) void {\n        _ = pointer;\n        _ = serial;\n\n        const x = c.wl_fixed_to_double(fixed_x);\n        const y = c.wl_fixed_to_double(fixed_y);\n\n        core_ptr.pushEvent(.{ .mouse_motion = .{ .pos = .{ .x = x, .y = y }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerMotion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handlePointerButton from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn handlePointerButton(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, serial: u32, time: u32, button: u32, state: u32) callconv(.C) void {\n        _ = pointer;\n        _ = serial;\n        _ = time;\n        const wl = &core_ptr.windows.getValue(window_id).native.?.wayland;\n\n        const mouse_button: Core.MouseButton = @enumFromInt(button - c.BTN_LEFT);\n        const pressed = state == c.WL_POINTER_BUTTON_STATE_PRESSED;\n        const x = core_ptr.input_state.mouse_position.x;\n        const y = core_ptr.input_state.mouse_position.y;\n\n        if (pressed) {\n            core_ptr.pushEvent(Core.Event{ .mouse_press = .{\n                .button = mouse_button,\n                .mods = wl.modifiers,\n                .pos = .{ .x = x, .y = y }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "handlePointerButton",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to seatHandleName from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn seatHandleName(window_id: mach.ObjectID, seat: ?*c.struct_wl_seat, name_ptr: [*:0]const u8) callconv(.C) void {\n        _ = window_id;\n        _ = seat;\n        _ = name_ptr;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "seatHandleName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to seatHandleCapabilities from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn seatHandleCapabilities(window_id: mach.ObjectID, seat: ?*c.struct_wl_seat, caps: c.wl_seat_capability) callconv(.C) void {\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n        var changed = false;\n\n        if ((caps & c.WL_SEAT_CAPABILITY_KEYBOARD) != 0) {\n            changed = true;\n            wl.keyboard = c.wl_seat_get_keyboard(seat);\n\n            // TODO: handle return value\n            _ = c.wl_keyboard_add_listener(wl.keyboard, &keyboard_listener.listener, @ptrFromInt(window_id));\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "seatHandleCapabilities",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wmBaseHandlePing from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn wmBaseHandlePing(window_id: mach.ObjectID, wm_base: ?*c.struct_xdg_wm_base, serial: u32) callconv(.C) void {\n        _ = window_id;\n        c.xdg_wm_base_pong(wm_base, serial);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "wmBaseHandlePing",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to xdgSurfaceHandleConfigure from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn xdgSurfaceHandleConfigure(window_id: mach.ObjectID, xdg_surface: ?*c.struct_xdg_surface, serial: u32) callconv(.C) void {\n        c.xdg_surface_ack_configure(xdg_surface, serial);\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n\n        if (wl.configured) {\n            c.wl_surface_commit(wl.surface);\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "xdgSurfaceHandleConfigure",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to xdgToplevelHandleClose from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn xdgToplevelHandleClose(window_id: mach.ObjectID, toplevel: ?*c.struct_xdg_toplevel) callconv(.C) void {\n        // TODO: implement this\n        _ = window_id;\n        _ = toplevel;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "xdgToplevelHandleClose",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to xdgToplevelHandleConfigure from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn xdgToplevelHandleConfigure(window_id: mach.ObjectID, toplevel: ?*c.struct_xdg_toplevel, width: i32, height: i32, states: [*c]c.struct_wl_array) callconv(.C) void {\n        var core_window = core_ptr.windows.getValue(window_id);\n        _ = toplevel;\n        _ = states;\n\n        if (width > 0 and height > 0) {\n            core_window.width = @intCast(width);\n            core_window.height = @intCast(height);\n            core_ptr.windows.setValue(window_id, core_window);\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "xdgToplevelHandleConfigure",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to composeSymbol from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn composeSymbol(wl: *const Native, sym: c.xkb_keysym_t) c.xkb_keysym_t {\n    if (sym == c.XKB_KEY_NoSymbol or wl.compose_state == null)\n        return sym;\n\n    if (libxkbcommon.?.xkb_compose_state_feed(wl.compose_state, sym) != c.XKB_COMPOSE_FEED_ACCEPTED)\n        return sym;\n\n    return switch (libxkbcommon.?.xkb_compose_state_get_status(wl.compose_state)) {\n        c.XKB_COMPOSE_COMPOSED => libxkbcommon.?.xkb_compose_state_get_one_sym(wl.compose_state),\n        c.XKB_COMPOSE_COMPOSING, c.XKB_COMPOSE_CANCELLED => c.XKB_KEY_NoSymbol,\n        else => sym,\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "composeSymbol",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setContentAreaOpaque from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "fn setContentAreaOpaque(wl: *const Native, new_size: Core.Size) void {\n    const region = c.wl_compositor_create_region(wl.interfaces.wl_compositor) orelse return;\n\n    c.wl_region_add(region, 0, 0, @intCast(new_size.width), @intCast(new_size.height));\n    c.wl_surface_set_opaque_region(wl.surface, region);\n    c.wl_region_destroy(region);\n\n    // FIX: What is the Mach Object System way of doing this?\n    // core_ptr.swap_chain_update.set();\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "function",
+      "name": "setContentAreaOpaque",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Native from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "pub const Native = struct {\n    surface_descriptor: gpu.Surface.DescriptorFromWaylandSurface,\n    configured: bool = false,\n\n    display: *c.wl_display,\n    surface: *c.wl_surface,\n    toplevel: *c.xdg_toplevel,\n    interfaces: Interfaces,\n\n    // input stuff\n    keyboard: ?*c.wl_keyboard = null,\n    pointer: ?*c.wl_pointer = null,\n\n    // keyboard stuff\n    xkb_context: *c.xkb_context,\n    xkb_state: ?*c.xkb_state = null,\n    compose_state: ?*c.xkb_compose_state = null,\n    keymap: ?*c.xkb_keymap = null,\n    modifiers: Core.KeyMods,\n    modifier_indices: KeyModInd,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "Native",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Interfaces from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const Interfaces = struct {\n    wl_compositor: ?*c.wl_compositor = null,\n    wl_subcompositor: ?*c.wl_subcompositor = null,\n    wl_shm: ?*c.wl_shm = null,\n    wl_output: ?*c.wl_output = null,\n    wl_seat: ?*c.wl_seat = null,\n    wl_data_device_manager: ?*c.wl_data_device_manager = null,\n    xdg_wm_base: ?*c.xdg_wm_base = null,\n    zxdg_decoration_manager_v1: ?*c.zxdg_decoration_manager_v1 = null,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "Interfaces",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to KeyModInd from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const KeyModInd = struct {\n    control_index: c.xkb_mod_index_t,\n    alt_index: c.xkb_mod_index_t,\n    shift_index: c.xkb_mod_index_t,\n    super_index: c.xkb_mod_index_t,\n    caps_lock_index: c.xkb_mod_index_t,\n    num_lock_index: c.xkb_mod_index_t,\n}",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "KeyModInd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to registry_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const registry_listener = struct {\n    fn registryHandleGlobal(window_id: mach.ObjectID, registry: ?*c.struct_wl_registry, name: u32, interface_ptr: [*:0]const u8, version: u32) callconv(.C) void {\n        const interface = std.mem.span(interface_ptr);\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n\n        if (std.mem.eql(u8, \"wl_compositor\", interface)) {\n            wl.interfaces.wl_compositor = @ptrCast(c.wl_registry_bind(\n                registry,\n                name,\n                libwaylandclient.?.wl_compositor_interface,\n                @min(3, version),\n            ) orelse @panic(\"uh idk how to proceed\"));\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "registry_listener",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to keyboard_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const keyboard_listener = struct {\n    fn keyboardHandleKeymap(window_id: mach.ObjectID, keyboard: ?*c.struct_wl_keyboard, format: u32, fd: i32, keymap_size: u32) callconv(.C) void {\n        _ = keyboard;\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n\n        if (format != c.WL_KEYBOARD_KEYMAP_FORMAT_XKB_V1) {\n            @panic(\"TODO\");\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "keyboard_listener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to pointer_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const pointer_listener = struct {\n    fn handlePointerAxis(window_id: mach.ObjectID, pointer: ?*c.struct_wl_pointer, time: u32, axis: u32, value: c.wl_fixed_t) callconv(.C) void {\n        _ = window_id;\n        _ = pointer;\n        _ = time;\n        _ = axis;\n        _ = value;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "pointer_listener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to seat_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const seat_listener = struct {\n    fn seatHandleName(window_id: mach.ObjectID, seat: ?*c.struct_wl_seat, name_ptr: [*:0]const u8) callconv(.C) void {\n        _ = window_id;\n        _ = seat;\n        _ = name_ptr;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "seat_listener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to xdg_wm_base_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const xdg_wm_base_listener = struct {\n    fn wmBaseHandlePing(window_id: mach.ObjectID, wm_base: ?*c.struct_xdg_wm_base, serial: u32) callconv(.C) void {\n        _ = window_id;\n        c.xdg_wm_base_pong(wm_base, serial);\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "xdg_wm_base_listener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to xdg_surface_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const xdg_surface_listener = struct {\n    fn xdgSurfaceHandleConfigure(window_id: mach.ObjectID, xdg_surface: ?*c.struct_xdg_surface, serial: u32) callconv(.C) void {\n        c.xdg_surface_ack_configure(xdg_surface, serial);\n        var core_window = core_ptr.windows.getValue(window_id);\n        const wl = &core_window.native.?.wayland;\n\n        if (wl.configured) {\n            c.wl_surface_commit(wl.surface);\n        }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "xdg_surface_listener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to xdg_toplevel_listener from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const xdg_toplevel_listener = struct {\n    fn xdgToplevelHandleClose(window_id: mach.ObjectID, toplevel: ?*c.struct_xdg_toplevel) callconv(.C) void {\n        // TODO: implement this\n        _ = window_id;\n        _ = toplevel;\n    }",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "struct",
+      "name": "xdg_toplevel_listener",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to name_z from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const name_z: [:0]const u8 = @ptrCast(name[0 .. name.len - 1]);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "const",
+      "name": "name_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to name_z from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const name_z: [:0]const u8 = @ptrCast(name[0 .. name.len - 1]);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "const",
+      "name": "name_z",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to keysym from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const keysym: c.xkb_keysym_t = composeSymbol(wl, keysyms.?[0]);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "const",
+      "name": "keysym",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to mouse_button from hexops/mach",
+    "context": "Repository: hexops/mach (4289 ⭐)\nFile: src/core/linux/Wayland.zig",
+    "response": "const mouse_button: Core.MouseButton = @enumFromInt(button - c.BTN_LEFT);",
+    "metadata": {
+      "repo": "hexops/mach",
+      "stars": 4289,
+      "file": "src/core/linux/Wayland.zig",
+      "type": "const",
+      "name": "mouse_button",
+      "difficulty": "easy"
+    }
+  }
+]

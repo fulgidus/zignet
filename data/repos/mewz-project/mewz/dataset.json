@@ -1,0 +1,2082 @@
+[
+  {
+    "instruction": "Write a Zig function similar to new from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: build.zig",
+    "response": "fn new(b: *Build) Self {\n        var params = BuildParams{}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "build.zig",
+      "type": "function",
+      "name": "new",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setOptions from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: build.zig",
+    "response": "fn setOptions(self: *const Self, b: *Build) *Build.Step.Options {\n        const options = b.addOptions();\n\n        options.addOption(bool, \"is_test\", self.is_test);\n        options.addOption([]const u8, \"log_level\", self.log_level);\n\n        if (self.obj_path) |_| {\n            options.addOption(bool, \"has_wasm\", true);\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "build.zig",
+      "type": "function",
+      "name": "setOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *Build) !void {\n    const params = BuildParams.new(b);\n    const options = params.setOptions(b);\n\n    const optimize = b.standardOptimizeOption(.{}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createTestDir from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: build.zig",
+    "response": "fn createTestDir() !void {\n    const cwd = std.fs.cwd();\n    const test_dir = try cwd.makeOpenPath(TEST_DIR_PATH, std.fs.Dir.OpenOptions{}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "build.zig",
+      "type": "function",
+      "name": "createTestDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to BuildParams from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: build.zig",
+    "response": "const BuildParams = struct {\n    obj_path: ?[]const u8 = undefined,\n    dir_path: ?[]const u8 = undefined,\n    is_test: bool = undefined,\n    log_level: []const u8 = undefined,\n\n    const Self = @This();\n\n    fn new(b: *Build) Self {\n        var params = BuildParams{}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "BuildParams",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isQueue from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn isQueue(self: Self) bool {\n        return @intFromEnum(self) & @intFromEnum(Self.QUEUE) != 0;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "isQueue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Virtio from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn Virtio(comptime DeviceConfigType: type) type {\n    return struct {\n        transport: VirtioMmioTransport(DeviceConfigType),\n        virtqueues: []Virtqueue,\n\n        const Self = @This();\n\n        pub fn new(dev: *pci.Device, features: u64, queue_num: u32, allocator: Allocator) Error!Self {\n            var transport = VirtioMmioTransport(DeviceConfigType).new(@constCast(dev));\n\n            transport.common_config.device_status = DeviceStatus.RESET.toInt();\n            transport.common_config.device_status |= DeviceStatus.ACKNOWLEDGE.toInt();\n            transport.common_config.device_status |= DeviceStatus.DRIVER.toInt();\n\n            const device_features = transport.read_device_feature();\n            if ((device_features & features) != features) {\n                @panic(\"virtio net does not support required features\");\n            }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "Virtio",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to new from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "fn new(index: u16, queue_size: u16, allocator: Allocator) Error!Self {\n        const desc_slice = try allocator.alignedAlloc(VirtqDesc, std.mem.Alignment.fromByteUnits(16), queue_size * @sizeOf(VirtqDesc));\n        @memset(desc_slice, VirtqDesc{ .addr = 0, .len = 0, .flags = 0, .next = 0 }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "new",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enqueue from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn enqueue(self: *Self, chain: []const VirtqDescBuffer) void {\n        if (self.num_free_descs < chain.len) {\n            while (true) {\n                const used_chain = self.popUsed(null) catch @panic(\"failed to pop used desc\");\n                if (used_chain == null) {\n                    break;\n                }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "enqueue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to popUsed from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn popUsed(self: *Self, allocator: ?Allocator) Error!?UsedRing.Chain {\n        if (self.used.idx().* == self.last_used_idx) {\n            return null;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "popUsed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to popUsedOne from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn popUsedOne(self: *Self) ?UsedRing.UsedRingEntry {\n        if (self.used.idx().* == self.last_used_idx) {\n            return null;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "popUsedOne",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to retrieveFromUsedDesc from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn retrieveFromUsedDesc(self: *Self, chain: UsedRing.Chain, allocator: Allocator) Error![]u8 {\n        _ = self;\n        const total_len = chain.total_len;\n        const total_buf = try allocator.alloc(u8, total_len);\n\n        var offset: usize = 0;\n        var remaining_len = total_len;\n        for (chain.desc_list.?, 0..) |desc_buf, i| {\n            const buf = @as([*]u8, @ptrFromInt(@as(usize, @intCast(desc_buf.addr))));\n\n            // the last buffer's length may be less than desc_buf.len\n            if (i == chain.desc_list.?.len - 1) {\n                @memcpy(total_buf[offset..], buf[0..remaining_len]);\n                break;\n            }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "retrieveFromUsedDesc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasNext from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "fn hasNext(self: *const volatile Self) bool {\n        return (self.flags & @intFromEnum(VirtqDescFlag.NEXT)) != 0;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "hasNext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to new from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "fn new(queue_size: u16, allocator: Allocator) Error!Self {\n        const size = @sizeOf(u16) * queue_size + @sizeOf(u16) * 3;\n        const data = allocator.alignedAlloc(u8, std.mem.Alignment.fromByteUnits(8), size) catch |err| {\n            log.fatal.printf(\"failed to allocate avail ring: {}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "new",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addr from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "fn addr(self: Self) usize {\n        return @intFromPtr(self.data.ptr);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "addr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flags from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn flags(self: Self) *volatile u16 {\n        const offset = 0;\n        return @as(*volatile u16, @ptrCast(@alignCast(&self.data[offset])));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to idx from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn idx(self: Self) *volatile u16 {\n        const offset = @sizeOf(u16);\n        return @as(*volatile u16, @ptrCast(@alignCast(&self.data[offset])));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "idx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ring from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn ring(self: Self) []volatile u16 {\n        const offset = 2 * @sizeOf(u16);\n        return @as([*]volatile u16, @ptrCast(@alignCast(&self.data[offset])))[0..self.queue_size];\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "ring",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to used_event from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn used_event(self: Self) *volatile u16 {\n        const offset = 2 * @sizeOf(u16) + @sizeOf(u16) * self.queue_size;\n        return @as(*volatile u16, @ptrCast(@alignCast(&self.data[offset])));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "used_event",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to new from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "fn new(queue_size: u16, allocator: Allocator) Error!Self {\n        const size = @sizeOf(UsedRingEntry) * queue_size + @sizeOf(u16) * 3;\n        const data = try allocator.alignedAlloc(u8, std.mem.Alignment.fromByteUnits(4), size);\n        @memset(data, 0);\n        return Self{\n            .data = data,\n            .queue_size = queue_size,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "new",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addr from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "fn addr(self: Self) usize {\n        return @intFromPtr(self.data.ptr);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "addr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flags from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn flags(self: Self) *volatile u16 {\n        const offset = 0;\n        return @as(*volatile u16, @ptrCast(@alignCast(&self.data[offset])));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to idx from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn idx(self: Self) *volatile u16 {\n        const offset = @sizeOf(u16);\n        return @as(*volatile u16, @ptrCast(@alignCast(&self.data[offset])));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "idx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ring from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn ring(self: Self) []volatile UsedRingEntry {\n        @setRuntimeSafety(false);\n        const offset = 2 * @sizeOf(u16);\n        return @as([*]volatile UsedRingEntry, @ptrCast(@alignCast(&self.data[offset])))[0..self.queue_size];\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "ring",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to avail_event from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn avail_event(self: Self) *volatile u16 {\n        const offset = 2 * @sizeOf(u16) + @sizeOf(UsedRingEntry) * self.queue_size;\n        return @as(*volatile u16, @ptrCast(@alignCast(&self.data[offset])));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "avail_event",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toInt from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "fn toInt(self: Self) u8 {\n        return @intFromEnum(self);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "toInt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to VirtioMmioTransport from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn VirtioMmioTransport(comptime DeviceConfigType: type) type {\n    // FIXME: volatile pointer of packed struct doesn't work?\n    // https://ziglang.org/documentation/master/#toc-packed-struct\n    return packed struct {\n        common_config: *volatile VirtioCommonConfig,\n        device_config: *volatile DeviceConfigType,\n        notify: usize,\n        notify_off_multiplier: u32,\n        isr: *volatile u32,\n        pci_dev: *const pci.Device,\n\n        const Self = @This();\n\n        pub fn new(dev: *pci.Device) Self {\n            var self = Self{\n                .common_config = undefined,\n                .device_config = undefined,\n                .notify = undefined,\n                .notify_off_multiplier = undefined,\n                .isr = undefined,\n                .pci_dev = dev,\n            }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "VirtioMmioTransport",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read_device_feature from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn read_device_feature(self: *Self) u64 {\n            var value: u64 = 0;\n            self.common_config.device_feature_select = 0;\n            value |= @as(u64, self.common_config.device_feature);\n            self.common_config.device_feature_select = 1;\n            value |= @as(u64, self.common_config.device_feature) << 32;\n            return value;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "read_device_feature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write_driver_feature from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn write_driver_feature(self: *Self, value: u64) void {\n            self.common_config.driver_feature_select = 0;\n            self.common_config.driver_feature = @as(u32, @intCast(value & 0xffffffff));\n            self.common_config.driver_feature_select = 1;\n            self.common_config.driver_feature = @as(u32, @intCast(value >> 32));\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "write_driver_feature",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to notifyQueue from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn notifyQueue(self: *Self, virtq: *Virtqueue) void {\n            if (virtq.not_notified_num_descs == 0) {\n                return;\n            }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "notifyQueue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getIsr from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub fn getIsr(self: *Self) IsrStatus {\n            return @as(IsrStatus, @enumFromInt(self.isr.*));\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "function",
+      "name": "getIsr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Virtqueue from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub const Virtqueue = struct {\n    desc: [*]volatile VirtqDesc,\n    avail: AvailRing,\n    used: UsedRing,\n\n    index: u16,\n    num_descs: u16,\n    num_free_descs: u16,\n    not_notified_num_descs: u16 = 0,\n    last_used_idx: u16,\n    free_desc_head_idx: u16,\n\n    const Self = @This();\n\n    fn new(index: u16, queue_size: u16, allocator: Allocator) Error!Self {\n        const desc_slice = try allocator.alignedAlloc(VirtqDesc, std.mem.Alignment.fromByteUnits(16), queue_size * @sizeOf(VirtqDesc));\n        @memset(desc_slice, VirtqDesc{ .addr = 0, .len = 0, .flags = 0, .next = 0 }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "struct",
+      "name": "Virtqueue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AvailRing from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub const AvailRing = struct {\n    // flags: u16,\n    // idx: u16,\n    // ring: [QUEUE_SIZE]u16,\n    // used_event: u16,\n    data: []u8,\n    queue_size: u16,\n\n    const Self = @This();\n\n    fn new(queue_size: u16, allocator: Allocator) Error!Self {\n        const size = @sizeOf(u16) * queue_size + @sizeOf(u16) * 3;\n        const data = allocator.alignedAlloc(u8, std.mem.Alignment.fromByteUnits(8), size) catch |err| {\n            log.fatal.printf(\"failed to allocate avail ring: {}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "struct",
+      "name": "AvailRing",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to UsedRing from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub const UsedRing = struct {\n    const UsedRingEntry = packed struct {\n        id: u32,\n        len: u32,\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "struct",
+      "name": "UsedRing",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Chain from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "const Chain = struct {\n        desc_list: ?[]VirtqDescBuffer,\n        total_len: u32,\n\n        const Self = @This();\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "struct",
+      "name": "Chain",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to VirtqDescBuffer from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub const VirtqDescBuffer = struct {\n    addr: u64,\n    len: u32,\n    type: VirtqDescBufferType,\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "struct",
+      "name": "VirtqDescBuffer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VIRTIO_PCI_CAP_COMMON_CFG from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "const VIRTIO_PCI_CAP_COMMON_CFG: u8 = 1;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "const",
+      "name": "VIRTIO_PCI_CAP_COMMON_CFG",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VIRTIO_PCI_CAP_NOTIFY_CFG from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "const VIRTIO_PCI_CAP_NOTIFY_CFG: u8 = 2;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "const",
+      "name": "VIRTIO_PCI_CAP_NOTIFY_CFG",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VIRTIO_PCI_CAP_ISR_CFG from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "const VIRTIO_PCI_CAP_ISR_CFG: u8 = 3;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "const",
+      "name": "VIRTIO_PCI_CAP_ISR_CFG",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VIRTIO_PCI_CAP_DEVICE_CFG from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "const VIRTIO_PCI_CAP_DEVICE_CFG: u8 = 4;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "const",
+      "name": "VIRTIO_PCI_CAP_DEVICE_CFG",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to VIRTQ_AVAIL_F_NO_INTERRUPT from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "pub const VIRTQ_AVAIL_F_NO_INTERRUPT: u16 = 1;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "const",
+      "name": "VIRTQ_AVAIL_F_NO_INTERRUPT",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to desc from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "const desc: *volatile VirtqDesc = &self.desc[desc_idx];",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "const",
+      "name": "desc",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to desc from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/common.zig",
+    "response": "const desc: *volatile VirtqDesc = &self.desc[desc_idx];",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/common.zig",
+      "type": "const",
+      "name": "desc",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rx_recv from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "fn rx_recv(data: *u8, len: u16) void;\n\nconst VirtioNetDeviceFeature = enum(u64) {\n    VIRTIO_NET_F_CSUM = 1 << 0,\n    VIRTIO_NET_F_GUEST_CSUM = 1 << 1,\n    VIRTIO_NET_F_CTRL_GUEST_OFFLOADS = 1 << 2,\n    VIRTIO_NET_F_MTU = 1 << 3,\n    VIRTIO_NET_F_MAC = 1 << 5,\n    VIRTIO_NET_F_GUEST_TSO4 = 1 << 7,\n    VIRTIO_NET_F_GUEST_TSO6 = 1 << 8,\n    VIRTIO_NET_F_GUEST_ECN = 1 << 9,\n    VIRTIO_NET_F_GUEST_UFO = 1 << 10,\n    VIRTIO_NET_F_HOST_TSO4 = 1 << 11,\n    VIRTIO_NET_F_HOST_TSO6 = 1 << 12,\n    VIRTIO_NET_F_HOST_ECN = 1 << 13,\n    VIRTIO_NET_F_HOST_UFO = 1 << 14,\n    VIRTIO_NET_F_MRG_RXBUF = 1 << 15,\n    VIRTIO_NET_F_STATUS = 1 << 16,\n    VIRTIO_NET_F_CTRL_VQ = 1 << 17,\n    VIRTIO_NET_F_CTRL_RX = 1 << 18,\n    VIRTIO_NET_F_CTRL_VLAN = 1 << 19,\n    VIRTIO_NET_F_GUEST_ANNOUNCE = 1 << 21,\n    VIRTIO_NET_F_MQ = 1 << 22,\n    VIRTIO_NET_F_CTRL_MAC_ADDR = 1 << 23,\n    VIRTIO_NET_F_HOST_USO = 1 << 56,\n    VIRTIO_NET_F_HASH_REPORT = 1 << 57,\n    VIRTIO_NET_F_GUEST_HDRLEN = 1 << 59,\n    VIRTIO_NET_F_RSS = 1 << 60,\n    VIRTIO_NET_F_RSC_EXT = 1 << 61,\n    VIRTIO_NET_F_STANDBY = 1 << 62,\n    VIRTIO_NET_F_SPEED_DUPLEX = 1 << 63,\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "rx_recv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to new from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "fn new(virtio: common.Virtio(VirtioNetDeviceConfig)) Self {\n        const mac_addr = @as(*[6]u8, @ptrCast(@volatileCast(&virtio.transport.device_config.mac))).*;\n        log.info.printf(\"mac: {x}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "new",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to receiveq from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "fn receiveq(self: *Self) *common.Virtqueue {\n        return &self.virtio.virtqueues[0];\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "receiveq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to transmitq from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "fn transmitq(self: *Self) *common.Virtqueue {\n        return &self.virtio.virtqueues[1];\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "transmitq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to transmit from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "pub fn transmit(\n        self: *Self,\n        data: []const u8,\n    ) void {\n        @setRuntimeSafety(false);\n\n        const idx = self.tx_ring_index % self.transmitq().num_descs;\n        const base = @intFromPtr(&virtio_net.tx_ring[idx * PACKET_MAX_LEN]);\n        defer self.tx_ring_index +%= 1;\n\n        const header = @as(*Header, @ptrFromInt(base));\n        header.* = Header{\n            .flags = 0,\n            .gso_type = 0,\n            .hdr_len = 0,\n            .gso_size = 0,\n            .checksum_start = 0,\n            .checksum_offset = 0,\n            .num_buffer = 1,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "transmit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to receive from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "pub fn receive(self: *Self) void {\n        const isr = self.virtio.transport.getIsr();\n        if (isr.isQueue()) {\n            lwip.acquire().sys_check_timeouts();\n            lwip.release();\n\n            const rq = self.receiveq();\n            while (rq.last_used_idx != rq.used.idx().*) {\n                // Each packet is contained in a single descriptor,\n                // because VIRTIO_NET_F_MRG_RXBUF is not negotiated.\n                const used_elem = rq.popUsedOne() orelse continue;\n                const buf = @as([*]u8, @ptrFromInt(rq.desc[used_elem.id].addr))[0..used_elem.len];\n                const packet_buf = buf[@sizeOf(Header)..];\n\n                rx_recv(@as(*u8, @ptrCast(packet_buf.ptr)), @as(u16, @intCast(packet_buf.len)));\n\n                rq.enqueue(([1]common.VirtqDescBuffer{common.VirtqDescBuffer{\n                    .addr = rq.desc[used_elem.id].addr,\n                    .len = PACKET_MAX_LEN,\n                    .type = common.VirtqDescBufferType.WritableFromDevice,\n                }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "receive",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "pub fn init() void {\n    var pci_dev = find: {\n        for (pci.devices) |d| {\n            const dev = d orelse continue;\n            if (dev.config.vendor_id == 0x1af4 and dev.config.device_id == 0x1041) {\n                break :find dev;\n            }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to handleIrq from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "fn handleIrq(frame: *interrupt.InterruptFrame) void {\n    _ = frame;\n    log.debug.print(\"interrupt\\n\");\n    virtio_net.receive();\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "handleIrq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flush from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "pub fn flush() void {\n    virtio_net.virtio.transport.notifyQueue(virtio_net.transmitq());\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "function",
+      "name": "flush",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Header from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "const Header = struct {\n    flags: u8,\n    gso_type: u8,\n    hdr_len: u16,\n    gso_size: u16,\n    checksum_start: u16,\n    checksum_offset: u16,\n    num_buffer: u16,\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "struct",
+      "name": "Header",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to VirtioNet from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/drivers/virtio/net.zig",
+    "response": "const VirtioNet = struct {\n    virtio: common.Virtio(VirtioNetDeviceConfig),\n\n    mac_addr: [6]u8,\n\n    tx_ring_index: usize,\n    tx_ring: []u8,\n    rx_ring: []u8,\n\n    const Self = @This();\n\n    fn new(virtio: common.Virtio(VirtioNetDeviceConfig)) Self {\n        const mac_addr = @as(*[6]u8, @ptrCast(@volatileCast(&virtio.transport.device_config.mac))).*;\n        log.info.printf(\"mac: {x}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/drivers/virtio/net.zig",
+      "type": "struct",
+      "name": "VirtioNet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "pub fn read(self: *Self, buffer: []u8) Stream.Error!usize {\n        const nread = @min(buffer.len, self.inner.data.len - self.pos);\n        @memcpy(buffer[0..nread], self.inner.data[self.pos..][0..nread]);\n        self.pos = self.pos + nread;\n        return nread;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "function",
+      "name": "read",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getFileByName from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "pub fn getFileByName(self: *Self, file_name: []const u8) ?*RegularFile {\n        for (&files) |*file| {\n            if (file.name.len != self.name.len + file_name.len) {\n                continue;\n            }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "function",
+      "name": "getFileByName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to oct2int from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "fn oct2int(oct: []const u8, len: usize) u32 {\n    var dec: u32 = 0;\n    var i: usize = 0;\n\n    while (i < len) : (i += 1) {\n        if (oct[i] < '0' or oct[i] > '7') {\n            break;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "function",
+      "name": "oct2int",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "pub fn init() void {\n    // check if fs is enabled\n    if (!options.has_fs) {\n        log.debug.print(\"file system is not attached\\n\");\n        return;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to RegularFile from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "pub const RegularFile = struct {\n    name: []u8,\n    data: []u8,\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "struct",
+      "name": "RegularFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to OpenedFile from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "pub const OpenedFile = struct {\n    inner: *RegularFile,\n    pos: usize = 0,\n\n    const Self = @This();\n    const Error = error{Failed}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "struct",
+      "name": "OpenedFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Directory from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "pub const Directory = struct {\n    name: []u8,\n\n    const Self = @This();\n    const Error = error{Failed}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "struct",
+      "name": "Directory",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to FILES_MAX from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "const FILES_MAX: usize = 200;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "const",
+      "name": "FILES_MAX",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to header from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "const header: *TarHeader = @as(*TarHeader, @ptrFromInt(@as(usize, @intFromPtr(disk_pointer)) + off));",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "const",
+      "name": "header",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to size from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "const size: u32 = oct2int(&header.size, header.size.len);",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "const",
+      "name": "size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to data_ptr from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/fs.zig",
+    "response": "const data_ptr: [*]u8 = @as([*]u8, @ptrFromInt(@as(usize, @intFromPtr(disk_pointer)) + off + @sizeOf(TarHeader)));",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/fs.zig",
+      "type": "const",
+      "name": "data_ptr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to malloc from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/heap.zig",
+    "response": "fn malloc(usize) ?*anyopaque;\nextern fn realloc(?*anyopaque, usize) ?*anyopaque;\nextern fn free(?*anyopaque) void;\n\nvar e = empty{}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/heap.zig",
+      "type": "function",
+      "name": "malloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sbrk from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/heap.zig",
+    "response": "fn sbrk(diff: i32) usize {\n    if (diff < 0) {\n        const diff_abs = -diff;\n        const old_program_break = program_break;\n        program_break = program_break - @as(usize, @intCast(diff_abs));\n        return old_program_break;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/heap.zig",
+      "type": "function",
+      "name": "sbrk",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rawCAlloc from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/heap.zig",
+    "response": "fn rawCAlloc(\n    _: *anyopaque,\n    len: usize,\n    alignment: std.mem.Alignment,\n    ret_addr: usize,\n) ?[*]u8 {\n    _ = ret_addr;\n\n    _ = lock.acquire();\n    defer lock.release();\n\n    std.debug.assert(alignment.compare(.lte, .of(std.c.max_align_t)));\n    // Note that this pointer cannot be aligncasted to max_align_t because if\n    // len is < max_align_t then the alignment can be smaller. For example, if\n    // max_align_t is 16, but the user requests 8 bytes, there is no built-in\n    // type in C that is size 8 and has 16 byte alignment, so the alignment may\n    // be 8 bytes rather than 16. Similarly if only 1 byte is requested, malloc\n    // is allowed to return a 1-byte aligned pointer.\n    return @ptrCast(malloc(len));\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/heap.zig",
+      "type": "function",
+      "name": "rawCAlloc",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rawCResize from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/heap.zig",
+    "response": "fn rawCResize(\n    context: *anyopaque,\n    memory: []u8,\n    alignment: std.mem.Alignment,\n    new_len: usize,\n    return_address: usize,\n) bool {\n    _ = context;\n    _ = memory;\n    _ = alignment;\n    _ = new_len;\n    _ = return_address;\n    return false;\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/heap.zig",
+      "type": "function",
+      "name": "rawCResize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rawCRemap from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/heap.zig",
+    "response": "fn rawCRemap(\n    context: *anyopaque,\n    memory: []u8,\n    alignment: std.mem.Alignment,\n    new_len: usize,\n    return_address: usize,\n) ?[*]u8 {\n    _ = context;\n    _ = alignment;\n    _ = return_address;\n\n    _ = lock.acquire();\n    defer lock.release();\n\n    return @ptrCast(realloc(memory.ptr, new_len));\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/heap.zig",
+      "type": "function",
+      "name": "rawCRemap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to rawCFree from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/heap.zig",
+    "response": "fn rawCFree(\n    context: *anyopaque,\n    memory: []u8,\n    alignment: std.mem.Alignment,\n    return_address: usize,\n) void {\n    _ = context;\n    _ = alignment;\n    _ = return_address;\n\n    _ = lock.acquire();\n    defer lock.release();\n\n    free(memory.ptr);\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/heap.zig",
+      "type": "function",
+      "name": "rawCFree",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to INITIAL_PROGRAM_BREAK from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/heap.zig",
+    "response": "const INITIAL_PROGRAM_BREAK: usize = 0xffffc00000000000;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/heap.zig",
+      "type": "const",
+      "name": "INITIAL_PROGRAM_BREAK",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to new from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/interrupt.zig",
+    "response": "pub fn new(isTrap: bool, sel: u16, off: u64, d: u2) Self {\n        return Self{\n            .off_15_0 = @as(u16, @intCast(off & 0xffff)),\n            .cs = sel,\n            .ist = 0,\n            .rsv1 = 0,\n            .typ = if (isTrap) STS_TG32 else STS_IG32,\n            .s = 0,\n            .dpl = d,\n            .p = 1,\n            .off_31_16 = @as(u16, @intCast((off >> 16) & 0xffff)),\n            .off_63_32 = @as(u32, @intCast(off >> 32)),\n            .rsv2 = 0,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/interrupt.zig",
+      "type": "function",
+      "name": "new",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/interrupt.zig",
+    "response": "pub fn init() void {\n    // Make interrupt descriptor table (IDT)\n    // It should be calculated at comptime, but cannot due to the Zig compiler\n    idt = init: {\n        var initial_value: [256]InterruptDescriptor = undefined;\n        var int_handler_pointer: usize = @intFromPtr(&interrupt_handlers);\n        for (&initial_value) |*pt| {\n            pt.* = InterruptDescriptor.new(false, SEG_KCODE << 3, int_handler_pointer, 0);\n            int_handler_pointer += 16;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/interrupt.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to registerIrq from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/interrupt.zig",
+    "response": "pub fn registerIrq(irq: u8, handler: *const fn (*InterruptFrame) void) void {\n    irq_handlers[irq] = handler;\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/interrupt.zig",
+      "type": "function",
+      "name": "registerIrq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to commonInterruptHandler from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/interrupt.zig",
+    "response": "fn commonInterruptHandler(trapno: u8, frame: *InterruptFrame) callconv(.c) void {\n    switch (trapno) {\n        T_BRKPT => {\n            const buf = @as([*]u8, @ptrFromInt(frame.rdi))[0..1000];\n            printMessage(buf);\n            while (true) {}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/interrupt.zig",
+      "type": "function",
+      "name": "commonInterruptHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printMessage from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/interrupt.zig",
+    "response": "fn printMessage(buf: []u8) void {\n    for (buf, 0..) |c, i| {\n        if (c == 0) {\n            log.fatal.printf(\"panic: {s}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/interrupt.zig",
+      "type": "function",
+      "name": "printMessage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unexpectedInterruptHandler from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/interrupt.zig",
+    "response": "fn unexpectedInterruptHandler(trapno: u8, frame: *InterruptFrame) void {\n    log.fatal.printf(\"unexpected interrupt {d}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/interrupt.zig",
+      "type": "function",
+      "name": "unexpectedInterruptHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to interrupt_handlers from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/interrupt.zig",
+    "response": "const interrupt_handlers: u32;\n\nvar idt: [256]InterruptDescriptor = undefined;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/interrupt.zig",
+      "type": "const",
+      "name": "interrupt_handlers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/ioapic.zig",
+    "response": "fn read(self: *volatile Self, reg: u32) u32 {\n        self.*.reg = reg;\n        return self.*.data;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/ioapic.zig",
+      "type": "function",
+      "name": "read",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/ioapic.zig",
+    "response": "fn write(self: *volatile Self, reg: u32, data: u32) void {\n        self.*.reg = reg;\n        self.*.data = data;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/ioapic.zig",
+      "type": "function",
+      "name": "write",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/ioapic.zig",
+    "response": "pub fn init() void {\n    const maxintr = (ioapic.read(REG_VER) >> 16) & 0xff;\n\n    // Mark all interrupts edge-triggered, active high, disabled,\n    // and not routed to any CPUs.\n    var i: u32 = 0;\n    while (i <= maxintr) : (i += 1) {\n        ioapic.write(REG_TABLE + 2 * i, INT_DISABLED | (interrupt.T_IRQ0 + i));\n        ioapic.write(REG_TABLE + 2 * i + 1, 0);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/ioapic.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ioapicenable from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/ioapic.zig",
+    "response": "pub fn ioapicenable(irq: u32, cpunum: u8) void {\n    // Mark interrupt edge-triggered, active high,\n    // enabled, and routed to the given cpunum,\n    // which happens to be that cpu's APIC ID.\n    ioapic.write(REG_TABLE + 2 * irq, interrupt.T_IRQ0 + irq);\n    ioapic.write(REG_TABLE + 2 * irq + 1, @as(u32, @intCast(cpunum)) << 24);\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/ioapic.zig",
+      "type": "function",
+      "name": "ioapicenable",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lapicw from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/lapic.zig",
+    "response": "fn lapicw(index: u32, value: u32) void {\n    lapic[index] = value;\n    _ = lapic[ID]; // wait for write to finish\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/lapic.zig",
+      "type": "function",
+      "name": "lapicw",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/lapic.zig",
+    "response": "pub fn init() void {\n    // Enable local APIC; set spurious interrupt vector.\n    lapicw(SVR, ENABLE | (interrupt.T_IRQ0 + interrupt.IRQ_SPURIOUS));\n\n    // The timer repeatedly counts down at bus frequency\n    // from lapic[TICR] and then issues an interrupt.\n    // If xv6 cared more about precise timekeeping,\n    // TICR would be calibrated using an external time source.\n    lapicw(TDCR, X1);\n    lapicw(TIMER, PERIODIC | (interrupt.T_IRQ0 + timer.IRQ_TIMER));\n    lapicw(TICR, 1000000);\n\n    // Disable logical interrupt lines.\n    lapicw(LINT0, MASKED);\n    lapicw(LINT1, MASKED);\n\n    // Disable performance counter overflow interrupts\n    // on machines that provide that interrupt entry.\n\n    if (((lapic[VER] >> 16) & 0xFF) >= 4) {\n        lapicw(PCINT, MASKED);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/lapic.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lapicid from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/lapic.zig",
+    "response": "pub fn lapicid() u32 {\n    return lapic[ID] >> 24;\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/lapic.zig",
+      "type": "function",
+      "name": "lapicid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fromString from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "fn fromString(s: []const u8) Self {\n        if (std.mem.eql(u8, s, \"debug\")) {\n            return .Debug;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "fromString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to largerThan from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "fn largerThan(self: Self, other: Self) bool {\n        return @intFromEnum(self) > @intFromEnum(other);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "largerThan",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to impl from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "pub fn impl(comptime level: []const u8) type {\n    return struct {\n        pub fn print(s: []const u8) void {\n            uart.puts(\"[LOG \" ++ level ++ \"]: \");\n            uart.puts(s);\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "impl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printf from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "pub fn printf(comptime format: []const u8, args: anytype) void {\n            var buf: [1024]u8 = undefined;\n            var fba = std.heap.FixedBufferAllocator.init(buf[0..1024]);\n            const allocator = fba.allocator();\n            const s = fmt.allocPrint(allocator, format, args) catch \"log.printf: invalid format error\\n\";\n            print(s);\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "printf",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dumpHex from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "pub fn dumpHex(data: []const u8) void {\n            const bytes_per_line = 16;\n\n            for (data, 0..) |b, i| {\n                if ((i % bytes_per_line) == 0 and i > 0) {\n                    print(\"\\n\");\n                }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "dumpHex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "pub fn print(s: []const u8) void {\n        _ = s;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "print",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printf from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "pub fn printf(comptime format: []const u8, args: anytype) void {\n        _ = args;\n        _ = format;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "printf",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dumpHex from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "pub fn dumpHex(data: []const u8) void {\n        _ = data;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "function",
+      "name": "dumpHex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to dummy from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/log.zig",
+    "response": "const dummy = struct {\n    pub fn print(s: []const u8) void {\n        _ = s;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/log.zig",
+      "type": "struct",
+      "name": "dummy",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to acquire from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/lwip.zig",
+    "response": "pub fn acquire() *const VTable {\n    _ = lock.acquire();\n    return &vtable;\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/lwip.zig",
+      "type": "function",
+      "name": "acquire",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to wasker_main from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/main.zig",
+    "response": "fn wasker_main() void;\n\npub const panic = mewz_panic.panic;\n\nexport fn bspEarlyInit(boot_magic: u32, boot_params: u32) align(16) callconv(.c) void {\n    const bootinfo = @as(*multiboot.BootInfo, @ptrFromInt(boot_params));\n    const cmdline = util.getString(bootinfo.cmdline);\n\n    x64.init();\n    param.parseFromArgs(cmdline);\n\n    uart.init();\n    lapic.init();\n    ioapic.init();\n    picirq.init();\n    printBootinfo(boot_magic, bootinfo);\n    timer.init();\n    interrupt.init();\n    mem.init(bootinfo);\n    pci.init();\n    log.debug.print(\"pci init finish\\n\");\n    if (param.params.isNetworkEnabled()) {\n        virtio_net.init();\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "wasker_main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/main.zig",
+    "response": "fn write(fd: i32, b: *const u8, count: usize) callconv(.c) isize {\n    if (fd == 1 or fd == 2) {\n        const buf = @as([*]u8, @constCast(@ptrCast(b)))[0..count];\n        log.fatal.print(buf);\n        return @as(isize, @intCast(count));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "write",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printBootinfo from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/main.zig",
+    "response": "fn printBootinfo(magic: u32, bootinfo: *multiboot.BootInfo) void {\n    log.debug.print(\"=== bootinfo ===\\n\");\n    log.debug.printf(\"magic: {x}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "printBootinfo",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocPages from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn allocPages() void {\n        // get a 64KiB block of physical memory\n        const block_addr = allocBlock();\n\n        const free_pages = free_pages_lock.acquire();\n        defer free_pages_lock.release();\n\n        // split the block into 4KiB pages\n        var current_addr = block_addr;\n        while (current_addr < block_addr + BLOCK_SIZE) : (current_addr += PAGE_SIZE) {\n            const page = @as(*FreeList, @ptrFromInt(current_addr));\n            page.next = free_pages.*;\n            free_pages.* = page;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "allocPages",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocTable from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn allocTable() *[512]PageMapEntry {\n        var free_pages = free_pages_lock.acquire();\n        defer free_pages_lock.release();\n\n        // allocate a new block of pages if necessary\n        if (free_pages.* == null) {\n            free_pages_lock.release();\n            allocPages();\n            free_pages = free_pages_lock.acquire();\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "allocTable",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lookupEntry from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn lookupEntry(v_addr: usize) *Self {\n        // This lock must be released by the caller.\n        var table = page_table_lock.acquire();\n        var entry: *Self = undefined;\n        const levels = [_]u6{ 4, 3, 2, 1 }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "lookupEntry",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mapBlock from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn mapBlock(v_addr: usize, p_addr: usize) void {\n        if (v_addr % BLOCK_SIZE != 0) {\n            @panic(\"mapBlock: v_addr is not aligned\");\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "mapBlock",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPointAddr from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn getPointAddr(self: *Self) usize {\n        return @as(usize, self.address << 12) & 0x7ffffffffffff000;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "getPointAddr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "pub fn init(info: *multiboot.BootInfo) void {\n    const image_end_addr = @intFromPtr(&image_end);\n\n    {\n        // disable alignment checks for mmaps\n        @setRuntimeSafety(false);\n\n        var off: usize = 0;\n        while (off < info.mmap_length) {\n            const mmap = @as(*multiboot.MemoryMap, @ptrFromInt(off + info.mmap_addr));\n            log.debug.printf(\"mmap.type: {x}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init2 from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "pub fn init2() void {\n    const base = @intFromPtr(boottime_fba.?.buffer.ptr) + boottime_fba.?.end_index;\n    const length = boottime_fba.?.buffer.len - boottime_fba.?.end_index;\n    const aligned_base = util.roundUp(usize, base, BLOCK_SIZE);\n    const aligned_length = util.roundDown(usize, length, BLOCK_SIZE);\n    initRange(aligned_base, aligned_length);\n\n    boottime_allocator = null;\n    boottime_fba = null;\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "init2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocBlock from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "pub fn allocBlock() usize {\n    const free_blocks = free_blocks_lock.acquire();\n    defer free_blocks_lock.release();\n\n    if (free_blocks.*) |block| {\n        free_blocks.* = block.next;\n        return @intFromPtr(block);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "allocBlock",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPaddr from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "pub fn getPaddr(v_addr: usize) usize {\n    const entry = PageMapEntry.lookupEntry(v_addr);\n    defer PageMapEntry.page_table_lock.release();\n    const page_addr = entry.getPointAddr();\n    var offset: usize = undefined;\n    if (entry.huge_page == 1) {\n        offset = v_addr & 0x1fffff;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "getPaddr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocAndMapBlock from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "pub fn allocAndMapBlock(v_addr: usize) usize {\n    const block = allocBlock();\n    fillBlockZero(block);\n    PageMapEntry.mapBlock(v_addr, block);\n    return block;\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "allocAndMapBlock",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fillBlockZero from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn fillBlockZero(block_addr: usize) void {\n    const buf = @as([*]u8, @ptrFromInt(block_addr))[0..BLOCK_SIZE];\n    @memset(buf, 0);\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "fillBlockZero",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printSize from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn printSize() void {\n    const free_blocks = free_blocks_lock.acquire();\n    defer free_blocks_lock.release();\n\n    var current = free_blocks.*;\n    var count: u32 = 0;\n    var size: u32 = 0;\n    while (current != null) : (current = current.?.next) {\n        size += BLOCK_SIZE;\n        count += 1;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "printSize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initRange from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "fn initRange(base: usize, length: usize) void {\n    if (length == 0) {\n        return;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "function",
+      "name": "initRange",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FreeList from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "const FreeList = struct {\n    next: ?*FreeList,\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "struct",
+      "name": "FreeList",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to image_end from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/mem.zig",
+    "response": "const image_end: u8;\n\npub const BLOCK_SIZE = 65536;",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/mem.zig",
+      "type": "const",
+      "name": "image_end",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to panic from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/panic.zig",
+    "response": "pub fn panic(msg: []const u8, _: ?*std.builtin.StackTrace, _: ?usize) noreturn {\n    log.fatal.printf(\"=== PANIC ===\\n\", .{}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/panic.zig",
+      "type": "function",
+      "name": "panic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isNetworkEnabled from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/param.zig",
+    "response": "pub fn isNetworkEnabled(self: Params) bool {\n        return self.addr != null and self.subnetmask != null and self.gateway != null;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/param.zig",
+      "type": "function",
+      "name": "isNetworkEnabled",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseFromArgs from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/param.zig",
+    "response": "pub fn parseFromArgs(args: []const u8) void {\n    var params_itr = std.mem.splitScalar(u8, args, ' ');\n    while (params_itr.next()) |part| {\n        var kv = std.mem.splitScalar(u8, part, '=');\n\n        const k = kv.next() orelse continue;\n        const v = kv.next() orelse continue;\n\n        if (std.mem.eql(u8, k, \"ip\")) {\n            parseIp(v);\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/param.zig",
+      "type": "function",
+      "name": "parseFromArgs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseIp from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/param.zig",
+    "response": "fn parseIp(ip_str: []const u8) void {\n    var parts = std.mem.splitScalar(u8, ip_str, '/');\n    const ip = parts.next() orelse @panic(\"invalid ip format\");\n    const subnet = parts.next() orelse @panic(\"invalid ip format\");\n    if (parts.next()) |_| {\n        @panic(\"invalid ip format\");\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/param.zig",
+      "type": "function",
+      "name": "parseIp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseIp4Address from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/param.zig",
+    "response": "fn parseIp4Address(buf: []const u8) ?u32 {\n    var result: u32 = 0;\n    const out_ptr = std.mem.asBytes(&result);\n\n    var x: u8 = 0;\n    var index: u8 = 0;\n    var saw_any_digits = false;\n    var has_zero_prefix = false;\n    for (buf) |c| {\n        if (c == '.') {\n            if (!saw_any_digits) {\n                return null; // invalid character\n            }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/param.zig",
+      "type": "function",
+      "name": "parseIp4Address",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Params from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/param.zig",
+    "response": "const Params = struct {\n    addr: ?u32 = null,\n    subnetmask: ?u32 = null,\n    gateway: ?u32 = null,\n\n    pub fn isNetworkEnabled(self: Params) bool {\n        return self.addr != null and self.subnetmask != null and self.gateway != null;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/param.zig",
+      "type": "struct",
+      "name": "Params",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isInvalid from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn isInvalid(self: *const Self) bool {\n        return self.vendor_id == 0xffff;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "isInvalid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bar from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "pub fn bar(self: *const Self, index: u8) u32 {\n        const value = switch (index) {\n            0 => self.bar0,\n            1 => self.bar1,\n            2 => self.bar2,\n            3 => self.bar3,\n            4 => self.bar4,\n            5 => self.bar5,\n            else => @panic(\"pci: invalid bar index\"),\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "bar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to new from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn new(bus: u8, slot: u8, func: u8) (Allocator.Error || Error)!Self {\n        var config_buffer: [16]u32 align(16) = [16]u32{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "new",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to headerType from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn headerType(self: *const Self) u8 {\n        return self.read8(0xe);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "headerType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to vendorId from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn vendorId(self: *const Self) u16 {\n        return self.read16(0);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "vendorId",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isSingleFunction from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn isSingleFunction(self: *const Self) bool {\n        return (self.headerType() & 0x80) == 0;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "isSingleFunction",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isBridge from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn isBridge(self: *const Self) bool {\n        return (self.config.class == 0x06) and (self.config.subclass == 0x04);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "isBridge",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isInvalid from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn isInvalid(self: *const Self) bool {\n        return self.vendorId() == 0xffff;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "isInvalid",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enable_bus_master from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "pub fn enable_bus_master(self: *Self) void {\n        const command = self.read32(4);\n        self.write32(4, command | (1 << 2));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "enable_bus_master",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read8 from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn read8(self: *const Self, offset: u8) u8 {\n        const value = readConfig(self.bus, self.slot, self.func, offset & 0xfc);\n        return @as(u8, @intCast(((value >> @as(u5, @intCast(((offset & 0x03) * 8)))) & 0xff)));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "read8",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read16 from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn read16(self: *const Self, offset: u8) u16 {\n        const value = readConfig(self.bus, self.slot, self.func, offset & 0xfc);\n        return @as(u16, @intCast(((value >> @as(u5, @intCast(((offset & 0x02) * 8)))) & 0xffff)));\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "read16",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read32 from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn read32(self: *const Self, offset: u8) u32 {\n        return readConfig(self.bus, self.slot, self.func, offset);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "read32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write32 from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn write32(self: *const Self, offset: u8, value: u32) void {\n        const b = @as(u32, @intCast(self.bus));\n        const s = @as(u32, @intCast(self.slot));\n        const f = @as(u32, @intCast(self.func));\n        const o = @as(u32, @intCast(offset));\n        const address: u32 = 0x80000000 | (b << 16) | (s << 11) | (f << 8) | (o & 0xfc);\n        x64.out(CONDIG_ADDRESS, address);\n        x64.out(CONDIG_DATA, value);\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "write32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "pub fn init() void {\n    // TODO: check for host bridge\n    // TODO: check for PCI-to-PCI bridge\n\n    var root = Device{\n        .bus = 0,\n        .slot = 0,\n        .func = 0,\n        .config = undefined,\n        .capabilities = undefined,\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanFunction from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn scanFunction(bus: u8, slot: u8, func: u8) ?Device {\n    const device = Device.new(bus, slot, func) catch return null;\n\n    log.info.printf(\"pci: found device at bus {}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "scanFunction",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanDevice from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn scanDevice(bus: u8, slot: u8) void {\n    const device = scanFunction(bus, slot, 0) orelse @panic(\"pci: invalid device\");\n\n    devices[null_device_index] = device;\n    null_device_index += 1;\n\n    if (device.isSingleFunction()) {\n        return;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "scanDevice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scanBus from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn scanBus(bus: u8) void {\n    for (0..32) |slot| {\n        const dev = Device{\n            .bus = bus,\n            .slot = @as(u8, @intCast(slot)),\n            .func = 0,\n            .config = undefined,\n            .capabilities = undefined,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "scanBus",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readConfig from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "fn readConfig(bus: u8, slot: u8, func: u8, offset: u8) u32 {\n    const b = @as(u32, @intCast(bus));\n    const s = @as(u32, @intCast(slot));\n    const f = @as(u32, @intCast(func));\n    const o = @as(u32, @intCast(offset));\n    const address: u32 = 0x80000000 | (b << 16) | (s << 11) | (f << 8) | (o & 0xfc);\n    x64.out(CONDIG_ADDRESS, address);\n    return x64.in(u32, CONDIG_DATA);\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "function",
+      "name": "readConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Capability from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "pub const Capability = struct {\n    id: u8,\n    next: u8,\n    len: u8,\n    data: []u8,\n\n    const Self = @This();\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "struct",
+      "name": "Capability",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Device from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "pub const Device = struct {\n    bus: u8,\n    slot: u8,\n    func: u8,\n    config: Config,\n    capabilities: []Capability,\n\n    const Self = @This();\n\n    fn new(bus: u8, slot: u8, func: u8) (Allocator.Error || Error)!Self {\n        var config_buffer: [16]u32 align(16) = [16]u32{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "struct",
+      "name": "Device",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to address from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "const address: u32 = 0x80000000 | (b << 16) | (s << 11) | (f << 8) | (o & 0xfc);",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "const",
+      "name": "address",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to address from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/pci.zig",
+    "response": "const address: u32 = 0x80000000 | (b << 16) | (s << 11) | (f << 8) | (o & 0xfc);",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/pci.zig",
+      "type": "const",
+      "name": "address",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/picirq.zig",
+    "response": "pub fn init() void {\n    // disable PIC interrupts to use APIC\n    x64.out(IO_PIC1 + 1, @as(u8, 0xff));\n    x64.out(IO_PIC2 + 1, @as(u8, 0xff));\n}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/picirq.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toEvent from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/poll.zig",
+    "response": "pub fn toEvent(self: *Self) ?Event {\n        switch (self.target) {\n            .fd_read => |s| {\n                const nbytes = s.bytesCanRead() orelse return null;\n                return Event{\n                    .userdata = self.userdata,\n                    .err = WasiError.SUCCESS.toU16(),\n                    .eventtype = EventType.fd_read.toInt(),\n                    .event_fd_readwrite = EventFdReadwrite{\n                        .nbytes = nbytes,\n                        .flags = s.flags(),\n                    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/poll.zig",
+      "type": "function",
+      "name": "toEvent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to poll from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/poll.zig",
+    "response": "pub fn poll(wasi_subscriptions: []WasiSubscription, events: []Event, nsubscriptions: i32) i32 {\n    var nevents: usize = 0;\n    // FIXME: Can we avoid allocating this?\n    var subscriptions = heap.runtime_allocator.alloc(?Subscription, @as(usize, @intCast(nsubscriptions))) catch @panic(\"failed to allocate memory for subscriptions: out of memory\");\n\n    defer heap.runtime_allocator.free(subscriptions);\n    // WARNING: Timers are registered only in this function,\n    // so we can unregister all timers here.\n    defer timer.unregisterAll();\n\n    for (wasi_subscriptions, 0..) |sub, i| {\n        const eventtype = EventType.fromInt(sub.content.tag);\n        if (eventtype == null) {\n            events[nevents] = Event{\n                .userdata = sub.userdata,\n                .err = WasiError.INVAL.toU16(),\n                .eventtype = sub.content.tag,\n                .event_fd_readwrite = EventFdReadwrite{ .nbytes = 0, .flags = 0 }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/poll.zig",
+      "type": "function",
+      "name": "poll",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dumpSubscriptions from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/poll.zig",
+    "response": "fn dumpSubscriptions(subscriptions: []?Subscription) void {\n    for (subscriptions) |sub| {\n        if (sub == null) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/poll.zig",
+      "type": "function",
+      "name": "dumpSubscriptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Subscription from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/poll.zig",
+    "response": "const Subscription = struct {\n    target: Target,\n    userdata: u64,\n\n    const Self = @This();\n\n    pub fn toEvent(self: *Self) ?Event {\n        switch (self.target) {\n            .fd_read => |s| {\n                const nbytes = s.bytesCanRead() orelse return null;\n                return Event{\n                    .userdata = self.userdata,\n                    .err = WasiError.SUCCESS.toU16(),\n                    .eventtype = EventType.fd_read.toInt(),\n                    .event_fd_readwrite = EventFdReadwrite{\n                        .nbytes = nbytes,\n                        .flags = s.flags(),\n                    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/poll.zig",
+      "type": "struct",
+      "name": "Subscription",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to x64FillFn from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/rand.zig",
+    "response": "pub fn x64FillFn(p: *anyopaque, b: []u8) void {\n    _ = p;\n    var buf = b;\n    for (0..buf.len / 8) |i| {\n        const r = asm (\"rdrand %[reg]\"\n            : [reg] \"=r\" (-> u64),\n        );\n        const ptr = @as(*u64, @ptrCast(@alignCast(&buf[i * 8])));\n        ptr.* = r;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/rand.zig",
+      "type": "function",
+      "name": "x64FillFn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn get(self: *Self, fd: i32) ?*Stream {\n        const streams = self.streams.acquire();\n        defer self.streams.release();\n        const s = &streams.*[@as(usize, @intCast(fd))];\n        if (s.* == null) {\n            return null;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to set from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn set(self: *Self, stream: Stream) Stream.Error!i32 {\n        const streams = self.streams.acquire();\n        defer self.streams.release();\n        var i = (self.index + 1) % STREAM_NUM;\n        defer self.index = i;\n\n        while (i != self.index) : (i = (i + 1) % STREAM_NUM) {\n            if (streams.*[i] == null) {\n                streams.*[i] = stream;\n                const set_stream = &streams.*[i];\n\n                const new_fd = @as(i32, @intCast(i));\n                switch (set_stream.*.?) {\n                    Stream.uart => {}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "set",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn remove(self: *Self, fd: i32) void {\n        const streams = self.streams.acquire();\n        defer self.streams.release();\n        streams.*[@as(usize, @intCast(fd))] = null;\n    }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to read from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn read(self: *Self, buffer: []u8) Error!usize {\n        return switch (self.*) {\n            Self.uart => @panic(\"unimplemented\"),\n            Self.socket => |*sock| sock.read(buffer),\n            Self.opened_file => |*f| f.read(buffer),\n            Self.dir => @panic(\"unimplemented\"),\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "read",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to write from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn write(self: *Self, buffer: []u8) Error!usize {\n        return switch (self.*) {\n            Self.uart => uart.write(buffer),\n            Self.socket => |*sock| sock.send(buffer),\n            Self.opened_file => @panic(\"unimplemented\"),\n            Self.dir => @panic(\"unimplemented\"),\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "write",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to close from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn close(self: *Self) Error!void {\n        return switch (self.*) {\n            Self.uart => @panic(\"unimplemented\"),\n            Self.socket => |*sock| sock.close(),\n            Self.opened_file => {}",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "close",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to flags from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn flags(self: *Self) u16 {\n        return switch (self.*) {\n            Self.uart => 0,\n            Self.socket => 0,\n            Self.opened_file => 0,\n            Self.dir => 0,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "flags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setFlags from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn setFlags(self: *Self, f: u16) void {\n        switch (self.*) {\n            Self.uart => @panic(\"unimplemented\"),\n            Self.socket => |*sock| sock.*.flags |= f,\n            Self.opened_file => @panic(\"unimplemented\"),\n            Self.dir => @panic(\"unimplemented\"),\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "setFlags",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bytesCanRead from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn bytesCanRead(self: *Self) ?usize {\n        return switch (self.*) {\n            Self.uart => 1,\n            Self.socket => |*sock| sock.bytesCanRead(),\n            Self.opened_file => |*f| f.inner.data.len - f.pos,\n            Self.dir => 0,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "bytesCanRead",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to bytesCanWrite from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn bytesCanWrite(self: *Self) ?usize {\n        return switch (self.*) {\n            Self.uart => 1,\n            Self.socket => |*sock| sock.bytesCanWrite(),\n            Self.opened_file => 0,\n            Self.dir => 0,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "bytesCanWrite",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to size from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "pub fn size(self: *Self) usize {\n        return switch (self.*) {\n            Self.uart => 0,\n            Self.socket => 0,\n            Self.opened_file => |*f| f.inner.data.len,\n            Self.dir => 0,\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "function",
+      "name": "size",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FdTable from mewz-project/mewz",
+    "context": "Repository: mewz-project/mewz (637 ⭐)\nFile: src/stream.zig",
+    "response": "const FdTable = struct {\n    streams: SpinLock([STREAM_NUM]?Stream),\n    index: usize = 0,\n\n    const Self = @This();\n\n    pub fn get(self: *Self, fd: i32) ?*Stream {\n        const streams = self.streams.acquire();\n        defer self.streams.release();\n        const s = &streams.*[@as(usize, @intCast(fd))];\n        if (s.* == null) {\n            return null;\n        }",
+    "metadata": {
+      "repo": "mewz-project/mewz",
+      "stars": 637,
+      "file": "src/stream.zig",
+      "type": "struct",
+      "name": "FdTable",
+      "difficulty": "easy"
+    }
+  }
+]

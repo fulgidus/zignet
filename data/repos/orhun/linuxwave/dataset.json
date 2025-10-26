@@ -1,0 +1,418 @@
+[
+  {
+    "instruction": "Write a Zig function similar to addPackages from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: build.zig",
+    "response": "fn addPackages(b: *std.Build, mod: *std.Build.Module) !void {\n    const clap = b.dependency(\"clap\", .{}",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addPackages",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    // Standard target options allows the person running `zig build` to choose\n    // what target to build for. Here we do not override the defaults, which\n    // means any target is allowed, and the default is native. Other options\n    // for restricting supported target set are available.\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sample_rate from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/defaults.zig",
+    "response": "pub const sample_rate: usize = 24000;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/defaults.zig",
+      "type": "const",
+      "name": "sample_rate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to note from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/defaults.zig",
+    "response": "pub const note: f32 = 440;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/defaults.zig",
+      "type": "const",
+      "name": "note",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to channels from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/defaults.zig",
+    "response": "pub const channels: usize = 1;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/defaults.zig",
+      "type": "const",
+      "name": "channels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to volume from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/defaults.zig",
+    "response": "pub const volume: u8 = 50;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/defaults.zig",
+      "type": "const",
+      "name": "volume",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to duration from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/defaults.zig",
+    "response": "pub const duration: usize = 20;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/defaults.zig",
+      "type": "const",
+      "name": "duration",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readBytes from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/file.zig",
+    "response": "pub fn readBytes(\n    allocator: std.mem.Allocator,\n    path: []const u8,\n    len: usize,\n) ![]u8 {\n    const file = try std.fs.cwd().openFile(path, .{}",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/file.zig",
+      "type": "function",
+      "name": "readBytes",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "pub fn init(config: GeneratorConfig) Generator {\n        return Generator{ .config = config }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to generate from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "pub fn generate(self: Generator, allocator: std.mem.Allocator, sample: u8) ![]u8 {\n        var buffer = std.ArrayList(u8).init(allocator);\n        var i: usize = 0;\n        while (i < sample_count) : (i += 1) {\n            // Calculate the frequency according to the equal temperament.\n            // Hertz = 440 * 2^(semitone distance / 12)\n            // (<http://en.wikipedia.org/wiki/Equal_temperament>)\n            const tone_distance: f32 = @floatFromInt(self.config.scale[sample % self.config.scale.len]);\n            const increment: f32 = @floatFromInt(i);\n            var amp = @sin(self.config.note * std.math.pi * std.math.pow(f32, 2, tone_distance / 12) * (increment * 0.0001));\n            // Scale the amplitude between 0 and 256.\n            amp = (amp * std.math.maxInt(u8) / 2) + (std.math.maxInt(u8) / 2);\n            // Apply the volume control.\n            const volume: f32 = @floatFromInt(self.config.volume);\n            amp = amp * volume / 100;\n            try buffer.append(@intFromFloat(amp));\n        }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "function",
+      "name": "generate",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to GeneratorConfig from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "pub const GeneratorConfig = struct {\n    /// Semitones from the base note in a major musical scale.\n    scale: []const u8,\n    /// Frequency of the note.\n    ///\n    /// <https://pages.mtu.edu/~suits/notefreqs.html>\n    note: f32,\n    /// Volume control.\n    volume: u8,\n}",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "struct",
+      "name": "GeneratorConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Generator from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "pub const Generator = struct {\n    /// Number of calculated samples per sine curve (affects perceived frequency).\n    pub const sample_count: usize = 10000;\n\n    /// Configuration.\n    config: GeneratorConfig,\n\n    /// Creates a new instance.\n    pub fn init(config: GeneratorConfig) Generator {\n        return Generator{ .config = config }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "struct",
+      "name": "Generator",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sample_count from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "pub const sample_count: usize = 10000;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "const",
+      "name": "sample_count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tone_distance from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "const tone_distance: f32 = @floatFromInt(self.config.scale[sample % self.config.scale.len]);",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "const",
+      "name": "tone_distance",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to increment from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "const increment: f32 = @floatFromInt(i);",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "const",
+      "name": "increment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to volume from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/gen.zig",
+    "response": "const volume: f32 = @floatFromInt(self.config.volume);",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/gen.zig",
+      "type": "const",
+      "name": "volume",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/main.zig",
+    "response": "fn run(allocator: std.mem.Allocator, output: anytype) !void {\n    // Parse command-line arguments.\n    const cli = try clap.parse(clap.Help, &args.params, args.parsers, .{ .allocator = allocator }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/main.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getNumBytes from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "pub fn getNumBytes(self: Format) u16 {\n        return switch (self) {\n            .U8 => 1,\n            .S16_LE => 2,\n            .S24_LE => 3,\n            .S32_LE => 4,\n        }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "function",
+      "name": "getNumBytes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getDataLength from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "pub fn getDataLength(self: EncoderConfig, duration: usize) usize {\n        return duration * (self.sample_rate * self.num_channels * self.format.getNumBytes()) - header_len;\n    }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "function",
+      "name": "getDataLength",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Encoder from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "pub fn Encoder(comptime Writer: type) type {\n    // Position of the data chunk.\n    const data_chunk_pos: u32 = 36;\n\n    return struct {\n        // Encode WAV.\n        pub fn encode(writer: Writer, data: []const u8, config: EncoderConfig) !void {\n            try writeChunks(writer, config, data);\n        }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "function",
+      "name": "Encoder",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeHeader from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "pub fn writeHeader(writer: Writer, config: EncoderConfig) !void {\n            try writeChunks(writer, config, null);\n        }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "function",
+      "name": "writeHeader",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to patchHeader from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "pub fn patchHeader(writer: Writer, seeker: anytype, data_len: u32) !void {\n            const endian = std.builtin.Endian.little;\n            try seeker.seekTo(4);\n            try writer.writeInt(u32, data_chunk_pos + 8 + data_len - 8, endian);\n            try seeker.seekTo(data_chunk_pos + 4);\n            try writer.writeInt(u32, data_len, endian);\n        }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "function",
+      "name": "patchHeader",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeChunks from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "fn writeChunks(writer: Writer, config: EncoderConfig, opt_data: ?[]const u8) !void {\n            // Chunk configuration.\n            const bytes_per_sample = config.format.getNumBytes();\n            const num_channels: u16 = @intCast(config.num_channels);\n            const sample_rate: u32 = @intCast(config.sample_rate);\n            const byte_rate = sample_rate * @as(u32, num_channels) * bytes_per_sample;\n            const block_align: u16 = num_channels * bytes_per_sample;\n            const bits_per_sample: u16 = bytes_per_sample * 8;\n            const data_len: u32 = if (opt_data) |data| @intCast(data.len) else 0;\n            const endian = std.builtin.Endian.little;\n            // Write the file header.\n            try writer.writeAll(&RIFF);\n            if (opt_data != null) {\n                try writer.writeInt(u32, data_chunk_pos + 8 + data_len - 8, endian);\n            }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "function",
+      "name": "writeChunks",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EncoderConfig from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "pub const EncoderConfig = struct {\n    /// Number of channels.\n    num_channels: usize,\n    /// Sample rate.\n    sample_rate: usize,\n    /// Sample format.\n    format: Format,\n\n    /// Returns the data length needed for given duration.\n    pub fn getDataLength(self: EncoderConfig, duration: usize) usize {\n        return duration * (self.sample_rate * self.num_channels * self.format.getNumBytes()) - header_len;\n    }",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "struct",
+      "name": "EncoderConfig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to header_len from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "const header_len: u32 = 44;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "const",
+      "name": "header_len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to data_chunk_pos from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "const data_chunk_pos: u32 = 36;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "const",
+      "name": "data_chunk_pos",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to num_channels from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "const num_channels: u16 = @intCast(config.num_channels);",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "const",
+      "name": "num_channels",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to sample_rate from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "const sample_rate: u32 = @intCast(config.sample_rate);",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "const",
+      "name": "sample_rate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to block_align from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "const block_align: u16 = num_channels * bytes_per_sample;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "const",
+      "name": "block_align",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to bits_per_sample from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "const bits_per_sample: u16 = bytes_per_sample * 8;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "const",
+      "name": "bits_per_sample",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to data_len from orhun/linuxwave",
+    "context": "Repository: orhun/linuxwave (611 ⭐)\nFile: src/wav.zig",
+    "response": "const data_len: u32 = if (opt_data) |data| @intCast(data.len) else 0;",
+    "metadata": {
+      "repo": "orhun/linuxwave",
+      "stars": 611,
+      "file": "src/wav.zig",
+      "type": "const",
+      "name": "data_len",
+      "difficulty": "easy"
+    }
+  }
+]

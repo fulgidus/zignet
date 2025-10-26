@@ -1,0 +1,938 @@
+[
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/alloc_free.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/alloc_free.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/arena_alloc.zig",
+    "response": "pub fn main() !void {\r\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/arena_alloc.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/fixed_buffer_alloc.zig",
+    "response": "pub fn main() !void {\r\n    var buffer: [10]u8 = undefined;\r\n    for (0..buffer.len) |i| {\r\n        buffer[i] = 0;\r\n    }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/fixed_buffer_alloc.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/for_scope_local_var.zig",
+    "response": "pub fn main() !void {\r\n    const a = [_]u8{\r\n        0, 1, 2, 3, 4,\r\n        5, 6, 7, 8\r\n    }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/for_scope_local_var.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/general_purpose_alloc.zig",
+    "response": "pub fn main() !void {\r\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/general_purpose_alloc.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/login_example.zig",
+    "response": "pub fn main() !void {\r\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/login_example.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/user_struct.zig",
+    "response": "pub fn init(id: usize, name: []const u8) User {\r\n        return .{ .id = id, .name = name }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/user_struct.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/user_struct.zig",
+    "response": "pub fn main() !void {\r\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/user_struct.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to User from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/allocators/user_struct.zig",
+    "response": "const User = struct {\r\n    id: usize,\r\n    name: []const u8,\r\n\r\n    pub fn init(id: usize, name: []const u8) User {\r\n        return .{ .id = id, .name = name }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/allocators/user_struct.zig",
+      "type": "struct",
+      "name": "User",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "fn print(input: []const u8) !void {\r\n    try stdout.print(\"{s}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "print",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "pub fn init() Base64 {\r\n        const upper = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r\n        const lower = \"abcdefghijklmnopqrstuvwxyz\";\r\n        const numbers = \"0123456789+/\";\r\n        return Base64{\r\n            ._table = upper ++ lower ++ numbers,\r\n        }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _char_at from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "fn _char_at(self: Base64, index: u8) u8 {\r\n        return self._table[index];\r\n    }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "_char_at",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _char_index from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "fn _char_index(self: Base64, char: u8) u8 {\r\n        if (char == '=')\r\n            return 64;\r\n\r\n        var index: u8 = 0;\r\n        for (0..63) |_| {\r\n            if (self._char_at(index) == char)\r\n                break;\r\n            index += 1;\r\n        }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "_char_index",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to encode from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "fn encode(self: Base64, allocator: std.mem.Allocator, input: []const u8) ![]u8 {\r\n        if (input.len == 0)\r\n            return \"\";\r\n\r\n        const n_output = try _calc_encode_length(input);\r\n        var output = try allocator.alloc(u8, n_output);\r\n        var tmp_buffer = [3]u8{ 0, 0, 0 }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "encode",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to decode from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "fn decode(self: Base64, allocator: std.mem.Allocator, input: []const u8) ![]u8 {\r\n        if (input.len == 0)\r\n            return \"\";\r\n\r\n        const n_output = try _calc_decode_length(input);\r\n        var tmp_buffer = [4]u8{ 0, 0, 0, 0 }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "decode",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _calc_encode_length from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "fn _calc_encode_length(input: []const u8) !usize {\r\n    if (input.len < 3) {\r\n        return 4;\r\n    }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "_calc_encode_length",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _calc_decode_length from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "fn _calc_decode_length(input: []const u8) !usize {\r\n    if (input.len < 4) {\r\n        return 3;\r\n    }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "_calc_decode_length",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "pub fn main() !void {\r\n    var memory_buffer: [1000]u8 = undefined;\r\n    var fba = std.heap.FixedBufferAllocator.init(&memory_buffer);\r\n    const allocator = fba.allocator();\r\n\r\n    const text = \"Testing some more stuff\";\r\n    const etext = \"VGVzdGluZyBzb21lIG1vcmUgc3R1ZmY=\";\r\n    const base64 = Base64.init();\r\n    const encoded_text = try base64.encode(allocator, text);\r\n    const decoded_text = try base64.decode(allocator, etext);\r\n\r\n    try stdout.print(\"Encoded text: {s}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Base64 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "const Base64 = struct {\r\n    _table: *const [64]u8,\r\n\r\n    pub fn init() Base64 {\r\n        const upper = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r\n        const lower = \"abcdefghijklmnopqrstuvwxyz\";\r\n        const numbers = \"0123456789+/\";\r\n        return Base64{\r\n            ._table = upper ++ lower ++ numbers,\r\n        }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "struct",
+      "name": "Base64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to n_output from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "const n_output: usize = try std.math.divCeil(usize, input.len, 3);",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "const",
+      "name": "n_output",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to n_groups from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_basic.zig",
+    "response": "const n_groups: usize = try std.math.divFloor(usize, input.len, 4);",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_basic.zig",
+      "type": "const",
+      "name": "n_groups",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to print from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "fn print(input: []const u8) !void {\r\n    try stdout.print(\"{s}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "function",
+      "name": "print",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "pub fn init() Base64 {\r\n        const upper = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r\n        const lower = \"abcdefghijklmnopqrstuvwxyz\";\r\n        const numbers = \"0123456789+/\";\r\n        return Base64{\r\n            .table = upper ++ lower ++ numbers,\r\n        }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to char_at from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "pub fn char_at(self: Base64, index: u8) u8 {\r\n        return self.table[index];\r\n    }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "function",
+      "name": "char_at",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to calc_output_length from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "fn calc_output_length(input_length: usize) u8 {\r\n    const as_float: f64 = @floatFromInt(input_length);\r\n    const d = as_float / 3.0;\r\n    return @intFromFloat(@ceil(d));\r\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "function",
+      "name": "calc_output_length",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to decode from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "fn decode(allocator: std.mem.Allocator, input: []const u8) !void {\r\n    try stdout.print(\"Start decoding of {s}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "function",
+      "name": "decode",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "pub fn main() !void {\r\n    const text = \"Hi\";\r\n    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);\r\n    defer arena.deinit();\r\n    const allocator = arena.allocator();\r\n\r\n    try decode(allocator, text);\r\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Base64 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "const Base64 = struct {\r\n    table: *const [64]u8,\r\n\r\n    pub fn init() Base64 {\r\n        const upper = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\r\n        const lower = \"abcdefghijklmnopqrstuvwxyz\";\r\n        const numbers = \"0123456789+/\";\r\n        return Base64{\r\n            .table = upper ++ lower ++ numbers,\r\n        }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "struct",
+      "name": "Base64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to as_float from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/base64/base64_table.zig",
+    "response": "const as_float: f64 = @floatFromInt(input_length);",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/base64/base64_table.zig",
+      "type": "const",
+      "name": "as_float",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __glibc_clang_prereq from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __glibc_clang_prereq(maj: anytype, min: anytype) @TypeOf(((__clang_major__ << @as(c_int, 16)) + __clang_minor__) >= ((maj << @as(c_int, 16)) + min)) {\n    _ = &maj;\n    _ = &min;\n    return ((__clang_major__ << @as(c_int, 16)) + __clang_minor__) >= ((maj << @as(c_int, 16)) + min);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__glibc_clang_prereq",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __GLIBC_PREREQ from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __GLIBC_PREREQ(maj: anytype, min: anytype) @TypeOf(((__GLIBC__ << @as(c_int, 16)) + __GLIBC_MINOR__) >= ((maj << @as(c_int, 16)) + min)) {\n    _ = &maj;\n    _ = &min;\n    return ((__GLIBC__ << @as(c_int, 16)) + __GLIBC_MINOR__) >= ((maj << @as(c_int, 16)) + min);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__GLIBC_PREREQ",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __glibc_has_builtin from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __glibc_has_builtin(name: anytype) @TypeOf(__has_builtin(name)) {\n    _ = &name;\n    return __has_builtin(name);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__glibc_has_builtin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __P from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __P(args: anytype) @TypeOf(args) {\n    _ = &args;\n    return args;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__P",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __PMT from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __PMT(args: anytype) @TypeOf(args) {\n    _ = &args;\n    return args;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__PMT",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __bos from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __bos(ptr: anytype) @TypeOf(__builtin_object_size(ptr, __USE_FORTIFY_LEVEL > @as(c_int, 1))) {\n    _ = &ptr;\n    return __builtin_object_size(ptr, __USE_FORTIFY_LEVEL > @as(c_int, 1));\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__bos",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __bos0 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __bos0(ptr: anytype) @TypeOf(__builtin_object_size(ptr, @as(c_int, 0))) {\n    _ = &ptr;\n    return __builtin_object_size(ptr, @as(c_int, 0));\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__bos0",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __glibc_objsize0 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __glibc_objsize0(__o: anytype) @TypeOf(__bos0(__o)) {\n    _ = &__o;\n    return __bos0(__o);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__glibc_objsize0",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __glibc_objsize from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __glibc_objsize(__o: anytype) @TypeOf(__bos(__o)) {\n    _ = &__o;\n    return __bos(__o);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__glibc_objsize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __ASMNAME2 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __ASMNAME2(prefix: anytype, cname: anytype) @TypeOf(__STRING(prefix) ++ cname) {\n    _ = &prefix;\n    _ = &cname;\n    return __STRING(prefix) ++ cname;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__ASMNAME2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __nonnull from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __nonnull(params: anytype) @TypeOf(__attribute_nonnull__(params)) {\n    _ = &params;\n    return __attribute_nonnull__(params);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__nonnull",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __glibc_unlikely from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __glibc_unlikely(cond: anytype) @TypeOf(__builtin_expect(cond, @as(c_int, 0))) {\n    _ = &cond;\n    return __builtin_expect(cond, @as(c_int, 0));\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__glibc_unlikely",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __glibc_likely from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __glibc_likely(cond: anytype) @TypeOf(__builtin_expect(cond, @as(c_int, 1))) {\n    _ = &cond;\n    return __builtin_expect(cond, @as(c_int, 1));\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__glibc_likely",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __LDBL_REDIR1 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __LDBL_REDIR1(name: anytype, proto: anytype, alias: anytype) @TypeOf(name ++ proto) {\n    _ = &name;\n    _ = &proto;\n    _ = &alias;\n    return name ++ proto;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__LDBL_REDIR1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __LDBL_REDIR from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __LDBL_REDIR(name: anytype, proto: anytype) @TypeOf(name ++ proto) {\n    _ = &name;\n    _ = &proto;\n    return name ++ proto;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__LDBL_REDIR",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __LDBL_REDIR1_NTH from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __LDBL_REDIR1_NTH(name: anytype, proto: anytype, alias: anytype) @TypeOf(name ++ proto ++ __THROW) {\n    _ = &name;\n    _ = &proto;\n    _ = &alias;\n    return name ++ proto ++ __THROW;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__LDBL_REDIR1_NTH",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __LDBL_REDIR_NTH from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __LDBL_REDIR_NTH(name: anytype, proto: anytype) @TypeOf(name ++ proto ++ __THROW) {\n    _ = &name;\n    _ = &proto;\n    return name ++ proto ++ __THROW;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__LDBL_REDIR_NTH",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __REDIRECT_LDBL from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __REDIRECT_LDBL(name: anytype, proto: anytype, alias: anytype) @TypeOf(__REDIRECT(name, proto, alias)) {\n    _ = &name;\n    _ = &proto;\n    _ = &alias;\n    return __REDIRECT(name, proto, alias);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__REDIRECT_LDBL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __REDIRECT_NTH_LDBL from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __REDIRECT_NTH_LDBL(name: anytype, proto: anytype, alias: anytype) @TypeOf(__REDIRECT_NTH(name, proto, alias)) {\n    _ = &name;\n    _ = &proto;\n    _ = &alias;\n    return __REDIRECT_NTH(name, proto, alias);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__REDIRECT_NTH_LDBL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __feof_unlocked_body from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __feof_unlocked_body(_fp: anytype) @TypeOf((_fp.*._flags & _IO_EOF_SEEN) != @as(c_int, 0)) {\n    _ = &_fp;\n    return (_fp.*._flags & _IO_EOF_SEEN) != @as(c_int, 0);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__feof_unlocked_body",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __ferror_unlocked_body from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __ferror_unlocked_body(_fp: anytype) @TypeOf((_fp.*._flags & _IO_ERR_SEEN) != @as(c_int, 0)) {\n    _ = &_fp;\n    return (_fp.*._flags & _IO_ERR_SEEN) != @as(c_int, 0);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__ferror_unlocked_body",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __f64 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __f64(x: anytype) @TypeOf(x) {\n    _ = &x;\n    return x;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__f64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __f32x from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __f32x(x: anytype) @TypeOf(x) {\n    _ = &x;\n    return x;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__f32x",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __builtin_huge_valf32 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __builtin_huge_valf32() @TypeOf(__builtin_huge_valf()) {\n    return __builtin_huge_valf();\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__builtin_huge_valf32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __builtin_inff32 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __builtin_inff32() @TypeOf(__builtin_inff()) {\n    return __builtin_inff();\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__builtin_inff32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __builtin_nanf32 from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/c.zig",
+    "response": "fn __builtin_nanf32(x: anytype) @TypeOf(__builtin_nanf(x)) {\n    _ = &x;\n    return __builtin_nanf(x);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/c.zig",
+      "type": "function",
+      "name": "__builtin_nanf32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/cstring.zig",
+    "response": "pub fn main() !void {\r\n    const zig_string: []const u8 = \"test\";\r\n    // Every pointer type casting is made with the @ptrCast() function.\r\n    const c_string: [*c]const u8 = @ptrCast(zig_string);\r\n    _ = c_string;\r\n    // Pointer type casting cannot be done only with @as(), the @ptrCast() function must be involved.\r\n    // This is why the expression below does not compile succesfully.\r\n    const v2 = @as([*c]const u8, zig_string);\r\n    _ = v2;\r\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/cstring.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to zig_string from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/cstring.zig",
+    "response": "const zig_string: []const u8 = \"test\";",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/cstring.zig",
+      "type": "const",
+      "name": "zig_string",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to c_string from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/cstring.zig",
+    "response": "const c_string: [*c]const u8 = @ptrCast(zig_string);",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/cstring.zig",
+      "type": "const",
+      "name": "c_string",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/fopen.zig",
+    "response": "pub fn main() !void {\r\n    const file = c.fopen(\"ZigExamples/image_filter/build.zig\", \"rb\");\r\n    const close_status = c.fclose(file);\r\n    if (close_status != 0) {\r\n        return error.CouldNotCloseFileDescriptor;\r\n    }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/fopen.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/instantiating-c-objects.zig",
+    "response": "pub fn main() !void {\r\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/instantiating-c-objects.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/pow.zig",
+    "response": "pub fn main() !void {\r\n    const x: f32 = 15.68;\r\n    const y = cmath.powf(x, 2.32);\r\n    try stdout.print(\"{d}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/pow.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to x from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/pow.zig",
+    "response": "const x: f32 = 15.68;",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/pow.zig",
+      "type": "const",
+      "name": "x",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to set_user_id from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/set_user_id.zig",
+    "response": "fn set_user_id(id: u64, user: *c.User) void {\r\n    user.*.id = id;\r\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/set_user_id.zig",
+      "type": "function",
+      "name": "set_user_id",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/set_user_id.zig",
+    "response": "pub fn main() !void {\r\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/set_user_id.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/stdio-example.zig",
+    "response": "pub fn main() !void {\r\n    const x: f32 = 15.2;\r\n    _ = stdio.printf(\"%.3f\\n\", x);\r\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/stdio-example.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/stdio-math-example.zig",
+    "response": "pub fn main() !void {\r\n    const x: f32 = 15.2;\r\n    const y = cmath.powf(x, @as(f32, 2.6));\r\n    _ = stdio.printf(\"%.3f\\n\", y);\r\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/stdio-math-example.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/translate-c.zig",
+    "response": "pub fn main() !void {\n    const x: f32 = 1772.94122;\n    _ = c.printf(\"%.3f\\n\", x);\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/translate-c.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to x from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/calling-c/translate-c.zig",
+    "response": "const x: f32 = 1772.94122;",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/calling-c/translate-c.zig",
+      "type": "const",
+      "name": "x",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to twice from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/comptime/comptime_arg_runtime_error.zig",
+    "response": "fn twice(comptime num: u32) u32 {\n    return num * 2;\n}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/comptime/comptime_arg_runtime_error.zig",
+      "type": "function",
+      "name": "twice",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/comptime/comptime_arg_runtime_error.zig",
+    "response": "pub fn main() !void {\n    var buffer: [5]u8 = .{ 0, 0, 0, 0, 0 }",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/comptime/comptime_arg_runtime_error.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to n from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/comptime/comptime_arg_runtime_error.zig",
+    "response": "const n: u32 = try std.fmt.parseInt(u32, buffer[0 .. buffer.len - 1], 10);",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/comptime/comptime_arg_runtime_error.zig",
+      "type": "const",
+      "name": "n",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from pedropark99/zig-book",
+    "context": "Repository: pedropark99/zig-book (1944 ⭐)\nFile: ZigExamples/data-structures/append-ex.zig",
+    "response": "pub fn main() !void {\n    var gpa = std.heap.GeneralPurposeAllocator(.{}",
+    "metadata": {
+      "repo": "pedropark99/zig-book",
+      "stars": 1944,
+      "file": "ZigExamples/data-structures/append-ex.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "bun",
+  "fullName": "oven-sh/bun",
+  "owner": "oven-sh",
+  "stars": 81759,
+  "description": "Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one",
+  "url": "https://github.com/oven-sh/bun",
+  "defaultBranch": "main"
+}

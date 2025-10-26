@@ -1,0 +1,9 @@
+{
+  "name": "zigmod",
+  "fullName": "nektro/zigmod",
+  "owner": "nektro",
+  "stars": 891,
+  "description": "📦 A package manager for the Zig programming language.",
+  "url": "https://github.com/nektro/zigmod",
+  "defaultBranch": "master"
+}

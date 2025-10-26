@@ -1,0 +1,483 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lessThanContext from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "pub fn lessThanContext(comptime field: []const u8) type {\n        return struct {\n            fn lessThan(\n                _: void,\n                lhs: Sample,\n                rhs: Sample,\n            ) bool {\n                return @field(lhs, field) < @field(rhs, field);\n            }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "lessThanContext",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "pub fn main() !void {\n    var arena_instance = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n    defer arena_instance.deinit();\n    const arena = arena_instance.allocator();\n\n    const args = try std.process.argsAlloc(arena);\n\n    var stdout_buffer: [1024]u8 = undefined;\n    var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);\n    const stdout_w = &stdout_writer.interface;\n\n    var commands = std.ArrayList(Command).init(arena);\n    var max_nano_seconds: u64 = std.time.ns_per_s * 5;\n    var color: ColorMode = .auto;\n    var allow_failures = false;\n\n    var arg_i: usize = 1;\n    while (arg_i < args.len) : (arg_i += 1) {\n        const arg = args[arg_i];\n        if (!std.mem.startsWith(u8, arg, \"-\")) {\n            var cmd_argv = std.ArrayList([]const u8).init(arena);\n            try parseCmd(&cmd_argv, arg);\n            try commands.append(.{\n                .raw_cmd = arg,\n                .argv = try cmd_argv.toOwnedSlice(),\n                .measurements = undefined,\n                .sample_count = undefined,\n            }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseCmd from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "fn parseCmd(list: *std.ArrayList([]const u8), cmd: []const u8) !void {\n    var it = std.mem.tokenizeScalar(u8, cmd, ' ');\n    while (it.next()) |s| try list.append(s);\n}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "parseCmd",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readPerfFd from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "fn readPerfFd(fd: fd_t) usize {\n    var result: usize = 0;\n    const n = std.posix.read(fd, std.mem.asBytes(&result)) catch |err| {\n        std.debug.panic(\"unable to read perf fd: {s}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "readPerfFd",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compute from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "fn compute(samples: []Sample, comptime field: []const u8, unit: Unit) Measurement {\n        std.mem.sort(Sample, samples, {}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "compute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printMeasurement from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "fn printMeasurement(\n    tty_conf: std.io.tty.Config,\n    w: anytype,\n    m: Measurement,\n    name: []const u8,\n    first_m: ?Measurement,\n    command_count: usize,\n) !void {\n    try w.print(\"  {s}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "printMeasurement",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printNum3SigFigs from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "fn printNum3SigFigs(w: anytype, num: f64) !void {\n    if (num >= 1000 or @round(num) == num) {\n        try w.print(\"{d: >4.0}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "printNum3SigFigs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printUnit from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "fn printUnit(w: anytype, x: f64, unit: Measurement.Unit, std_dev: f64, color_enabled: bool) !void {\n    _ = std_dev; // TODO something useful with this\n    const num = x;\n    var val: f64 = 0;\n    const color: []const u8 = progress.EscapeCodes.dim ++ progress.EscapeCodes.white;\n    var ustr: []const u8 = \"  \";\n    if (num >= 1000_000_000_000) {\n        val = num / 1000_000_000_000;\n        ustr = switch (unit) {\n            .count => \"T \",\n            .nanoseconds => \"ks\",\n            .bytes => \"TB\",\n        }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "printUnit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getStatScore95 from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "pub fn getStatScore95(df: ?u64) f64 {\n    if (df) |dff| {\n        const dfv: usize = @intCast(dff);\n        if (dfv <= 30) {\n            return t_table95_1to30[dfv - 1];\n        }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "function",
+      "name": "getStatScore95",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to PerfMeasurement from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const PerfMeasurement = struct {\n    name: []const u8,\n    config: PERF.COUNT.HW,\n}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "struct",
+      "name": "PerfMeasurement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Command from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const Command = struct {\n    raw_cmd: []const u8,\n    argv: []const []const u8,\n    measurements: Measurements,\n    sample_count: usize,\n\n    const Measurements = struct {\n        wall_time: Measurement,\n        peak_rss: Measurement,\n        cpu_cycles: Measurement,\n        instructions: Measurement,\n        cache_references: Measurement,\n        cache_misses: Measurement,\n        branch_misses: Measurement,\n    }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "struct",
+      "name": "Command",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Sample from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const Sample = struct {\n    wall_time: u64,\n    cpu_cycles: u64,\n    instructions: u64,\n    cache_references: u64,\n    cache_misses: u64,\n    branch_misses: u64,\n    peak_rss: u64,\n\n    pub fn lessThanContext(comptime field: []const u8) type {\n        return struct {\n            fn lessThan(\n                _: void,\n                lhs: Sample,\n                rhs: Sample,\n            ) bool {\n                return @field(lhs, field) < @field(rhs, field);\n            }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "struct",
+      "name": "Sample",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Measurement from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const Measurement = struct {\n    q1: u64,\n    median: u64,\n    q3: u64,\n    min: u64,\n    max: u64,\n    mean: f64,\n    std_dev: f64,\n    outlier_count: u64,\n    sample_count: u64,\n    unit: Unit,\n\n    const Unit = enum {\n        nanoseconds,\n        bytes,\n        count,\n    }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "struct",
+      "name": "Measurement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tty_conf from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const tty_conf: std.io.tty.Config = switch (color) {\n        .auto => std.io.tty.detectConfig(.stdout()),\n        .never => .no_color,\n        .ansi => .escape_codes,\n    };",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "tty_conf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cur_samples from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const cur_samples: u64 = sample_index + 1;",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "cur_samples",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to delta from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const delta: f64 = @as(f64, @floatFromInt(v)) - mean;",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "delta",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to iqr from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const iqr: f64 = @floatFromInt(q3 - q1);",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "iqr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to v from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const v: f64 = @floatFromInt(@field(s, field));",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "v",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to n1 from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const n1: f64 = @floatFromInt(m.sample_count);",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "n1",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to n2 from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const n2: f64 = @floatFromInt(f.sample_count);",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "n2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to color from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const color: []const u8 = progress.EscapeCodes.dim ++ progress.EscapeCodes.white;",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "color",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to dfv from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/main.zig",
+    "response": "const dfv: usize = @intCast(dff);",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/main.zig",
+      "type": "const",
+      "name": "dfv",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn init() Self {\n        return Self{ .frame_idx = 0 }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn get(self: *const Self) []const u8 {\n        return frames[self.frame_idx * frame1.len ..][0..frame1.len];\n    }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn next(self: *Self) void {\n        self.frame_idx = (self.frame_idx + 1) % frame_count;\n    }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getScreenWidth from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn getScreenWidth(stdout: std.posix.fd_t) usize {\n    var winsize: Winsize = undefined;\n    _ = std.os.linux.ioctl(stdout, TIOCGWINSZ, @intFromPtr(&winsize));\n    return @intCast(winsize.ws_col);\n}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "getScreenWidth",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn init(allocator: std.mem.Allocator, stdout: std.fs.File) !Self {\n        const width = getScreenWidth(stdout.handle);\n        const buf = try std.ArrayList(u8).initCapacity(allocator, width + WIDTH_PADDING);\n        return Self{\n            .spinner = Spinner.init(),\n            .last_rendered = try std.time.Instant.now(),\n            .current = 0,\n            .estimate = 1,\n            .stdout = stdout,\n            .buf = buf,\n        }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn deinit(self: *Self) void {\n        self.buf.deinit();\n    }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to render from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn render(self: *Self) !void {\n        const now = try std.time.Instant.now();\n        if (now.since(self.last_rendered) < 50 * std.time.ns_per_ms) {\n            return;\n        }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "render",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clear from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub fn clear(self: *Self) !void {\n        try self.stdout.writeAll(EscapeCodes.erase_line); // clear and reset line\n        self.buf.clearRetainingCapacity();\n    }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "function",
+      "name": "clear",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Spinner from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "const Spinner = struct {\n    const Self = @This();\n    pub const frames = \"⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏\";\n    pub const frame1 = \"⠋\";\n    pub const frame_count = frames.len / frame1.len;\n\n    frame_idx: usize,\n\n    pub fn init() Self {\n        return Self{ .frame_idx = 0 }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "struct",
+      "name": "Spinner",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EscapeCodes from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub const EscapeCodes = struct {\n    pub const dim = \"\\x1b[2m\";\n    pub const pink = \"\\x1b[38;5;205m\";\n    pub const white = \"\\x1b[37m\";\n    pub const red = \"\\x1b[31m\";\n    pub const yellow = \"\\x1b[33m\";\n    pub const green = \"\\x1b[32m\";\n    pub const magenta = \"\\x1b[35m\";\n    pub const cyan = \"\\x1b[36m\";\n    pub const reset = \"\\x1b[0m\";\n    pub const erase_line = \"\\x1b[2K\\r\";\n}",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "struct",
+      "name": "EscapeCodes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ProgressBar from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "pub const ProgressBar = struct {\n    const Self = @This();\n\n    spinner: Spinner,\n    current: u64,\n    estimate: u64,\n    stdout: std.fs.File,\n    buf: std.ArrayList(u8),\n    last_rendered: std.time.Instant,\n\n    pub fn init(allocator: std.mem.Allocator, stdout: std.fs.File) !Self {\n        const width = getScreenWidth(stdout.handle);\n        const buf = try std.ArrayList(u8).initCapacity(allocator, width + WIDTH_PADDING);\n        return Self{\n            .spinner = Spinner.init(),\n            .last_rendered = try std.time.Instant.now(),\n            .current = 0,\n            .estimate = 1,\n            .stdout = stdout,\n            .buf = buf,\n        }",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "struct",
+      "name": "ProgressBar",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to TIOCGWINSZ from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "const TIOCGWINSZ: u32 = 0x5413;",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "const",
+      "name": "TIOCGWINSZ",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to WIDTH_PADDING from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "const WIDTH_PADDING: usize = 100;",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "const",
+      "name": "WIDTH_PADDING",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to full_bars_len from andrewrk/poop",
+    "context": "Repository: andrewrk/poop (1708 ⭐)\nFile: src/progress.zig",
+    "response": "const full_bars_len: usize = @intCast(prog_len / 2);",
+    "metadata": {
+      "repo": "andrewrk/poop",
+      "stars": 1708,
+      "file": "src/progress.zig",
+      "type": "const",
+      "name": "full_bars_len",
+      "difficulty": "easy"
+    }
+  }
+]

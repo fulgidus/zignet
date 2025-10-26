@@ -1,0 +1,1640 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addZigupExe from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn addZigupExe(\n    b: *std.Build,\n    target: std.Build.ResolvedTarget,\n    optimize: std.builtin.Mode,\n) *std.Build.Step.Compile {\n    const win32exelink_mod: ?*std.Build.Module = blk: {\n        if (target.result.os.tag == .windows) {\n            const exe = b.addExecutable(.{\n                .name = \"win32exelink\",\n                .root_source_file = b.path(\"win32exelink.zig\"),\n                .target = target,\n                .optimize = optimize,\n            }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addZigupExe",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ci from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn ci(\n    b: *std.Build,\n    ci_step: *std.Build.Step,\n    host_zip_exe: *std.Build.Step.Compile,\n) !void {\n    const ci_targets = [_][]const u8{\n        \"aarch64-linux\",\n        \"aarch64-macos\",\n        \"aarch64-windows\",\n        \"arm-linux\",\n        \"powerpc64le-linux\",\n        \"riscv64-linux\",\n        \"s390x-linux\",\n        \"x86-linux\",\n        \"x86-windows\",\n        \"x86_64-linux\",\n        \"x86_64-macos\",\n        \"x86_64-windows\",\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "ci",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to makeCiArchiveStep from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn makeCiArchiveStep(\n    b: *std.Build,\n    ci_target_str: []const u8,\n    target: std.Target,\n    exe_install: *std.Build.Step.InstallArtifact,\n    host_zip_exe: *std.Build.Step.Compile,\n) *std.Build.Step {\n    const install_path = b.getInstallPath(.prefix, \".\");\n\n    if (target.os.tag == .windows) {\n        const out_zip_file = b.pathJoin(&.{\n            install_path,\n            b.fmt(\"zigup-{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "makeCiArchiveStep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addTests from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn addTests(\n    b: *std.Build,\n    target: std.Build.ResolvedTarget,\n    zigup_exe: *std.Build.Step.Compile,\n    test_step: *std.Build.Step,\n    shared_options: SharedTestOptions,\n) void {\n    const runtest_exe = b.addExecutable(.{\n        .name = \"runtest\",\n        .root_source_file = b.path(\"runtest.zig\"),\n        .target = target,\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addTests",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addWithClean from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn addWithClean(tests: Tests, opt: TestOptions) void {\n        _ = tests.addCommon(opt, .yes_clean);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addWithClean",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn add(tests: Tests, opt: TestOptions) std.Build.LazyPath {\n        return tests.addCommon(opt, .no_clean);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compilersArg from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn compilersArg(arg: []const u8) []const u8 {\n        return if (arg.len == 0) \"--no-compilers\" else arg;\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "compilersArg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addCommon from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn addCommon(tests: Tests, opt: TestOptions, clean_opt: enum { no_clean, yes_clean }) std.Build.LazyPath {\n        const b = tests.b;\n        const run = std.Build.Step.Run.create(b, b.fmt(\"run {s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addCommon",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "pub fn create(owner: *std.Build, path: std.Build.LazyPath) *CleanDir {\n        const clean_dir = owner.allocator.create(CleanDir) catch @panic(\"OOM\");\n        clean_dir.* = .{\n            .step = std.Build.Step.init(.{\n                .id = .custom,\n                .name = owner.fmt(\"CleanDir {s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to make from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "fn make(step: *std.Build.Step, opts: std.Build.Step.MakeOptions) !void {\n        _ = opts;\n        const b = step.owner;\n        const clean_dir: *CleanDir = @fieldParentPtr(\"step\", step);\n        try b.build_root.handle.deleteTree(clean_dir.dir_path.getPath(b));\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "function",
+      "name": "make",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SharedTestOptions from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const SharedTestOptions = struct {\n    make_build_steps: bool,\n    failing_to_execute_foreign_is_an_error: bool = true,\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "SharedTestOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestOptions from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const TestOptions = struct {\n    name: []const u8,\n    add_path: bool = true,\n    env: ?struct { dir: std.Build.LazyPath, with_compilers: []const u8 = \"\" }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "TestOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Tests from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const Tests = struct {\n    b: *std.Build,\n    test_step: *std.Build.Step,\n    zigup_exe: *std.Build.Step.Compile,\n    runtest_exe: *std.Build.Step.Compile,\n    shared_options: SharedTestOptions,\n\n    fn addWithClean(tests: Tests, opt: TestOptions) void {\n        _ = tests.addCommon(opt, .yes_clean);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "Tests",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CleanDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const CleanDir = struct {\n    step: std.Build.Step,\n    dir_path: std.Build.LazyPath,\n    pub fn create(owner: *std.Build, path: std.Build.LazyPath) *CleanDir {\n        const clean_dir = owner.allocator.create(CleanDir) catch @panic(\"OOM\");\n        clean_dir.* = .{\n            .step = std.Build.Step.init(.{\n                .id = .custom,\n                .name = owner.fmt(\"CleanDir {s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "CleanDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to win32exelink_mod from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const win32exelink_mod: ?*std.Build.Module = blk: {\n        if (target.result.os.tag == .windows) {\n            const exe = b.addExecutable(.{\n                .name = \"win32exelink\",\n                .root_source_file = b.path(\"win32exelink.zig\"),\n                .target = target,\n                .optimize = optimize,\n            });",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "const",
+      "name": "win32exelink_mod",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to optimize from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const optimize: std.builtin.OptimizeMode =\n            // Compile in ReleaseSafe on Windows for faster extraction\n            if (target.result.os.tag == .windows) .ReleaseSafe else .Debug;",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "const",
+      "name": "optimize",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to tests from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const tests: Tests = .{\n        .b = b,\n        .test_step = test_step,\n        .zigup_exe = zigup_exe,\n        .runtest_exe = runtest_exe,\n        .shared_options = shared_options,\n    };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "const",
+      "name": "tests",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to test_step from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const test_step: *std.Build.Step = switch (clean_opt) {\n            .no_clean => &run.step,\n            .yes_clean => &CleanDir.create(tests.b, out_env).step,\n        };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "const",
+      "name": "test_step",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to clean_dir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: build.zig",
+    "response": "const clean_dir: *CleanDir = @fieldParentPtr(\"step\", step);",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "build.zig",
+      "type": "const",
+      "name": "clean_dir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteTree from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: fixdeletetree.zig",
+    "response": "pub fn deleteTree(dir: std.fs.Dir, sub_path: []const u8) !void {\n    if (builtin.os.tag != .windows) {\n        return dir.deleteTree(sub_path);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "fixdeletetree.zig",
+      "type": "function",
+      "name": "deleteTree",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deleteTreeAbsolute from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: fixdeletetree.zig",
+    "response": "pub fn deleteTreeAbsolute(dir_absolute: []const u8) !void {\n    if (builtin.os.tag != .windows) {\n        return std.fs.deleteTreeAbsolute(dir_absolute);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "fixdeletetree.zig",
+      "type": "function",
+      "name": "deleteTreeAbsolute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to oom from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: unzip.zig",
+    "response": "fn oom(e: error{OutOfMemory}) noreturn {\n    @panic(@errorName(e));\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "unzip.zig",
+      "type": "function",
+      "name": "oom",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fatal from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: unzip.zig",
+    "response": "fn fatal(comptime fmt: []const u8, args: anytype) noreturn {\n    std.log.err(fmt, args);\n    std.process.exit(0xff);\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "unzip.zig",
+      "type": "function",
+      "name": "fatal",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to usage from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: unzip.zig",
+    "response": "fn usage() noreturn {\n    std.io.getStdErr().writer().print(\"Usage: unzip [-d DIR] ZIP_FILE\\n\", .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "unzip.zig",
+      "type": "function",
+      "name": "usage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cmdlineArgs from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: unzip.zig",
+    "response": "pub fn cmdlineArgs() [][*:0]u8 {\n    if (builtin.os.tag == .windows) {\n        const slices = std.process.argsAlloc(windows_args_arena.allocator()) catch |err| switch (err) {\n            error.OutOfMemory => oom(error.OutOfMemory),\n            //error.InvalidCmdLine => @panic(\"InvalidCmdLine\"),\n            error.Overflow => @panic(\"Overflow while parsing command line\"),\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "unzip.zig",
+      "type": "function",
+      "name": "cmdlineArgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: unzip.zig",
+    "response": "pub fn main() !void {\n    var cmdline_opt: struct {\n        dir_arg: ?[]u8 = null,\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "unzip.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: win32exelink.zig",
+    "response": "pub fn main() !u8 {\n    // Sanity check that the exe_marker_len is right (note: not fullproof)\n    std.debug.assert(zig_exe_string[exe_marker_len - 1] == '#');\n    if (zig_exe_string[exe_marker_len] == 0) {\n        log.err(\"the zig target executable has not been set in the exelink\", .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "win32exelink.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consoleCtrlHandler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: win32exelink.zig",
+    "response": "fn consoleCtrlHandler(ctrl_type: u32) callconv(@import(\"std\").os.windows.WINAPI) win32.BOOL {\n    //\n    // NOTE: Do I need to synchronize this with the main thread?\n    //\n    const name: []const u8 = switch (ctrl_type) {\n        win32.CTRL_C_EVENT => \"Control-C\",\n        win32.CTRL_BREAK_EVENT => \"Break\",\n        win32.CTRL_CLOSE_EVENT => \"Close\",\n        win32.CTRL_LOGOFF_EVENT => \"Logoff\",\n        win32.CTRL_SHUTDOWN_EVENT => \"Shutdown\",\n        else => \"Unknown\",\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "win32exelink.zig",
+      "type": "function",
+      "name": "consoleCtrlHandler",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to global from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: win32exelink.zig",
+    "response": "const global = struct {\n    var child: std.process.Child = undefined;\n    var arena_instance = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n    const arena = arena_instance.allocator();\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "win32exelink.zig",
+      "type": "struct",
+      "name": "global",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to win32 from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: win32exelink.zig",
+    "response": "const win32 = struct {\n    pub const BOOL = i32;\n    pub const CTRL_C_EVENT = @as(u32, 0);\n    pub const CTRL_BREAK_EVENT = @as(u32, 1);\n    pub const CTRL_CLOSE_EVENT = @as(u32, 2);\n    pub const CTRL_LOGOFF_EVENT = @as(u32, 5);\n    pub const CTRL_SHUTDOWN_EVENT = @as(u32, 6);\n    pub const GetLastError = std.os.windows.kernel32.GetLastError;\n    pub const PHANDLER_ROUTINE = switch (builtin.zig_backend) {\n        .stage1 => fn (\n            CtrlType: u32,\n        ) callconv(@import(\"std\").os.windows.WINAPI) BOOL,\n        else => *const fn (\n            CtrlType: u32,\n        ) callconv(@import(\"std\").os.windows.WINAPI) BOOL,\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "win32exelink.zig",
+      "type": "struct",
+      "name": "win32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to name from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: win32exelink.zig",
+    "response": "const name: []const u8 = switch (ctrl_type) {\n        win32.CTRL_C_EVENT => \"Control-C\",\n        win32.CTRL_BREAK_EVENT => \"Break\",\n        win32.CTRL_CLOSE_EVENT => \"Close\",\n        win32.CTRL_LOGOFF_EVENT => \"Logoff\",\n        win32.CTRL_SHUTDOWN_EVENT => \"Shutdown\",\n        else => \"Unknown\",\n    };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "win32exelink.zig",
+      "type": "const",
+      "name": "name",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loginfo from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn loginfo(comptime fmt: []const u8, args: anytype) void {\n    if (global_enable_log) {\n        std.debug.print(fmt ++ \"\\n\", args);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "loginfo",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to oom from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn oom(e: error{OutOfMemory}) noreturn {\n    @panic(@errorName(e));\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "oom",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn deinit(self: DownloadResult, allocator: Allocator) void {\n        switch (self) {\n            .ok => {}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to download from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn download(allocator: Allocator, url: []const u8, writer: anytype) DownloadResult {\n    const uri = std.Uri.parse(url) catch |err| return .{ .err = std.fmt.allocPrint(\n        allocator,\n        \"the URL is invalid ({s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "download",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to downloadToString from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn downloadToString(allocator: Allocator, url: []const u8) DownloadStringResult {\n    var response_array_list = ArrayList(u8).initCapacity(allocator, 50 * 1024) catch |e| oom(e); // 50 KB (modify if response is expected to be bigger)\n    defer response_array_list.deinit();\n    switch (download(allocator, url, response_array_list.writer())) {\n        .ok => return .{ .ok = response_array_list.toOwnedSlice() catch |e| oom(e) }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "downloadToString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ignoreHttpCallback from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn ignoreHttpCallback(request: []const u8) void {\n    _ = request;\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "ignoreHttpCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocInstallDirStringXdg from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn allocInstallDirStringXdg(allocator: Allocator) error{AlreadyReported}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "allocInstallDirStringXdg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getSettingsDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn getSettingsDir(allocator: Allocator) ?[]const u8 {\n    const appdata: ?[]const u8 = std.fs.getAppDataDir(allocator, \"zigup\") catch |err| switch (err) {\n        error.OutOfMemory => |e| oom(e),\n        error.AppDataDirUnavailable => null,\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getSettingsDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readInstallDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn readInstallDir(allocator: Allocator) !?[]const u8 {\n    const settings_dir_path = getSettingsDir(allocator) orelse return null;\n    defer allocator.free(settings_dir_path);\n    const setting_path = std.fs.path.join(allocator, &.{ settings_dir_path, \"install-dir\" }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "readInstallDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to saveInstallDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn saveInstallDir(allocator: Allocator, maybe_dir: ?[]const u8) !void {\n    const settings_dir_path = getSettingsDir(allocator) orelse {\n        std.log.err(\"cannot save install dir, unable to find a suitable settings directory\", .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "saveInstallDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getBuiltinInstallDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn getBuiltinInstallDir(allocator: Allocator) error{AlreadyReported}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getBuiltinInstallDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to allocInstallDirString from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn allocInstallDirString(allocator: Allocator) error{ AlreadyReported, BadInstallDirSetting }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "allocInstallDirString",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getInstallDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn getInstallDir(allocator: Allocator, options: GetInstallDirOptions) ![]const u8 {\n    var optional_dir_to_free_on_error: ?[]const u8 = null;\n    errdefer if (optional_dir_to_free_on_error) |dir| allocator.free(dir);\n\n    const install_dir = init: {\n        if (global_optional_install_dir) |dir| break :init dir;\n        optional_dir_to_free_on_error = try allocInstallDirString(allocator);\n        break :init optional_dir_to_free_on_error.?;\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getInstallDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to makeZigPathLinkString from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn makeZigPathLinkString(allocator: Allocator) ![]const u8 {\n    if (global_optional_path_link) |path| return path;\n\n    const zigup_dir = try std.fs.selfExeDirPathAlloc(allocator);\n    defer allocator.free(zigup_dir);\n\n    return try std.fs.path.join(allocator, &[_][]const u8{ zigup_dir, comptime \"zig\" ++ builtin.target.exeFileExt() }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "makeZigPathLinkString",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to toAbsolute from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn toAbsolute(allocator: Allocator, path: []const u8) ![]u8 {\n    std.debug.assert(!std.fs.path.isAbsolute(path));\n    const cwd = try std.process.getCwdAlloc(allocator);\n    defer allocator.free(cwd);\n    return std.fs.path.join(allocator, &[_][]const u8{ cwd, path }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "toAbsolute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to help from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn help(allocator: Allocator) !void {\n    const builtin_install_dir = getBuiltinInstallDir(allocator) catch |err| switch (err) {\n        error.AlreadyReported => \"unknown (see error printed above)\",\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "help",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getCmdOpt from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn getCmdOpt(args: [][:0]u8, i: *usize) ![]const u8 {\n    i.* += 1;\n    if (i.* == args.len) {\n        std.log.err(\"option '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getCmdOpt",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn main() !u8 {\n    return main2() catch |e| switch (e) {\n        error.AlreadyReported => return 1,\n        else => return e,\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main2 from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn main2() !u8 {\n    if (builtin.os.tag == .windows) {\n        _ = try std.os.windows.WSAStartup(2, 2);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "main2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn runCompiler(allocator: Allocator, args: []const []const u8) !u8 {\n    // disable log so we don't add extra output to whatever the compiler will output\n    global_enable_log = false;\n    if (args.len <= 1) {\n        std.log.err(\"zigup run requires at least 2 arguments: zigup run VERSION PROG ARGS...\", .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "runCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fetchCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn fetchCompiler(\n    allocator: Allocator,\n    index_url: []const u8,\n    version_arg: []const u8,\n    set_default: SetDefault,\n) !void {\n    const install_dir = try getInstallDir(allocator, .{ .create = true }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "fetchCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn deinit(self: *DownloadIndex, allocator: Allocator) void {\n        self.json.deinit();\n        allocator.free(self.text);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fetchDownloadIndex from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn fetchDownloadIndex(allocator: Allocator, index_url: []const u8) !DownloadIndex {\n    const text = switch (downloadToString(allocator, index_url)) {\n        .ok => |text| text,\n        .err => |err| {\n            std.log.err(\"could not download '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "fetchDownloadIndex",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loggyMakePath from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn loggyMakePath(dir_absolute: []const u8) !void {\n    if (builtin.os.tag == .windows) {\n        loginfo(\"mkdir \\\"{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "loggyMakePath",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loggyDeleteTreeAbsolute from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn loggyDeleteTreeAbsolute(dir_absolute: []const u8) !void {\n    if (builtin.os.tag == .windows) {\n        loginfo(\"rd /s /q \\\"{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "loggyDeleteTreeAbsolute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loggyRenameAbsolute from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn loggyRenameAbsolute(old_path: []const u8, new_path: []const u8) !void {\n    loginfo(\"mv '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "loggyRenameAbsolute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loggySymlinkAbsolute from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn loggySymlinkAbsolute(target_path: []const u8, sym_link_path: []const u8, flags: std.fs.Dir.SymLinkFlags) !void {\n    loginfo(\"ln -s '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "loggySymlinkAbsolute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to loggyUpdateSymlink from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn loggyUpdateSymlink(target_path: []const u8, sym_link_path: []const u8, flags: std.fs.Dir.SymLinkFlags) !bool {\n    var current_target_path_buffer: [std.fs.max_path_bytes]u8 = undefined;\n    if (std.fs.readLinkAbsolute(sym_link_path, &current_target_path_buffer)) |current_target_path| {\n        if (std.mem.eql(u8, target_path, current_target_path)) {\n            loginfo(\"symlink '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "loggyUpdateSymlink",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to existsAbsolute from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn existsAbsolute(absolutePath: []const u8) !bool {\n    std.fs.cwd().access(absolutePath, .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "existsAbsolute",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to listCompilers from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn listCompilers(allocator: Allocator) !void {\n    const install_dir_string = try getInstallDir(allocator, .{ .create = false }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "listCompilers",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to keepCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn keepCompiler(allocator: Allocator, compiler_version: []const u8) !void {\n    const install_dir_string = try getInstallDir(allocator, .{ .create = true }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "keepCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cleanCompilers from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn cleanCompilers(allocator: Allocator, compiler_name_opt: ?[]const u8) !void {\n    const install_dir_string = try getInstallDir(allocator, .{ .create = true }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "cleanCompilers",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readDefaultCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn readDefaultCompiler(allocator: Allocator, buffer: *[std.fs.max_path_bytes + 1]u8) !?[]const u8 {\n    const path_link = try makeZigPathLinkString(allocator);\n    defer allocator.free(path_link);\n\n    if (builtin.os.tag == .windows) {\n        var file = std.fs.openFileAbsolute(path_link, .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "readDefaultCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to targetPathToVersion from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn targetPathToVersion(target_path: []const u8) []const u8 {\n    return std.fs.path.basename(std.fs.path.dirname(std.fs.path.dirname(target_path).?).?);\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "targetPathToVersion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to readMasterDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn readMasterDir(buffer: *[std.fs.max_path_bytes]u8, install_dir: *std.fs.Dir) !?[]const u8 {\n    if (builtin.os.tag == .windows) {\n        var file = install_dir.openFile(\"master\", .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "readMasterDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getDefaultCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn getDefaultCompiler(allocator: Allocator) !?[]const u8 {\n    var buffer: [std.fs.max_path_bytes + 1]u8 = undefined;\n    const slice_path = (try readDefaultCompiler(allocator, &buffer)) orelse return null;\n    const path_to_return = try allocator.alloc(u8, slice_path.len);\n    @memcpy(path_to_return, slice_path);\n    return path_to_return;\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getDefaultCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getMasterDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn getMasterDir(allocator: Allocator, install_dir: *std.fs.Dir) !?[]const u8 {\n    var buffer: [std.fs.max_path_bytes]u8 = undefined;\n    const slice_path = (try readMasterDir(&buffer, install_dir)) orelse return null;\n    const path_to_return = try allocator.alloc(u8, slice_path.len);\n    @memcpy(path_to_return, slice_path);\n    return path_to_return;\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getMasterDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to printDefaultCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn printDefaultCompiler(allocator: Allocator) !void {\n    const default_compiler_opt = try getDefaultCompiler(allocator);\n    defer if (default_compiler_opt) |default_compiler| allocator.free(default_compiler);\n    const stdout = std.io.getStdOut().writer();\n    if (default_compiler_opt) |default_compiler| {\n        try stdout.print(\"{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "printDefaultCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to setDefaultCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn setDefaultCompiler(allocator: Allocator, compiler_dir: []const u8, exist_verify: ExistVerify) !void {\n    switch (exist_verify) {\n        .existence_verified => {}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "setDefaultCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to verifyPathLink from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn verifyPathLink(allocator: Allocator, path_link: []const u8) !void {\n    const path_link_dir = std.fs.path.dirname(path_link) orelse {\n        std.log.err(\"invalid '--path-link' '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "verifyPathLink",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compareDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn compareDir(dir_id: FileId, other_dir: []const u8) !enum { missing, access_denied, match, mismatch }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "compareDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to enforceNoZig from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn enforceNoZig(path_link: []const u8, exe: []const u8) !void {\n    var file = std.fs.cwd().openFile(exe, .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "enforceNoZig",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initFromFile from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn initFromFile(file: std.fs.File, filename_for_error: []const u8) !FileId {\n        if (builtin.os.tag == .windows) {\n            var info: win32.BY_HANDLE_FILE_INFORMATION = undefined;\n            if (0 == win32.GetFileInformationByHandle(file.handle, &info)) {\n                std.log.err(\n                    \"GetFileInformationByHandle on '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "initFromFile",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initFromDir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn initFromDir(dir: std.fs.Dir, name_for_error: []const u8) !FileId {\n        if (builtin.os.tag == .windows) {\n            return initFromFile(std.fs.File{ .handle = dir.fd }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "initFromDir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn eql(self: FileId, other: FileId) bool {\n        return self.dev == other.dev and self.ino == other.ino;\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to GetFileInformationByHandle from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn GetFileInformationByHandle(\n        hFile: ?@import(\"std\").os.windows.HANDLE,\n        lpFileInformation: ?*BY_HANDLE_FILE_INFORMATION,\n    ) callconv(@import(\"std\").os.windows.WINAPI) BOOL;\n};\n\nconst win32exelink = struct {\n    const content = @embedFile(\"win32exelink\");\n    const exe_offset: usize = if (builtin.os.tag != .windows) 0 else blk: {\n        @setEvalBranchQuota(content.len * 2);\n        const marker = \"!!!THIS MARKS THE zig_exe_string MEMORY!!#\";\n        const offset = std.mem.indexOf(u8, content, marker) orelse {\n            @compileError(\"win32exelink is missing the marker: \" ++ marker);\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "GetFileInformationByHandle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createExeLink from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn createExeLink(link_target: []const u8, path_link: []const u8) !void {\n    if (path_link.len > std.fs.max_path_bytes) {\n        std.debug.print(\"Error: path_link (size {}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "createExeLink",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to order from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn order(a: Release, b: Release) std.math.Order {\n        if (a.major != b.major) return std.math.order(a.major, b.major);\n        if (a.minor != b.minor) return std.math.order(a.minor, b.minor);\n        return std.math.order(a.patch, b.patch);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "order",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to array from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn array(self: *const SemanticVersion) std.BoundedArray(u8, max_string) {\n        var result: std.BoundedArray(u8, max_string) = undefined;\n        const roundtrip = std.fmt.bufPrint(&result.buffer, \"{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "array",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn parse(s: []const u8) ?SemanticVersion {\n        const parsed = std.SemanticVersion.parse(s) catch |e| switch (e) {\n            error.Overflow, error.InvalidVersion => return null,\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ref from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn ref(self: *const SemanticVersion) std.SemanticVersion {\n        return .{\n            .major = self.major,\n            .minor = self.minor,\n            .patch = self.patch,\n            .pre = if (self.pre) |*pre| pre.slice() else null,\n            .build = if (self.build) |*build| build.slice() else null,\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "ref",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to format from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn format(\n        self: SemanticVersion,\n        comptime fmt: []const u8,\n        options: std.fmt.FormatOptions,\n        writer: anytype,\n    ) !void {\n        try self.ref().format(fmt, options, writer);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "format",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getDefaultUrl from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn getDefaultUrl(allocator: Allocator, compiler_version: []const u8) ![]const u8 {\n    const sv = SemanticVersion.parse(compiler_version) orelse errExit(\n        \"invalid zig version '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getDefaultUrl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to installCompiler from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn installCompiler(allocator: Allocator, compiler_dir: []const u8, url: []const u8) !void {\n    if (try existsAbsolute(compiler_dir)) {\n        loginfo(\"compiler '{s}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "installCompiler",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn run(allocator: Allocator, argv: []const []const u8) !std.process.Child.Term {\n    try logRun(allocator, argv);\n    var proc = std.process.Child.init(argv, allocator);\n    return proc.spawnAndWait();\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to logRun from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn logRun(allocator: Allocator, argv: []const []const u8) !void {\n    var buffer = try allocator.alloc(u8, getCommandStringLength(argv));\n    defer allocator.free(buffer);\n\n    var prefix = false;\n    var offset: usize = 0;\n    for (argv) |arg| {\n        if (prefix) {\n            buffer[offset] = ' ';\n            offset += 1;\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "logRun",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to errExit from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "fn errExit(comptime fmt: []const u8, args: anytype) noreturn {\n    std.log.err(fmt, args);\n    std.process.exit(0xff);\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "errExit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getCommandStringLength from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn getCommandStringLength(argv: []const []const u8) usize {\n    var len: usize = 0;\n    var prefix_length: u8 = 0;\n    for (argv) |arg| {\n        len += prefix_length + arg.len;\n        prefix_length = 1;\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getCommandStringLength",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getKeepReason from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "pub fn getKeepReason(master_points_to_opt: ?[]const u8, default_compiler_opt: ?[]const u8, name: []const u8) ?[]const u8 {\n    if (default_compiler_opt) |default_comp| {\n        if (mem.eql(u8, default_comp, name)) {\n            return \"is default compiler\";\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "function",
+      "name": "getKeepReason",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to GetInstallDirOptions from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const GetInstallDirOptions = struct {\n    create: bool,\n    log: bool = true,\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "GetInstallDirOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to VersionUrl from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const VersionUrl = struct { version: []const u8, url: []const u8 }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "VersionUrl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to DownloadIndex from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const DownloadIndex = struct {\n    text: []u8,\n    json: std.json.Parsed(std.json.Value),\n    pub fn deinit(self: *DownloadIndex, allocator: Allocator) void {\n        self.json.deinit();\n        allocator.free(self.text);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "DownloadIndex",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FileId from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const FileId = struct {\n    dev: if (builtin.os.tag == .windows) u32 else blk: {\n        const st: std.posix.Stat = undefined;\n        break :blk @TypeOf(st.dev);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "FileId",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to win32 from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const win32 = struct {\n    pub const BOOL = i32;\n    pub const FILETIME = extern struct {\n        dwLowDateTime: u32,\n        dwHighDateTime: u32,\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "win32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to win32exelink from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const win32exelink = struct {\n    const content = @embedFile(\"win32exelink\");\n    const exe_offset: usize = if (builtin.os.tag != .windows) 0 else blk: {\n        @setEvalBranchQuota(content.len * 2);\n        const marker = \"!!!THIS MARKS THE zig_exe_string MEMORY!!#\";\n        const offset = std.mem.indexOf(u8, content, marker) orelse {\n            @compileError(\"win32exelink is missing the marker: \" ++ marker);\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "win32exelink",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Release from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const Release = struct {\n    major: usize,\n    minor: usize,\n    patch: usize,\n    pub fn order(a: Release, b: Release) std.math.Order {\n        if (a.major != b.major) return std.math.order(a.major, b.major);\n        if (a.minor != b.minor) return std.math.order(a.minor, b.minor);\n        return std.math.order(a.patch, b.patch);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "Release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SemanticVersion from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const SemanticVersion = struct {\n    const max_pre = 50;\n    const max_build = 50;\n    const max_string = 50 + max_pre + max_build;\n\n    major: usize,\n    minor: usize,\n    patch: usize,\n    pre: ?std.BoundedArray(u8, max_pre),\n    build: ?std.BoundedArray(u8, max_build),\n\n    pub fn array(self: *const SemanticVersion) std.BoundedArray(u8, max_string) {\n        var result: std.BoundedArray(u8, max_string) = undefined;\n        const roundtrip = std.fmt.bufPrint(&result.buffer, \"{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "struct",
+      "name": "SemanticVersion",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to appdata from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const appdata: ?[]const u8 = std.fs.getAppDataDir(allocator, \"zigup\") catch |err| switch (err) {\n        error.OutOfMemory => |e| oom(e),\n        error.AppDataDirUnavailable => null,\n    };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "appdata",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to setting_file from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const setting_file: []const u8 = blk: {\n        if (getSettingsDir(allocator)) |d| break :blk std.fs.path.join(allocator, &.{ d, \"install-dir\" }) catch |e| oom(e);",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "setting_file",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to optional_master_dir from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const optional_master_dir: ?[]const u8 = blk: {\n                    var install_dir = std.fs.openDirAbsolute(install_dir_string, .{ .iterate = true }) catch |e| switch (e) {\n                        error.FileNotFound => break :blk null,\n                        else => return e,\n                    };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "optional_master_dir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to st from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const st: std.posix.Stat = undefined;",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "st",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to st from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const st: std.posix.Stat = undefined;",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "st",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to exe_offset from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const exe_offset: usize = if (builtin.os.tag != .windows) 0 else blk: {\n        @setEvalBranchQuota(content.len * 2);",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "exe_offset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to arch_os_swap_release from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const arch_os_swap_release: Release = .{ .major = 0, .minor = 14, .patch = 1 };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "arch_os_swap_release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to release from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zigup.zig",
+    "response": "const release: Release = .{ .major = sv.major, .minor = sv.minor, .patch = sv.patch };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zigup.zig",
+      "type": "const",
+      "name": "release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to oom from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "fn oom(e: error{OutOfMemory}) noreturn {\n    @panic(@errorName(e));\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "oom",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to fatal from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "fn fatal(comptime fmt: []const u8, args: anytype) noreturn {\n    std.log.err(fmt, args);\n    std.process.exit(0xff);\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "fatal",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to usage from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "fn usage() noreturn {\n    std.io.getStdErr().writer().writeAll(\n        \"Usage: zip [-options] ZIP_FILE FILES/DIRS..\\n\",\n    ) catch |e| @panic(@errorName(e));\n    std.process.exit(1);\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "usage",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to cmdlineArgs from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn cmdlineArgs() [][*:0]u8 {\n    if (builtin.os.tag == .windows) {\n        const slices = std.process.argsAlloc(windows_args_arena.allocator()) catch |err| switch (err) {\n            error.OutOfMemory => oom(error.OutOfMemory),\n            //error.InvalidCmdLine => @panic(\"InvalidCmdLine\"),\n            error.Overflow => @panic(\"Overflow while parsing command line\"),\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "cmdlineArgs",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn main() !void {\n    var arena_instance = std.heap.ArenaAllocator.init(std.heap.page_allocator);\n    defer arena_instance.deinit();\n    const arena = arena_instance.allocator();\n\n    const cmd_args = blk: {\n        const cmd_args = cmdlineArgs();\n        var arg_index: usize = 0;\n        var non_option_len: usize = 0;\n        while (arg_index < cmd_args.len) : (arg_index += 1) {\n            const arg = std.mem.span(cmd_args[arg_index]);\n            if (!std.mem.startsWith(u8, arg, \"-\")) {\n                cmd_args[non_option_len] = arg;\n                non_option_len += 1;\n            }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeZip from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "fn writeZip(\n    out_zip: std.fs.File,\n    file_entries: []const FileEntry,\n    store: []FileStore,\n) !void {\n    var zipper = initZipper(out_zip.writer());\n    for (file_entries, 0..) |file_entry, i| {\n        const file_offset = zipper.counting_writer.bytes_written;\n\n        const compression: std.zip.CompressionMethod = .deflate;\n\n        try zipper.writeFileHeader(file_entry.path, compression);\n\n        var file = try std.fs.cwd().openFile(file_entry.path, .{}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "writeZip",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Crc32Reader from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn Crc32Reader(comptime ReaderType: type) type {\n    return struct {\n        underlying_reader: ReaderType,\n        crc32: std.hash.Crc32 = std.hash.Crc32.init(),\n\n        pub const Error = ReaderType.Error;\n        pub const Reader = std.io.Reader(*Self, Error, read);\n\n        const Self = @This();\n\n        pub fn read(self: *Self, dest: []u8) Error!usize {\n            const len = try self.underlying_reader.read(dest);\n            self.crc32.update(dest[0..len]);\n            return len;\n        }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "Crc32Reader",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reader from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn reader(self: *Self) Reader {\n            return .{ .context = self }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "reader",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isBadFilename from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "fn isBadFilename(filename: []const u8) bool {\n    if (std.mem.indexOfScalar(u8, filename, '\\\\')) |_|\n        return true;\n\n    if (filename.len == 0 or filename[0] == '/' or filename[0] == '\\\\')\n        return true;\n\n    var it = std.mem.splitAny(u8, filename, \"/\\\\\");\n    while (it.next()) |part| {\n        if (std.mem.eql(u8, part, \"..\"))\n            return true;\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "isBadFilename",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initZipper from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn initZipper(writer: anytype) Zipper(@TypeOf(writer)) {\n    return .{ .counting_writer = std.io.countingWriter(writer) }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "initZipper",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Zipper from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "fn Zipper(comptime Writer: type) type {\n    return struct {\n        counting_writer: std.io.CountingWriter(Writer),\n        central_count: u64 = 0,\n        first_central_offset: ?u64 = null,\n        last_central_limit: ?u64 = null,\n\n        const Self = @This();\n\n        pub fn writeFileHeader(\n            self: *Self,\n            name: []const u8,\n            compression: std.zip.CompressionMethod,\n        ) !void {\n            const writer = self.counting_writer.writer();\n            const hdr: std.zip.LocalFileHeader = .{\n                .signature = std.zip.local_file_header_sig,\n                .version_needed_to_extract = 10,\n                .flags = .{ .encrypted = false, ._ = 0 }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "Zipper",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeCentralRecord from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn writeCentralRecord(\n            self: *Self,\n            store: FileStore,\n            opt: struct {\n                name: []const u8,\n                version_needed_to_extract: u16 = 10,\n            },\n        ) !void {\n            if (self.first_central_offset == null) {\n                self.first_central_offset = self.counting_writer.bytes_written;\n            }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "writeCentralRecord",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeEndRecord from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn writeEndRecord(self: *Self) !void {\n            const cd_offset = self.first_central_offset orelse 0;\n            const cd_end = self.last_central_limit orelse 0;\n            const hdr: std.zip.EndRecord = .{\n                .signature = std.zip.end_record_sig,\n                .disk_number = 0,\n                .central_directory_disk_number = 0,\n                .record_count_disk = @intCast(self.central_count),\n                .record_count_total = @intCast(self.central_count),\n                .central_directory_size = @intCast(cd_end - cd_offset),\n                .central_directory_offset = @intCast(cd_offset),\n                .comment_len = 0,\n            }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "writeEndRecord",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to writeStructEndian from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "fn writeStructEndian(writer: anytype, value: anytype, endian: std.builtin.Endian) anyerror!void {\n    // TODO: make sure this value is not a reference type\n    if (native_endian == endian) {\n        return writer.writeStruct(value);\n    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "writeStructEndian",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to byteSwapAllFields from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub fn byteSwapAllFields(comptime S: type, ptr: *S) void {\n    switch (@typeInfo(S)) {\n        .@\"struct\" => {\n            inline for (std.meta.fields(S)) |f| {\n                switch (@typeInfo(f.type)) {\n                    .@\"struct\" => |struct_info| if (struct_info.backing_integer) |Int| {\n                        @field(ptr, f.name) = @bitCast(@byteSwap(@as(Int, @bitCast(@field(ptr, f.name)))));\n                    }",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "function",
+      "name": "byteSwapAllFields",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FileEntry from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "const FileEntry = struct {\n    path: []const u8,\n    size: u64,\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "struct",
+      "name": "FileEntry",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to FileStore from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "pub const FileStore = struct {\n    file_offset: u64,\n    compression: std.zip.CompressionMethod,\n    uncompressed_size: u32,\n    crc32: u32,\n    compressed_size: u32,\n}",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "struct",
+      "name": "FileStore",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to compression from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "const compression: std.zip.CompressionMethod = .deflate;",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "const",
+      "name": "compression",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to hdr from marler8997/zigup",
+    "context": "Repository: marler8997/zigup (1061 ⭐)\nFile: zip.zig",
+    "response": "const hdr: std.zip.EndRecord = .{\n                .signature = std.zip.end_record_sig,\n                .disk_number = 0,\n                .central_directory_disk_number = 0,\n                .record_count_disk = @intCast(self.central_count),\n                .record_count_total = @intCast(self.central_count),\n                .central_directory_size = @intCast(cd_end - cd_offset),\n                .central_directory_offset = @intCast(cd_offset),\n                .comment_len = 0,\n            };",
+    "metadata": {
+      "repo": "marler8997/zigup",
+      "stars": 1061,
+      "file": "zip.zig",
+      "type": "const",
+      "name": "hdr",
+      "difficulty": "easy"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "mach",
+  "fullName": "hexops/mach",
+  "owner": "hexops",
+  "stars": 4289,
+  "description": "zig game engine & graphics toolkit",
+  "url": "https://github.com/hexops/mach",
+  "defaultBranch": "main"
+}

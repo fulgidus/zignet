@@ -1,0 +1,9 @@
+{
+  "name": "odiff",
+  "fullName": "dmtrKovalenko/odiff",
+  "owner": "dmtrKovalenko",
+  "stars": 2626,
+  "description": "A very fast SIMD-first image comparison library (with nodejs API)",
+  "url": "https://github.com/dmtrKovalenko/odiff",
+  "defaultBranch": "main"
+}

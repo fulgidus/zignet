@@ -1,0 +1,9 @@
+{
+  "name": "jetzig",
+  "fullName": "jetzig-framework/jetzig",
+  "owner": "jetzig-framework",
+  "stars": 1283,
+  "description": "Jetzig is a web framework written in Zig",
+  "url": "https://github.com/jetzig-framework/jetzig",
+  "defaultBranch": "main"
+}

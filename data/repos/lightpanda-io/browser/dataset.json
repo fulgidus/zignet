@@ -1,0 +1,3785 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *Build) !void {\n    switch (comptime builtin.zig_version.order(std.SemanticVersion.parse(recommended_zig_version) catch unreachable)) {\n        .eq => {}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addDependencies from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "fn addDependencies(b: *Build, mod: *Build.Module, opts: *Build.Step.Options) !void {\n    try moduleNetSurf(b, mod);\n    mod.addImport(\"build_config\", opts.createModule());\n\n    const target = mod.resolved_target.?;\n    const dep_opts = .{\n        .target = target,\n        .optimize = mod.optimize.?,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "addDependencies",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moduleNetSurf from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "fn moduleNetSurf(b: *Build, mod: *Build.Module) !void {\n    const target = mod.resolved_target.?;\n    const os = target.result.os.tag;\n    const arch = target.result.cpu.arch;\n\n    // iconv\n    const libiconv_lib_path = try std.fmt.allocPrint(\n        b.allocator,\n        \"vendor/libiconv/out/{s}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "moduleNetSurf",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildZlib from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "fn buildZlib(b: *Build, m: *Build.Module) !void {\n    const zlib = b.addLibrary(.{\n        .name = \"zlib\",\n        .root_module = m,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildZlib",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildBrotli from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "fn buildBrotli(b: *Build, m: *Build.Module) !void {\n    const brotli = b.addLibrary(.{\n        .name = \"brotli\",\n        .root_module = m,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildBrotli",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildMbedtls from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "fn buildMbedtls(b: *Build, m: *Build.Module) !void {\n    const mbedtls = b.addLibrary(.{\n        .name = \"mbedtls\",\n        .root_module = m,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildMbedtls",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildNghttp2 from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "fn buildNghttp2(b: *Build, m: *Build.Module) !void {\n    const nghttp2 = b.addLibrary(.{\n        .name = \"nghttp2\",\n        .root_module = m,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildNghttp2",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildCurl from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "fn buildCurl(b: *Build, m: *Build.Module) !void {\n    const curl = b.addLibrary(.{\n        .name = \"curl\",\n        .root_module = m,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildCurl",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to buildAda from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "pub fn buildAda(b: *Build, m: *Build.Module) !void {\n    const ada_dep = b.dependency(\"ada-singleheader\", .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "function",
+      "name": "buildAda",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to libs from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: build.zig",
+    "response": "const libs: [4][]const u8 = .{\n        \"libdom\",\n        \"libhubbub\",\n        \"libparserutils\",\n        \"libwapcaplet\",\n    };",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "build.zig",
+      "type": "const",
+      "name": "libs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/app.zig",
+    "response": "pub fn init(allocator: Allocator, config: Config) !*App {\n        const app = try allocator.create(App);\n        errdefer allocator.destroy(app);\n\n        const notification = try Notification.init(allocator, null);\n        errdefer notification.deinit();\n\n        var http = try Http.init(allocator, .{\n            .max_host_open = config.http_max_host_open orelse 4,\n            .max_concurrent = config.http_max_concurrent orelse 10,\n            .timeout_ms = config.http_timeout_ms orelse 5000,\n            .connect_timeout_ms = config.http_connect_timeout_ms orelse 0,\n            .http_proxy = config.http_proxy,\n            .tls_verify_host = config.tls_verify_host,\n            .proxy_bearer_token = config.proxy_bearer_token,\n            .user_agent = config.user_agent,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/app.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/app.zig",
+    "response": "pub fn deinit(self: *App) void {\n        const allocator = self.allocator;\n        if (self.app_dir_path) |app_dir_path| {\n            allocator.free(app_dir_path);\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/app.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAndMakeAppDir from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/app.zig",
+    "response": "fn getAndMakeAppDir(allocator: Allocator) ?[]const u8 {\n    if (@import(\"builtin\").is_test) {\n        return allocator.dupe(u8, \"/tmp\") catch unreachable;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/app.zig",
+      "type": "function",
+      "name": "getAndMakeAppDir",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to App from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/app.zig",
+    "response": "pub const App = struct {\n    http: Http,\n    config: Config,\n    platform: Platform,\n    allocator: Allocator,\n    telemetry: Telemetry,\n    app_dir_path: ?[]const u8,\n    notification: *Notification,\n\n    pub const RunMode = enum {\n        help,\n        fetch,\n        serve,\n        version,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/app.zig",
+      "type": "struct",
+      "name": "App",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Config from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/app.zig",
+    "response": "pub const Config = struct {\n        run_mode: RunMode,\n        tls_verify_host: bool = true,\n        http_proxy: ?[:0]const u8 = null,\n        proxy_bearer_token: ?[:0]const u8 = null,\n        http_timeout_ms: ?u31 = null,\n        http_connect_timeout_ms: ?u31 = null,\n        http_max_host_open: ?u8 = null,\n        http_max_concurrent: ?u8 = null,\n        user_agent: [:0]const u8,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/app.zig",
+      "type": "struct",
+      "name": "Config",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/DataURI.zig",
+    "response": "pub fn parse(allocator: Allocator, src: []const u8) !?[]const u8 {\n    if (!std.mem.startsWith(u8, src, \"data:\")) {\n        return null;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/DataURI.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to test_valid from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/DataURI.zig",
+    "response": "fn test_valid(uri: []const u8, expected: []const u8) !void {\n    defer testing.reset();\n    const data_uri = try parse(testing.arena_allocator, uri) orelse return error.TestFailed;\n    try testing.expectEqual(expected, data_uri);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/DataURI.zig",
+      "type": "function",
+      "name": "test_valid",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to test_cannot_parse from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/DataURI.zig",
+    "response": "fn test_cannot_parse(uri: []const u8) !void {\n    try testing.expectEqual(null, parse(undefined, uri));\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/DataURI.zig",
+      "type": "function",
+      "name": "test_cannot_parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "pub fn init(allocator: Allocator) Scheduler {\n    return .{\n        .high_priority = Queue.init(allocator, {}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "pub fn reset(self: *Scheduler) void {\n    // Our allocator is the page arena, it's been reset. We cannot use\n    // clearAndRetainCapacity, since that space is no longer ours\n    self.high_priority.clearAndFree();\n    self.low_priority.clearAndFree();\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "pub fn add(self: *Scheduler, ctx: *anyopaque, func: Task.Func, ms: u32, opts: AddOpts) !void {\n    var low_priority = opts.low_priority;\n    if (ms > 5_000) {\n        // we don't want tasks in the far future to block page.wait from\n        // completing. However, if page.wait is called multiple times (maybe\n        // a CDP driver is wait for something to happen), then we do want\n        // to [eventually] run these when their time is up.\n        low_priority = true;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "pub fn run(self: *Scheduler) !?i32 {\n    _ = try self.runQueue(&self.low_priority);\n    return self.runQueue(&self.high_priority);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "run",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runQueue from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "fn runQueue(self: *Scheduler, queue: *Queue) !?i32 {\n    // this is O(1)\n    if (queue.count() == 0) {\n        return null;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "runQueue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compare from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "fn compare(_: void, a: Task, b: Task) std.math.Order {\n        return std.math.order(a.ms, b.ms);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "compare",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run1 from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "fn run1(ctx: *anyopaque) ?u32 {\n        var self: *TestTask = @ptrCast(@alignCast(ctx));\n        self.calls.append(self.allocator, 1) catch unreachable;\n        return null;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "run1",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to run2 from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "fn run2(ctx: *anyopaque) ?u32 {\n        var self: *TestTask = @ptrCast(@alignCast(ctx));\n        self.calls.append(self.allocator, 2) catch unreachable;\n        return 2;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "function",
+      "name": "run2",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AddOpts from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "const AddOpts = struct {\n    name: []const u8 = \"\",\n    low_priority: bool = false,\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "struct",
+      "name": "AddOpts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Task from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "const Task = struct {\n    ms: i64,\n    func: Func,\n    ctx: *anyopaque,\n    name: []const u8,\n\n    const Func = *const fn (ctx: *anyopaque) ?u32;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "struct",
+      "name": "Task",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TestTask from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/Scheduler.zig",
+    "response": "const TestTask = struct {\n    allocator: Allocator,\n    calls: std.ArrayListUnmanaged(u32) = .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/Scheduler.zig",
+      "type": "struct",
+      "name": "TestTask",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn init(browser: *Browser, page: *Page) ScriptManager {\n    // page isn't fully initialized, we can setup our reference, but that's it.\n    const allocator = browser.allocator;\n    return .{\n        .page = page,\n        .asyncs = .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn deinit(self: *ScriptManager) void {\n    self.reset();\n    var it = self.sync_modules.valueIterator();\n    while (it.next()) |value_ptr| {\n        value_ptr.*.buffer.deinit(self.allocator);\n        self.sync_module_pool.destroy(value_ptr.*);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn reset(self: *ScriptManager) void {\n    var it = self.sync_modules.valueIterator();\n    while (it.next()) |value_ptr| {\n        value_ptr.*.buffer.deinit(self.allocator);\n        self.sync_module_pool.destroy(value_ptr.*);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to clearList from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn clearList(_: *const ScriptManager, list: *OrderList) void {\n    while (list.first) |node| {\n        const pending_script: *PendingScript = @fieldParentPtr(\"node\", node);\n        // this removes it from the list\n        pending_script.deinit();\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "clearList",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to addFromElement from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn addFromElement(self: *ScriptManager, element: *parser.Element, comptime ctx: []const u8) !void {\n    if (try parser.elementGetAttribute(element, \"nomodule\") != null) {\n        // these scripts should only be loaded if we don't support modules\n        // but since we do support modules, we can just skip them.\n        return;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "addFromElement",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to resolveSpecifier from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn resolveSpecifier(self: *ScriptManager, arena: Allocator, specifier: []const u8, base: []const u8) ![:0]const u8 {\n    // If the specifier is mapped in the importmap, return the pre-resolved value.\n    if (self.importmap.get(specifier)) |s| {\n        return s;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "resolveSpecifier",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getModule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn getModule(self: *ScriptManager, url: [:0]const u8, referrer: []const u8) !void {\n    const gop = try self.sync_modules.getOrPut(self.allocator, url);\n    if (gop.found_existing) {\n        // already requested\n        return;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "getModule",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to waitForModule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn waitForModule(self: *ScriptManager, url: [:0]const u8) !GetResult {\n    // Normally it's dangerous to hold on to map pointers. But here, the map\n    // can't change. It's possible that by calling `tick`, other entries within\n    // the map will have their value change, but the map itself is immutable\n    // during this tick.\n    const entry = self.sync_modules.getEntry(url) orelse {\n        return error.UnknownModule;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "waitForModule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAsyncModule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn getAsyncModule(self: *ScriptManager, url: [:0]const u8, cb: AsyncModule.Callback, cb_data: *anyopaque, referrer: []const u8) !void {\n    const async = try self.async_module_pool.create();\n    errdefer self.async_module_pool.destroy(async);\n\n    async.* = .{\n        .cb = cb,\n        .manager = self,\n        .cb_data = cb_data,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "getAsyncModule",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to staticScriptsDone from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn staticScriptsDone(self: *ScriptManager) void {\n    std.debug.assert(self.static_scripts_done == false);\n    self.static_scripts_done = true;\n    self.evaluate();\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "staticScriptsDone",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to evaluate from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn evaluate(self: *ScriptManager) void {\n    if (self.is_evaluating) {\n        // It's possible for a script.eval to cause evaluate to be called again.\n        // This is particularly true with blockingGet, but even without this,\n        // it's theoretically possible (but unlikely). We could make this work\n        // but there's little reason to support the complexity.\n        return;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "evaluate",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isDone from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn isDone(self: *const ScriptManager) bool {\n    return self.asyncs.first == null and // there are no more async scripts\n        self.static_scripts_done and // and we've finished parsing the HTML to queue all <scripts>\n        self.scripts.first == null and // and there are no more <script src=> to wait for\n        self.deferreds.first == null; // and there are no more <script defer src=> to wait for\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "isDone",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to asyncScriptIsDone from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn asyncScriptIsDone(self: *ScriptManager) void {\n    if (self.isDone()) {\n        self.page.documentIsComplete();\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "asyncScriptIsDone",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn startCallback(transfer: *Http.Transfer) !void {\n    const script: *PendingScript = @ptrCast(@alignCast(transfer.ctx));\n    script.startCallback(transfer) catch |err| {\n        log.err(.http, \"SM.startCallback\", .{ .err = err, .transfer = transfer }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "startCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to headerCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn headerCallback(transfer: *Http.Transfer) !void {\n    const script: *PendingScript = @ptrCast(@alignCast(transfer.ctx));\n    try script.headerCallback(transfer);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "headerCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dataCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn dataCallback(transfer: *Http.Transfer, data: []const u8) !void {\n    const script: *PendingScript = @ptrCast(@alignCast(transfer.ctx));\n    script.dataCallback(transfer, data) catch |err| {\n        log.err(.http, \"SM.dataCallback\", .{ .err = err, .transfer = transfer, .len = data.len }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "dataCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doneCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn doneCallback(ctx: *anyopaque) !void {\n    const script: *PendingScript = @ptrCast(@alignCast(ctx));\n    script.doneCallback();\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "doneCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to errorCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn errorCallback(ctx: *anyopaque, err: anyerror) void {\n    const script: *PendingScript = @ptrCast(@alignCast(ctx));\n    script.errorCallback(err);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "errorCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseImportmap from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn parseImportmap(self: *ScriptManager, script: *const Script) !void {\n    const content = script.source.content();\n\n    const Imports = struct {\n        imports: std.json.ArrayHashMap([]const u8),\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "parseImportmap",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn deinit(self: *PendingScript) void {\n        const script = &self.script;\n        const manager = self.manager;\n\n        if (script.source == .remote) {\n            manager.buffer_pool.release(script.source.remote);\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to remove from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn remove(self: *PendingScript) void {\n        if (self.node) |*node| {\n            self.getList().remove(node);\n            self.node = null;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "remove",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn startCallback(self: *PendingScript, transfer: *Http.Transfer) !void {\n        _ = self;\n        log.debug(.http, \"script fetch start\", .{ .req = transfer }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "startCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to headerCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn headerCallback(self: *PendingScript, transfer: *Http.Transfer) !void {\n        const header = &transfer.response_header.?;\n        if (header.status != 200) {\n            log.info(.http, \"script header\", .{\n                .req = transfer,\n                .status = header.status,\n                .content_type = header.contentType(),\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "headerCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dataCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn dataCallback(self: *PendingScript, transfer: *Http.Transfer, data: []const u8) !void {\n        _ = transfer;\n        // too verbose\n        // log.debug(.http, \"script data chunk\", .{\n        //     .req = transfer,\n        //     .len = data.len,\n        // }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "dataCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doneCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn doneCallback(self: *PendingScript) void {\n        log.debug(.http, \"script fetch complete\", .{ .req = self.script.url }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "doneCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to errorCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn errorCallback(self: *PendingScript, err: anyerror) void {\n        log.warn(.http, \"script fetch error\", .{ .req = self.script.url, .err = err }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "errorCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getList from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn getList(self: *const PendingScript) *OrderList {\n        // When a script has both the async and defer flag set, it should be\n        // treated as async. Async is newer, so some websites use both so that\n        // if async isn't known, it'll fallback to defer.\n\n        const script = &self.script;\n        if (script.is_async) {\n            return &self.manager.asyncs;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "getList",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to content from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn content(self: Source) []const u8 {\n            return switch (self) {\n                .remote => |buf| buf.items,\n                .@\"inline\" => |c| c,\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "content",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eval from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn eval(self: *Script, page: *Page) void {\n        page.setCurrentScript(@ptrCast(self.element)) catch |err| {\n            log.err(.browser, \"set document script\", .{ .err = err }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "eval",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to executeCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn executeCallback(self: *const Script, comptime typ: []const u8, page: *Page) void {\n        const callback = self.getCallback(typ, page) orelse return;\n\n        switch (callback) {\n            .string => |str| {\n                var try_catch: js.TryCatch = undefined;\n                try_catch.init(page.js);\n                defer try_catch.deinit();\n\n                _ = page.js.exec(str, typ) catch |err| {\n                    const msg = try_catch.err(page.arena) catch @errorName(err) orelse \"unknown\";\n                    log.warn(.user_script, \"script callback\", .{\n                        .url = self.url,\n                        .err = msg,\n                        .type = typ,\n                        .@\"inline\" = true,\n                    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "executeCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn getCallback(self: *const Script, comptime typ: []const u8, page: *Page) ?Callback {\n        const element = self.element;\n        // first we check if there was an el.onload set directly on the\n        // element in JavaScript (if so, it'd be stored in the node state)\n        if (page.getNodeState(@ptrCast(element))) |se| {\n            if (@field(se, typ)) |function| {\n                return .{ .function = function }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "getCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn init(allocator: Allocator, max_concurrent_transfers: u8) BufferPool {\n        return .{\n            .available = .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn deinit(self: *BufferPool) void {\n        const allocator = self.allocator;\n\n        var node = self.available.first;\n        while (node) |n| {\n            const container: *Container = @fieldParentPtr(\"node\", n);\n            container.buf.deinit(allocator);\n            node = n.next;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn get(self: *BufferPool) std.ArrayListUnmanaged(u8) {\n        const node = self.available.popFirst() orelse {\n            // return a new buffer\n            return .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to release from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn release(self: *BufferPool, buffer: ArrayListUnmanaged(u8)) void {\n        // create mutable copy\n        var b = buffer;\n\n        if (self.count == self.max_concurrent_transfers) {\n            b.deinit(self.allocator);\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn startCallback(transfer: *Http.Transfer) !void {\n        log.debug(.http, \"script fetch start\", .{ .req = transfer, .blocking = true }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "startCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to headerCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn headerCallback(transfer: *Http.Transfer) !void {\n        const header = &transfer.response_header.?;\n        log.debug(.http, \"script header\", .{\n            .req = transfer,\n            .blocking = true,\n            .status = header.status,\n            .content_type = header.contentType(),\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "headerCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dataCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn dataCallback(transfer: *Http.Transfer, data: []const u8) !void {\n        // too verbose\n        // log.debug(.http, \"script data chunk\", .{\n        //     .req = transfer,\n        //     .blocking = true,\n        // }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "dataCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doneCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn doneCallback(ctx: *anyopaque) !void {\n        var self: *SyncModule = @ptrCast(@alignCast(ctx));\n        self.finished(.done);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "doneCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to errorCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn errorCallback(ctx: *anyopaque, err: anyerror) void {\n        var self: *SyncModule = @ptrCast(@alignCast(ctx));\n        self.finished(.{ .err = err }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "errorCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to finished from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn finished(self: *SyncModule, state: State) void {\n        self.state = state;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "finished",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn startCallback(transfer: *Http.Transfer) !void {\n        log.debug(.http, \"script fetch start\", .{ .req = transfer, .async = true }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "startCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to headerCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn headerCallback(transfer: *Http.Transfer) !void {\n        const header = &transfer.response_header.?;\n        log.debug(.http, \"script header\", .{\n            .req = transfer,\n            .async = true,\n            .status = header.status,\n            .content_type = header.contentType(),\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "headerCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dataCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn dataCallback(transfer: *Http.Transfer, data: []const u8) !void {\n        // too verbose\n        // log.debug(.http, \"script data chunk\", .{\n        //     .req = transfer,\n        //     .blocking = true,\n        // }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "dataCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to doneCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn doneCallback(ctx: *anyopaque) !void {\n        var self: *AsyncModule = @ptrCast(@alignCast(ctx));\n        defer self.manager.async_module_pool.destroy(self);\n        self.cb(self.cb_data, .{\n            .shared = false,\n            .buffer = self.buffer,\n            .buffer_pool = &self.manager.buffer_pool,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "doneCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to errorCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "fn errorCallback(ctx: *anyopaque, err: anyerror) void {\n        var self: *AsyncModule = @ptrCast(@alignCast(ctx));\n\n        if (err != error.Abort) {\n            self.cb(self.cb_data, err);\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "errorCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn deinit(self: *GetResult) void {\n        // if the result is shared, don't deinit.\n        if (self.shared) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to src from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub fn src(self: *const GetResult) []const u8 {\n        return self.buffer.items;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "function",
+      "name": "src",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Imports from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const Imports = struct {\n        imports: std.json.ArrayHashMap([]const u8),\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "Imports",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to PendingScript from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub const PendingScript = struct {\n    script: Script,\n    complete: bool,\n    node: OrderList.Node,\n    manager: *ScriptManager,\n\n    fn deinit(self: *PendingScript) void {\n        const script = &self.script;\n        const manager = self.manager;\n\n        if (script.source == .remote) {\n            manager.buffer_pool.release(script.source.remote);\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "PendingScript",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Script from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const Script = struct {\n    kind: Kind,\n    url: []const u8,\n    is_async: bool,\n    is_defer: bool,\n    source: Source,\n    element: *parser.Element,\n\n    const Kind = enum {\n        module,\n        javascript,\n        importmap,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "Script",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to BufferPool from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const BufferPool = struct {\n    count: usize,\n    available: List = .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "BufferPool",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Container from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const Container = struct {\n        node: List.Node,\n        buf: std.ArrayListUnmanaged(u8),\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "Container",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to SyncModule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const SyncModule = struct {\n    manager: *ScriptManager,\n    buffer: std.ArrayListUnmanaged(u8) = .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "SyncModule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to AsyncModule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub const AsyncModule = struct {\n    cb: Callback,\n    cb_data: *anyopaque,\n    manager: *ScriptManager,\n    buffer: std.ArrayListUnmanaged(u8) = .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "AsyncModule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to GetResult from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "pub const GetResult = struct {\n    buffer: std.ArrayListUnmanaged(u8),\n    buffer_pool: *BufferPool,\n    shared: bool,\n\n    pub fn deinit(self: *GetResult) void {\n        // if the result is shared, don't deinit.\n        if (self.shared) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "struct",
+      "name": "GetResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pending_script from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const pending_script: *PendingScript = @fieldParentPtr(\"node\", node);",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "pending_script",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to kind from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const kind: Script.Kind = blk: {\n        const script_type = try parser.elementGetAttribute(element, \"type\") orelse break :blk .javascript;",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "kind",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const script: *PendingScript = @ptrCast(@alignCast(transfer.ctx));",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "script",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const script: *PendingScript = @ptrCast(@alignCast(transfer.ctx));",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "script",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const script: *PendingScript = @ptrCast(@alignCast(transfer.ctx));",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "script",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const script: *PendingScript = @ptrCast(@alignCast(ctx));",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "script",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to script from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const script: *PendingScript = @ptrCast(@alignCast(ctx));",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "script",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to container from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const container: *Container = @fieldParentPtr(\"node\", n);",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "container",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to container from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/ScriptManager.zig",
+    "response": "const container: *Container = @fieldParentPtr(\"node\", node);",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/ScriptManager.zig",
+      "type": "const",
+      "name": "container",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "pub fn init(page: *Page) !*SlotChangeMonitor {\n    // on the heap, we need a stable address for event_node\n    const self = try page.arena.create(SlotChangeMonitor);\n    self.* = .{\n        .page = page,\n        .slots_changed = .empty,\n        .event_node = .{ .func = mutationCallback }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findSlot from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "pub fn findSlot(element: *parser.Element, page: *const Page) !?*parser.Slot {\n    const target_name = (try parser.elementGetAttribute(element, \"slot\")) orelse return null;\n    return findNamedSlot(element, target_name, page);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "findSlot",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findNamedSlot from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn findNamedSlot(element: *parser.Element, target_name: []const u8, page: *const Page) !?*parser.Slot {\n    // I believe elements need to be added as direct descendents of the host,\n    // so we don't need to go find the host, we just grab the parent.\n    const host = parser.nodeParentNode(@ptrCast(element)) orelse return null;\n    const state = page.getNodeState(host) orelse return null;\n    const shadow_root = state.shadow_root orelse return null;\n\n    // if we're here, we found a host, now find the slot\n    var nodes = collection.HTMLCollectionByTagName(\n        @ptrCast(@alignCast(shadow_root.proto)),\n        \"slot\",\n        .{ .include_root = false }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "findNamedSlot",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to mutationCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn mutationCallback(en: *parser.EventNode, event: *parser.Event) void {\n    const mutation_event = parser.eventToMutationEvent(event);\n    const self: *SlotChangeMonitor = @fieldParentPtr(\"event_node\", en);\n    self._mutationCallback(mutation_event) catch |err| {\n        log.err(.web_api, \"slot change callback\", .{ .err = err }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "mutationCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _mutationCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn _mutationCallback(self: *SlotChangeMonitor, event: *parser.MutationEvent) !void {\n    const event_type = parser.eventType(@ptrCast(event));\n    if (std.mem.eql(u8, event_type, \"DOMNodeInserted\")) {\n        const event_target = parser.eventTarget(@ptrCast(event)) orelse return;\n        return self.nodeAddedOrRemoved(@ptrCast(event_target));\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "_mutationCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nodeAddedOrRemoved from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn nodeAddedOrRemoved(self: *SlotChangeMonitor, node: *parser.Node) !void {\n    if (parser.nodeType(node) != .element) {\n        return;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "nodeAddedOrRemoved",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nodeAttributeChanged from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn nodeAttributeChanged(self: *SlotChangeMonitor, node: *parser.Node, new_value: ?[]const u8, prev_value: ?[]const u8) !void {\n    if (parser.nodeType(node) != .element) {\n        return;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "nodeAttributeChanged",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scheduleSlotChange from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn scheduleSlotChange(self: *SlotChangeMonitor, slot: *parser.Slot) !void {\n    for (self.slots_changed.items) |changed| {\n        if (slot == changed) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "scheduleSlotChange",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to scheduleCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn scheduleCallback(ctx: *anyopaque) ?u32 {\n    var self: *SlotChangeMonitor = @ptrCast(@alignCast(ctx));\n    self._scheduleCallback() catch |err| {\n        log.err(.app, \"slot change schedule\", .{ .err = err }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "scheduleCallback",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _scheduleCallback from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "fn _scheduleCallback(self: *SlotChangeMonitor) !void {\n    for (self.slots_changed.items) |slot| {\n        const event = try parser.eventCreate();\n        defer parser.eventDestroy(event);\n        try parser.eventInit(event, \"slotchange\", .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "function",
+      "name": "_scheduleCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "const self: *SlotChangeMonitor = @fieldParentPtr(\"event_node\", en);",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to el from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "const el: *parser.Element = @ptrCast(node);",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "const",
+      "name": "el",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to el from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/SlotChangeMonitor.zig",
+    "response": "const el: *parser.Element = @ptrCast(node);",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/SlotChangeMonitor.zig",
+      "type": "const",
+      "name": "el",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/browser.zig",
+    "response": "pub fn init(app: *App) !Browser {\n        const allocator = app.allocator;\n\n        const env = try js.Env.init(allocator, &app.platform, .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/browser.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/browser.zig",
+    "response": "pub fn deinit(self: *Browser) void {\n        self.closeSession();\n        self.env.deinit();\n        self.call_arena.deinit();\n        self.page_arena.deinit();\n        self.session_arena.deinit();\n        self.transfer_arena.deinit();\n        self.http_client.notification = null;\n        self.notification.deinit();\n        self.state_pool.deinit();\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/browser.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to newSession from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/browser.zig",
+    "response": "pub fn newSession(self: *Browser) !*Session {\n        self.closeSession();\n        self.session = @as(Session, undefined);\n        const session = &self.session.?;\n        try Session.init(session, self);\n        return session;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/browser.zig",
+      "type": "function",
+      "name": "newSession",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to closeSession from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/browser.zig",
+    "response": "pub fn closeSession(self: *Browser) void {\n        if (self.session) |*session| {\n            session.deinit();\n            self.session = null;\n            _ = self.session_arena.reset(.{ .retain_with_limit = 1 * 1024 * 1024 }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/browser.zig",
+      "type": "function",
+      "name": "closeSession",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runMicrotasks from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/browser.zig",
+    "response": "pub fn runMicrotasks(self: *const Browser) void {\n        self.env.runMicrotasks();\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/browser.zig",
+      "type": "function",
+      "name": "runMicrotasks",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to runMessageLoop from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/browser.zig",
+    "response": "pub fn runMessageLoop(self: *const Browser) void {\n        while (self.env.pumpMessageLoop()) {\n            log.debug(.browser, \"pumpMessageLoop\", .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/browser.zig",
+      "type": "function",
+      "name": "runMessageLoop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Browser from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/browser.zig",
+    "response": "pub const Browser = struct {\n    env: *js.Env,\n    app: *App,\n    session: ?Session,\n    allocator: Allocator,\n    http_client: *HttpClient,\n    call_arena: ArenaAllocator,\n    page_arena: ArenaAllocator,\n    session_arena: ArenaAllocator,\n    transfer_arena: ArenaAllocator,\n    notification: *Notification,\n    state_pool: std.heap.MemoryPool(State),\n\n    pub fn init(app: *App) !Browser {\n        const allocator = app.allocator;\n\n        const env = try js.Env.init(allocator, &app.platform, .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/browser.zig",
+      "type": "struct",
+      "name": "Browser",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _lp from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _lp(values: []js.Object, page: *Page) !void {\n        if (values.len == 0) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_lp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _log from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _log(values: []js.Object, page: *Page) !void {\n        if (values.len == 0) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_log",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _info from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _info(values: []js.Object, page: *Page) !void {\n        return _log(values, page);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_info",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _debug from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _debug(values: []js.Object, page: *Page) !void {\n        if (values.len == 0) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_debug",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _warn from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _warn(values: []js.Object, page: *Page) !void {\n        if (values.len == 0) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_warn",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _error from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _error(values: []js.Object, page: *Page) !void {\n        if (values.len == 0) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_error",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _trace from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _trace(values: []js.Object, page: *Page) !void {\n        if (values.len == 0) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_trace",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _count from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _count(self: *Console, label_: ?[]const u8, page: *Page) !void {\n        const label = label_ orelse \"default\";\n        const gop = try self.counts.getOrPut(page.arena, label);\n\n        var current: u32 = 0;\n        if (gop.found_existing) {\n            current = gop.value_ptr.*;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _countReset from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _countReset(self: *Console, label_: ?[]const u8) !void {\n        const label = label_ orelse \"default\";\n        const kv = self.counts.fetchRemove(label) orelse {\n            log.info(.console, \"invalid counter\", .{ .label = label }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_countReset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _time from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _time(self: *Console, label_: ?[]const u8, page: *Page) !void {\n        const label = label_ orelse \"default\";\n        const gop = try self.timers.getOrPut(page.arena, label);\n\n        if (gop.found_existing) {\n            log.info(.console, \"duplicate timer\", .{ .label = label }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_time",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _timeLog from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _timeLog(self: *Console, label_: ?[]const u8) void {\n        const elapsed = timestamp();\n        const label = label_ orelse \"default\";\n        const start = self.timers.get(label) orelse {\n            log.info(.console, \"invalid timer\", .{ .label = label }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_timeLog",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _timeStop from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _timeStop(self: *Console, label_: ?[]const u8) void {\n        const elapsed = timestamp();\n        const label = label_ orelse \"default\";\n        const kv = self.timers.fetchRemove(label) orelse {\n            log.info(.console, \"invalid timer\", .{ .label = label }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_timeStop",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _assert from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub fn _assert(assertion: js.Object, values: []js.Object, page: *Page) !void {\n        if (assertion.isTruthy()) {\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "_assert",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to serializeValues from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "fn serializeValues(values: []js.Object, page: *Page) ![]const u8 {\n        if (values.len == 0) {\n            return \"\";\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "serializeValues",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to timestamp from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "fn timestamp() u32 {\n    return @import(\"../../datetime.zig\").timestamp();\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "function",
+      "name": "timestamp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Console from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/console/console.zig",
+    "response": "pub const Console = struct {\n    // TODO: configurable writer\n    timers: std.StringHashMapUnmanaged(u32) = .{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/console/console.zig",
+      "type": "struct",
+      "name": "Console",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _getRandomValues from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/crypto/crypto.zig",
+    "response": "pub fn _getRandomValues(_: *const Crypto, js_obj: js.Object) !js.Object {\n        var into = try js_obj.toZig(Crypto, \"getRandomValues\", RandomValues);\n        const buf = into.asBuffer();\n        if (buf.len > 65_536) {\n            return error.QuotaExceededError;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/crypto/crypto.zig",
+      "type": "function",
+      "name": "_getRandomValues",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _randomUUID from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/crypto/crypto.zig",
+    "response": "pub fn _randomUUID(_: *const Crypto) [36]u8 {\n        var hex: [36]u8 = undefined;\n        uuidv4(&hex);\n        return hex;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/crypto/crypto.zig",
+      "type": "function",
+      "name": "_randomUUID",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to asBuffer from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/crypto/crypto.zig",
+    "response": "fn asBuffer(self: RandomValues) []u8 {\n        return switch (self) {\n            .int8 => |b| (@as([]u8, @ptrCast(b)))[0..b.len],\n            .uint8 => |b| (@as([]u8, @ptrCast(b)))[0..b.len],\n            .int16 => |b| (@as([]u8, @ptrCast(b)))[0 .. b.len * 2],\n            .uint16 => |b| (@as([]u8, @ptrCast(b)))[0 .. b.len * 2],\n            .int32 => |b| (@as([]u8, @ptrCast(b)))[0 .. b.len * 4],\n            .uint32 => |b| (@as([]u8, @ptrCast(b)))[0 .. b.len * 4],\n            .int64 => |b| (@as([]u8, @ptrCast(b)))[0 .. b.len * 8],\n            .uint64 => |b| (@as([]u8, @ptrCast(b)))[0 .. b.len * 8],\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/crypto/crypto.zig",
+      "type": "function",
+      "name": "asBuffer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Crypto from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/crypto/crypto.zig",
+    "response": "pub const Crypto = struct {\n    _not_empty: bool = true,\n\n    pub fn _getRandomValues(_: *const Crypto, js_obj: js.Object) !js.Object {\n        var into = try js_obj.toZig(Crypto, \"getRandomValues\", RandomValues);\n        const buf = into.asBuffer();\n        if (buf.len > 65_536) {\n            return error.QuotaExceededError;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/crypto/crypto.zig",
+      "type": "struct",
+      "name": "Crypto",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _supports from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/css.zig",
+    "response": "pub fn _supports(_: *Css, _: []const u8, _: ?[]const u8) bool {\n        // TODO: Actually respond with which CSS features we support.\n        return true;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/css.zig",
+      "type": "function",
+      "name": "_supports",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/css.zig",
+    "response": "pub fn parse(alloc: std.mem.Allocator, s: []const u8, opts: parser.ParseOptions) parser.ParseError!Selector {\n    var p = parser.Parser{ .s = s, .i = 0, .opts = opts }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/css.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchFirst from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/css.zig",
+    "response": "pub fn matchFirst(s: *const Selector, node: anytype, m: anytype) !bool {\n    var child = node.firstChild();\n    while (child) |c| {\n        if (try s.match(c)) {\n            try m.match(c);\n            return true;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/css.zig",
+      "type": "function",
+      "name": "matchFirst",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to matchAll from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/css.zig",
+    "response": "pub fn matchAll(s: *const Selector, node: anytype, m: anytype) !void {\n    var child = node.firstChild();\n    while (child) |c| {\n        if (try s.match(c)) try m.match(c);\n        try matchAll(s, c, m);\n        child = c.nextSibling();\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/css.zig",
+      "type": "function",
+      "name": "matchAll",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Css from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/css.zig",
+    "response": "pub const Css = struct {\n    _not_empty: bool = true,\n\n    pub fn _supports(_: *Css, _: []const u8, _: ?[]const u8) bool {\n        // TODO: Actually respond with which CSS features we support.\n        return true;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/css.zig",
+      "type": "struct",
+      "name": "Css",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to firstChild from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn firstChild(n: Node) ?Node {\n        const c = parser.nodeFirstChild(n.node);\n        if (c) |cc| return .{ .node = cc }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "firstChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lastChild from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn lastChild(n: Node) ?Node {\n        const c = parser.nodeLastChild(n.node);\n        if (c) |cc| return .{ .node = cc }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "lastChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextSibling from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn nextSibling(n: Node) ?Node {\n        const c = parser.nodeNextSibling(n.node);\n        if (c) |cc| return .{ .node = cc }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "nextSibling",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to prevSibling from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn prevSibling(n: Node) ?Node {\n        const c = parser.nodePreviousSibling(n.node);\n        if (c) |cc| return .{ .node = cc }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "prevSibling",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parent from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn parent(n: Node) ?Node {\n        const c = parser.nodeParentNode(n.node);\n        if (c) |cc| return .{ .node = cc }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "parent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isElement from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn isElement(n: Node) bool {\n        return parser.nodeType(n.node) == .element;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "isElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isDocument from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn isDocument(n: Node) bool {\n        return parser.nodeType(n.node) == .document;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "isDocument",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isComment from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn isComment(n: Node) bool {\n        return parser.nodeType(n.node) == .comment;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "isComment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isText from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn isText(n: Node) bool {\n        return parser.nodeType(n.node) == .text;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "isText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to text from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn text(n: Node) ?[]const u8 {\n        const data = parser.nodeTextContent(n.node);\n        if (data == null) return null;\n        if (data.?.len == 0) return null;\n\n        return std.mem.trim(u8, data.?, &std.ascii.whitespace);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "text",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isEmptyText from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn isEmptyText(n: Node) bool {\n        const data = parser.nodeTextContent(n.node);\n        if (data == null) return true;\n        if (data.?.len == 0) return true;\n\n        return std.mem.trim(u8, data.?, &std.ascii.whitespace).len == 0;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "isEmptyText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tag from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn tag(n: Node) ![]const u8 {\n        return parser.nodeName(n.node);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "tag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to attr from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn attr(n: Node, key: []const u8) !?[]const u8 {\n        if (!n.isElement()) return null;\n        return try parser.elementGetAttribute(parser.nodeToElement(n.node), key);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "attr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn eql(a: Node, b: Node) bool {\n        return a.node == b.node;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "fn init(allocator: Allocator) MatcherTest {\n        return .{\n            .nodes = .empty,\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "fn deinit(m: *MatcherTest) void {\n        m.nodes.deinit(m.allocator);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "fn reset(m: *MatcherTest) void {\n        m.nodes.clearRetainingCapacity();\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to match from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub fn match(m: *MatcherTest, n: Node) !void {\n        try m.nodes.append(m.allocator, n);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "function",
+      "name": "match",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Node from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "pub const Node = struct {\n    node: *parser.Node,\n\n    pub fn firstChild(n: Node) ?Node {\n        const c = parser.nodeFirstChild(n.node);\n        if (c) |cc| return .{ .node = cc }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "struct",
+      "name": "Node",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MatcherTest from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/libdom.zig",
+    "response": "const MatcherTest = struct {\n    const Nodes = std.ArrayListUnmanaged(Node);\n\n    nodes: Nodes,\n    allocator: Allocator,\n\n    fn init(allocator: Allocator) MatcherTest {\n        return .{\n            .nodes = .empty,\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/libdom.zig",
+      "type": "struct",
+      "name": "MatcherTest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "pub fn parse(p: *Parser, allocator: Allocator) ParseError!Selector {\n        return p.parseSelectorGroup(allocator);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to skipWhitespace from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn skipWhitespace(p: *Parser) bool {\n        var i = p.i;\n        while (i < p.s.len) {\n            const c = p.s[i];\n            // Whitespaces.\n            if (ascii.isWhitespace(c)) {\n                i += 1;\n                continue;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "skipWhitespace",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseSimpleSelectorSequence from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseSimpleSelectorSequence(p: *Parser, allocator: Allocator) ParseError!Selector {\n        if (p.i >= p.s.len) {\n            return ParseError.ExpectedSelector;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseSimpleSelectorSequence",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseTypeSelector from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseTypeSelector(p: *Parser, allocator: Allocator) ParseError!Selector {\n        var buf: std.ArrayListUnmanaged(u8) = .empty;\n        defer buf.deinit(allocator);\n        try p.parseIdentifier(buf.writer(allocator));\n\n        return .{ .tag = try buf.toOwnedSlice(allocator) }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseTypeSelector",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseIdentifier from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseIdentifier(p: *Parser, w: anytype) ParseError!void {\n        const prefix = '-';\n        var numPrefix: usize = 0;\n\n        while (p.s.len > p.i and p.s[p.i] == prefix) {\n            p.i += 1;\n            numPrefix += 1;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseIdentifier",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseName from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseName(p: *Parser, w: anytype) ParseError!void {\n        const sel = p.s;\n        const sel_len = sel.len;\n\n        var i = p.i;\n        var ok = false;\n\n        while (i < sel_len) {\n            const c = sel[i];\n\n            if (nameChar(c)) {\n                const start = i;\n                while (i < sel_len and nameChar(sel[i])) i += 1;\n                w.writeAll(sel[start..i]) catch return ParseError.WriteError;\n                ok = true;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseName",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseEscape from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseEscape(p: *Parser, w: anytype) ParseError!void {\n        const sel = p.s;\n        const sel_len = sel.len;\n\n        if (sel_len < p.i + 2 or sel[p.i] != '\\\\') {\n            p.i += 1;\n            w.writeAll(REPLACEMENT_CHARACTER) catch return ParseError.WriteError;\n            return;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseEscape",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseIDSelector from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseIDSelector(p: *Parser, allocator: Allocator) ParseError!Selector {\n        if (p.i >= p.s.len) return ParseError.ExpectedIDSelector;\n        if (p.s[p.i] != '#') return ParseError.ExpectedIDSelector;\n\n        p.i += 1;\n\n        var buf: std.ArrayListUnmanaged(u8) = .empty;\n        defer buf.deinit(allocator);\n\n        try p.parseName(buf.writer(allocator));\n        return .{ .id = try buf.toOwnedSlice(allocator) }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseIDSelector",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseClassSelector from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseClassSelector(p: *Parser, allocator: Allocator) ParseError!Selector {\n        if (p.i >= p.s.len) return ParseError.ExpectedClassSelector;\n        if (p.s[p.i] != '.') return ParseError.ExpectedClassSelector;\n\n        p.i += 1;\n\n        var buf: std.ArrayListUnmanaged(u8) = .empty;\n        defer buf.deinit(allocator);\n\n        try p.parseIdentifier(buf.writer(allocator));\n        return .{ .class = try buf.toOwnedSlice(allocator) }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseClassSelector",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseAttributeSelector from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseAttributeSelector(p: *Parser, allocator: Allocator) ParseError!Selector {\n        if (p.i >= p.s.len) return ParseError.ExpectedAttributeSelector;\n        if (p.s[p.i] != '[') return ParseError.ExpectedAttributeSelector;\n\n        p.i += 1;\n        _ = p.skipWhitespace();\n\n        var buf: std.ArrayListUnmanaged(u8) = .empty;\n        defer buf.deinit(allocator);\n\n        try p.parseIdentifier(buf.writer(allocator));\n        const key = try buf.toOwnedSlice(allocator);\n        errdefer allocator.free(key);\n\n        lowerstr(key);\n\n        _ = p.skipWhitespace();\n        if (p.i >= p.s.len) return ParseError.ExpectedAttributeSelector;\n        if (p.s[p.i] == ']') {\n            p.i += 1;\n            return .{ .attribute = .{ .key = key }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseAttributeSelector",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseString from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseString(p: *Parser, writer: anytype) ParseError!void {\n        const sel = p.s;\n        const sel_len = sel.len;\n\n        var i = p.i;\n        if (sel_len < i + 2) return ParseError.ExpectedString;\n\n        const quote = sel[i];\n        i += 1;\n\n        loop: while (i < sel_len) {\n            switch (sel[i]) {\n                '\\\\' => {\n                    if (sel_len > i + 1) {\n                        const c = sel[i + 1];\n                        switch (c) {\n                            '\\r' => {\n                                if (sel_len > i + 2 and sel[i + 2] == '\\n') {\n                                    i += 3;\n                                    continue :loop;\n                                }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseString",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseRegex from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseRegex(p: *Parser, writer: anytype) ParseError!void {\n        var i = p.i;\n        if (p.s.len < i + 2) return ParseError.ExpectedRegexp;\n\n        // number of open parens or brackets;\n        // when it becomes negative, finished parsing regex\n        var open: isize = 0;\n\n        loop: while (i < p.s.len) {\n            switch (p.s[i]) {\n                '(', '[' => open += 1,\n                ')', ']' => {\n                    open -= 1;\n                    if (open < 0) break :loop;\n                }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseRegex",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parsePseudoclassSelector from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parsePseudoclassSelector(p: *Parser, allocator: Allocator) ParseError!Selector {\n        if (p.i >= p.s.len) return ParseError.ExpectedPseudoClassSelector;\n        if (p.s[p.i] != ':') return ParseError.ExpectedPseudoClassSelector;\n\n        p.i += 1;\n\n        var must_pseudo_elt: bool = false;\n        if (p.i >= p.s.len) return ParseError.EmptyPseudoClassSelector;\n        if (p.s[p.i] == ':') { // we found a pseudo-element\n            must_pseudo_elt = true;\n            p.i += 1;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parsePseudoclassSelector",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consumeParenthesis from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn consumeParenthesis(p: *Parser) bool {\n        if (p.i < p.s.len and p.s[p.i] == '(') {\n            p.i += 1;\n            _ = p.skipWhitespace();\n            return true;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "consumeParenthesis",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseSelectorGroup from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseSelectorGroup(p: *Parser, allocator: Allocator) ParseError!Selector {\n        const s = try p.parseSelector(allocator);\n\n        var buf: std.ArrayListUnmanaged(Selector) = .empty;\n        defer buf.deinit(allocator);\n\n        try buf.append(allocator, s);\n\n        while (p.i < p.s.len) {\n            if (p.s[p.i] != ',') break;\n            p.i += 1;\n            const ss = try p.parseSelector(allocator);\n            try buf.append(allocator, ss);\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseSelectorGroup",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseSelector from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseSelector(p: *Parser, allocator: Allocator) ParseError!Selector {\n        _ = p.skipWhitespace();\n        var s = try p.parseSimpleSelectorSequence(allocator);\n\n        while (true) {\n            var combinator: Combinator = .empty;\n            if (p.skipWhitespace()) {\n                combinator = .descendant;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseSelector",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to consumeClosingParenthesis from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn consumeClosingParenthesis(p: *Parser) bool {\n        const i = p.i;\n        _ = p.skipWhitespace();\n        if (p.i < p.s.len and p.s[p.i] == ')') {\n            p.i += 1;\n            return true;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "consumeClosingParenthesis",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseInteger from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseInteger(p: *Parser) ParseError!isize {\n        var i = p.i;\n        const start = i;\n        while (i < p.s.len and '0' <= p.s[i] and p.s[i] <= '9') i += 1;\n        if (i == start) return ParseError.ExpectedInteger;\n        p.i = i;\n\n        return std.fmt.parseUnsigned(isize, p.s[start..i], 10) catch ParseError.ExpectedInteger;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseInteger",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseNthReadN from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseNthReadN(p: *Parser, a: isize) ParseError![2]isize {\n        _ = p.skipWhitespace();\n        if (p.i >= p.s.len) return ParseError.ExpectedNthExpression;\n\n        return switch (p.s[p.i]) {\n            '+' => {\n                p.i += 1;\n                _ = p.skipWhitespace();\n                const b = try p.parseInteger();\n                return .{ a, b }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseNthReadN",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseNthReadA from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseNthReadA(p: *Parser, a: isize) ParseError![2]isize {\n        if (p.i >= p.s.len) return ParseError.ExpectedNthExpression;\n        return switch (p.s[p.i]) {\n            'n', 'N' => {\n                p.i += 1;\n                return p.parseNthReadN(a);\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseNthReadA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseNthNegativeA from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseNthNegativeA(p: *Parser) ParseError![2]isize {\n        if (p.i >= p.s.len) return ParseError.ExpectedNthExpression;\n        const c = p.s[p.i];\n        if (std.ascii.isDigit(c)) {\n            const a = try p.parseInteger() * -1;\n            return p.parseNthReadA(a);\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseNthNegativeA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseNthPositiveA from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseNthPositiveA(p: *Parser) ParseError![2]isize {\n        if (p.i >= p.s.len) return ParseError.ExpectedNthExpression;\n        const c = p.s[p.i];\n        if (std.ascii.isDigit(c)) {\n            const a = try p.parseInteger();\n            return p.parseNthReadA(a);\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseNthPositiveA",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseNth from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseNth(p: *Parser, allocator: Allocator) ParseError![2]isize {\n        // initial state\n        if (p.i >= p.s.len) return ParseError.ExpectedNthExpression;\n        return switch (p.s[p.i]) {\n            '-' => {\n                p.i += 1;\n                return p.parseNthNegativeA();\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseNth",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nameStart from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn nameStart(c: u8) bool {\n    return 'a' <= c and c <= 'z' or 'A' <= c and c <= 'Z' or c == '_' or c > 127 or\n        '0' <= c and c <= '9';\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "nameStart",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nameChar from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn nameChar(c: u8) bool {\n    return 'a' <= c and c <= 'z' or 'A' <= c and c <= 'Z' or c == '_' or c > 127 or\n        c == '-' or '0' <= c and c <= '9';\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "nameChar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lowerstr from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn lowerstr(str: []u8) void {\n    for (str, 0..) |c, i| {\n        str[i] = std.ascii.toLower(c);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "lowerstr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseAttributeOP from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "fn parseAttributeOP(s: []const u8) ParseError!AttributeOP {\n    if (s.len < 1 or s.len > 2) return ParseError.InvalidAttributeOperator;\n\n    // if the first sign is equal, we don't check anything else.\n    if (s[0] == '=') return .eql;\n\n    if (s.len != 2 or s[1] != '=') return ParseError.InvalidAttributeOperator;\n\n    return switch (s[0]) {\n        '=' => .eql,\n        '!' => .not_eql,\n        '~' => .one_of,\n        '|' => .prefix_hyphen,\n        '^' => .prefix,\n        '$' => .suffix,\n        '*' => .contains,\n        '#' => .regexp,\n        else => ParseError.InvalidAttributeOperator,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "function",
+      "name": "parseAttributeOP",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ParseOptions from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "pub const ParseOptions = struct {\n    accept_pseudo_elts: bool = true,\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "struct",
+      "name": "ParseOptions",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Parser from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/parser.zig",
+    "response": "pub const Parser = struct {\n    s: []const u8, // string to parse\n    i: usize = 0, // current position\n\n    opts: ParseOptions,\n\n    pub fn parse(p: *Parser, allocator: Allocator) ParseError!Selector {\n        return p.parseSelectorGroup(allocator);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/parser.zig",
+      "type": "struct",
+      "name": "Parser",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to len from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn len(op: AttributeOP) u2 {\n        if (op == .eql) return 1;\n        return 2;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "len",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn parse(c: u8) Error!Combinator {\n        return switch (c) {\n            ' ' => .descendant,\n            '>' => .child,\n            '+' => .next_sibling,\n            '~' => .subsequent_sibling,\n            else => Error.InvalidCombinator,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isPseudoElement from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn isPseudoElement(pc: PseudoClass) bool {\n        return switch (pc) {\n            .after, .backdrop, .before, .cue, .first_letter => true,\n            .first_line, .grammar_error, .marker, .placeholder => true,\n            .selection, .spelling_error => true,\n            else => false,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "isPseudoElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parse from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn parse(s: []const u8) Error!PseudoClass {\n        const longest_selector = \"nth-last-of-type\";\n        if (s.len > longest_selector.len) {\n            return Error.InvalidPseudoClass;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "parse",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to asUint from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn asUint(comptime T: type, comptime string: []const u8) T {\n    return @bitCast(string[0..string.len].*);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "asUint",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to word from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn word(haystack: []const u8, needle: []const u8, ci: bool) bool {\n        if (haystack.len == 0) return false;\n        var it = std.mem.splitAny(u8, haystack, \" \\t\\r\\n\"); // TODO add \\f\n        while (it.next()) |part| {\n            if (eql(part, needle, ci)) return true;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "word",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn eql(a: []const u8, b: []const u8, ci: bool) bool {\n        if (ci) return std.ascii.eqlIgnoreCase(a, b);\n        return std.mem.eql(u8, a, b);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to starts from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn starts(haystack: []const u8, needle: []const u8, ci: bool) bool {\n        if (ci) return std.ascii.startsWithIgnoreCase(haystack, needle);\n        return std.mem.startsWith(u8, haystack, needle);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "starts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ends from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn ends(haystack: []const u8, needle: []const u8, ci: bool) bool {\n        if (ci) return std.ascii.endsWithIgnoreCase(haystack, needle);\n        return std.mem.endsWith(u8, haystack, needle);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "ends",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to contains from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn contains(haystack: []const u8, needle: []const u8, ci: bool) bool {\n        if (ci) return std.ascii.indexOfIgnoreCase(haystack, needle) != null;\n        return std.mem.indexOf(u8, haystack, needle) != null;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "contains",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to match from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn match(s: *const Selector, n: anytype) !bool {\n        return switch (s.*) {\n            .tag => |v| n.isElement() and std.ascii.eqlIgnoreCase(v, try n.tag()),\n            .id => |v| return n.isElement() and std.mem.eql(u8, v, try n.attr(\"id\") orelse return false),\n            .class => |v| return n.isElement() and word(try n.attr(\"class\") orelse return false, v, false),\n            .group => |v| {\n                for (v) |sel| {\n                    if (try sel.match(n)) return true;\n                }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "match",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasLegendInPreviousSiblings from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn hasLegendInPreviousSiblings(n: anytype) anyerror!bool {\n        var child = n.prevSibling();\n        while (child) |c| {\n            const ctag = try c.tag();\n            if (std.ascii.eqlIgnoreCase(\"legend\", ctag)) return true;\n            child = c.prevSibling();\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "hasLegendInPreviousSiblings",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to inDisabledFieldset from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn inDisabledFieldset(n: anytype) anyerror!bool {\n        const p = n.parent() orelse return false;\n\n        const ntag = try n.tag();\n        const ptag = try p.tag();\n\n        if (std.ascii.eqlIgnoreCase(\"fieldset\", ptag) and\n            try p.attr(\"disabled\") != null and\n            (!std.ascii.eqlIgnoreCase(\"legend\", ntag) or try hasLegendInPreviousSiblings(n)))\n        {\n            return true;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "inDisabledFieldset",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to langMatch from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn langMatch(lang: []const u8, n: anytype) anyerror!bool {\n        if (try n.attr(\"lang\")) |own| {\n            if (std.mem.eql(u8, own, lang)) return true;\n\n            // check if the lang attr starts with lang+'-'\n            if (std.mem.startsWith(u8, own, lang)) {\n                if (own.len > lang.len and own[lang.len] == '-') return true;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "langMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to onlyChildMatch from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn onlyChildMatch(of_type: bool, n: anytype) anyerror!bool {\n        if (!n.isElement()) return false;\n\n        const p = n.parent() orelse return false;\n\n        const ntag = try n.tag();\n\n        var count: usize = 0;\n        var child = p.firstChild();\n        // loop hover all n siblings.\n        while (child) |c| {\n            // ignore non elements or others tags if of-type is true.\n            if (!c.isElement() or (of_type and !std.mem.eql(u8, ntag, try c.tag()))) {\n                child = c.nextSibling();\n                continue;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "onlyChildMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to simpleNthLastChildMatch from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn simpleNthLastChildMatch(b: isize, of_type: bool, n: anytype) anyerror!bool {\n        if (!n.isElement()) return false;\n\n        const p = n.parent() orelse return false;\n        const ntag = try n.tag();\n\n        var count: isize = 0;\n        var child = p.lastChild();\n        // loop hover all n siblings.\n        while (child) |c| {\n            // ignore non elements or others tags if of-type is true.\n            if (!c.isElement() or (of_type and !std.mem.eql(u8, ntag, try c.tag()))) {\n                child = c.prevSibling();\n                continue;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "simpleNthLastChildMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to simpleNthChildMatch from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn simpleNthChildMatch(b: isize, of_type: bool, n: anytype) anyerror!bool {\n        if (!n.isElement()) return false;\n\n        const p = n.parent() orelse return false;\n        const ntag = try n.tag();\n\n        var count: isize = 0;\n        var child = p.firstChild();\n        // loop hover all n siblings.\n        while (child) |c| {\n            // ignore non elements or others tags if of-type is true.\n            if (!c.isElement() or (of_type and !std.mem.eql(u8, ntag, try c.tag()))) {\n                child = c.nextSibling();\n                continue;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "simpleNthChildMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nthChildMatch from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn nthChildMatch(a: isize, b: isize, last: bool, of_type: bool, n: anytype) anyerror!bool {\n        if (!n.isElement()) return false;\n\n        const p = n.parent() orelse return false;\n        const ntag = try n.tag();\n\n        var i: isize = -1;\n        var count: isize = 0;\n        var child = p.firstChild();\n        // loop hover all n siblings.\n        while (child) |c| {\n            // ignore non elements or others tags if of-type is true.\n            if (!c.isElement() or (of_type and !std.mem.eql(u8, ntag, try c.tag()))) {\n                child = c.nextSibling();\n                continue;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "nthChildMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasDescendantMatch from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn hasDescendantMatch(s: *const Selector, n: anytype) anyerror!bool {\n        var child = n.firstChild();\n        while (child) |c| {\n            if (try s.match(c)) return true;\n            if (c.isElement() and try hasDescendantMatch(s, c)) return true;\n            child = c.nextSibling();\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "hasDescendantMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasChildMatch from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn hasChildMatch(s: *const Selector, n: anytype) anyerror!bool {\n        var child = n.firstChild();\n        while (child) |c| {\n            if (try s.match(c)) return true;\n            child = c.nextSibling();\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "hasChildMatch",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn deinit(sel: *const Selector, alloc: std.mem.Allocator) void {\n        switch (sel.*) {\n            .group => |v| {\n                for (v) |vv| vv.deinit(alloc);\n                alloc.free(v);\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to firstChild from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn firstChild(n: *const NodeTest) ?*const NodeTest {\n        return n.child;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "firstChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lastChild from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn lastChild(n: *const NodeTest) ?*const NodeTest {\n        return n.last;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "lastChild",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nextSibling from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn nextSibling(n: *const NodeTest) ?*const NodeTest {\n        return n.sibling;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "nextSibling",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to prevSibling from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn prevSibling(n: *const NodeTest) ?*const NodeTest {\n        return n.prev;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "prevSibling",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parent from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn parent(n: *const NodeTest) ?*const NodeTest {\n        return n.par;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "parent",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isElement from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn isElement(_: *const NodeTest) bool {\n        return true;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "isElement",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isDocument from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn isDocument(_: *const NodeTest) bool {\n        return false;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "isDocument",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isComment from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn isComment(_: *const NodeTest) bool {\n        return false;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "isComment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to text from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn text(_: *const NodeTest) ?[]const u8 {\n        return null;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "text",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isText from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn isText(_: *const NodeTest) bool {\n        return false;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "isText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isEmptyText from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn isEmptyText(_: *const NodeTest) bool {\n        return false;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "isEmptyText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tag from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn tag(n: *const NodeTest) ![]const u8 {\n        return n.name;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "tag",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to attr from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn attr(n: *const NodeTest, _: []const u8) !?[]const u8 {\n        return n.att;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "attr",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eql from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn eql(a: *const NodeTest, b: *const NodeTest) bool {\n        return a == b;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "eql",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn init(allocator: Allocator) MatcherTest {\n        return .{\n            .nodes = .empty,\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to deinit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn deinit(m: *MatcherTest) void {\n        m.nodes.deinit(m.allocator);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "deinit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reset from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "fn reset(m: *MatcherTest) void {\n        m.nodes.clearRetainingCapacity();\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "reset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to match from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub fn match(m: *MatcherTest, n: *const NodeTest) !void {\n        try m.nodes.append(m.allocator, n);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "function",
+      "name": "match",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to NodeTest from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "pub const NodeTest = struct {\n    child: ?*const NodeTest = null,\n    last: ?*const NodeTest = null,\n    sibling: ?*const NodeTest = null,\n    prev: ?*const NodeTest = null,\n    par: ?*const NodeTest = null,\n\n    name: []const u8 = \"\",\n    att: ?[]const u8 = null,\n\n    pub fn firstChild(n: *const NodeTest) ?*const NodeTest {\n        return n.child;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "struct",
+      "name": "NodeTest",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to MatcherTest from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "const MatcherTest = struct {\n    const NodeTests = std.ArrayListUnmanaged(*const NodeTest);\n\n    nodes: NodeTests,\n    allocator: Allocator,\n\n    fn init(allocator: Allocator) MatcherTest {\n        return .{\n            .nodes = .empty,\n            .allocator = allocator,\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "struct",
+      "name": "MatcherTest",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to exp from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "const exp: usize = 1;",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "const",
+      "name": "exp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to exp from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "const exp: usize = 0;",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "const",
+      "name": "exp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to exp from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "const exp: usize = 1;",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "const",
+      "name": "exp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to exp from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/css/selector.zig",
+    "response": "const exp: usize = 0;",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/css/selector.zig",
+      "type": "const",
+      "name": "exp",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSParser.zig",
+    "response": "pub fn init() CSSParser {\n    return .{\n        .state = .seek_name,\n        .name_start = 0,\n        .name_end = 0,\n        .value_start = 0,\n        .position = 0,\n        .paren_depth = 0,\n        .escape_next = false,\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSParser.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to parseDeclarations from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSParser.zig",
+    "response": "pub fn parseDeclarations(arena: Allocator, text: []const u8) ![]CSSDeclaration {\n    var parser = init();\n    var declarations: std.ArrayListUnmanaged(CSSDeclaration) = .empty;\n\n    while (parser.position < text.len) {\n        const c = text[parser.position];\n\n        switch (parser.state) {\n            .seek_name => {\n                if (!std.ascii.isWhitespace(c)) {\n                    parser.name_start = parser.position;\n                    parser.state = .in_name;\n                    continue;\n                }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSParser.zig",
+      "type": "function",
+      "name": "parseDeclarations",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to finishDeclaration from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSParser.zig",
+    "response": "fn finishDeclaration(self: *CSSParser, arena: Allocator, declarations: *std.ArrayListUnmanaged(CSSDeclaration), text: []const u8) !void {\n    const name = std.mem.trim(u8, text[self.name_start..self.name_end], &std.ascii.whitespace);\n    if (name.len == 0) return;\n\n    const raw_value = text[self.value_start..self.position];\n    const value = std.mem.trim(u8, raw_value, &std.ascii.whitespace);\n\n    var final_value = value;\n    var is_important = false;\n\n    if (std.mem.endsWith(u8, value, CSSConstants.IMPORTANT)) {\n        is_important = true;\n        final_value = std.mem.trimRight(u8, value[0 .. value.len - CSSConstants.IMPORTANT.len], &std.ascii.whitespace);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSParser.zig",
+      "type": "function",
+      "name": "finishDeclaration",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to finalize from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSParser.zig",
+    "response": "fn finalize(self: *CSSParser, arena: Allocator, declarations: *std.ArrayListUnmanaged(CSSDeclaration), text: []const u8) !void {\n    if (self.state != .in_value) {\n        return;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSParser.zig",
+      "type": "function",
+      "name": "finalize",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CSSConstants from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSParser.zig",
+    "response": "const CSSConstants = struct {\n    const IMPORTANT = \"!important\";\n    const URL_PREFIX = \"url(\";\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSParser.zig",
+      "type": "struct",
+      "name": "CSSConstants",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CSSDeclaration from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSParser.zig",
+    "response": "const CSSDeclaration = struct {\n    name: []const u8,\n    value: []const u8,\n    is_important: bool,\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSParser.zig",
+      "type": "struct",
+      "name": "CSSDeclaration",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CSSImportRule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSRule.zig",
+    "response": "pub const CSSImportRule = struct {\n    pub const prototype = *CSSRule;\n    href: []const u8,\n    layer_name: ?[]const u8,\n    media: void,\n    style_sheet: CSSStyleSheet,\n    supports_text: ?[]const u8,\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSRule.zig",
+      "type": "struct",
+      "name": "CSSImportRule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to constructor from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSRuleList.zig",
+    "response": "pub fn constructor() CSSRuleList {\n    return .{ .list = .empty }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSRuleList.zig",
+      "type": "function",
+      "name": "constructor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _item from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSRuleList.zig",
+    "response": "pub fn _item(self: *CSSRuleList, _index: u32) ?CSSRule {\n    const index: usize = @intCast(_index);\n\n    if (index > self.list.items.len) {\n        return null;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSRuleList.zig",
+      "type": "function",
+      "name": "_item",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_length from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSRuleList.zig",
+    "response": "pub fn get_length(self: *CSSRuleList) u32 {\n    return @intCast(self.list.items.len);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSRuleList.zig",
+      "type": "function",
+      "name": "get_length",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to index from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSRuleList.zig",
+    "response": "const index: usize = @intCast(_index);",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSRuleList.zig",
+      "type": "const",
+      "name": "index",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_cssFloat from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn get_cssFloat(self: *const CSSStyleDeclaration) []const u8 {\n    return self._getPropertyValue(\"float\");\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "get_cssFloat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to set_cssFloat from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn set_cssFloat(self: *CSSStyleDeclaration, value: ?[]const u8, page: *Page) !void {\n    const final_value = value orelse \"\";\n    return self._setProperty(\"float\", final_value, null, page);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "set_cssFloat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_cssText from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn get_cssText(self: *const CSSStyleDeclaration, page: *Page) ![]const u8 {\n    var buffer: std.ArrayListUnmanaged(u8) = .empty;\n    const writer = buffer.writer(page.call_arena);\n    var it = self.properties.iterator();\n    while (it.next()) |entry| {\n        const name = entry.key_ptr.*;\n        const property = entry.value_ptr;\n        const escaped = try escapeCSSValue(page.call_arena, property.value);\n        try writer.print(\"{s}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "get_cssText",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to set_cssText from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn set_cssText(self: *CSSStyleDeclaration, text: []const u8, page: *Page) !void {\n    self.properties.clearRetainingCapacity();\n\n    // call_arena is safe here, because _setProperty will dupe the name\n    // using the page's longer-living arena.\n    const declarations = try CSSParser.parseDeclarations(page.call_arena, text);\n\n    for (declarations) |decl| {\n        if (!isValidPropertyName(decl.name)) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "set_cssText",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_length from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn get_length(self: *const CSSStyleDeclaration) usize {\n    return self.properties.count();\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "get_length",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_parentRule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn get_parentRule(_: *const CSSStyleDeclaration) ?CSSRule {\n    return null;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "get_parentRule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _getPropertyPriority from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn _getPropertyPriority(self: *const CSSStyleDeclaration, name: []const u8) []const u8 {\n    const property = self.properties.getPtr(name) orelse return \"\";\n    return if (property.priority) \"important\" else \"\";\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "_getPropertyPriority",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _getPropertyValue from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn _getPropertyValue(self: *const CSSStyleDeclaration, name: []const u8) []const u8 {\n    if (self.properties.getPtr(name)) |property| {\n        return property.value;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "_getPropertyValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _item from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn _item(self: *const CSSStyleDeclaration, index: usize) []const u8 {\n    const values = self.properties.entries.items(.key);\n    if (index >= values.len) {\n        return \"\";\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "_item",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _removeProperty from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn _removeProperty(self: *CSSStyleDeclaration, name: []const u8) ![]const u8 {\n    const property = self.properties.fetchOrderedRemove(name) orelse return \"\";\n    return property.value.value;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "_removeProperty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _setProperty from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn _setProperty(self: *CSSStyleDeclaration, name: []const u8, value: []const u8, priority: ?[]const u8, page: *Page) !void {\n    const gop = try self.properties.getOrPut(page.arena, name);\n    if (!gop.found_existing) {\n        const owned_name = try page.arena.dupe(u8, name);\n        gop.key_ptr.* = owned_name;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "_setProperty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to named_get from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn named_get(self: *const CSSStyleDeclaration, name: []const u8, _: *bool) []const u8 {\n    return self._getPropertyValue(name);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "named_get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to named_set from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn named_set(self: *CSSStyleDeclaration, name: []const u8, value: []const u8, _: *bool, page: *Page) !void {\n    return self._setProperty(name, value, null, page);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "named_set",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isNumericWithUnit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn isNumericWithUnit(value: []const u8) bool {\n    if (value.len == 0) {\n        return false;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isNumericWithUnit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isHexColor from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn isHexColor(value: []const u8) bool {\n    if (value.len == 0) {\n        return false;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isHexColor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isMultiValueProperty from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn isMultiValueProperty(value: []const u8) bool {\n    var parts = std.mem.splitAny(u8, value, \" \");\n    var multi_value_parts: usize = 0;\n    var all_parts_valid = true;\n\n    while (parts.next()) |part| {\n        if (part.len == 0) continue;\n        multi_value_parts += 1;\n\n        if (isNumericWithUnit(part)) {\n            continue;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isMultiValueProperty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isAlreadyQuoted from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn isAlreadyQuoted(value: []const u8) bool {\n    return value.len >= 2 and ((value[0] == '\"' and value[value.len - 1] == '\"') or\n        (value[0] == '\\'' and value[value.len - 1] == '\\''));\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isAlreadyQuoted",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isValidPropertyName from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn isValidPropertyName(name: []const u8) bool {\n    if (name.len == 0) return false;\n\n    if (std.mem.startsWith(u8, name, \"--\")) {\n        if (name.len == 2) return false;\n        for (name[2..]) |c| {\n            if (!std.ascii.isAlphanumeric(c) and c != '-' and c != '_') {\n                return false;\n            }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isValidPropertyName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to extractImportant from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn extractImportant(value: []const u8) struct { value: []const u8, is_important: bool }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "extractImportant",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to needsQuotes from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn needsQuotes(value: []const u8) bool {\n    if (value.len == 0) return true;\n    if (isAlreadyQuoted(value)) return false;\n\n    if (CSSKeywords.containsSpecialChar(value)) {\n        return true;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "needsQuotes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to escapeCSSValue from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn escapeCSSValue(arena: std.mem.Allocator, value: []const u8) ![]const u8 {\n    if (!needsQuotes(value)) {\n        return value;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "escapeCSSValue",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isKnownKeyword from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn isKnownKeyword(value: []const u8) bool {\n    return CSSKeywords.isKnownKeyword(value);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isKnownKeyword",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to containsSpecialChar from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn containsSpecialChar(value: []const u8) bool {\n    return CSSKeywords.containsSpecialChar(value);\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "containsSpecialChar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isKnownKeyword from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn isKnownKeyword(value: []const u8) bool {\n        if (value.len > MAX_KEYWORD_LEN) {\n            return false;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isKnownKeyword",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to containsSpecialChar from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn containsSpecialChar(value: []const u8) bool {\n        return std.mem.indexOfAny(u8, value, &SPECIAL_CHARS) != null;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "containsSpecialChar",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isValidUnit from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn isValidUnit(unit: []const u8) bool {\n        if (unit.len > MAX_UNIT_LEN) {\n            return false;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isValidUnit",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to startsWithFunction from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub fn startsWithFunction(value: []const u8) bool {\n        const pos = std.mem.indexOfScalar(u8, value, '(') orelse return false;\n        if (pos == 0) return false;\n\n        if (std.mem.indexOfScalarPos(u8, value, pos, ')') == null) {\n            return false;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "startsWithFunction",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isValidFunctionName from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn isValidFunctionName(name: []const u8) bool {\n        if (name.len == 0) return false;\n\n        const first = name[0];\n        if (!std.ascii.isAlphabetic(first) and first != '_' and first != '-') {\n            return false;\n        }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "isValidFunctionName",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lengthOfLongestValue from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "fn lengthOfLongestValue(values: []const []const u8) usize {\n    var max: usize = 0;\n    for (values) |v| {\n        max = @max(v.len, max);\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "function",
+      "name": "lengthOfLongestValue",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Property from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "const Property = struct {\n    value: []const u8,\n    priority: bool,\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "struct",
+      "name": "Property",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CSSKeywords from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "const CSSKeywords = struct {\n    const BORDER_STYLES = [_][]const u8{\n        \"none\", \"solid\", \"dotted\", \"dashed\", \"double\", \"groove\", \"ridge\", \"inset\", \"outset\",\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "struct",
+      "name": "CSSKeywords",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to empty from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "pub const empty: CSSStyleDeclaration = .{\n    .properties = .empty,\n};",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "const",
+      "name": "empty",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to priority from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleDeclaration.zig",
+    "response": "const priority: ?[]const u8 = if (decl.is_important) \"important\" else null;",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleDeclaration.zig",
+      "type": "const",
+      "name": "priority",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to constructor from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "pub fn constructor(_opts: ?CSSStyleSheetOpts) !CSSStyleSheet {\n    const opts = _opts orelse CSSStyleSheetOpts{}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "function",
+      "name": "constructor",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_ownerRule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "pub fn get_ownerRule(_: *CSSStyleSheet) ?*CSSImportRule {\n    return null;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "function",
+      "name": "get_ownerRule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_cssRules from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "pub fn get_cssRules(self: *CSSStyleSheet) *CSSRuleList {\n    return &self.css_rules;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "function",
+      "name": "get_cssRules",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _insertRule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "pub fn _insertRule(self: *CSSStyleSheet, rule: []const u8, _index: ?usize, page: *Page) !usize {\n    const index = _index orelse 0;\n    if (index > self.css_rules.list.items.len) {\n        return error.IndexSize;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "function",
+      "name": "_insertRule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _deleteRule from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "pub fn _deleteRule(self: *CSSStyleSheet, index: usize) !void {\n    if (index > self.css_rules.list.items.len) {\n        return error.IndexSize;\n    }",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "function",
+      "name": "_deleteRule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _replace from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "pub fn _replace(self: *CSSStyleSheet, text: []const u8, page: *Page) !js.Promise {\n    _ = self;\n    _ = text;\n    // TODO: clear self.css_rules\n    // parse text and re-populate self.css_rules\n\n    return page.js.resolvePromise({}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "function",
+      "name": "_replace",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to _replaceSync from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "pub fn _replaceSync(self: *CSSStyleSheet, text: []const u8) !void {\n    _ = self;\n    _ = text;\n    // TODO: clear self.css_rules\n    // parse text and re-populate self.css_rules\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "function",
+      "name": "_replaceSync",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CSSStyleSheetOpts from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/CSSStyleSheet.zig",
+    "response": "const CSSStyleSheetOpts = struct {\n    base_url: ?[]const u8 = null,\n    // TODO: Suupport media\n    disabled: bool = false,\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/CSSStyleSheet.zig",
+      "type": "struct",
+      "name": "CSSStyleSheetOpts",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_disabled from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/StyleSheet.zig",
+    "response": "pub fn get_disabled(self: *const StyleSheet) bool {\n    return self.disabled;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/StyleSheet.zig",
+      "type": "function",
+      "name": "get_disabled",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_href from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/StyleSheet.zig",
+    "response": "pub fn get_href(self: *const StyleSheet) []const u8 {\n    return self.href;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/StyleSheet.zig",
+      "type": "function",
+      "name": "get_href",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_ownerNode from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/StyleSheet.zig",
+    "response": "pub fn get_ownerNode(self: *const StyleSheet) ?*parser.Node {\n    return self.owner_node;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/StyleSheet.zig",
+      "type": "function",
+      "name": "get_ownerNode",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_parentStyleSheet from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/StyleSheet.zig",
+    "response": "pub fn get_parentStyleSheet(self: *const StyleSheet) ?*StyleSheet {\n    return self.parent_stylesheet;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/StyleSheet.zig",
+      "type": "function",
+      "name": "get_parentStyleSheet",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_title from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/StyleSheet.zig",
+    "response": "pub fn get_title(self: *const StyleSheet) []const u8 {\n    return self.title;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/StyleSheet.zig",
+      "type": "function",
+      "name": "get_title",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_type from lightpanda-io/browser",
+    "context": "Repository: lightpanda-io/browser (10112 ⭐)\nFile: src/browser/cssom/StyleSheet.zig",
+    "response": "pub fn get_type(self: *const StyleSheet) []const u8 {\n    return self.type;\n}",
+    "metadata": {
+      "repo": "lightpanda-io/browser",
+      "stars": 10112,
+      "file": "src/browser/cssom/StyleSheet.zig",
+      "type": "function",
+      "name": "get_type",
+      "difficulty": "easy"
+    }
+  }
+]

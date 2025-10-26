@@ -1,0 +1,9 @@
+{
+  "name": "zig-clap",
+  "fullName": "Hejsil/zig-clap",
+  "owner": "Hejsil",
+  "stars": 1343,
+  "description": "Command line argument parsing library",
+  "url": "https://github.com/Hejsil/zig-clap",
+  "defaultBranch": "master"
+}

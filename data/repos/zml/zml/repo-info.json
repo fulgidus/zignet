@@ -1,0 +1,9 @@
+{
+  "name": "zml",
+  "fullName": "zml/zml",
+  "owner": "zml",
+  "stars": 2827,
+  "description": "Any model. Any hardware. Zero compromise. Built with @ziglang / @openxla / MLIR / @bazelbuild",
+  "url": "https://github.com/zml/zml",
+  "defaultBranch": "master"
+}

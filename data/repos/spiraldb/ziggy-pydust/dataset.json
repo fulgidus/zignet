@@ -1,0 +1,2446 @@
+[
+  {
+    "instruction": "Write a Zig function similar to build from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPythonIncludePath from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: build.zig",
+    "response": "fn getPythonIncludePath(\n    python_exe: []const u8,\n    allocator: std.mem.Allocator,\n) ![]const u8 {\n    const includeResult = try runProcess(.{\n        .allocator = allocator,\n        .argv = &.{ python_exe, \"-c\", \"import sysconfig; print(sysconfig.get_path('include'), end='')\" }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getPythonIncludePath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPythonLibraryPath from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: build.zig",
+    "response": "fn getPythonLibraryPath(python_exe: []const u8, allocator: std.mem.Allocator) ![]const u8 {\n    const includeResult = try runProcess(.{\n        .allocator = allocator,\n        .argv = &.{ python_exe, \"-c\", \"import sysconfig; print(sysconfig.get_config_var('LIBDIR'), end='')\" }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getPythonLibraryPath",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getPythonLDVersion from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: build.zig",
+    "response": "fn getPythonLDVersion(python_exe: []const u8, allocator: std.mem.Allocator) ![]const u8 {\n    const includeResult = try runProcess(.{\n        .allocator = allocator,\n        .argv = &.{ python_exe, \"-c\", \"import sysconfig; print(sysconfig.get_config_var('LDVERSION'), end='')\" }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getPythonLDVersion",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zigstruct from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/args_types.zig",
+    "response": "pub fn zigstruct(args: struct { x: ArgStruct }) bool {\n    return args.x.foo == 1234 and args.x.bar;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/args_types.zig",
+      "type": "function",
+      "name": "zigstruct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to ArgStruct from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/args_types.zig",
+    "response": "const ArgStruct = struct {\n    foo: i32,\n    bar: bool,\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/args_types.zig",
+      "type": "struct",
+      "name": "ArgStruct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/buffers.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { elem: i64, length: u32 }) !void {\n        const values = try py.allocator.alloc(i64, args.length);\n        @memset(values, args.elem);\n\n        const shape = try py.allocator.alloc(isize, 1);\n        shape[0] = @intCast(args.length);\n\n        self.* = .{ .values = values, .shape = shape }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/buffers.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __del__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/buffers.zig",
+    "response": "pub fn __del__(self: *Self) void {\n        py.allocator.free(self.values);\n        py.allocator.free(self.shape);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/buffers.zig",
+      "type": "function",
+      "name": "__del__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __buffer__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/buffers.zig",
+    "response": "pub fn __buffer__(self: *const Self, view: *py.PyBuffer, flags: c_int) !void {\n        // For more details on request types, see https://docs.python.org/3/c-api/buffer.html#buffer-request-types\n        if (flags & py.PyBuffer.Flags.WRITABLE != 0) {\n            return py.BufferError(root).raise(\"request for writable buffer is rejected\");\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/buffers.zig",
+      "type": "function",
+      "name": "__buffer__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sum from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/buffers.zig",
+    "response": "pub fn sum(args: struct { buf: py.PyObject }) !i64 {\n    const view = try args.buf.getBuffer(root, py.PyBuffer.Flags.ND);\n    defer view.release();\n\n    var bufferSum: i64 = 0;\n    for (view.asSlice(i64)) |value| bufferSum += value;\n    return bufferSum;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/buffers.zig",
+      "type": "function",
+      "name": "sum",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *@This(), args: struct { count: u32 }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to species from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn species(self: *Self) py.PyString {\n        return self.species_;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "species",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { breed: py.PyString }) !void {\n        args.breed.obj.incref();\n        self.* = .{\n            .animal = .{ .species_ = try py.PyString.create(\"dog\") }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to breed from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn breed(self: *Self) py.PyString {\n        return self.breed_;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "breed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { name: py.PyString }) void {\n        args.name.obj.incref();\n        self.* = .{ .name = args.name, .email = .{}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn get(prop: *const Prop) ?py.PyString {\n            if (prop.e) |e| e.obj.incref();\n            return prop.e;\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to set from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn set(prop: *Prop, value: py.PyString) !void {\n            const self: *Self = @fieldParentPtr(\"email\", prop);\n            if (std.mem.indexOfScalar(u8, try value.asSlice(), '@') == null) {\n                return py.ValueError(root).raiseFmt(\"Invalid email address for {s}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "set",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn get(self: *const Self) !py.PyString {\n            return py.PyString.createFmt(\"Hello, {s}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "get",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __del__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __del__(self: *Self) void {\n        self.name.obj.decref();\n        if (self.email.e) |e| e.obj.decref();\n        self.email.e = null;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__del__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *Self) void {\n        _ = self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to increment from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn increment(self: *Self) void {\n        self.count.value += 1;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "increment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to add from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn add(args: struct { x: i32, y: i32 }) i32 {\n        return args.x + args.y;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "add",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { x: i32 }) void {\n        self.number = args.x;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to get_number from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn get_number(self: *const Self) i32 {\n    //         return self.number;\n    //     }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "get_number",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to reexposed from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn reexposed(self: *const Self) i32 {\n        // return self.get_number();\n        return self.number;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "reexposed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { x: u32 }) void {\n        self.number = args.x;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __hash__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __hash__(self: *const Self) usize {\n        var hasher = std.hash.Wyhash.init(0);\n        std.hash.autoHashStrat(&hasher, self, .DeepRecursive);\n        return hasher.final();\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__hash__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *Self) void {\n        _ = self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __call__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __call__(self: *const Self, args: struct { i: u32 }) u32 {\n        _ = self;\n        return args.i;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__call__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __init__(self: *Self) void {\n        _ = self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __getattr__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "pub fn __getattr__(self: *const Self, attr: py.PyString) !py.PyObject {\n        const name = try attr.asSlice();\n        if (std.mem.eql(u8, name, \"number\")) {\n            return py.create(root, 42);\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "function",
+      "name": "__getattr__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to self from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/classes.zig",
+    "response": "const self: *Self = @fieldParentPtr(\"email\", prop);",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/classes.zig",
+      "type": "const",
+      "name": "self",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to line_number from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/code.zig",
+    "response": "pub fn line_number() u32 {\n    return py.PyFrame(root).get().?.lineNumber();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/code.zig",
+      "type": "function",
+      "name": "line_number",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to function_name from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/code.zig",
+    "response": "pub fn function_name() !py.PyString {\n    return py.PyFrame(root).get().?.code().name();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/code.zig",
+      "type": "function",
+      "name": "function_name",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to file_name from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/code.zig",
+    "response": "pub fn file_name() !py.PyString {\n    return py.PyFrame(root).get().?.code().fileName();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/code.zig",
+      "type": "function",
+      "name": "file_name",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to first_line_number from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/code.zig",
+    "response": "pub fn first_line_number() !u32 {\n    return py.PyFrame(root).get().?.code().firstLineNumber();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/code.zig",
+      "type": "function",
+      "name": "first_line_number",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to raise_value_error from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/exceptions.zig",
+    "response": "pub fn raise_value_error(args: struct { message: py.PyString }) !void {\n    return py.ValueError(root).raise(try args.message.asSlice());\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/exceptions.zig",
+      "type": "function",
+      "name": "raise_value_error",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to raise_custom_error from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/exceptions.zig",
+    "response": "pub fn raise_custom_error() !void {\n    return CustomError.Oops;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/exceptions.zig",
+      "type": "function",
+      "name": "raise_custom_error",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to double from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/functions.zig",
+    "response": "pub fn double(args: struct { x: i64 }) i64 {\n    return args.x * 2;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/functions.zig",
+      "type": "function",
+      "name": "double",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to with_kwargs from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/functions.zig",
+    "response": "pub fn with_kwargs(args: struct { x: f64, y: f64 = 42.42 }) f64 {\n    return if (args.x < args.y) args.x * 2 else args.y;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/functions.zig",
+      "type": "function",
+      "name": "with_kwargs",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to variadic from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/functions.zig",
+    "response": "pub fn variadic(args: struct { hello: py.PyString, args: py.Args(), kwargs: py.Kwargs() }) !py.PyString {\n    return py.PyString.createFmt(\n        \"Hello {s}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/functions.zig",
+      "type": "function",
+      "name": "variadic",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sleep from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/gil.zig",
+    "response": "pub fn sleep(args: struct { millis: u64 }) void {\n    std.Thread.sleep(args.millis * 1_000_000);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/gil.zig",
+      "type": "function",
+      "name": "sleep",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to sleep_release from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/gil.zig",
+    "response": "pub fn sleep_release(args: struct { millis: u64 }) void {\n    const nogil = py.nogil();\n    defer nogil.acquire();\n    std.Thread.sleep(args.millis * 1_000_000);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/gil.zig",
+      "type": "function",
+      "name": "sleep_release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hello from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/hello.zig",
+    "response": "pub fn hello() !py.PyString {\n    return try py.PyString.create(\"Hello!\");\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/hello.zig",
+      "type": "function",
+      "name": "hello",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/iterators.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { lower: i64, upper: i64, step: i64 }) void {\n        self.* = .{ .lower = args.lower, .upper = args.upper, .step = args.step }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/iterators.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __iter__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/iterators.zig",
+    "response": "pub fn __iter__(self: *const Self) !*RangeIterator.definition {\n        return try py.init(root, RangeIterator.definition, .{ .next = self.lower, .stop = self.upper, .step = self.step }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/iterators.zig",
+      "type": "function",
+      "name": "__iter__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __next__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/iterators.zig",
+    "response": "pub fn __next__(self: *Self) ?i64 {\n        if (self.next >= self.stop) {\n            return null;\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/iterators.zig",
+      "type": "function",
+      "name": "__next__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to append from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/memory.zig",
+    "response": "pub fn append(args: struct { left: py.PyString }) !py.PyString {\n    // Since we create right, we must also decref it.\n    const right = try py.PyString.create(\"right\");\n    defer right.obj.decref();\n\n    // Left is given to us as a borrowed reference from the caller.\n    // Since append steals the left-hand-side, we must incref first.\n    args.left.obj.incref();\n    return args.left.append(right);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/memory.zig",
+      "type": "function",
+      "name": "append",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to concat from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/memory.zig",
+    "response": "pub fn concat(args: struct { left: py.PyString }) !py.PyString {\n    return args.left.concatSlice(\"right\");\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/memory.zig",
+      "type": "function",
+      "name": "concat",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/modules.zig",
+    "response": "pub fn __init__(self: *Self) !void { // (3)!\n    self.* = .{ .name = try py.PyString.create(\"Ziggy\") }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/modules.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __del__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/modules.zig",
+    "response": "pub fn __del__(self: Self) void {\n    self.name.obj.decref();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/modules.zig",
+      "type": "function",
+      "name": "__del__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to increment from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/modules.zig",
+    "response": "pub fn increment(self: *Self) void { // (4)!\n    self.count_ += 1;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/modules.zig",
+      "type": "function",
+      "name": "increment",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to count from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/modules.zig",
+    "response": "pub fn count(self: *const Self) u32 {\n    return self.count_;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/modules.zig",
+      "type": "function",
+      "name": "count",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to whoami from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/modules.zig",
+    "response": "pub fn whoami(self: *const Self) py.PyString {\n    py.incref(root, self.name);\n    return self.name;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/modules.zig",
+      "type": "function",
+      "name": "whoami",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hello from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/modules.zig",
+    "response": "pub fn hello(\n    self: *const Self,\n    args: struct { name: py.PyString }, // (5)!\n) !py.PyString {\n    return py.PyString.createFmt(\n        \"Hello, {s}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/modules.zig",
+      "type": "function",
+      "name": "hello",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to world from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/modules.zig",
+    "response": "pub fn world() !py.PyString {\n        return try py.PyString.create(\"Hello, World!\");\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/modules.zig",
+      "type": "function",
+      "name": "world",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { num: u64 }) !void {\n        self.num_ = args.num;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to num from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn num(self: *const Self) u64 {\n        return self.num_;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __add__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __add__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ + other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__add__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __iadd__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __iadd__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ += other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__iadd__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __sub__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __sub__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ - other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__sub__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __isub__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __isub__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ -= other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__isub__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __mul__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __mul__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ * other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__mul__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __imul__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __imul__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ *= other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__imul__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __mod__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __mod__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = try std.math.mod(u64, self.num_, other.num_) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__mod__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __imod__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __imod__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = try std.math.mod(u64, self.num_, other.num_);\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__imod__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __divmod__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __divmod__(self: *const Self, other: *const Self) !py.PyTuple(root) {\n        return py.PyTuple(root).create(.{ self.num_ / other.num_, std.math.mod(u64, self.num_, other.num_) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__divmod__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __pow__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __pow__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = std.math.pow(u64, self.num_, other.num_) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__pow__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __ipow__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __ipow__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = std.math.pow(u64, self.num_, other.num_);\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__ipow__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __lshift__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __lshift__(self: *const Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        return py.init(root, Self, .{ .num_ = self.num_ << @as(u6, @intCast(other.num_)) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__lshift__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __ilshift__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __ilshift__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = self.num_ << @as(u6, @intCast(other.num_));\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__ilshift__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __rshift__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __rshift__(self: *const Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        return py.init(root, Self, .{ .num_ = self.num_ >> @as(u6, @intCast(other.num_)) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__rshift__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __irshift__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __irshift__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = self.num_ >> @as(u6, @intCast(other.num_));\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__irshift__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __and__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __and__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ & other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__and__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __iand__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __iand__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = self.num_ & other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__iand__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __xor__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __xor__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ ^ other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__xor__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __ixor__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __ixor__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = self.num_ ^ other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__ixor__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __or__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __or__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ | other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__or__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __ior__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __ior__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = self.num_ | other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__ior__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __truediv__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __truediv__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ / other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__truediv__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __itruediv__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __itruediv__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = self.num_ / other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__itruediv__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __floordiv__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __floordiv__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ / other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__floordiv__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __ifloordiv__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __ifloordiv__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ = self.num_ / other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__ifloordiv__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __matmul__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __matmul__(self: *const Self, other: *const Self) !*Self {\n        return py.init(root, Self, .{ .num_ = self.num_ * other.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__matmul__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __imatmul__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __imatmul__(self: *Self, other: *const Self) !*Self {\n        py.incref(root, self);\n        self.num_ *= other.num_;\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__imatmul__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { num: i64 }) !void {\n        self.num_ = args.num;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to num from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn num(self: *const Self) i64 {\n        return self.num_;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __neg__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __neg__(self: *Self) !py.PyLong {\n        return py.PyLong.create(-self.num_);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__neg__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __pos__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __pos__(self: *Self) !*Self {\n        py.incref(root, self);\n        return self;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__pos__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __abs__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __abs__(self: *Self) !*Self {\n        return py.init(root, Self, .{ .num_ = @as(i64, @intCast(@abs(self.num_))) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__abs__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __invert__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __invert__(self: *Self) !*Self {\n        return py.init(root, Self, .{ .num_ = ~self.num_ }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__invert__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __int__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __int__(self: *Self) !py.PyLong {\n        return py.PyLong.create(self.num_);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__int__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __float__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __float__(self: *Self) !py.PyFloat {\n        return py.PyFloat.create(@as(f64, @floatFromInt(self.num_)));\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__float__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __index__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __index__(self: *Self) !py.PyLong {\n        return py.PyLong.create(self.num_);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__index__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __bool__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __bool__(self: *Self) !bool {\n        return self.num_ == 1;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__bool__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { num: u64 }) void {\n        self.num_ = args.num;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to num from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn num(self: *const Self) u64 {\n        return self.num_;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "num",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __truediv__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __truediv__(self: *const Self, other: py.PyObject) !py.PyObject {\n        const selfCls = try py.self(root, Self);\n        defer selfCls.obj.decref();\n\n        if (try py.PyFloat.from.check(other)) {\n            const numF: f64 = @floatFromInt(self.num_);\n            return py.create(root, numF / try py.as(root, f64, other));\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__truediv__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { num: u64 }) void {\n        self.num = args.num;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __richcompare__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __richcompare__(self: *const Self, other: *const Self, op: py.CompareOp) bool {\n        return switch (op) {\n            .LT => self.num < other.num,\n            .LE => self.num <= other.num,\n            .EQ => self.num == other.num,\n            .NE => self.num != other.num,\n            .GT => self.num > other.num,\n            .GE => self.num >= other.num,\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__richcompare__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { num: u64 }) void {\n        self.num = args.num;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __eq__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __eq__(self: *const Self, other: *const Self) bool {\n        return self.num == other.num;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__eq__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __init__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __init__(self: *Self, args: struct { name: py.PyString }) void {\n        args.name.obj.incref();\n        self.name = args.name;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__init__",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __lt__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __lt__(self: *const Self, other: *const Self) !bool {\n        const le = try self.__le__(other);\n        if (le) {\n            const selfName = try self.name.asSlice();\n            const otherName = try other.name.asSlice();\n\n            if (std.mem.eql(u8, selfName, otherName)) {\n                return false;\n            }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__lt__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to __le__ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "pub fn __le__(self: *const Self, other: *const Self) !bool {\n        const selfName = try self.name.asSlice();\n        const otherName = try other.name.asSlice();\n        if (selfName.len > otherName.len) {\n            return false;\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "function",
+      "name": "__le__",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to numF from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "const numF: f64 = @floatFromInt(self.num_);",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "const",
+      "name": "numF",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to otherO from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/operators.zig",
+    "response": "const otherO: *Self = try py.as(root, *Self, other);",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/operators.zig",
+      "type": "const",
+      "name": "otherO",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pyobject from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn pyobject() !py.PyObject {\n    return (try py.PyString.create(\"hello\")).obj;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "pyobject",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to pystring from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn pystring() !py.PyString {\n    return py.PyString.create(\"hello world\");\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "pystring",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zigu128 from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn zigu128() u128 {\n//     return 9223372036854775809;\n// }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "zigu128",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zigi128 from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn zigi128() i128 {\n//     return -9223372036854775809;\n// }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "zigi128",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zigf32 from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn zigf32() f32 {\n    return 2.71 * std.math.pow(f32, 10, 38);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "zigf32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zigf64 from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn zigf64() f64 {\n    return 2.71 * std.math.pow(f64, 10, 39);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "zigf64",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zigtuple from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn zigtuple() !TupleResult {\n    return .{ py.object(root, try py.PyString.create(\"hello\")), 128 }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "zigtuple",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to zigstruct from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "pub fn zigstruct() StructResult {\n    return .{ .foo = 1234, .bar = true }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "function",
+      "name": "zigstruct",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to TupleResult from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "const TupleResult = struct { py.PyObject, u64 }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "struct",
+      "name": "TupleResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to StructResult from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: example/result_types.zig",
+    "response": "const StructResult = struct { foo: u64, bar: bool }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "example/result_types.zig",
+      "type": "struct",
+      "name": "StructResult",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Attribute from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/attributes.zig",
+    "response": "pub fn Attribute(comptime root: type) type {\n    return struct {\n        name: [:0]const u8,\n        ctor: fn (module: py.PyModule(root)) py.PyError!py.PyObject,\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/attributes.zig",
+      "type": "function",
+      "name": "Attribute",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to Attributes from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/attributes.zig",
+    "response": "pub fn Attributes(comptime root: type, comptime definition: type) type {\n    return struct {\n        const attr_count = blk: {\n            var cnt = 0;\n            for (@typeInfo(definition).@\"struct\".decls) |decl| {\n                const value = @field(definition, decl.name);\n\n                if (State.findDefinition(root, value)) |def| {\n                    if (def.type == .class) {\n                        cnt += 1;\n                    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/attributes.zig",
+      "type": "function",
+      "name": "Attributes",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/attributes.zig",
+    "response": "pub fn init(module: py.PyModule(root)) !py.PyObject {\n                                const typedef = Type(root, decl.name ++ \"\", def.definition);\n                                return try typedef.init(module);\n                            }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/attributes.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Closure from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/attributes.zig",
+    "response": "const Closure = struct {\n                            pub fn init(module: py.PyModule(root)) !py.PyObject {\n                                const typedef = Type(root, decl.name ++ \"\", def.definition);\n                                return try typedef.init(module);\n                            }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/attributes.zig",
+      "type": "struct",
+      "name": "Closure",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to attributes from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/attributes.zig",
+    "response": "pub const attributes: [attr_count]Attribute(root) = blk: {\n            var attrs: [attr_count]Attribute(root) = undefined;",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/attributes.zig",
+      "type": "const",
+      "name": "attributes",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to NotImplemented from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn NotImplemented() py.PyObject {\n    // It's important that we incref the Py_NotImplemented singleton\n    const notImplemented = py.PyObject{ .py = if (ffi.PY_VERSION_HEX < 0x030D0000)\n        ffi.Py_NotImplemented()\n    else\n        ffi.Py_GetConstantBorrowed(ffi.Py_CONSTANT_NOT_IMPLEMENTED) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "NotImplemented",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to None from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn None() py.PyObject {\n    // It's important that we incref the Py_None singleton\n    const none = py.PyObject{ .py = if (ffi.PY_VERSION_HEX < 0x030D0000)\n        ffi.Py_None()\n    else\n        ffi.Py_GetConstantBorrowed(ffi.Py_CONSTANT_NONE) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "None",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to False from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "fn False() py.PyBool {\n    return py.PyBool.false_();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "False",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to True from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "fn True() py.PyBool {\n    return py.PyBool.true_();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "True",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to decref from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "fn decref(comptime root: type, value: anytype) void {\n    py.object(root, value).decref();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "decref",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to incref from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "fn incref(comptime root: type, value: anytype) void {\n    py.object(root, value).incref();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "incref",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to callable from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn callable(comptime root: type, object: anytype) bool {\n    const obj = try py.object(root, object);\n    return ffi.PyCallable_Check(obj.py) == 1;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "callable",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call0 from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn call0(comptime root: type, comptime T: type, object: anytype) !T {\n    const result = ffi.PyObject_CallNoArgs(py.object(root, object).py) orelse return PyError.PyRaised;\n    return try py.as(root, T, result);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "call0",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to call from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn call(comptime root: type, comptime ReturnType: type, object: anytype, args: anytype, kwargs: anytype) !ReturnType {\n    const pyobj = py.object(root, object);\n\n    var argsPy = try if (@typeInfo(@TypeOf(args)) == .optional and args == null)\n        py.PyTuple(root).new(0)\n    else\n        py.PyTuple(root).from.checked(root, try py.create(root, args));\n\n    defer argsPy.obj.decref();\n\n    var kwargsPy: ?py.PyDict(root) = null;\n    defer {\n        if (kwargsPy) |kwpy| {\n            kwpy.obj.decref();\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "call",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to dict from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn dict(comptime root: type, object: anytype) !py.PyDict(root) {\n    const Dict: py.PyObject = .{ .py = @alignCast(@ptrCast(&ffi.PyDict_Type)) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "dict",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to release from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn release(self_: Self) void {\n        ffi.PyGILState_Release(self_.state);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "release",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gil from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn gil() PyGIL {\n    return .{ .state = ffi.PyGILState_Ensure() }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "gil",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to acquire from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn acquire(self_: Self) void {\n        ffi.PyEval_RestoreThread(self_.state);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "acquire",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to nogil from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn nogil() PyNoGIL {\n    // TODO(ngates): can this fail?\n    return .{ .state = ffi.PyEval_SaveThread() orelse unreachable }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "nogil",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to is_none from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn is_none(comptime root: type, object: anytype) bool {\n    const obj = py.object(root, object);\n    return ffi.Py_IsNone(obj.py) == 1;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "is_none",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to import from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn import(comptime root: type, module_name: [:0]const u8) !py.PyObject {\n    return (try py.PyModule(root).import(module_name)).obj;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "import",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to alloc from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn alloc(comptime root: type, comptime Cls: type) PyError!*Cls {\n    const pytype = try self(root, Cls);\n    defer pytype.obj.decref();\n\n    // Alloc the class\n    // NOTE(ngates): we currently don't allow users to override tp_alloc, therefore we can shortcut\n    // using ffi.PyType_GetSlot(tp_alloc) since we know it will always return ffi.PyType_GenericAlloc\n    const pyobj: *pytypes.PyTypeStruct(Cls) = @alignCast(@ptrCast(ffi.PyType_GenericAlloc(@ptrCast(pytype.obj.py), 0) orelse return PyError.PyRaised));\n    return &pyobj.state;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "alloc",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to init from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "fn init(comptime root: type, comptime Cls: type, state: Cls) PyError!*Cls {\n    const cls: *Cls = try alloc(root, Cls);\n    cls.* = state;\n    return cls;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "init",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to isinstance from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn isinstance(comptime root: type, object: anytype, cls: anytype) !bool {\n    const pyobj = py.object(root, object);\n    const pycls = py.object(root, cls);\n\n    const result = ffi.PyObject_IsInstance(pyobj.py, pycls.py);\n    if (result < 0) return PyError.PyRaised;\n    return result == 1;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "isinstance",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to iter from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn iter(comptime root: type, object: anytype) !py.PyIter(root) {\n    const iterator = ffi.PyObject_GetIter(py.object(root, object).py) orelse return PyError.PyRaised;\n    return py.PyIter(root).from.unchecked(.{ .py = iterator }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "iter",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to len from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn len(comptime root: type, object: anytype) !usize {\n    const length = ffi.PyObject_Length(py.object(root, object).py);\n    if (length < 0) return PyError.PyRaised;\n    return @intCast(length);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "len",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to moduleState from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn moduleState(comptime root: type, comptime Module: type) !*Module {\n    if (State.getDefinition(root, Module).type != .module) {\n        @compileError(\"Not a module definition: \" ++ Module);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "moduleState",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to next from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn next(comptime root: type, comptime T: type, iterator: anytype) !?T {\n    const pyiter = try py.PyIter(root).from.checked(root, iterator);\n    return try pyiter.next(T);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "next",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to not_ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn not_(comptime root: type, object: anytype) !bool {\n    const result = ffi.PyObject_Not(py.object(root, object).py);\n    if (result < 0) return PyError.PyRaised;\n    return result == 1;\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "not_",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to refcnt from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn refcnt(comptime root: type, object: anytype) isize {\n    const pyobj = py.object(root, object);\n    return pyobj.refcnt();\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "refcnt",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to str from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn str(comptime root: type, object: anytype) !py.PyString {\n    const pyobj = py.object(root, object);\n    return py.PyString.from.unchecked(.{ .py = ffi.PyObject_Str(pyobj.py) orelse return PyError.PyRaised }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "str",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to repr from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn repr(comptime root: type, object: anytype) !py.PyString {\n    const pyobj = py.object(root, object);\n    return py.PyString.from.unchecked(.{ .py = ffi.PyObject_Repr(pyobj.py) orelse return PyError.PyRaised }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "repr",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to self from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn self(comptime root: type, comptime Class: type) !py.PyType {\n    if (State.getDefinition(root, Class).type != .class) {\n        @compileError(\"Not a class definition: \" ++ Class);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "self",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to super from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn super(comptime root: type, comptime Super: type, selfInstance: anytype) !py.PyObject {\n    const mod = State.getContaining(root, Super, .module);\n\n    const imported = try import(root, State.getIdentifier(root, mod).name());\n    defer imported.decref();\n\n    const superPyType = try imported.get(State.getIdentifier(root, Super).name());\n    defer superPyType.decref();\n\n    const superBuiltin: py.PyObject = .{ .py = @alignCast(@ptrCast(&ffi.PySuper_Type)) }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "super",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to tuple from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn tuple(comptime root: type, object: anytype) !py.PyTuple(root) {\n    const pytuple = ffi.PySequence_Tuple(py.object(root, object).py) orelse return PyError.PyRaised;\n    return py.PyTuple(root).from.unchecked(.{ .py = pytuple }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "tuple",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to type_ from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn type_(comptime root: type, object: anytype) py.PyType {\n    return .{ .obj = .{ .py = @as(\n        ?*ffi.PyObject,\n        @ptrCast(@alignCast(py.object(root, object).py.ob_type)),\n    ).? }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "type_",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to eq from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn eq(comptime root: type, a: anytype, b: anytype) !bool {\n    return compare(py.object(root, a), py.object(root, b), py.CompareOp.EQ);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "eq",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ne from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn ne(comptime root: type, a: anytype, b: anytype) !bool {\n    return compare(py.object(root, a), py.object(root, b), py.CompareOp.NE);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "ne",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lt from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn lt(comptime root: type, a: anytype, b: anytype) !bool {\n    return compare(py.object(root, a), py.object(root, b), py.CompareOp.LT);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "lt",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to le from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn le(comptime root: type, a: anytype, b: anytype) !bool {\n    return compare(py.object(root, a), py.object(root, b), py.CompareOp.LE);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "le",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to gt from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn gt(comptime root: type, a: anytype, b: anytype) !bool {\n    return compare(py.object(root, a), py.object(root, b), py.CompareOp.GT);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "gt",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to ge from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub fn ge(comptime root: type, a: anytype, b: anytype) !bool {\n    return compare(py.object(root, a), py.object(root, b), py.CompareOp.GE);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "ge",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to compare from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "fn compare(a: py.PyObject, b: py.PyObject, op: py.CompareOp) !bool {\n    const res = ffi.PyObject_RichCompareBool(a.py, b.py, @intFromEnum(op));\n    if (res == -1) {\n        return PyError.PyRaised;\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "compare",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to lift from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "fn lift(comptime root: type, comptime PydustStruct: type) !py.PyObject {\n    // Grab the qualified name, importing the root module first.\n    comptime var qualName = State.getIdentifier(root, PydustStruct).qualifiedName;\n\n    var mod = try import(root, qualName[0]);\n\n    // Recursively resolve submodules / nested classes\n    if (comptime qualName.len > 1) {\n        inline for (qualName[1 .. qualName.len - 1]) |part| {\n            const prev_mod = mod;\n            mod = try mod.get(part);\n            prev_mod.decref();\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "function",
+      "name": "lift",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to PyGIL from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub const PyGIL = struct {\n    const Self = @This();\n\n    state: ffi.PyGILState_STATE,\n\n    pub fn release(self_: Self) void {\n        ffi.PyGILState_Release(self_.state);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "struct",
+      "name": "PyGIL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to PyNoGIL from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "pub const PyNoGIL = struct {\n    const Self = @This();\n\n    state: *ffi.PyThreadState,\n\n    pub fn acquire(self_: Self) void {\n        ffi.PyEval_RestoreThread(self_.state);\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "struct",
+      "name": "PyNoGIL",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to Dict from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "const Dict: py.PyObject = .{ .py = @alignCast(@ptrCast(&ffi.PyDict_Type)) };",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "const",
+      "name": "Dict",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to pyobj from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "const pyobj: *pytypes.PyTypeStruct(Cls) = @alignCast(@ptrCast(ffi.PyType_GenericAlloc(@ptrCast(pytype.obj.py), 0) orelse return PyError.PyRaised));",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "const",
+      "name": "pyobj",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to cls from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "const cls: *Cls = try alloc(root, Cls);",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "const",
+      "name": "cls",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to superBuiltin from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/builtins.zig",
+    "response": "const superBuiltin: py.PyObject = .{ .py = @alignCast(@ptrCast(&ffi.PySuper_Type)) };",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/builtins.zig",
+      "type": "const",
+      "name": "superBuiltin",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to object from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/conversions.zig",
+    "response": "fn object(comptime root: type, value: anytype) py.PyObject {\n    return tramp.Trampoline(root, @TypeOf(value)).asObject(value);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/conversions.zig",
+      "type": "function",
+      "name": "object",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to createOwned from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/conversions.zig",
+    "response": "fn createOwned(comptime root: type, value: anytype) py.PyError!py.PyObject {\n    const trampoline = tramp.Trampoline(root, @TypeOf(value));\n    defer trampoline.decref_objectlike(value);\n    return trampoline.wrap(value);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/conversions.zig",
+      "type": "function",
+      "name": "createOwned",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to create from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/conversions.zig",
+    "response": "fn create(comptime root: type, value: anytype) py.PyError!py.PyObject {\n    return tramp.Trampoline(root, @TypeOf(value)).wrap(value);\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/conversions.zig",
+      "type": "function",
+      "name": "create",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to as from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/conversions.zig",
+    "response": "fn as(comptime root: type, comptime T: type, obj: anytype) py.PyError!T {\n    return tramp.Trampoline(root, T).unwrap(object(root, obj));\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/conversions.zig",
+      "type": "function",
+      "name": "as",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to unchecked from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/conversions.zig",
+    "response": "fn unchecked(comptime root: type, comptime T: type, obj: py.PyObject) T {\n    const Definition = @typeInfo(T).pointer.child;\n    const definition = State.getDefinition(root, Definition);\n    if (definition.type != .class) {\n        @compileError(\"Can only perform unchecked cast into a PyDust class type. Found \" ++ @typeName(Definition));\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/conversions.zig",
+      "type": "function",
+      "name": "unchecked",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to instance from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/conversions.zig",
+    "response": "const instance: *pytypes.PyTypeStruct(Definition) = @ptrCast(@alignCast(obj.py));",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/conversions.zig",
+      "type": "const",
+      "name": "instance",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to name from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub fn name(self: Identifier) [:0]const u8 {\n        const qualifiedName = self.qualifiedName;\n        return qualifiedName[qualifiedName.len - 1];\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "name",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to countDefinitions from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "fn countDefinitions(comptime definition: type) usize {\n    @setEvalBranchQuota(10000);\n    comptime var count = 0;\n    switch (@typeInfo(definition)) {\n        .@\"struct\" => |info| {\n            inline for (info.fields) |f| {\n                count += countDefinitions(f.type);\n            }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "countDefinitions",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getIdentifiers from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "fn getIdentifiers(\n    comptime definition: type,\n    comptime qualifiedName: []const [:0]const u8,\n    comptime parent: type,\n) [countDefinitions(definition)]Identifier {\n    comptime var identifiers: [countDefinitions(definition)]Identifier = undefined;\n    comptime var count = 0;\n    switch (@typeInfo(definition)) {\n        .@\"struct\" => |info| {\n            // Iterate over the fields of the struct\n            for (info.fields) |f| {\n                for (getIdentifiers(f.type, qualifiedName ++ .{f.name}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "getIdentifiers",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getAllIdentifiers from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "fn getAllIdentifiers(comptime definition: type) [countDefinitions(definition) + 1]Identifier {\n    const qualifiedName = &.{@import(\"pyconf\").module_name}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "getAllIdentifiers",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to countFieldsWithType from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub fn countFieldsWithType(\n        comptime root: type,\n        comptime definition: type,\n        deftype: DefinitionType,\n    ) usize {\n        var cnt = 0;\n        for (std.meta.fields(definition)) |field| {\n            if (hasType(root, field.type, deftype)) {\n                cnt += 1;\n            }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "countFieldsWithType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to hasType from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub fn hasType(\n        comptime root: type,\n        comptime definition: type,\n        deftype: DefinitionType,\n    ) bool {\n        if (findDefinition(root, definition)) |def| {\n            return def.type == deftype;\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "hasType",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getDefinition from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub fn getDefinition(\n        comptime root: type,\n        comptime definition: type,\n    ) Definition {\n        return findDefinition(root, definition) orelse @compileError(\"Unable to find definition \" ++ @typeName(definition));\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "getDefinition",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findDefinition from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "fn findDefinition(\n        comptime root: type,\n        comptime definition: anytype,\n    ) ?Definition {\n        return switch (@TypeOf(definition)) {\n            Definition => definition,\n            type => switch (@typeInfo(definition)) {\n                .@\"struct\" => blk: {\n                    for (getAllIdentifiers(root)) |id| {\n                        if (id.definition.definition == definition)\n                            break :blk id.definition;\n                    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "findDefinition",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getIdentifier from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub fn getIdentifier(\n        comptime root: type,\n        comptime definition: type,\n    ) Identifier {\n        return findIdentifier(root, definition) orelse @compileError(\"Definition not yet identified \" ++ @typeName(definition));\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "getIdentifier",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findIdentifier from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "fn findIdentifier(\n        comptime root: type,\n        comptime definition: type,\n    ) ?Identifier {\n        if (@typeInfo(definition) != .@\"struct\") {\n            return null;\n        }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "findIdentifier",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getContaining from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub fn getContaining(\n        comptime root: type,\n        comptime definition: type,\n        comptime deftype: DefinitionType,\n    ) type {\n        return findContaining(root, definition, deftype) orelse @compileError(\"Cannot find containing object\");\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "getContaining",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to findContaining from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "fn findContaining(\n        comptime root: type,\n        comptime definition: type,\n        comptime deftype: DefinitionType,\n    ) ?type {\n        const identifiers = getAllIdentifiers(root);\n        var idx = identifiers.len;\n        var foundOriginal = false;\n        while (idx > 0) : (idx -= 1) {\n            const def = identifiers[idx - 1].definition;\n\n            if (def.definition == definition) {\n                // Only once we found the original definition, should we check for deftype.\n                foundOriginal = true;\n                continue;\n            }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "function",
+      "name": "findContaining",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Definition from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub const Definition = struct {\n    definition: type,\n    type: DefinitionType,\n}",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "struct",
+      "name": "Definition",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Identifier from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "const Identifier = struct {\n    qualifiedName: []const [:0]const u8,\n    definition: Definition,\n    parent: type,\n\n    pub fn name(self: Identifier) [:0]const u8 {\n        const qualifiedName = self.qualifiedName;\n        return qualifiedName[qualifiedName.len - 1];\n    }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "struct",
+      "name": "Identifier",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to State from spiraldb/ziggy-pydust",
+    "context": "Repository: spiraldb/ziggy-pydust (673 ⭐)\nFile: pydust/src/discovery.zig",
+    "response": "pub const State = struct {\n    pub fn countFieldsWithType(\n        comptime root: type,\n        comptime definition: type,\n        deftype: DefinitionType,\n    ) usize {\n        var cnt = 0;\n        for (std.meta.fields(definition)) |field| {\n            if (hasType(root, field.type, deftype)) {\n                cnt += 1;\n            }",
+    "metadata": {
+      "repo": "spiraldb/ziggy-pydust",
+      "stars": 673,
+      "file": "pydust/src/discovery.zig",
+      "type": "struct",
+      "name": "State",
+      "difficulty": "easy"
+    }
+  }
+]

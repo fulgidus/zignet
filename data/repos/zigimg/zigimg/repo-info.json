@@ -1,0 +1,9 @@
+{
+  "name": "zigimg",
+  "fullName": "zigimg/zigimg",
+  "owner": "zigimg",
+  "stars": 690,
+  "description": "Zig library for reading and writing different image formats",
+  "url": "https://github.com/zigimg/zigimg",
+  "defaultBranch": "master"
+}

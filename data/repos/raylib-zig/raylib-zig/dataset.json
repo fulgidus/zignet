@@ -1,0 +1,847 @@
+[
+  {
+    "instruction": "Write a Zig function similar to getRaylib from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: build.zig",
+    "response": "fn getRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, options: Options) *std.Build.Step.Compile {\n    const raylib_dep = b.dependency(\"raylib\", .{\n        .target = target,\n        .optimize = optimize,\n        .raudio = options.raudio,\n        .rmodels = options.rmodels,\n        .rshapes = options.rshapes,\n        .rtext = options.rtext,\n        .rtextures = options.rtextures,\n        .platform = options.platform,\n        .linkage = options.linkage,\n        .linux_display_backend = options.linux_display_backend,\n        .opengl_version = options.opengl_version,\n        .android_api_version = options.android_api_version,\n        .android_ndk = options.android_ndk,\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getRaylib",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getModule from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: build.zig",
+    "response": "fn getModule(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) *std.Build.Module {\n    if (b.modules.contains(\"raylib\")) {\n        return b.modules.get(\"raylib\").?;\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getModule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getModule from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: build.zig",
+    "response": "fn getModule(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) *std.Build.Module {\n        const raylib = this.getModule(b, target, optimize);\n        return b.addModule(\"raygui\", .{\n            .root_source_file = b.path(\"lib/raygui.zig\"),\n            .imports = &.{.{ .name = \"raylib-zig\", .module = raylib }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "build.zig",
+      "type": "function",
+      "name": "getModule",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to build from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: build.zig",
+    "response": "pub fn build(b: *std.Build) !void {\n    const target = b.standardTargetOptions(.{}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "build.zig",
+      "type": "function",
+      "name": "build",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Program from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: build.zig",
+    "response": "const Program = struct {\n    name: []const u8,\n    path: []const u8,\n    desc: []const u8,\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "Program",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to gui from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: build.zig",
+    "response": "const gui = struct {\n    fn getModule(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) *std.Build.Module {\n        const raylib = this.getModule(b, target, optimize);\n        return b.addModule(\"raygui\", .{\n            .root_source_file = b.path(\"lib/raygui.zig\"),\n            .imports = &.{.{ .name = \"raylib-zig\", .module = raylib }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "build.zig",
+      "type": "struct",
+      "name": "gui",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to install_dir from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: build.zig",
+    "response": "const install_dir: std.Build.InstallDir = .{ .custom = \"web\" };",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "build.zig",
+      "type": "const",
+      "name": "install_dir",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/module_playing.zig",
+    "response": "pub fn main() !void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    rl.setConfigFlags(rl.ConfigFlags{ .msaa_4x_hint = true }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/module_playing.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to initCircle from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/module_playing.zig",
+    "response": "fn initCircle(circle: *CircleWave) void {\n    circle.alpha = 0.0;\n    circle.radius = getRandomValuef32(10, 40);\n    circle.position.x = getRandomValuef32(@intFromFloat(circle.radius), @intFromFloat(screenWidth - circle.radius));\n    circle.position.y = getRandomValuef32(@intFromFloat(circle.radius), @intFromFloat(screenHeight - circle.radius));\n    circle.speed = getRandomValuef32(1, 100) / 2000.0;\n    circle.color = colors[@intCast(rl.getRandomValue(0, 13))];\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/module_playing.zig",
+      "type": "function",
+      "name": "initCircle",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to getRandomValuef32 from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/module_playing.zig",
+    "response": "fn getRandomValuef32(min: i32, max: i32) f32 {\n    return @as(f32, @floatFromInt(rl.getRandomValue(min, max)));\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/module_playing.zig",
+      "type": "function",
+      "name": "getRandomValuef32",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to CircleWave from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/module_playing.zig",
+    "response": "const CircleWave = struct {\n    position: rl.Vector2,\n    radius: f32,\n    alpha: f32,\n    speed: f32,\n    color: rl.Color,\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/module_playing.zig",
+      "type": "struct",
+      "name": "CircleWave",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/music_stream.zig",
+    "response": "pub fn main() !void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib [audio] example - music playing (streaming)\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    rl.initAudioDevice(); // Initialize audio device\n    defer rl.closeAudioDevice(); // Close audio device (music streaming is automatically stopped)\n\n    const music: rl.Music = try rl.loadMusicStream(\"resources/audio/country.mp3\");\n    defer rl.unloadMusicStream(music); // Unload music stream buffers from RAM\n\n    rl.playMusicStream(music);\n\n    var timePlayed: f32 = 0; // Time played normalized [0.0f..1.0f]\n    var pause: bool = false; // Music playing paused\n\n    rl.setTargetFPS(30); // Set our game to run at 30 frames-per-second\n    //--------------------------------------------------------------------------------------\n\n    // Main game loop\n    while (!rl.windowShouldClose()) // Detect window close button or ESC key\n    {\n        // Update\n        //----------------------------------------------------------------------------------\n        rl.updateMusicStream(music); // Update music buffer with new stream data\n\n        // Restart music playing (stop and play)\n        if (rl.isKeyPressed(.space)) {\n            rl.stopMusicStream(music);\n            rl.playMusicStream(music);\n        }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/music_stream.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to music from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/music_stream.zig",
+    "response": "const music: rl.Music = try rl.loadMusicStream(\"resources/audio/country.mp3\");",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/music_stream.zig",
+      "type": "const",
+      "name": "music",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to audioInputCallback from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/raw_stream.zig",
+    "response": "fn audioInputCallback(buffer: ?*anyopaque, frames: c_uint) callconv(C) void {\n    audioFrequency = frequency + (audioFrequency - frequency) * 0.95;\n\n    const incr = audioFrequency / 44100;\n    const d: [*]i16 = @alignCast(@ptrCast(buffer orelse return));\n\n    for (0..frames) |i| {\n        d[i] = @intFromFloat(32000 * @sin(2 * pi * sineIdx));\n        sineIdx += incr;\n        if (sineIdx > 1) {\n            sineIdx -= 1;\n        }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/raw_stream.zig",
+      "type": "function",
+      "name": "audioInputCallback",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/raw_stream.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - raw audio streaming\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    rl.initAudioDevice();        // Initialize audio device\n    defer rl.closeAudioDevice(); // Close audio device (music streaming is automatically stopped)\n\n    rl.setAudioStreamBufferSizeDefault(MAX_SAMPLES_PER_UPDATE);\n\n    // Init raw audio stream (sample rate: 44100, sample size: 16bit-short, channels: 1-mono)\n    const stream = try rl.loadAudioStream(44100, 16, 1);\n    defer rl.unloadAudioStream(stream); // Close raw audio stream and delete buffers from RAM\n\n    rl.setAudioStreamCallback(stream, &audioInputCallback);\n\n    // Buffer for the single cycle waveform we are synthesizing\n    const data = try rl.mem.alloc(i16, MAX_SAMPLES);\n    defer rl.mem.free(data); // Unload sine wave data\n\n    // Frame buffer, describing the waveform when repeated over the course of a frame\n    const writeBuf = try rl.mem.alloc(i16, MAX_SAMPLES_PER_UPDATE);\n    defer rl.mem.free(writeBuf); // Unload write buffer\n\n    rl.playAudioStream(stream); // Start processing stream buffer (no data loaded currently)\n\n    // Computed size in samples of the sine wave\n    var waveLength: i32 = 1;\n\n    var position = rl.Vector2{ .x = 0, .y = 0 }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/raw_stream.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to d from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/raw_stream.zig",
+    "response": "const d: [*]i16 = @alignCast(@ptrCast(buffer orelse return));",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/raw_stream.zig",
+      "type": "const",
+      "name": "d",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to n from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/raw_stream.zig",
+    "response": "const n: u32 = @intCast(waveLength * 2);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/raw_stream.zig",
+      "type": "const",
+      "name": "n",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to wlen from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/raw_stream.zig",
+    "response": "const wlen: f32 = @floatFromInt(waveLength);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/raw_stream.zig",
+      "type": "const",
+      "name": "wlen",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to idx from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/raw_stream.zig",
+    "response": "const idx: f32 = @floatFromInt(i);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/raw_stream.zig",
+      "type": "const",
+      "name": "idx",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to y from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/raw_stream.zig",
+    "response": "const y: f32 = @floatFromInt(data[@divFloor(i * MAX_SAMPLES, screenWidth)]);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/raw_stream.zig",
+      "type": "const",
+      "name": "y",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/sound_loading.zig",
+    "response": "pub fn main() !void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib [audio] example - sound loading and playing\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    rl.initAudioDevice(); // Initialize audio device\n    defer rl.closeAudioDevice(); // Close audio device\n\n    const fxWav: rl.Sound = try rl.loadSound(\"resources/audio/sound.wav\"); // Load WAV audio file\n    const fxOgg: rl.Sound = try rl.loadSound(\"resources/audio/target.ogg\"); // Load OGG audio file\n    defer rl.unloadSound(fxWav); // Unload sound data\n    defer rl.unloadSound(fxOgg); // Unload sound data\n\n    rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second\n    //--------------------------------------------------------------------------------------\n\n    // Main game loop\n    while (!rl.windowShouldClose()) // Detect window close button or ESC key\n    {\n        // Update\n        //----------------------------------------------------------------------------------\n        if (rl.isKeyPressed(.space)) rl.playSound(fxWav); // Play WAV sound\n        if (rl.isKeyPressed(.enter)) rl.playSound(fxOgg); // Play OGG sound\n        //----------------------------------------------------------------------------------\n\n        // Draw\n        //----------------------------------------------------------------------------------\n        rl.beginDrawing();\n        defer rl.endDrawing();\n\n        rl.clearBackground(.white);\n\n        rl.drawText(\"Press SPACE to PLAY the WAV sound!\", 200, 180, 20, .light_gray);\n        rl.drawText(\"Press ENTER to PLAY the OGG sound!\", 200, 220, 20, .light_gray);\n        //----------------------------------------------------------------------------------\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/sound_loading.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fxWav from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/sound_loading.zig",
+    "response": "const fxWav: rl.Sound = try rl.loadSound(\"resources/audio/sound.wav\");",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/sound_loading.zig",
+      "type": "const",
+      "name": "fxWav",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to fxOgg from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/audio/sound_loading.zig",
+    "response": "const fxOgg: rl.Sound = try rl.loadSound(\"resources/audio/target.ogg\");",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/audio/sound_loading.zig",
+      "type": "const",
+      "name": "fxOgg",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - 2d camera\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var player = rl.Rectangle{ .x = 400, .y = 280, .width = 40, .height = 40 }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_mouse_zoom.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - 2d camera mouse zoom\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var camera = rl.Camera2D{\n        .target = .{ .x = 0, .y = 0 }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_mouse_zoom.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screen_width = 800;\n    const screen_height = 450;\n\n    rl.initWindow(screen_width, screen_height, \"raylib [core] example - 2d camera\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var player: Player = .{ .can_jump = false, .speed = 0, .position = Vec2.init(400, 280) }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updatePlayer from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "fn updatePlayer(player: *Player, env_items: []EnvItem, delta: f32) void {\n    if (rl.isKeyDown(.left)) player.position.x -= PLAYER_HOR_SPD * delta;\n    if (rl.isKeyDown(.right)) player.position.x += PLAYER_HOR_SPD * delta;\n    if (rl.isKeyDown(.space) and player.can_jump) {\n        player.speed = -PLAYER_JUMP_SPD;\n        player.can_jump = false;\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "function",
+      "name": "updatePlayer",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateCameraCenter from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "fn updateCameraCenter(\n    camera: *Camera2D,\n    player: *Player,\n    _: []EnvItem,\n    _: f32,\n    width: i32,\n    height: i32,\n) void {\n    const widthf: f32 = @floatFromInt(width);\n    const heightf: f32 = @floatFromInt(height);\n    camera.offset = Vec2.init(widthf / 2, heightf / 2);\n    camera.target = player.position;\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "function",
+      "name": "updateCameraCenter",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updatecameraCenterInsideMap from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "fn updatecameraCenterInsideMap(\n    camera: *Camera2D,\n    player: *Player,\n    env_items: []EnvItem,\n    _: f32,\n    width: i32,\n    height: i32,\n) void {\n    const widthf: f32 = @floatFromInt(width);\n    const heightf: f32 = @floatFromInt(height);\n    camera.offset = Vec2.init(widthf / 2, heightf / 2);\n    camera.target = player.position;\n\n    var min_x: f32 = 1000;\n    var min_y: f32 = 1000;\n    var max_x: f32 = -1000;\n    var max_y: f32 = -1000;\n\n    for (env_items) |ei| {\n        min_x = @min(ei.rect.x, min_x);\n        min_y = @min(ei.rect.y, min_y);\n        max_x = @max(ei.rect.x + ei.rect.width, max_x);\n        max_y = @max(ei.rect.y + ei.rect.height, max_y);\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "function",
+      "name": "updatecameraCenterInsideMap",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateCameraCenterSmoothFollow from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "fn updateCameraCenterSmoothFollow(\n    camera: *Camera2D,\n    player: *Player,\n    _: []EnvItem,\n    delta: f32,\n    width: i32,\n    height: i32,\n) void {\n    const min_speed = 30;\n    const min_effect_length = 10;\n    const fraction_speed = 0.8;\n\n    const widthf: f32 = @floatFromInt(width);\n    const heightf: f32 = @floatFromInt(height);\n\n    camera.offset = Vec2.init(widthf / 2, heightf / 2);\n    const diff = player.position.subtract(camera.target);\n    const length = diff.length();\n\n    if (length > min_effect_length) {\n        const speed = @max(fraction_speed * length, min_speed);\n        camera.target = camera.target.add(diff.scale(speed * delta / length));\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "function",
+      "name": "updateCameraCenterSmoothFollow",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateCameraEvenOutOnLanding from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "fn updateCameraEvenOutOnLanding(\n    camera: *Camera2D,\n    player: *Player,\n    _: []EnvItem,\n    delta: f32,\n    width: i32,\n    height: i32,\n) void {\n    const even_out_speed = 700;\n\n    const widthf: f32 = @floatFromInt(width);\n    const heightf: f32 = @floatFromInt(height);\n\n    camera.offset = Vec2.init(widthf / 2, heightf / 2);\n    camera.target.x = player.position.x;\n\n    if (evening_out) {\n        if (even_out_target > camera.target.y) {\n            camera.target.y += even_out_speed * delta;\n            if (camera.target.y > even_out_target) {\n                camera.target.y = even_out_target;\n                evening_out = false;\n            }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "function",
+      "name": "updateCameraEvenOutOnLanding",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateCameraPlayerBoundsPush from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "fn updateCameraPlayerBoundsPush(\n    camera: *Camera2D,\n    player: *Player,\n    _: []EnvItem,\n    _: f32,\n    width: i32,\n    height: i32,\n) void {\n    const bbox = Vec2.init(0.2, 0.2);\n\n    const widthf: f32 = @floatFromInt(width);\n    const heightf: f32 = @floatFromInt(height);\n\n    const bbox_world_min = rl.getScreenToWorld2D(Vec2.init((1 - bbox.x) * 0.5 * widthf, (1 - bbox.y) * 0.5 * heightf), camera.*);\n    const bbox_world_max = rl.getScreenToWorld2D(Vec2.init((1 + bbox.x) * 0.5 * widthf, (1 + bbox.y) * 0.5 * heightf), camera.*);\n    camera.offset = Vec2.init((1 - bbox.x) * 0.5 * widthf, (1 - bbox.y) * 0.5 * heightf);\n\n    if (player.position.x < bbox_world_min.x) camera.target.x = player.position.x;\n    if (player.position.y < bbox_world_min.y) camera.target.y = player.position.y;\n    if (player.position.x > bbox_world_max.x) camera.target.x = bbox_world_min.x + (player.position.x - bbox_world_max.x);\n    if (player.position.y > bbox_world_max.y) camera.target.y = bbox_world_min.y + (player.position.y - bbox_world_max.y);\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "function",
+      "name": "updateCameraPlayerBoundsPush",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to Player from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const Player = struct {\n    can_jump: bool,\n    speed: f32,\n    position: rl.Vector2,\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "struct",
+      "name": "Player",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig struct similar to EnvItem from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const EnvItem = struct {\n    blocking: bool,\n    rect: rl.Rectangle,\n    color: rl.Color,\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "struct",
+      "name": "EnvItem",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to PLAYER_JUMP_SPD from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const PLAYER_JUMP_SPD: f32 = 350;",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "PLAYER_JUMP_SPD",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to PLAYER_HOR_SPD from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const PLAYER_HOR_SPD: f32 = 200;",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "PLAYER_HOR_SPD",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to widthf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const widthf: f32 = @floatFromInt(width);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "widthf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to heightf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const heightf: f32 = @floatFromInt(height);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "heightf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to widthf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const widthf: f32 = @floatFromInt(width);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "widthf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to heightf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const heightf: f32 = @floatFromInt(height);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "heightf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to widthf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const widthf: f32 = @floatFromInt(width);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "widthf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to heightf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const heightf: f32 = @floatFromInt(height);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "heightf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to widthf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const widthf: f32 = @floatFromInt(width);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "widthf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to heightf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const heightf: f32 = @floatFromInt(height);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "heightf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to widthf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const widthf: f32 = @floatFromInt(width);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "widthf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to heightf from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/2d_camera_platformer.zig",
+    "response": "const heightf: f32 = @floatFromInt(height);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/2d_camera_platformer.zig",
+      "type": "const",
+      "name": "heightf",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/3d_camera_first_person.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - 3d camera first person\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var camera = rl.Camera3D{\n        .position = .init(4, 2, 4),\n        .target = .init(0, 1.8, 0),\n        .up = .init(0, 1, 0),\n        .fovy = 60,\n        .projection = .perspective,\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/3d_camera_first_person.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/3d_camera_free.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib [core] example - 3d camera free\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    // Define the camera to look into our 3d world\n    var camera = rl.Camera{\n        .position = .init(10, 10, 10),\n        .target = .init(0, 0, 0),\n        .up = .init(0, 1, 0),\n        .fovy = 45,\n        .projection = .perspective,\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/3d_camera_free.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/3d_picking.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - 3d picking\");\n\n    // Define the camera to look into our 3d world\n    var camera = rl.Camera{\n        .position = .init(10, 10, 10),\n        .target = .init(0, 0, 0),\n        .up = .init(0, 1, 0),\n        .fovy = 45,\n        .projection = .perspective,\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/3d_picking.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/basic_screen_manager.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    // -------------------------------------------------------------------------\n    rl.initWindow(\n        screen_width,\n        screen_height,\n        \"raylib-zig [core] example - basic screen height\",\n    );\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    // TODO: Initialize all required variables and load all required data here!\n\n    var current_screen: GameScreen = .logo;\n\n    var frames_counter: i32 = 0; // Useful to count frames\n\n    rl.setTargetFPS(60); // Set desired framerate\n\n    // Main game loop\n    while (!rl.windowShouldClose()) { // Detect window close button or ESC key\n        // Update\n        // ---------------------------------------------------------------------\n        switch (current_screen) {\n            .logo => {\n                // TODO: Update `logo` state variables here!\n\n                frames_counter += 1; // Count frames\n\n                // Wait for 2 seconds (120 frames) before jumping to `title` screen\n                if (frames_counter > 120) current_screen = .title;\n            }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/basic_screen_manager.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/basic_window.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - basic window\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second\n    //--------------------------------------------------------------------------------------\n\n    // Main game loop\n    while (!rl.windowShouldClose()) { // Detect window close button or ESC key\n        // Update\n        //----------------------------------------------------------------------------------\n        // TODO: Update your variables here\n        //----------------------------------------------------------------------------------\n\n        // Draw\n        //----------------------------------------------------------------------------------\n        rl.beginDrawing();\n        defer rl.endDrawing();\n\n        rl.clearBackground(.white);\n\n        rl.drawText(\"Congrats! You created your first window!\", 190, 200, 20, .light_gray);\n        //----------------------------------------------------------------------------------\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/basic_window.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/basic_window_web.zig",
+    "response": "pub fn main() anyerror!void {\n\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - basic window\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    if (builtin.os.tag == .emscripten) {\n        emscripten.emscripten_set_main_loop(@ptrCast(&updateDrawFrame), 0, 1);\n    }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/basic_window_web.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to updateDrawFrame from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/basic_window_web.zig",
+    "response": "fn updateDrawFrame() void {\n    // Update\n    //----------------------------------------------------------------------------------\n    // TODO: Update your variables here\n    //----------------------------------------------------------------------------------\n\n    // Draw\n    //----------------------------------------------------------------------------------\n    rl.beginDrawing();\n    defer rl.endDrawing();\n\n    rl.clearBackground(.white);\n\n    rl.drawText(\"Congrats! You created your first window!\", 190, 200, 20, .light_gray);\n    //----------------------------------------------------------------------------------\n}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/basic_window_web.zig",
+      "type": "function",
+      "name": "updateDrawFrame",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/drop_files.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - drop files\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var filePathCounter: usize = 0;\n    var filePaths: [MAX_FILEPATH_RECORDED][MAX_FILEPATH_SIZE]u8 = std.mem.zeroes([MAX_FILEPATH_RECORDED][MAX_FILEPATH_SIZE]u8);\n\n    rl.setTargetFPS(60);\n\n    // Main game loop\n    while (!rl.windowShouldClose()) {\n        // Update\n        //----------------------------------------------------------------------------------\n        if (rl.isFileDropped()) {\n            const droppedFiles: rl.FilePathList = rl.loadDroppedFiles();\n\n            for (0..droppedFiles.count) |i| {\n                const offset: usize = @as(usize, @intCast(filePathCounter));\n                const droppedFilePathLength: usize = std.mem.len(droppedFiles.paths[i]);\n\n                if (filePathCounter < (MAX_FILEPATH_RECORDED - 1)) {\n                    _ = rl.textCopy(\n                        @ptrCast(@constCast(&filePaths[offset])),\n                        droppedFiles.paths[i][0..droppedFilePathLength :0],\n                    );\n                    filePathCounter += 1;\n                }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/drop_files.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to droppedFiles from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/drop_files.zig",
+    "response": "const droppedFiles: rl.FilePathList = rl.loadDroppedFiles();",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/drop_files.zig",
+      "type": "const",
+      "name": "droppedFiles",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to offset from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/drop_files.zig",
+    "response": "const offset: usize = @as(usize, @intCast(filePathCounter));",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/drop_files.zig",
+      "type": "const",
+      "name": "offset",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to droppedFilePathLength from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/drop_files.zig",
+    "response": "const droppedFilePathLength: usize = std.mem.len(droppedFiles.paths[i]);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/drop_files.zig",
+      "type": "const",
+      "name": "droppedFilePathLength",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to castedI from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/drop_files.zig",
+    "response": "const castedI: i32 = @intCast(i);",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/drop_files.zig",
+      "type": "const",
+      "name": "castedI",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/input_keys.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - keyboard input\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var ballPosition = rl.Vector2.init(screenWidth / 2, screenHeight / 2);\n\n    rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second\n    //--------------------------------------------------------------------------------------\n\n    // Main game loop\n    while (!rl.windowShouldClose()) { // Detect window close button or ESC key\n\n        // Update\n        //----------------------------------------------------------------------------------\n        if (rl.isKeyDown(.right)) {\n            ballPosition.x += 2.0;\n        }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/input_keys.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/input_mouse.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - mouse input\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var ballPosition = rl.Vector2.init(-100, -100);\n    var ballColor = rl.Color.dark_blue;\n\n    rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second\n    //--------------------------------------------------------------------------------------\n\n    // Main game loop\n    while (!rl.windowShouldClose()) { // Detect window close button or ESC key\n        // Update\n        //----------------------------------------------------------------------------------\n        ballPosition = rl.getMousePosition();\n        ballPosition.x = @as(f32, @floatFromInt(rl.getMouseX()));\n        ballPosition.y = @as(f32, @floatFromInt(rl.getMouseY()));\n\n        if (rl.isMouseButtonPressed(.left)) {\n            ballColor = .maroon;\n        }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/input_mouse.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/input_mouse_wheel.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - basic window\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var boxPositionY: f32 = screenHeight / 2 - 40;\n    const scrollSpeed: f32 = 4; // Scrolling speed in pixels\n\n    rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second\n    //--------------------------------------------------------------------------------------\n\n    // Main game loop\n    while (!rl.windowShouldClose()) { // Detect window close button or ESC key\n        // Update\n        //----------------------------------------------------------------------------------\n        boxPositionY -= (rl.getMouseWheelMove() * scrollSpeed);\n        //----------------------------------------------------------------------------------\n\n        // Draw\n        //----------------------------------------------------------------------------------\n        rl.beginDrawing();\n        defer rl.endDrawing();\n\n        rl.clearBackground(.white);\n\n        rl.drawRectangle(screenWidth / 2 - 40, @as(i32, @intFromFloat(boxPositionY)), 80, 80, .maroon);\n\n        rl.drawText(\"Use mouse wheel to move the cube up and down!\", 10, 10, 20, .gray);\n\n        rl.drawText(\n            rl.textFormat(\"Box position Y: %03i\", .{@as(i32, @intFromFloat(boxPositionY))}",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/input_mouse_wheel.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to scrollSpeed from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/input_mouse_wheel.zig",
+    "response": "const scrollSpeed: f32 = 4;",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/input_mouse_wheel.zig",
+      "type": "const",
+      "name": "scrollSpeed",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/input_multitouch.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    //--------------------------------------------------------------------------------------\n    const screenWidth = 800;\n    const screenHeight = 450;\n\n    rl.initWindow(screenWidth, screenHeight, \"raylib-zig [core] example - basic window\");\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var ballPosition = rl.Vector2.init(-100, -100);\n    var ballColor = rl.Color.beige;\n\n    var touchCounter: f32 = 0;\n    var touchPosition = rl.Vector2.init(0, 0);\n\n    rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second\n    //--------------------------------------------------------------------------------------\n\n    // Main game loop\n    while (!rl.windowShouldClose()) { // Detect window close button or ESC key\n        // Update\n        //----------------------------------------------------------------------------------\n        ballPosition = rl.getMousePosition();\n\n        ballColor = .beige;\n\n        if (rl.isMouseButtonDown(.left)) {\n            ballColor = .maroon;\n        }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/input_multitouch.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig function similar to main from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/window_flags.zig",
+    "response": "pub fn main() anyerror!void {\n    // Initialization\n    // -------------------------------------------------------------------------\n\n    // Possible window flags\n    // flag_vsync_hint\n    // flag_fullscreen_mode    -> not working properly -> wrong scaling!\n    // flag_window_resizable\n    // flag_window_undecorated\n    // flag_window_transparent\n    // flag_window_hidden\n    // flag_window_minimized   -> Not supported on window creation\n    // flag_window_maximized   -> Not supported on window creation\n    // flag_window_unfocused\n    // flag_window_topmost\n    // flag_window_highdpi     -> errors after minimize-resize, fb size is recalculated\n    // flag_window_always_run\n    // flag_msaa_4x_hint\n\n    // Set configuration flags for window creation\n    // rl.setConfigFlags(\n    //     @enumFromInt(@intFromEnum(rl.ConfigFlags.flag_vsync_hint) | @intFromEnum(rl.ConfigFlags.flag_msaa_4x_hint) | @intFromEnum(rl.ConfigFlags.flag_window_highdpi)),\n    // );\n    rl.initWindow(\n        screen_width,\n        screen_height,\n        \"raylib-zig [core] example - window flags\",\n    );\n    defer rl.closeWindow(); // Close window and OpenGL context\n\n    var ball_position = rl.Vector2.init(\n        @floatFromInt(@divFloor(rl.getScreenWidth(), 2)),\n        @floatFromInt(@divFloor(rl.getScreenHeight(), 2)),\n    );\n    var ball_speed = rl.Vector2.init(5, 4);\n    const ball_radius: f32 = 20;\n\n    var frames_counter: i32 = 0;\n\n    rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second\n\n    while (!rl.windowShouldClose()) {\n        // Update\n        // ---------------------------------------------------------------------\n        if (rl.isKeyPressed(.f)) rl.toggleFullscreen(); // Modifies window size when scaling!\n\n        if (rl.isKeyPressed(.r)) {\n            if (rl.isWindowState(rl.ConfigFlags { .window_resizable = true }",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/window_flags.zig",
+      "type": "function",
+      "name": "main",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "instruction": "Write a Zig const similar to ball_radius from raylib-zig/raylib-zig",
+    "context": "Repository: raylib-zig/raylib-zig (1396 ⭐)\nFile: examples/core/window_flags.zig",
+    "response": "const ball_radius: f32 = 20;",
+    "metadata": {
+      "repo": "raylib-zig/raylib-zig",
+      "stars": 1396,
+      "file": "examples/core/window_flags.zig",
+      "type": "const",
+      "name": "ball_radius",
+      "difficulty": "easy"
+    }
+  }
+]

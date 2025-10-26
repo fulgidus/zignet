@@ -1,0 +1,9 @@
+{
+  "name": "zig-network",
+  "fullName": "ikskuh/zig-network",
+  "owner": "ikskuh",
+  "stars": 592,
+  "description": "A smallest-common-subset of socket functions for crossplatform networking, TCP & UDP",
+  "url": "https://github.com/ikskuh/zig-network",
+  "defaultBranch": "master"
+}
