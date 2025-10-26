@@ -10,11 +10,13 @@ ZigNet integrates with Claude (and other MCP-compatible LLMs) to provide real-ti
 
 ### MCP Tools
 
-#### 1. **analyze_zig**
-Analyze Zig code for syntax errors, type mismatches, and semantic issues.
+<details>
+<summary><b>🔍 analyze_zig</b> — Syntax and type checking with official Zig compiler</summary>
 
+Analyze Zig code for syntax errors, type mismatches, and semantic issues using `zig ast-check`.
+
+**Example usage:**
 ```typescript
-// Example usage in Claude
 User: "Analyze this Zig code"
 Claude: [calls analyze_zig tool]
 Response: "✅ Syntax: Valid | Type Check: PASS | Warnings: 0"
@@ -25,16 +27,21 @@ Response: "✅ Syntax: Valid | Type Check: PASS | Warnings: 0"
 - Syntax parsing (AST generation)
 - Type checking and validation
 - Semantic error detection
+- Line/column error reporting
 
----
+</details>
 
-#### 2. **compile_zig**
-Validate and format Zig code, generating clean, idiomatic output.
+<details>
+<summary><b>✨ compile_zig</b> — Format and validate Zig code</summary>
 
-```typescript
-// Example
-Input: "fn add(a:i32,b:i32)i32{return a+b;}"
-Output: 
+Validate and format Zig code using `zig fmt`, generating clean, idiomatic output.
+
+**Example:**
+```zig
+// Input (messy)
+fn add(a:i32,b:i32)i32{return a+b;}
+
+// Output (formatted)
 fn add(a: i32, b: i32) i32 {
     return a + b;
 }
@@ -44,14 +51,17 @@ fn add(a: i32, b: i32) i32 {
 - Code formatting (2-space indentation)
 - Syntax validation
 - Best practices enforcement
+- Preserves semantics
 
----
+</details>
 
-#### 3. **get_zig_docs**
-Retrieve Zig documentation and explanations for language features.
+<details>
+<summary><b>📖 get_zig_docs</b> — AI-powered documentation lookup (coming soon)</summary>
 
+Retrieve Zig documentation and explanations for language features using a fine-tuned LLM.
+
+**Example:**
 ```typescript
-// Example
 Query: "comptime"
 Response: "comptime enables compile-time evaluation in Zig..."
 ```
@@ -61,43 +71,46 @@ Response: "comptime enables compile-time evaluation in Zig..."
 - 13,756 examples from Zig 0.13-0.15
 - Specialized on advanced Zig idioms (comptime, generics, error handling)
 
----
+</details>
 
-#### 4. **suggest_fix**
-Get intelligent code fix suggestions for Zig errors.
+<details>
+<summary><b>🔧 suggest_fix</b> — Intelligent error fix suggestions (coming soon)</summary>
 
-```typescript
-// Example
-Error: "Type mismatch: cannot assign string to i32"
-Code: var x: i32 = "hello";
+Get intelligent code fix suggestions for Zig errors using AI-powered analysis.
 
-Suggestion:
-Option 1: var x: []const u8 = "hello";  // If you meant string
-Option 2: var x: i32 = 42;              // If you meant integer
+**Example:**
+```zig
+// Error: "Type mismatch: cannot assign string to i32"
+var x: i32 = "hello";
+
+// Suggestions:
+// Option 1: var x: []const u8 = "hello";  // If you meant string
+// Option 2: var x: i32 = 42;              // If you meant integer
 ```
 
 **Features:**
 - Context-aware suggestions
 - Multiple fix options
 - Explanation of the issue
+- Zig idiom recommendations
+
+</details>
 
 ---
 
-## 🚀 Usage
+## 📖 Usage
 
-ZigNet is an **MCP (Model Context Protocol) server** that integrates with Claude Desktop or VS Code (Cline extension).
-
-### Quick Start
-
-**1. Add to your MCP client configuration:**
+ZigNet is an **MCP server** — configure it once in your MCP client, then use it naturally in conversation.
 
 <details>
-<summary><b>Claude Desktop</b></summary>
+<summary><b>🖥️ Claude Desktop</b></summary>
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
-**Linux**: `~/.config/Claude/claude_desktop_config.json`  
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+**Configuration file location:**
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
+**Add this:**
 ```json
 {
   "mcpServers": {
@@ -108,54 +121,53 @@ ZigNet is an **MCP (Model Context Protocol) server** that integrates with Claude
   }
 }
 ```
-</details>
 
-<details>
-<summary><b>VS Code (Cline Extension)</b></summary>
-
-Add to Cline MCP settings:
-
-```json
-{
-  "mcpServers": {
-    "zignet": {
-      "command": "npx",
-      "args": ["-y", "zignet"]
-    }
-  }
-}
+**Then restart Claude Desktop** and start using:
 ```
-</details>
-
-**2. Restart your MCP client (Claude Desktop or VS Code)**
-
-**3. Start using ZigNet tools in conversation:**
-
-```
-You: "Analyze this Zig code"
-
-const std = @import("std");
-pub fn main() void {
-    var x: i32 = "hello";  // Type error
-}
+You: "Analyze this Zig code for errors"
+     [paste code]
 
 Claude: [uses analyze_zig tool]
-"❌ Type Error at line 3: expected type 'i32', found '[]const u8'"
+        "Found 1 type error: variable 'x' expects i32 but got []const u8"
 ```
 
-### Available Tools
+</details>
 
-Once configured, Claude/Cline can use these tools automatically:
+<details>
+<summary><b>🔧 VS Code (with GitHub Copilot)</b></summary>
 
-- **`analyze_zig`**: Syntax and type checking with the official Zig compiler
-- **`compile_zig`**: Format and validate Zig code
-- **`get_zig_docs`**: Retrieve Zig documentation (coming soon - fine-tuned LLM)
-- **`suggest_fix`**: Intelligent error fix suggestions (coming soon - fine-tuned LLM)
+**Method 1: VS Code Marketplace (coming soon)**
+1. Open VS Code Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+2. Search for `@mcp zignet`
+3. Click **Install**
+4. Restart VS Code
 
-### System Requirements
+**Method 2: Manual configuration (available now)**
+1. Install GitHub Copilot extension (if not already installed)
+2. Open Copilot settings
+3. Add to MCP servers config:
 
-- **Node.js 18+** (installed automatically with npx)
-- **No other dependencies** — ZigNet downloads Zig compilers automatically (supports 0.13, 0.14, 0.15)
+```json
+{
+  "mcpServers": {
+    "zignet": {
+      "command": "npx",
+      "args": ["-y", "zignet"]
+    }
+  }
+}
+```
+
+**Then restart VS Code** and Copilot will have access to ZigNet tools.
+
+</details>
+
+### What happens after configuration?
+
+1. **First use**: `npx` downloads and caches ZigNet automatically
+2. **Zig compiler**: Downloads on-demand (supports Zig 0.13, 0.14, 0.15)
+3. **Tools available**: `analyze_zig`, `compile_zig` (+ `get_zig_docs`, `suggest_fix` coming soon)
+4. **Zero maintenance**: Updates automatically via `npx -y zignet`
 
 ---
 
@@ -283,11 +295,39 @@ Full benchmarks: `scripts/test-results/`
 
 ---
 
+## 🛠️ Development
+
+```bash
+# Run tests
+pnpm test
+
+# Run specific component tests
+pnpm test -- lexer
+pnpm test -- parser
+pnpm test -- type-checker
+
+# Watch mode
+pnpm test:watch
+
+# Linting
+pnpm lint
+pnpm lint:fix
+
+# Build
+pnpm build
+```
+
+---
+
 ## 🤝 Contributing
 
-See [AGENTS.md](./docs/AGENTS.md) for detailed project specification.
+See [AGENTS.md](./AGENTS.md) for detailed project specification and development phases.
 
-For development setup, testing, and contribution guidelines, check the repository documentation.
+**Current needs:**
+- Testing on diverse Zig codebases
+- Edge case discovery (parser/type-checker)
+- Performance optimization
+- Documentation improvements
 
 ---
 
@@ -300,6 +340,10 @@ For development setup, testing, and contribution guidelines, check the repositor
 ## 🔗 Links
 
 - **Repository:** https://github.com/fulgidus/zignet
+- **Model (post-training):** https://huggingface.co/fulgidus/zignet-qwen2.5-coder-7b
 - **MCP Protocol:** https://modelcontextprotocol.io
 - **Zig Language:** https://ziglang.org
 
+---
+
+**Status:** 🔄 Active development - Fine-tuning in progress (ETA: Oct 26, 2025 23:30 CET)

@@ -29,6 +29,7 @@
         "dist",
         "bin",
         "scripts/install-zig.js",
+        "icon.svg",
         "README.md",
         "LICENSE"
     ],
@@ -73,19 +74,43 @@
     },
     "keywords": [
         "mcp",
+        "mcp-server",
         "model-context-protocol",
         "zig",
         "ziglang",
         "ai",
-        "code-generation",
-        "llm",
+        "copilot",
+        "github-copilot",
         "code-analysis",
+        "code-generation",
         "linter",
         "formatter",
-        "claude"
+        "compiler",
+        "ast",
+        "type-checker"
     ],
     "author": "fulgidus",
     "license": "WTFPL",
+    "publisher": "fulgidus",
+    "displayName": "ZigNet MCP Server",
+    "icon": "icon.png",
+    "categories": [
+        "Programming Languages",
+        "Linters",
+        "Formatters",
+        "Machine Learning"
+    ],
+    "contributes": {
+        "mcpServers": {
+            "zignet": {
+                "command": "npx",
+                "args": [
+                    "-y",
+                    "zignet"
+                ]
+            }
+        }
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/fulgidus/zignet.git"
