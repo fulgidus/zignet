@@ -10,7 +10,7 @@
 **Test Matrix**:
 - **Platforms**: Ubuntu, macOS, Windows
 - **Node.js**: 20.x
-- **Zig Versions**: 0.13.0, 0.14.0, 0.15.0
+- **Zig Versions**: 0.13.0, 0.14.0, 0.15.1
 
 **Jobs**:
 1. ✅ **test** - Lint, typecheck, build, unit tests on all platforms

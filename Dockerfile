@@ -57,8 +57,8 @@ RUN pnpm install --prod --frozen-lockfile
 RUN mkdir -p /root/.zignet/zig-versions
 
 # Environment variables (can be overridden at runtime)
-ENV ZIG_SUPPORTED="0.13.0,0.14.0,0.15.0"
-ENV ZIG_DEFAULT="0.15.0"
+ENV ZIG_SUPPORTED="0.13.0,0.14.0,0.15.1"
+ENV ZIG_DEFAULT="0.15.1"
 ENV NODE_ENV=production
 
 # Expose MCP server port (if needed for future HTTP transport)

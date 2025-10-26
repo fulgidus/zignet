@@ -46,7 +46,7 @@ Automated tests on every push/PR to `main` or `develop`.
 **Zig Versions:**
 - ✅ 0.13.0
 - ✅ 0.14.0
-- ✅ 0.15.0
+- ✅ 0.15.1
 
 ## Running Tests Locally
 
