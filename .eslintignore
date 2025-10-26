@@ -1,0 +1,26 @@
+# Build output
+dist/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Training data and models
+data/
+models/
+
+# Scripts (plain JavaScript, not TypeScript)
+scripts/install-zig.js
+scripts/download-model.js
+scripts/scrape-zig-docs.js
+scripts/scrape-zig-repos.js
+scripts/prepare-training-dataset.js
+scripts/compare-models.js
+scripts/test-config.cjs
+
+# Test files
+tests/
+
+# Config files
+*.config.js
+*.config.cjs

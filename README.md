@@ -83,56 +83,79 @@ Option 2: var x: i32 = 42;              // If you meant integer
 
 ---
 
-## 🚀 Installation
+## 🚀 Usage
 
-### Prerequisites
-- Node.js 20+
-- 8GB+ RAM (for local LLM inference)
-- CUDA GPU (optional, for faster inference)
+ZigNet is an **MCP (Model Context Protocol) server** that integrates with Claude Desktop or VS Code (Cline extension).
 
-### Install
+### Quick Start
 
-```bash
-# Clone repository
-git clone https://github.com/fulgidus/zignet.git
-cd zignet
+**1. Add to your MCP client configuration:**
 
-# Install dependencies
-pnpm install
+<details>
+<summary><b>Claude Desktop</b></summary>
 
-# Download fine-tuned model (auto-downloads on first run)
-# Model: fulgidus/zignet-qwen2.5-coder-7b-Q4_K_M (~4GB)
-```
-
----
-
-## 📖 Usage
-
-### With Claude Desktop
-
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
+**Linux**: `~/.config/Claude/claude_desktop_config.json`  
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "zignet": {
-      "command": "node",
-      "args": ["/path/to/zignet/dist/mcp-server.js"]
+      "command": "npx",
+      "args": ["-y", "zignet"]
     }
   }
 }
 ```
+</details>
 
-Then use in Claude:
+<details>
+<summary><b>VS Code (Cline Extension)</b></summary>
+
+Add to Cline MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "zignet": {
+      "command": "npx",
+      "args": ["-y", "zignet"]
+    }
+  }
+}
+```
+</details>
+
+**2. Restart your MCP client (Claude Desktop or VS Code)**
+
+**3. Start using ZigNet tools in conversation:**
 
 ```
-You: "Analyze this Zig code for errors"
-     [paste code]
+You: "Analyze this Zig code"
 
-Claude: "I'll use ZigNet to analyze this"
-        [calls analyze_zig tool]
-        "Found 1 type error: variable 'x' expects i32 but got []const u8"
+const std = @import("std");
+pub fn main() void {
+    var x: i32 = "hello";  // Type error
+}
+
+Claude: [uses analyze_zig tool]
+"❌ Type Error at line 3: expected type 'i32', found '[]const u8'"
 ```
+
+### Available Tools
+
+Once configured, Claude/Cline can use these tools automatically:
+
+- **`analyze_zig`**: Syntax and type checking with the official Zig compiler
+- **`compile_zig`**: Format and validate Zig code
+- **`get_zig_docs`**: Retrieve Zig documentation (coming soon - fine-tuned LLM)
+- **`suggest_fix`**: Intelligent error fix suggestions (coming soon - fine-tuned LLM)
+
+### System Requirements
+
+- **Node.js 18+** (installed automatically with npx)
+- **No other dependencies** — ZigNet downloads Zig compilers automatically (supports 0.13, 0.14, 0.15)
 
 ---
 
@@ -260,39 +283,11 @@ Full benchmarks: `scripts/test-results/`
 
 ---
 
-## 🛠️ Development
-
-```bash
-# Run tests
-pnpm test
-
-# Run specific component tests
-pnpm test -- lexer
-pnpm test -- parser
-pnpm test -- type-checker
-
-# Watch mode
-pnpm test:watch
-
-# Linting
-pnpm lint
-pnpm lint:fix
-
-# Build
-pnpm build
-```
-
----
-
 ## 🤝 Contributing
 
-See [AGENTS.md](./AGENTS.md) for detailed project specification and development phases.
+See [AGENTS.md](./docs/AGENTS.md) for detailed project specification.
 
-**Current needs:**
-- Testing on diverse Zig codebases
-- Edge case discovery (parser/type-checker)
-- Performance optimization
-- Documentation improvements
+For development setup, testing, and contribution guidelines, check the repository documentation.
 
 ---
 
@@ -305,10 +300,6 @@ See [AGENTS.md](./AGENTS.md) for detailed project specification and development 
 ## 🔗 Links
 
 - **Repository:** https://github.com/fulgidus/zignet
-- **Model (post-training):** https://huggingface.co/fulgidus/zignet-qwen2.5-coder-7b
 - **MCP Protocol:** https://modelcontextprotocol.io
 - **Zig Language:** https://ziglang.org
 
----
-
-**Status:** 🔄 Active development - Fine-tuning in progress (ETA: Oct 26, 2025 23:30 CET)

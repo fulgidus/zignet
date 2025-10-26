@@ -69,7 +69,7 @@
         "clean": "rm -rf dist",
         "docker:build": "docker build -t zignet:latest .",
         "docker:run": "docker run --rm -it zignet:latest",
-        "ci": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test"
+        "prepublishOnly": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test"
     },
     "keywords": [
         "mcp",

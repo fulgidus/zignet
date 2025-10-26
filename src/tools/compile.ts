@@ -5,9 +5,9 @@
  * Supports multiple Zig versions for consistent formatting.
  */
 
-import { zigFormat } from "../zig/executor.js";
-import { type ZigVersion } from "../zig/manager.js";
-import { DEFAULT_ZIG_VERSION } from "../config.js";
+import { zigFormat } from '../zig/executor.js';
+import { type ZigVersion } from '../zig/manager.js';
+import { DEFAULT_ZIG_VERSION } from '../config.js';
 
 export interface CompileInput {
     code: string;
@@ -21,7 +21,7 @@ export interface CompileResult {
         message: string;
         line?: number;
         column?: number;
-        severity: "error" | "warning";
+        severity: 'error' | 'warning';
     }>;
     summary: string;
     zig_version: string;
@@ -30,22 +30,22 @@ export interface CompileResult {
 /**
  * Format Zig code using official Zig formatter
  */
-export async function compileZig(input: CompileInput): Promise<CompileResult> {
+export function compileZig(input: CompileInput): CompileResult {
     const { code, zig_version = DEFAULT_ZIG_VERSION } = input;
 
     // Validate input
     if (!code || code.trim().length === 0) {
         return {
             success: false,
-            errors: [{ message: "Input code cannot be empty", severity: "error" }],
-            summary: "❌ Empty input",
+            errors: [{ message: 'Input code cannot be empty', severity: 'error' }],
+            summary: '❌ Empty input',
             zig_version,
         };
     }
 
     try {
         // Run Zig fmt
-        const result = await zigFormat(code, zig_version);
+        const result = zigFormat(code, zig_version);
 
         if (result.success) {
             return {
@@ -61,7 +61,7 @@ export async function compileZig(input: CompileInput): Promise<CompileResult> {
                 message: d.message,
                 line: d.line,
                 column: d.column,
-                severity: "error" as const,
+                severity: 'error' as const,
             }));
 
             return {
@@ -77,7 +77,7 @@ export async function compileZig(input: CompileInput): Promise<CompileResult> {
             errors: [
                 {
                     message: `Failed to run Zig formatter: ${error instanceof Error ? error.message : String(error)}`,
-                    severity: "error",
+                    severity: 'error',
                 },
             ],
             summary: `❌ Format failed: Could not execute Zig ${zig_version}`,
@@ -93,23 +93,23 @@ export function formatCompileResult(result: CompileResult): string {
     const lines: string[] = [];
 
     lines.push(result.summary);
-    lines.push("");
+    lines.push('');
 
     if (result.success && result.output) {
-        lines.push("**Formatted Zig Code:**");
-        lines.push("```zig");
+        lines.push('**Formatted Zig Code:**');
+        lines.push('```zig');
         lines.push(result.output);
-        lines.push("```");
-        return lines.join("\n");
+        lines.push('```');
+        return lines.join('\n');
     }
 
     if (result.errors.length > 0) {
-        lines.push("**Errors:**");
+        lines.push('**Errors:**');
         result.errors.forEach((error, index) => {
-            const location = error.line && error.column ? ` (${error.line}:${error.column})` : "";
+            const location = error.line && error.column ? ` (${error.line}:${error.column})` : '';
             lines.push(`${index + 1}. ${error.message}${location}`);
         });
     }
 
-    return lines.join("\n");
+    return lines.join('\n');
 }
