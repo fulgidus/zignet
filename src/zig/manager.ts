@@ -108,8 +108,14 @@ function getZigDownloadUrl(version: ZigVersion): string {
     };
 
     const zigPlatform = platformMap[platform];
-    // Format: zig-{arch}-{platform}-{version}{ext}
-    const filename = `zig-${arch}-${zigPlatform}-${version}${ext}`;
+
+    // Zig changed filename format in 0.15.0:
+    // - 0.13.0, 0.14.0: zig-{platform}-{arch}-{version}  (e.g., zig-linux-x86_64-0.13.0)
+    // - 0.15.0+:        zig-{arch}-{platform}-{version}  (e.g., zig-x86_64-linux-0.15.0)
+    const versionNum = parseFloat(version);
+    const filename = versionNum >= 0.15
+        ? `zig-${arch}-${zigPlatform}-${version}${ext}`  // New format (0.15.0+)
+        : `zig-${zigPlatform}-${arch}-${version}${ext}`;  // Old format (0.13.0, 0.14.0)
 
     return `https://ziglang.org/download/${version}/${filename}`;
 }
@@ -137,19 +143,21 @@ export function getZigInstallPath(version: ZigVersion): string {
  */
 export function getZigBinaryPath(version: ZigVersion): string {
     const installPath = getZigInstallPath(version);
-    const { platform } = detectPlatform();
+    const { platform, arch } = detectPlatform();
     const binaryName = platform === 'windows' ? 'zig.exe' : 'zig';
 
-    // Zig extracts to zig-{arch}-{platform}-{version}/
-    const { arch } = detectPlatform();
     const platformMap: Record<Platform, string> = {
         linux: 'linux',
         macos: 'macos',
         windows: 'windows',
     };
     const zigPlatform = platformMap[platform];
-    // Format: zig-{arch}-{platform}-{version}
-    const extractDir = `zig-${arch}-${zigPlatform}-${version}`;
+
+    // Match the extraction directory format with download filename format
+    const versionNum = parseFloat(version);
+    const extractDir = versionNum >= 0.15
+        ? `zig-${arch}-${zigPlatform}-${version}`  // New format (0.15.0+)
+        : `zig-${zigPlatform}-${arch}-${version}`;  // Old format (0.13.0, 0.14.0)
 
     return join(installPath, extractDir, binaryName);
 }
