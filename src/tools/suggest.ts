@@ -2,12 +2,12 @@
  * suggest_fix tool - Suggest intelligent fixes for Zig errors
  */
 
-import { getLLM } from '../llm/session.js';
+import { getLLM } from "../llm/session.js";
 
 export interface SuggestFixArgs {
     error_message: string;
     code_context?: string;
-    error_type?: 'syntax' | 'type' | 'semantic' | 'runtime';
+    error_type?: "syntax" | "type" | "semantic" | "runtime";
 }
 
 export interface SuggestFixResult {
@@ -26,8 +26,10 @@ export interface Fix {
 /**
  * Suggest fixes for Zig compilation errors
  */
-export async function suggestFix(args: SuggestFixArgs): Promise<SuggestFixResult> {
-    const { error_message, code_context, error_type = 'semantic' } = args;
+export async function suggestFix(
+    args: SuggestFixArgs,
+): Promise<SuggestFixResult> {
+    const { error_message, code_context, error_type = "semantic" } = args;
 
     console.log(`💡 Suggesting fix for: ${error_message.substring(0, 50)}...`);
 
@@ -39,7 +41,7 @@ Error Message:
 ${error_message}
 \`\`\`
 
-${code_context ? `Code Context:\n\`\`\`zig\n${code_context}\n\`\`\`\n` : ''}
+${code_context ? `Code Context:\n\`\`\`zig\n${code_context}\n\`\`\`\n` : ""}
 
 Error Type: ${error_type}
 
@@ -64,7 +66,7 @@ Format your response clearly with code blocks for fixes.`;
         };
     } catch (error) {
         throw new Error(
-            `Failed to suggest fix: ${error instanceof Error ? error.message : String(error)}`
+            `Failed to suggest fix: ${error instanceof Error ? error.message : String(error)}`,
         );
     }
 }
@@ -74,8 +76,8 @@ Format your response clearly with code blocks for fixes.`;
  */
 function extractErrorSummary(response: string): string {
     // Look for first paragraph or sentence
-    const lines = response.split('\n').filter((line) => line.trim());
-    return lines[0] || 'Error analysis';
+    const lines = response.split("\n").filter((line) => line.trim());
+    return lines[0] || "Error analysis";
 }
 
 /**
@@ -105,7 +107,7 @@ function parseFixes(response: string): Fix[] {
     for (let i = 0; i < Math.max(descriptions.length, codeBlocks.length); i++) {
         fixes.push({
             description: descriptions[i] || `Fix option ${i + 1}`,
-            code_after: codeBlocks[i] || '// See explanation above',
+            code_after: codeBlocks[i] || "// See explanation above",
             rationale: `Addresses the ${extractErrorSummary(response)}`,
         });
     }
@@ -113,9 +115,9 @@ function parseFixes(response: string): Fix[] {
     // If no structured fixes found, create a generic one
     if (fixes.length === 0) {
         fixes.push({
-            description: 'Suggested fix',
-            code_after: codeBlocks[0] || '// See detailed explanation',
-            rationale: 'Based on error analysis',
+            description: "Suggested fix",
+            code_after: codeBlocks[0] || "// See detailed explanation",
+            rationale: "Based on error analysis",
         });
     }
 

@@ -5,12 +5,12 @@
  * Parses compiler output and formats errors for MCP responses.
  */
 
-import { execSync } from 'child_process';
-import { writeFileSync, unlinkSync, mkdtempSync, readFileSync } from 'fs';
-import { join } from 'path';
-import { tmpdir } from 'os';
-import { ensureZig, type ZigVersion } from './manager.js';
-import { DEFAULT_ZIG_VERSION } from '../config.js';
+import { execSync } from "child_process";
+import { writeFileSync, unlinkSync, mkdtempSync, readFileSync } from "fs";
+import { join } from "path";
+import { tmpdir } from "os";
+import { ensureZig, type ZigVersion } from "./manager.js";
+import { DEFAULT_ZIG_VERSION } from "../config.js";
 
 /**
  * Zig compiler error/warning
@@ -20,7 +20,7 @@ export interface ZigDiagnostic {
     file?: string;
     line?: number;
     column?: number;
-    severity: 'error' | 'warning' | 'note';
+    severity: "error" | "warning" | "note";
 }
 
 /**
@@ -42,13 +42,15 @@ export interface ZigResult {
  */
 function parseZigOutput(output: string): ZigDiagnostic[] {
     const diagnostics: ZigDiagnostic[] = [];
-    const lines = output.split('\n');
+    const lines = output.split("\n");
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
 
         // Match Zig error format: file:line:col: severity: message
-        const match = line.match(/^(.+?):(\d+):(\d+):\s+(error|warning|note):\s+(.+)$/);
+        const match = line.match(
+            /^(.+?):(\d+):(\d+):\s+(error|warning|note):\s+(.+)$/,
+        );
 
         if (match) {
             const [, file, lineNum, colNum, severity, message] = match;
@@ -57,13 +59,13 @@ function parseZigOutput(output: string): ZigDiagnostic[] {
                 file,
                 line: parseInt(lineNum, 10),
                 column: parseInt(colNum, 10),
-                severity: severity as 'error' | 'warning' | 'note',
+                severity: severity as "error" | "warning" | "note",
             });
-        } else if (line.trim().startsWith('error:')) {
+        } else if (line.trim().startsWith("error:")) {
             // Generic error without location
             diagnostics.push({
-                message: line.replace(/^error:\s+/, '').trim(),
-                severity: 'error',
+                message: line.replace(/^error:\s+/, "").trim(),
+                severity: "error",
             });
         }
     }
@@ -78,23 +80,26 @@ function parseZigOutput(output: string): ZigDiagnostic[] {
  * @param version - Zig version to use (default: from ZIG_DEFAULT env var)
  * @returns Result with success status and diagnostics
  */
-export function zigAstCheck(code: string, version: ZigVersion = DEFAULT_ZIG_VERSION): ZigResult {
+export function zigAstCheck(
+    code: string,
+    version: ZigVersion = DEFAULT_ZIG_VERSION,
+): ZigResult {
     // Ensure Zig version is installed
     const zigBinary = ensureZig(version);
 
     // Create temporary file
-    const tempDir = mkdtempSync(join(tmpdir(), 'zignet-'));
-    const tempFile = join(tempDir, 'check.zig');
+    const tempDir = mkdtempSync(join(tmpdir(), "zignet-"));
+    const tempFile = join(tempDir, "check.zig");
 
     try {
         // Write code to temp file
-        writeFileSync(tempFile, code, 'utf8');
+        writeFileSync(tempFile, code, "utf8");
 
         // Run zig ast-check
         try {
             const output = execSync(`"${zigBinary}" ast-check "${tempFile}"`, {
-                encoding: 'utf8',
-                stdio: 'pipe',
+                encoding: "utf8",
+                stdio: "pipe",
             });
 
             return {
@@ -105,7 +110,11 @@ export function zigAstCheck(code: string, version: ZigVersion = DEFAULT_ZIG_VERS
         } catch (error: unknown) {
             // ast-check failed, parse errors
             const errorObj = error as { stderr?: Buffer; stdout?: Buffer };
-            const stderr = (errorObj.stderr ?? errorObj.stdout ?? Buffer.from('')).toString();
+            const stderr = (
+                errorObj.stderr ??
+                errorObj.stdout ??
+                Buffer.from("")
+            ).toString();
             const diagnostics = parseZigOutput(stderr);
 
             return {
@@ -131,23 +140,26 @@ export function zigAstCheck(code: string, version: ZigVersion = DEFAULT_ZIG_VERS
  * @param version - Zig version to use (default: from ZIG_DEFAULT env var)
  * @returns Formatted code or error
  */
-export function zigFormat(code: string, version: ZigVersion = DEFAULT_ZIG_VERSION): ZigResult {
+export function zigFormat(
+    code: string,
+    version: ZigVersion = DEFAULT_ZIG_VERSION,
+): ZigResult {
     // Ensure Zig version is installed
     const zigBinary = ensureZig(version);
 
     // Create temporary file
-    const tempDir = mkdtempSync(join(tmpdir(), 'zignet-'));
-    const tempFile = join(tempDir, 'format.zig');
+    const tempDir = mkdtempSync(join(tmpdir(), "zignet-"));
+    const tempFile = join(tempDir, "format.zig");
 
     try {
         // Write code to temp file
-        writeFileSync(tempFile, code, 'utf8');
+        writeFileSync(tempFile, code, "utf8");
 
         // Run zig fmt --check (check if formatting needed)
         try {
             execSync(`"${zigBinary}" fmt --check "${tempFile}"`, {
-                encoding: 'utf8',
-                stdio: 'pipe',
+                encoding: "utf8",
+                stdio: "pipe",
             });
 
             // No formatting needed, return original
@@ -161,11 +173,11 @@ export function zigFormat(code: string, version: ZigVersion = DEFAULT_ZIG_VERSIO
             // Try to format
             try {
                 execSync(`"${zigBinary}" fmt "${tempFile}"`, {
-                    stdio: 'pipe',
+                    stdio: "pipe",
                 });
 
                 // Read formatted code
-                const formatted = readFileSync(tempFile, 'utf8');
+                const formatted = readFileSync(tempFile, "utf8");
 
                 return {
                     success: true,
@@ -174,8 +186,15 @@ export function zigFormat(code: string, version: ZigVersion = DEFAULT_ZIG_VERSIO
                 };
             } catch (fmtError: unknown) {
                 // Format failed, parse errors
-                const errorObj = fmtError as { stderr?: Buffer; stdout?: Buffer };
-                const stderr = (errorObj.stderr ?? errorObj.stdout ?? Buffer.from('')).toString();
+                const errorObj = fmtError as {
+                    stderr?: Buffer;
+                    stdout?: Buffer;
+                };
+                const stderr = (
+                    errorObj.stderr ??
+                    errorObj.stdout ??
+                    Buffer.from("")
+                ).toString();
                 const diagnostics = parseZigOutput(stderr);
 
                 return {
@@ -206,8 +225,8 @@ export function getZigVersionString(version: ZigVersion): string {
 
     try {
         const output = execSync(`"${zigBinary}" version`, {
-            encoding: 'utf8',
-            stdio: 'pipe',
+            encoding: "utf8",
+            stdio: "pipe",
         });
 
         return output.trim();

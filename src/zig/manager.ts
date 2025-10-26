@@ -6,11 +6,11 @@
  * Checks system PATH for existing Zig installations before downloading.
  */
 
-import { execSync } from 'child_process';
-import { existsSync, mkdirSync, chmodSync } from 'fs';
-import { join } from 'path';
-import { homedir } from 'os';
-import { SUPPORTED_ZIG_VERSIONS, type ZigVersion } from '../config.js';
+import { execSync } from "child_process";
+import { existsSync, mkdirSync, chmodSync } from "fs";
+import { join } from "path";
+import { homedir } from "os";
+import { SUPPORTED_ZIG_VERSIONS, type ZigVersion } from "../config.js";
 
 export { SUPPORTED_ZIG_VERSIONS, type ZigVersion };
 
@@ -20,9 +20,9 @@ export { SUPPORTED_ZIG_VERSIONS, type ZigVersion };
  */
 export function detectSystemZig(): string | null {
     try {
-        const output = execSync('zig version', {
-            encoding: 'utf-8',
-            stdio: ['pipe', 'pipe', 'ignore'],
+        const output = execSync("zig version", {
+            encoding: "utf-8",
+            stdio: ["pipe", "pipe", "ignore"],
         });
         const version = output.trim();
         console.log(`🔍 Found system Zig: ${version}`);
@@ -40,8 +40,11 @@ export function detectSystemZig(): string | null {
 export function getSystemZigPath(): string | null {
     try {
         const platform = process.platform;
-        const command = platform === 'win32' ? 'where zig' : 'which zig';
-        const output = execSync(command, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] });
+        const command = platform === "win32" ? "where zig" : "which zig";
+        const output = execSync(command, {
+            encoding: "utf-8",
+            stdio: ["pipe", "pipe", "ignore"],
+        });
         return output.trim();
     } catch {
         return null;
@@ -51,8 +54,8 @@ export function getSystemZigPath(): string | null {
 /**
  * Platform detection
  */
-type Platform = 'linux' | 'macos' | 'windows';
-type Arch = 'x86_64' | 'aarch64';
+type Platform = "linux" | "macos" | "windows";
+type Arch = "x86_64" | "aarch64";
 
 interface PlatformInfo {
     platform: Platform;
@@ -71,27 +74,27 @@ function detectPlatform(): PlatformInfo {
     let detectedArch: Arch;
 
     // Platform
-    if (platform === 'linux') {
-        detectedPlatform = 'linux';
-    } else if (platform === 'darwin') {
-        detectedPlatform = 'macos';
-    } else if (platform === 'win32') {
-        detectedPlatform = 'windows';
+    if (platform === "linux") {
+        detectedPlatform = "linux";
+    } else if (platform === "darwin") {
+        detectedPlatform = "macos";
+    } else if (platform === "win32") {
+        detectedPlatform = "windows";
     } else {
         throw new Error(`Unsupported platform: ${platform}`);
     }
 
     // Architecture
-    if (arch === 'x64') {
-        detectedArch = 'x86_64';
-    } else if (arch === 'arm64') {
-        detectedArch = 'aarch64';
+    if (arch === "x64") {
+        detectedArch = "x86_64";
+    } else if (arch === "arm64") {
+        detectedArch = "aarch64";
     } else {
         throw new Error(`Unsupported architecture: ${arch}`);
     }
 
     // Extension
-    const ext = detectedPlatform === 'windows' ? '.zip' : '.tar.xz';
+    const ext = detectedPlatform === "windows" ? ".zip" : ".tar.xz";
 
     return { platform: detectedPlatform, arch: detectedArch, ext };
 }
@@ -104,9 +107,9 @@ function getZigDownloadUrl(version: ZigVersion): string {
 
     // Map platform names to Zig's naming convention
     const platformMap: Record<Platform, string> = {
-        linux: 'linux',
-        macos: 'macos',
-        windows: 'windows',
+        linux: "linux",
+        macos: "macos",
+        windows: "windows",
     };
 
     const zigPlatform = platformMap[platform];
@@ -127,7 +130,7 @@ function getZigDownloadUrl(version: ZigVersion): string {
  * Get cache directory for Zig installations
  */
 export function getZigCacheDir(): string {
-    const cacheDir = join(homedir(), '.zignet', 'zig-versions');
+    const cacheDir = join(homedir(), ".zignet", "zig-versions");
     if (!existsSync(cacheDir)) {
         mkdirSync(cacheDir, { recursive: true });
     }
@@ -147,12 +150,12 @@ export function getZigInstallPath(version: ZigVersion): string {
 export function getZigBinaryPath(version: ZigVersion): string {
     const installPath = getZigInstallPath(version);
     const { platform, arch } = detectPlatform();
-    const binaryName = platform === 'windows' ? 'zig.exe' : 'zig';
+    const binaryName = platform === "windows" ? "zig.exe" : "zig";
 
     const platformMap: Record<Platform, string> = {
-        linux: 'linux',
-        macos: 'macos',
-        windows: 'windows',
+        linux: "linux",
+        macos: "macos",
+        windows: "windows",
     };
     const zigPlatform = platformMap[platform];
 
@@ -197,7 +200,7 @@ export function installZig(version: ZigVersion): void {
         // Download and extract using platform-appropriate tools
         const { platform } = detectPlatform();
 
-        if (platform === 'windows') {
+        if (platform === "windows") {
             // Windows: Download .zip and extract with PowerShell
             const tempFile = join(installPath, `zig-${version}.zip`);
 
@@ -205,26 +208,30 @@ export function installZig(version: ZigVersion): void {
             console.log(`📥 Downloading ${url}...`);
             execSync(
                 `powershell -Command "(New-Object System.Net.WebClient).DownloadFile('${url}', '${tempFile}')"`,
-                { stdio: 'inherit' }
+                { stdio: "inherit" },
             );
 
             // Extract using PowerShell
             console.log(`📦 Extracting Zig ${version}...`);
             execSync(
                 `powershell -Command "Expand-Archive -Path '${tempFile}' -DestinationPath '${installPath}' -Force"`,
-                { stdio: 'inherit' }
+                { stdio: "inherit" },
             );
 
             // Remove temp file
-            execSync(`del "${tempFile}"`, { stdio: 'inherit' });
+            execSync(`del "${tempFile}"`, { stdio: "inherit" });
         } else {
             // Unix-like: Download .tar.xz and extract with curl + tar
             const tempFile = join(installPath, `zig-${version}.tar.xz`);
-            execSync(`curl -fSL "${url}" -o "${tempFile}"`, { stdio: 'inherit' });
+            execSync(`curl -fSL "${url}" -o "${tempFile}"`, {
+                stdio: "inherit",
+            });
 
             // Extract
             console.log(`📦 Extracting Zig ${version}...`);
-            execSync(`tar -xJf "${tempFile}" -C "${installPath}"`, { stdio: 'inherit' });
+            execSync(`tar -xJf "${tempFile}" -C "${installPath}"`, {
+                stdio: "inherit",
+            });
 
             // Remove temp file
             execSync(`rm "${tempFile}"`);
@@ -233,13 +240,17 @@ export function installZig(version: ZigVersion): void {
         // Verify installation
         const binaryPath = getZigBinaryPath(version);
         if (!existsSync(binaryPath)) {
-            throw new Error(`Installation failed: binary not found at ${binaryPath}`);
+            throw new Error(
+                `Installation failed: binary not found at ${binaryPath}`,
+            );
         }
 
         // Make executable
         chmodSync(binaryPath, 0o755);
 
-        console.log(`✅ Zig ${version} installed successfully at ${binaryPath}`);
+        console.log(
+            `✅ Zig ${version} installed successfully at ${binaryPath}`,
+        );
     } catch (error: unknown) {
         const message = error instanceof Error ? error.message : String(error);
         throw new Error(`Failed to install Zig ${version}: ${message}`);
@@ -279,7 +290,9 @@ export function ensureZig(version: ZigVersion): string {
  */
 export function getInstalledZigVersion(binaryPath: string): string {
     try {
-        const output = execSync(`"${binaryPath}" version`, { encoding: 'utf8' });
+        const output = execSync(`"${binaryPath}" version`, {
+            encoding: "utf8",
+        });
         return output.trim();
     } catch (error: unknown) {
         const message = error instanceof Error ? error.message : String(error);
