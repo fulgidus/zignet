@@ -1,0 +1,30 @@
+{
+  "name": "zignet",
+  "version": "0.1.0",
+  "description": "MCP server for Zig — AI-powered code generation, debugging, and documentation",
+  "type": "module",
+  "bin": {
+    "zignet": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "node bin/cli.js",
+    "download-model": "node scripts/download-model.js"
+  },
+  "keywords": [
+    "mcp",
+    "zig",
+    "ai",
+    "code-generation",
+    "llm"
+  ],
+  "author": "",
+  "license": "WTFPL",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "node-llama-cpp": "^3.1.1",
+    "@huggingface/hub": "^0.15.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
