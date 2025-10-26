@@ -1,0 +1,63 @@
+{
+  "model": "mistral",
+  "timestamp": "2025-10-26T02:44:53.294Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": " Here's a simple Zig function in Zig language that returns the sum of two integers:\n\n```zig\nconst std = @import(\"std\");\n\npub fn main(args: []const char; env: *const std.Env) !void {\n    const int a = 5;\n    const int b = 3;\n\n    const int sum = .{sum}(a, b);\n    std.io.putstr(\"The sum of \", a, \" and \", b, \" is: \", sum, \"\\n\");\n}\n\npub fn sum(left: int, right: int) int {\n    return left + right;\n}\n```\n\nThis code defines a `sum` function that takes two integer arguments and returns their sum. The ma",
+      "duration": 39245,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": " In Zig, you can create your own simple allocator and manage memory allocation for a custom structure. Here's a basic example of an allocator for an `UntypedStruct` containing an `i32` (integer) field and functions to allocate, access, and free the allocated memory.\n\n```zig\nconst std = @import(\"std\");\n\npub struct UntypedStruct {\n    data: *u8,\n    size: u32,\n}\n\nconst allocatorSize(struct: type[*UntypedStruct]) = struct.FieldSizeof!();\n\nfn allocateUntypedStruct() *UntypedStruct {\n    var memory =",
+      "duration": 108254,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": " In Zig, I'll show you an example of a simple function that uses the `Result` type to return either a success value or an error. The example demonstrates error handling in the caller as well.\n\nFirst, let's define our custom error type and error functions:\n\n```zig\nconst std = @import(\"std\");\nconst Result = import(\"result\");\n\npub const Error = enum {\n    Success,\n    Failure(i32), // Custom error message\n};\n\npub fn error(message: zigstr)!Error {\n    return .Failure(std.fmt.Sprint(message));\n}\n```\n",
+      "duration": 85970,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": " In Zig language, here is a simple implementation of a `Point` struct with `x` and `y` coordinates and a method (or function) to calculate the distance from the origin:\n\n```zig\nconst std = @import(\"std\");\n\npub const Point = struct {\n    x: f64,\n    y: f64,\n};\n\npub fn distanceFromOrigin(point: Point) f64 {\n    return sqrt(point.x * point.x + point.y * point.y);\n}\n```\n\nYou can use the `Point` struct and `distanceFromOrigin` function like this:\n\n```zig\nconst pt = Point{ .x = 3, .y = 4 };\nconst dist",
+      "duration": 103103,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": " In Zig, you can create a generic function to find the maximum of two values using templates. Here's an example implementation for numeric types:\n\n```zig\nconst std = @import(\"std\");\n\npub fn maxOfTwo(a: T, b: T) !T {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\n\npub const fn isNumericType!(ty: anytype) !bool {\n    try std.stdio.writeln(\"Checking type {}...\", .{ty});\n    var _ = typeof(ty);\n    if (typeof(ty) & ZIG_TYPEOF_INT == ZIG_TYPEOF_INT ||\n        typeof(ty) & ZIG_TYPEOF_UINT ==",
+      "duration": 88354,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": " To compute a factorial at compile-time using Comptime in Zig, you can create a function that takes an integer as input and returns its factorial value. Here's an example:\n\n```zig\nconst CompileTime = @import(\"std/stdio/comptime.zig\");\nconst Std = @import(\"std\");\n\npub fn factorial(n: u64)!comp: comptime(n > 0) -> u64 {\n    if (n == 1) {\n        return 1;\n    } else {\n        return n * factorial(n - 1)!comp;\n    }\n}\n\nfn main() !body {\n    const N = CompileTime.constExpr!(u64, 5);\n    const res = ",
+      "duration": 71440,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 82727.66666666667
+}
