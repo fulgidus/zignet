@@ -106,11 +106,14 @@ jobs:
           export ZIG_DEFAULT="${{ matrix.zig-version }}"
           node -e "
           const { analyzeZig } = require('./dist/tools/analyze.cjs');
-          const code = 'fn main() void { const x: i32 = 42; }';
+          const code = 'fn add(a: i32, b: i32) i32 { return a + b; }';
           analyzeZig({ code, zig_version: '${{ matrix.zig-version }}' })
             .then(result => {
               console.log('Result:', result);
-              if (!result.success) process.exit(1);
+              if (!result.success) {
+                console.error('Analysis failed:', result.errors);
+                process.exit(1);
+              }
             })
             .catch(err => {
               console.error('Error:', err);
