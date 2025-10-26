@@ -347,26 +347,29 @@ Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, 
 - ✅ **Type Checker** (src/type-checker.ts) - DONE
 - ✅ **Code Generator** (src/codegen.ts) - DONE
 
-### Phase 2.5: Model Fine-Tuning 🔄 IN PROGRESS (TRAINING ACTIVE)
+### Phase 2.5: Model Fine-Tuning 🔄 IN PROGRESS (TRAINING ACTIVE - 26% COMPLETE)
 - ✅ **Select base model** → **Qwen2.5-Coder-7B** (best quality, idiomatica Zig)
 - ✅ **Prepare training data** → **13,756 examples** (9,629 train, 2,063 val, 2,064 test)
-- 🔄 **Fine-tune model** → **RUNNING NOW** (QLoRA on RTX 3090, ETA: Oct 26 23:30 CET)
-  - Hardware: RTX 3090 (24GB VRAM, 100% util, 75°C, 351W)
+- 🔄 **Fine-tune model** → **RUNNING NOW** (QLoRA on RTX 3090, Step 473/1806 - 26.1%)
+  - Hardware: RTX 3090 (24GB VRAM, 100% util, 80°C, 351W)
   - Method: QLoRA (4-bit) without Unsloth (compatibility issues)
   - Training: 3 epochs, 1,806 steps, batch 16, lr 2e-4
   - Script: `scripts/train-qwen-standard.py`
-  - Log: `training.log` (monitor: `tail -f training.log`)
-  - PID: 922643 (started Oct 26 15:43:30 CET)
+  - Log: `training.log` (monitor: `pnpm run monitor-training`)
+  - PID: 922643 (started Oct 26 15:45:47 CET)
+  - Speed: 5.67s/step, ETA: ~2h remaining (~18:00 CET)
 - ⏳ **Validate model** (test on Zig-specific benchmarks) - AFTER TRAINING
 - ⏳ **Upload to HuggingFace** → `fulgidus/zignet-qwen2.5-coder-7b` - AFTER TRAINING
 - ⏳ **Convert to GGUF** (Q4_K_M quantization for node-llama-cpp) - AFTER TRAINING
 - ⏳ **Integrate with ZigNet** (MCP tools: get_zig_docs, suggest_fix) - PHASE 3
 
 **Training Status (Real-time)**:
-- Started: Oct 26 15:43:30 CET 2025
-- Expected completion: Oct 26 23:30 CET 2025 (~8 hours)
-- Current: Loading first batch (GPU at 100%)
+- Started: Oct 26 15:45:47 CET 2025
+- Current: Step 473/1806 (26.1%), Epoch 1/3
+- Speed: 5.67 seconds per step
+- ETA: ~2.0h remaining (completion ~18:00 CET)
 - Output: `models/zignet-qwen-7b/final/`
+- Monitor: `pnpm run monitor-training` or `tail -f training.log`
 
 **Selected Model Details**:
 - **Base**: Qwen/Qwen2.5-Coder-7B-Instruct
@@ -375,9 +378,12 @@ Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, 
 - **Size**: 7B params → ~4GB GGUF Q4_K_M
 - **Why**: Migliore comprensione idiomi Zig (comptime, generics, error handling)
 
-### Phase 3: MCP Integration ⏳ NEXT
-- ⏳ **MCP Server** (src/mcp-server.ts)
-- ⏳ **Tool Implementations**
+### Phase 3: MCP Integration 🔄 IN PROGRESS (2/4 TOOLS IMPLEMENTED)
+- ✅ **MCP Server** (src/mcp-server.ts) - Skeleton complete
+- ✅ **analyze_zig tool** (src/tools/analyze.ts) - WORKING (Lexer → Parser → TypeChecker)
+- ✅ **compile_zig tool** (src/tools/compile.ts) - WORKING (Lexer → Parser → CodeGen)
+- ⏳ **get_zig_docs tool** (waiting for fine-tuned model)
+- ⏳ **suggest_fix tool** (waiting for fine-tuned model)
 
 ### Phase 4: Testing & Polish
 - ⏳ Unit tests for all components
