@@ -1,6 +1,6 @@
 /**
  * E2E Tests for Zig Manager
- * 
+ *
  * Tests multi-version support, system detection, and download functionality
  */
 
@@ -11,7 +11,7 @@ import {
     isZigInstalled,
     getZigBinaryPath,
     ensureZig,
-    SUPPORTED_ZIG_VERSIONS
+    SUPPORTED_ZIG_VERSIONS,
 } from '../../src/zig/manager.js';
 
 describe('Zig Manager E2E', () => {
@@ -64,14 +64,18 @@ describe('Zig Manager E2E', () => {
         // This test is slow - only run if ZIGNET_TEST_INSTALL=1
         const shouldTestInstall = process.env.ZIGNET_TEST_INSTALL === '1';
 
-        (shouldTestInstall ? it : it.skip)('should install Zig version on demand', async () => {
-            const version = SUPPORTED_ZIG_VERSIONS[0];
-            const binaryPath = await ensureZig(version);
+        (shouldTestInstall ? it : it.skip)(
+            'should install Zig version on demand',
+            async () => {
+                const version = SUPPORTED_ZIG_VERSIONS[0];
+                const binaryPath = await ensureZig(version);
 
-            expect(typeof binaryPath).toBe('string');
-            expect(isZigInstalled(version)).toBe(true);
+                expect(typeof binaryPath).toBe('string');
+                expect(isZigInstalled(version)).toBe(true);
 
-            console.log(`✅ Installed Zig ${version} at ${binaryPath}`);
-        }, 60000); // 60s timeout for download
+                console.log(`✅ Installed Zig ${version} at ${binaryPath}`);
+            },
+            60000
+        ); // 60s timeout for download
     });
 });
