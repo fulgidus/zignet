@@ -5,6 +5,11 @@ All notable changes to ZigNet will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) aligned with Zig releases.
 
+## [0.15.2-c] - 2025-10-26
+
+### 🐛 Bug Fixes
+- **Fixed** Issue on Windows where the Zig executable path was not correctly resolved, causing tool failures. Now uses proper path normalization (I hope).
+
 ## [0.15.2-b] - 2025-10-26
 
 ### 🐛 Bug Fixes
