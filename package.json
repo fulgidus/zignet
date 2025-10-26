@@ -10,6 +10,7 @@
         "start": "node bin/cli.js",
         "download-model": "node scripts/download-model.js",
         "scrape-docs": "node scripts/scrape-zig-docs.js",
+        "scrape-repos": "node scripts/scrape-zig-repos.js",
         "compare-models": "node scripts/compare-models.js",
         "build": "tsc",
         "build:watch": "tsc --watch",
@@ -36,6 +37,7 @@
         "@huggingface/hub": "^0.15.2",
         "@modelcontextprotocol/sdk": "^1.0.4",
         "axios": "^1.12.2",
+        "dotenv": "^17.2.3",
         "http": "0.0.1-security",
         "node-llama-cpp": "^3.1.1"
     },

@@ -278,24 +278,24 @@ server.setRequestHandler(CallToolRequestSchema, handleToolCall);
 - ❌ **NOT used for parsing/validation**: Parser + Type Checker handle this (deterministic, fast)
 
 **Model Benchmarking** (Phase 1):
-Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, Llama3.2-3b, Qwen2.5-Coder (1.5b, 7b)
+Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, Llama3.2-3b, Qwen2.5-Coder (0.5b, 1.5b, 7b)
 - Results in `scripts/test-results/` - **ALL models: 100% pass rate** ✅
 - Analysis tool: `pnpm run compare-models`
 - Integration: `node-llama-cpp` (local, no API calls)
 
-**Top Candidates** (all 100% pass rate):
-1. **Qwen2.5-Coder-1.5B**: ⚡ Fastest (7.48s avg) - Best for low latency
-2. **Llama3.2-3B**: Balanced (12.27s avg) - Good speed/quality ratio
-3. **CodeLlama-7B**: Standard (24.61s avg) - Best for fine-tuning (HuggingFace support)
-4. **DeepSeek-Coder-6.7B**: Fast large model (27.86s avg) - Good alternative
-5. **Qwen2.5-Coder-7B**: Quality (29.58s avg) - Strong code generation
+**Benchmark Results** (all 100% pass rate):
+1. **Qwen2.5-Coder-0.5B**: ⚡ Fastest (3.94s) - ❌ Inventa sintassi, inutilizzabile
+2. **Qwen2.5-Coder-1.5B**: Fast (7.48s) - ⚠️ Impreciso per Zig avanzato
+3. **Llama3.2-3B**: Balanced (12.27s) - ⭐⭐⭐⭐ Ottima qualità
+4. **CodeLlama-7B**: Standard (24.61s) - ⚠️ Confonde Zig con Rust
+5. **DeepSeek-Coder-6.7B**: Quality (27.86s) - ⭐⭐⭐⭐⭐ Didattico
+6. **Qwen2.5-Coder-7B**: Best (29.58s) - ⭐⭐⭐⭐⭐ Sintassi idiomatica
 
-**Selection Criteria for Fine-Tuning**:
-- ✅ 100% benchmark pass rate
-- ✅ Community support & tooling
-- ✅ Fine-tuning efficiency (LoRA/QLoRA compatible)
-- ✅ Balance: size (7B recommended) vs speed vs quality
-- ⏳ **DECISION PENDING** - Awaiting final benchmark completion
+**✅ SELECTED MODEL: Qwen2.5-Coder-7B**
+- **Why**: Sintassi Zig moderna e idiomatica, zero errori gravi, comprende features avanzate
+- **Quality**: ⭐⭐⭐⭐⭐ (best-in-class per Zig)
+- **Speed**: 29.58s base → ~15-20s post fine-tuning + quantization
+- **Upload target**: `fulgidus/zignet-qwen2.5-coder-7b`
 
 ### No External Dependencies (For Core Analysis)
 - ✅ **Local LLM** via node-llama-cpp (for `get_zig_docs` and `suggest_fix` tools)
@@ -347,21 +347,21 @@ Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, 
 - ✅ **Type Checker** (src/type-checker.ts) - DONE
 - ✅ **Code Generator** (src/codegen.ts) - DONE
 
-### Phase 2.5: Model Fine-Tuning ⏳ TODO
-- ⏳ **Select base model** (awaiting final benchmarks - see comparison below)
-- ⏳ **Prepare training data** (instruction-response pairs from scraped docs)
-- ⏳ **Fine-tune model** (LoRA/QLoRA for efficiency)
-- ⏳ **Validate model** (test on Zig-specific tasks)
-- ⏳ **Upload to HuggingFace** (fulgidus/zignet-{model} - TBD based on selection)
-- ⏳ **Integrate with node-llama-cpp**
+### Phase 2.5: Model Fine-Tuning ⏳ IN PROGRESS
+- ✅ **Select base model** → **Qwen2.5-Coder-7B** (best quality, idiomatica Zig)
+- ⏳ **Prepare training data** (1,787 examples ready, target 10k+)
+- ⏳ **Fine-tune model** (QLoRA on Google Colab Pro, ~4-6h, ~$15)
+- ⏳ **Validate model** (test on Zig-specific benchmarks)
+- ⏳ **Upload to HuggingFace** → `fulgidus/zignet-qwen2.5-coder-7b`
+- ⏳ **Convert to GGUF** (Q4_K_M quantization for node-llama-cpp)
+- ⏳ **Integrate with ZigNet** (MCP tools: get_zig_docs, suggest_fix)
 
-**Model Options** (all 100% pass rate):
-- **Option A**: Qwen2.5-Coder-1.5B → Fastest (7.48s), smaller fine-tune cost
-- **Option B**: Llama3.2-3B → Balanced speed/size, good community support
-- **Option C**: CodeLlama-7B → Best tooling, standard for code, slower (24.61s)
-- **Option D**: Qwen2.5-Coder-7B → Strong generation, good for complex fixes (29.58s)
-
-**Decision Tool**: `pnpm run compare-models`
+**Selected Model Details**:
+- **Base**: Qwen/Qwen2.5-Coder-7B-Instruct
+- **Quality**: ⭐⭐⭐⭐⭐ (zero errori gravi, sintassi moderna)
+- **Speed**: 29.58s base → ~15-20s post quantization
+- **Size**: 7B params → ~4GB GGUF Q4_K_M
+- **Why**: Migliore comprensione idiomi Zig (comptime, generics, error handling)
 
 ### Phase 3: MCP Integration ⏳ NEXT
 - ⏳ **MCP Server** (src/mcp-server.ts)
@@ -655,20 +655,24 @@ npm run dev
 
 ## 12. DATA COLLECTION & FINE-TUNING ROADMAP
 
-### Current Status (Phase 1.5)
+### Current Status (Phase 2.5)
 
 ✅ **Completed**:
 - Documentation scraper (`scripts/scrape-zig-docs.js`)
-- Model selection (Qwen2.5-Coder-7B)
+- Dataset collection: 1,787 examples from Zig 0.13, 0.14.1, 0.15.1
+- Model benchmarking: 14 models tested
+- **Model selection: Qwen2.5-Coder-7B** ⭐
 - Training pipeline design
 - Version support strategy (0.13-0.15)
 
 ⏳ **Next Steps**:
-1. Run scraper: `pnpm run scrape-docs`
-2. Validate dataset quality
-3. Fine-tune model (Google Colab or local GPU)
-4. Upload to HuggingFace: `fulgidus/zignet-qwen-7b`
-5. Integrate with node-llama-cpp
+1. ~~Run scraper~~ ✅ DONE (1,787 examples)
+2. Optional: Augment dataset to 5k-10k (community code, error-fix pairs)
+3. Fine-tune Qwen2.5-Coder-7B (Google Colab Pro, QLoRA)
+4. Validate on test set (95%+ pass rate target)
+5. Upload to HuggingFace: `fulgidus/zignet-qwen2.5-coder-7b`
+6. Convert to GGUF Q4_K_M
+7. Integrate with node-llama-cpp in MCP server
 
 ### Documentation
 

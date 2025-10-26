@@ -9,3 +9,6 @@ build/
 coverage/
 *.tsbuildinfo
 .eslintcache
+
+.env*
+!.env.example
