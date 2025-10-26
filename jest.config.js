@@ -31,9 +31,7 @@ export default {
             'ts-jest',
             {
                 useESM: false,
-                tsconfig: {
-                    module: 'commonjs',
-                },
+                tsconfig: './tsconfig.test.json',
             },
         ],
     },

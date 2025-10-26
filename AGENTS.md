@@ -336,7 +336,7 @@ Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, 
 
 ### Phase 1.5: Data Collection ✅ COMPLETE
 - ✅ **Documentation Scraper** (scripts/scrape-zig-docs.js)
-- ✅ **Run scraper** for Zig 0.13, 0.14.1, 0.15.1 → 1,787 examples collected
+- ✅ **Run scraper** for Zig 0.13, 0.14.1, 0.15.2 → 1,787 examples collected
 - ✅ **Model comparison tool** (scripts/compare-models.js)
 - ⏳ **Curate dataset** (validate examples with parser, add community code)
 - ⏳ **Split dataset** (train/validation/test 70/15/15)
@@ -683,7 +683,7 @@ npm run dev
 
 ✅ **Completed**:
 - Documentation scraper (`scripts/scrape-zig-docs.js`)
-- Dataset collection: 1,787 examples from Zig 0.13, 0.14.1, 0.15.1
+- Dataset collection: 1,787 examples from Zig 0.13, 0.14.1, 0.15.2
 - Model benchmarking: 14 models tested
 - **Model selection: Qwen2.5-Coder-7B** ⭐
 - Training pipeline design

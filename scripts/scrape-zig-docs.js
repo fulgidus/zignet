@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 config({ path: path.join(__dirname, '..', '.env') });
 
 // Configuration
-const ZIG_VERSIONS = ['0.15.1', '0.14.1', '0.13.0']; // Support last 4 versions
+const ZIG_VERSIONS = ['0.15.2', '0.14.1', '0.13.0']; // Support last 4 versions
 const BASE_URL = 'https://ziglang.org/documentation';
 const OUTPUT_DIR = path.join(__dirname, '..', 'data', 'zig-docs');
 const CHUNK_SIZE = 4096; // Max tokens per chunk for training

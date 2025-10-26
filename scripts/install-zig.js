@@ -13,7 +13,7 @@
 import { analyzeZig } from "../dist/tools/analyze.js";
 
 const version = process.argv[2];
-const SUPPORTED_VERSIONS = ["0.13.0", "0.14.0", "0.15.1"];
+const SUPPORTED_VERSIONS = ["0.13.0", "0.14.0", "0.15.2"];
 
 async function main() {
     console.log("🔧 ZigNet - Zig Version Installer\n");

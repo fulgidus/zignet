@@ -76,7 +76,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        zig-version: ['0.13.0', '0.14.0', '0.15.1']
+        zig-version: ['0.13.0', '0.14.0', '0.15.2']
 
     steps:
       - name: Checkout code
@@ -161,7 +161,7 @@ jobs:
 
       - name: Install Zig in system PATH
         env:
-          ZIG_VERSION: '0.15.1'
+          ZIG_VERSION: '0.15.2'
         run: |
           wget https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz
           tar -xf zig-x86_64-linux-${ZIG_VERSION}.tar.xz
