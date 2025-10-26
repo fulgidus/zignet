@@ -13,6 +13,7 @@
         "scrape-repos": "node scripts/scrape-zig-repos.js",
         "prepare-dataset": "node scripts/prepare-training-dataset.js",
         "compare-models": "node scripts/compare-models.js",
+        "monitor-training": "watch -n 1 ./scripts/monitor-training.sh",
         "build": "tsc",
         "build:watch": "tsc --watch",
         "test": "jest",
