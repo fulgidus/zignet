@@ -21,6 +21,9 @@ import {
 import { analyzeZig, formatAnalyzeResult } from "./tools/analyze.js";
 import { compileZig, formatCompileResult } from "./tools/compile.js";
 
+// Import configuration
+import { SUPPORTED_ZIG_VERSIONS, DEFAULT_ZIG_VERSION } from "./config.js";
+
 /**
  * Create and configure the MCP server
  */
@@ -46,7 +49,7 @@ function createServer() {
                 {
                     name: "analyze_zig",
                     description:
-                        "Analyze Zig code for syntax errors, type mismatches, and semantic issues",
+                        "Analyze Zig code for syntax errors, type mismatches, and semantic issues using the official Zig compiler",
                     inputSchema: {
                         type: "object",
                         properties: {
@@ -54,19 +57,29 @@ function createServer() {
                                 type: "string",
                                 description: "Zig source code to analyze",
                             },
+                            zig_version: {
+                                type: "string",
+                                enum: SUPPORTED_ZIG_VERSIONS as unknown as string[],
+                                description: `Zig version to use for validation (default: ${DEFAULT_ZIG_VERSION})`,
+                            },
                         },
                         required: ["code"],
                     },
                 },
                 {
                     name: "compile_zig",
-                    description: "Validate and format Zig code",
+                    description: "Format Zig code using the official Zig formatter",
                     inputSchema: {
                         type: "object",
                         properties: {
                             code: {
                                 type: "string",
-                                description: "Zig source code to compile",
+                                description: "Zig source code to format",
+                            },
+                            zig_version: {
+                                type: "string",
+                                enum: SUPPORTED_ZIG_VERSIONS as unknown as string[],
+                                description: `Zig version to use for formatting (default: ${DEFAULT_ZIG_VERSION})`,
                             },
                         },
                         required: ["code"],
@@ -116,11 +129,14 @@ function createServer() {
 
         switch (name) {
             case "analyze_zig": {
-                const code = (args as { code?: string }).code;
+                const code = (args as { code?: string; zig_version?: string }).code;
+                const zig_version = (args as { zig_version?: "0.13.0" | "0.14.0" | "0.15.0" }).zig_version;
+
                 if (!code) {
                     throw new Error("Missing required argument: code");
                 }
-                const result = analyzeZig({ code });
+
+                const result = await analyzeZig({ code, zig_version });
                 return {
                     content: [
                         {
@@ -132,13 +148,14 @@ function createServer() {
             }
 
             case "compile_zig": {
-                const compileArgs = args as { code?: string; output_format?: "zig" | "json" };
+                const compileArgs = args as { code?: string; zig_version?: "0.13.0" | "0.14.0" | "0.15.0" };
                 if (!compileArgs.code) {
                     throw new Error("Missing required argument: code");
                 }
-                const result = compileZig({
+
+                const result = await compileZig({
                     code: compileArgs.code,
-                    output_format: compileArgs.output_format || "zig"
+                    zig_version: compileArgs.zig_version,
                 });
                 return {
                     content: [

@@ -134,13 +134,6 @@ Claude: "I'll use ZigNet to analyze this"
         "Found 1 type error: variable 'x' expects i32 but got []const u8"
 ```
 
-### Standalone CLI (coming soon)
-
-```bash
-pnpm run analyze -- file.zig
-pnpm run format -- file.zig
-```
-
 ---
 
 ## 🏗️ Architecture
@@ -159,12 +152,15 @@ pnpm run format -- file.zig
 │  │ - get_zig_docs                               │   │
 │  │ - suggest_fix                                │   │
 │  └─────────────┬────────────────────────────────┘   │
-│                ▼                                     │
+│                ▼                                    │
 │  ┌──────────────────────────────────────────────┐   │
-│  │ Analysis Engine                              │   │
-│  │ - Lexer → Parser → Type Checker → CodeGen   │   │
+│  │ Zig Compiler Integration                     │   │
+│  │ - zig ast-check (syntax + type validation)   │   │
+│  │ - zig fmt (official formatter)               │   │
+│  │ - Auto-detects system Zig installation       │   │
+│  │ - Falls back to downloading if needed        │   │
 │  └─────────────┬────────────────────────────────┘   │
-│                ▼                                     │
+│                ▼                                    │
 │  ┌──────────────────────────────────────────────┐   │
 │  │ Fine-tuned LLM (Qwen2.5-Coder-7B)            │   │
 │  │ - Documentation lookup                       │   │
@@ -174,27 +170,31 @@ pnpm run format -- file.zig
 ```
 
 **Why this architecture?**
-- **Deterministic analysis** (Lexer/Parser/TypeChecker) for reliability
+- **Official Zig compiler** (100% accurate, always up-to-date) instead of custom parser
+- **System integration** (uses existing Zig installation if available)
 - **LLM-powered suggestions** (get_zig_docs, suggest_fix) for intelligence
 - **No external API calls** (local inference via node-llama-cpp)
-- **Fast** (< 100ms for analysis, < 2s for LLM suggestions)
+- **Fast** (< 100ms for validation, < 2s for LLM suggestions)
+
+**Note:** When Zig releases a new version (e.g., 0.16.0), ZigNet will need to re-train the LLM model on updated documentation and examples.
 
 ---
 
 ## 🧪 Development Status
 
-| Component          | Status        | Notes                                  |
-| ------------------ | ------------- | -------------------------------------- |
-| Lexer              | ✅ Complete    | Full Zig 0.15 token support            |
-| Parser             | ✅ Complete    | Functions, structs, generics, comptime |
-| Type Checker       | ✅ Complete    | Type validation, scope tracking        |
-| Code Generator     | ✅ Complete    | AST → Zig formatting                   |
-| LLM Fine-tuning    | 🔄 In Progress | Training on RTX 3090 (6-10h)           |
-| MCP Server         | ⏳ Planned     | Phase 3 (after fine-tuning)            |
-| GGUF Conversion    | ⏳ Planned     | Post-training quantization             |
-| Claude Integration | ⏳ Planned     | Final deployment                       |
+| Component            | Status        | Notes                                   |
+| -------------------- | ------------- | --------------------------------------- |
+| Zig Compiler Wrapper | ✅ Complete    | ast-check + fmt integration             |
+| System Zig Detection | ✅ Complete    | Auto-detects installed Zig versions     |
+| Multi-version Cache  | ✅ Complete    | Downloads Zig 0.13-0.15 on demand       |
+| MCP Server           | ✅ Complete    | analyze_zig + compile_zig tools working |
+| LLM Fine-tuning      | 🔄 In Progress | Training on RTX 3090 (~32% complete)    |
+| get_zig_docs         | ⏳ Waiting     | Blocked on fine-tuning completion       |
+| suggest_fix          | ⏳ Waiting     | Blocked on fine-tuning completion       |
+| GGUF Conversion      | ⏳ Planned     | Post-training quantization              |
+| Claude Integration   | ⏳ Planned     | Final deployment                        |
 
-**Current Phase:** Fine-tuning Qwen2.5-Coder-7B on 13,756 Zig examples (97% repos, 3% docs)
+**Current Phase:** Fine-tuning Qwen2.5-Coder-7B on 13,756 Zig examples
 
 ---
 
@@ -203,16 +203,19 @@ pnpm run format -- file.zig
 ```
 zignet/
 ├── src/
-│   ├── lexer.ts              # Tokenization
-│   ├── parser.ts             # AST generation
-│   ├── type-checker.ts       # Type validation
-│   ├── codegen.ts            # Code formatting
-│   ├── mcp-server.ts         # MCP handler (TODO)
-│   └── tools/                # Tool implementations (TODO)
+│   ├── config.ts             # Environment-based configuration
+│   ├── mcp-server.ts         # MCP protocol handler
+│   ├── zig/
+│   │   ├── manager.ts        # Multi-version Zig download/cache
+│   │   └── executor.ts       # zig ast-check + fmt wrapper
+│   └── tools/
+│       ├── analyze.ts        # analyze_zig tool (COMPLETE)
+│       └── compile.ts        # compile_zig tool (COMPLETE)
 ├── scripts/
-│   ├── train-qwen-standard.py   # Fine-tuning script (running)
+│   ├── train-qwen-standard.py   # Fine-tuning script (RUNNING)
 │   ├── scrape-zig-repos.js      # Dataset collection
-│   └── compare-models.js        # Model benchmarking
+│   ├── install-zig.js           # Zig version installer
+│   └── test-config.cjs          # Config system tests
 ├── data/
 │   ├── training/             # 13,756 examples (train/val/test)
 │   └── zig-docs/             # Scraped documentation
@@ -221,7 +224,6 @@ zignet/
 ├── tests/                    # Unit tests
 ├── docs/
 │   ├── AGENTS.md             # Detailed project spec
-│   ├── TRAINING_GUIDE.md     # Fine-tuning guide
 │   └── ARCHITECTURE.md       # Technical details
 └── README.md                 # This file
 ```

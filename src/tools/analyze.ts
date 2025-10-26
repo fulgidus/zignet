@@ -1,18 +1,17 @@
 /**
  * analyze_zig tool implementation
  * 
- * Analyzes Zig code using:
- * - Lexer: Tokenization
- * - Parser: AST generation
- * - TypeChecker: Type validation
+ * Analyzes Zig code using the official Zig compiler.
+ * Supports multiple Zig versions for accurate validation.
  */
 
-import { Lexer } from "../lexer.js";
-import { Parser } from "../parser.js";
-import { TypeChecker } from "../type-checker.js";
+import { zigAstCheck } from "../zig/executor.js";
+import { type ZigVersion } from "../zig/manager.js";
+import { DEFAULT_ZIG_VERSION } from "../config.js";
 
 export interface AnalyzeZigInput {
     code: string;
+    zig_version?: ZigVersion;
 }
 
 export interface AnalyzeZigResult {
@@ -29,121 +28,82 @@ export interface AnalyzeZigResult {
         column?: number;
     }>;
     summary: string;
+    zig_version: string;
 }
 
 /**
- * Analyze Zig code for syntax and type errors
+ * Analyze Zig code using official Zig compiler
  */
-export function analyzeZig(input: AnalyzeZigInput): AnalyzeZigResult {
-    const { code } = input;
+export async function analyzeZig(input: AnalyzeZigInput): Promise<AnalyzeZigResult> {
+    const { code, zig_version = DEFAULT_ZIG_VERSION } = input;
 
-    const result: AnalyzeZigResult = {
-        success: true,
-        errors: [],
-        warnings: [],
-        summary: "",
-    };
+    // Validate input
+    if (!code || code.trim().length === 0) {
+        return {
+            success: true,
+            errors: [],
+            warnings: [],
+            summary: "✅ Analysis Result: Empty code (valid)",
+            zig_version,
+        };
+    }
 
     try {
-        // Step 1: Lexical Analysis
-        const lexer = new Lexer(code);
-        let tokens;
+        // Run Zig ast-check
+        const result = await zigAstCheck(code, zig_version);
 
-        try {
-            tokens = lexer.tokenize();
-        } catch (error) {
-            result.success = false;
-            result.errors.push({
-                message: `Lexical error: ${error instanceof Error ? error.message : String(error)}`,
-                severity: "error",
-            });
-            result.summary = "❌ Lexical analysis failed";
-            return result;
-        }
+        // Separate errors and warnings
+        const errors = result.diagnostics
+            .filter((d) => d.severity === "error")
+            .map((d) => ({
+                message: d.message,
+                line: d.line,
+                column: d.column,
+                severity: "error" as const,
+            }));
 
-        // Step 2: Syntax Analysis (Parsing)
-        const parser = new Parser(tokens);
-        let ast;
-
-        try {
-            ast = parser.parse();
-        } catch (error) {
-            result.success = false;
-            const errorMsg = error instanceof Error ? error.message : String(error);
-
-            // Try to extract line/column from parser error
-            const match = errorMsg.match(/at line (\d+), column (\d+)/);
-            const line = match ? parseInt(match[1]) : undefined;
-            const column = match ? parseInt(match[2]) : undefined;
-
-            result.errors.push({
-                message: `Syntax error: ${errorMsg}`,
-                line,
-                column,
-                severity: "error",
-            });
-            result.summary = "❌ Syntax analysis failed";
-            return result;
-        }
-
-        // Step 3: Semantic Analysis (Type Checking)
-        const typeChecker = new TypeChecker();
-
-        try {
-            typeChecker.check(ast);
-
-            // Check for type errors
-            const typeErrors = typeChecker.getErrors();
-
-            if (typeErrors.length > 0) {
-                result.success = false;
-                result.errors.push(
-                    ...typeErrors.map((err) => ({
-                        message: err.message,
-                        line: err.line,
-                        column: err.column,
-                        severity: "error" as const,
-                    }))
-                );
-            }
-
-            // Note: TypeChecker currently doesn't track warnings separately
-            // This can be added in the future if needed
-        } catch (error) {
-            result.success = false;
-            result.errors.push({
-                message: `Type checking error: ${error instanceof Error ? error.message : String(error)}`,
-                severity: "error",
-            });
-            result.summary = "❌ Type checking failed";
-            return result;
-        }
+        const warnings = result.diagnostics
+            .filter((d) => d.severity === "warning")
+            .map((d) => ({
+                message: d.message,
+                line: d.line,
+                column: d.column,
+            }));
 
         // Generate summary
-        if (result.success) {
-            result.summary = `✅ Analysis Result:
+        const summary = result.success
+            ? `✅ Analysis Result (Zig ${zig_version}):
 - Syntax: Valid
 - Type Check: PASS
-- Warnings: ${result.warnings.length}
-- Errors: 0`;
-        } else {
-            result.summary = `❌ Analysis Result:
-- Syntax: ${result.errors.some(e => e.message.includes('Syntax')) ? 'Invalid' : 'Valid'}
+- Warnings: ${warnings.length}
+- Errors: 0`
+            : `❌ Analysis Result (Zig ${zig_version}):
+- Syntax: ${errors.some((e) => e.message.includes("expected")) ? "Invalid" : "Valid"}
 - Type Check: FAIL
-- Warnings: ${result.warnings.length}
-- Errors: ${result.errors.length}`;
-        }
+- Warnings: ${warnings.length}
+- Errors: ${errors.length}`;
 
-        return result;
+        return {
+            success: result.success,
+            errors,
+            warnings,
+            summary,
+            zig_version,
+        };
     } catch (error) {
-        // Unexpected error
-        result.success = false;
-        result.errors.push({
-            message: `Unexpected error: ${error instanceof Error ? error.message : String(error)}`,
-            severity: "error",
-        });
-        result.summary = "❌ Analysis failed with unexpected error";
-        return result;
+        // Unexpected error (e.g., Zig installation failed)
+        return {
+            success: false,
+            errors: [
+                {
+                    message: `Failed to run Zig compiler: ${error instanceof Error ? error.message : String(error)}`,
+                    severity: "error",
+                },
+            ],
+            warnings: [],
+            summary: `❌ Analysis failed: Could not execute Zig ${zig_version}`,
+            zig_version,
+        };
     }
 }
 
@@ -156,7 +116,9 @@ export function formatAnalyzeResult(result: AnalyzeZigResult): string {
     if (result.errors.length > 0) {
         output += "🔴 Errors:\n";
         result.errors.forEach((error, index) => {
-            const location = error.line ? ` (line ${error.line}${error.column ? `, col ${error.column}` : ''})` : '';
+            const location = error.line
+                ? ` (line ${error.line}${error.column ? `, col ${error.column}` : ""})`
+                : "";
             output += `${index + 1}. ${error.message}${location}\n`;
         });
         output += "\n";
@@ -165,7 +127,9 @@ export function formatAnalyzeResult(result: AnalyzeZigResult): string {
     if (result.warnings.length > 0) {
         output += "⚠️  Warnings:\n";
         result.warnings.forEach((warning, index) => {
-            const location = warning.line ? ` (line ${warning.line}${warning.column ? `, col ${warning.column}` : ''})` : '';
+            const location = warning.line
+                ? ` (line ${warning.line}${warning.column ? `, col ${warning.column}` : ""})`
+                : "";
             output += `${index + 1}. ${warning.message}${location}\n`;
         });
     }

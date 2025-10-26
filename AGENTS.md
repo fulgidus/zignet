@@ -1,7 +1,7 @@
 # AGENTS.md - ZigNet Project Specification
 
-**Last Updated**: 2025-10-26 15:45:00 UTC  
-**Status**: Active Development - Phase 2.5 (Fine-Tuning IN PROGRESS)  
+**Last Updated**: 2025-10-26 17:30:00 UTC  
+**Status**: Active Development - Phase 2.5 (Fine-Tuning IN PROGRESS - 32.5% COMPLETE) + Phase 3 (MCP Integration ACTIVE - Config System COMPLETE)  
 **Owner**: fulgidus  
 **Repository**: https://github.com/fulgidus/zignet
 
@@ -378,10 +378,16 @@ Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, 
 - **Size**: 7B params → ~4GB GGUF Q4_K_M
 - **Why**: Migliore comprensione idiomi Zig (comptime, generics, error handling)
 
-### Phase 3: MCP Integration 🔄 IN PROGRESS (2/4 TOOLS IMPLEMENTED)
-- ✅ **MCP Server** (src/mcp-server.ts) - Skeleton complete
-- ✅ **analyze_zig tool** (src/tools/analyze.ts) - WORKING (Lexer → Parser → TypeChecker)
-- ✅ **compile_zig tool** (src/tools/compile.ts) - WORKING (Lexer → Parser → CodeGen)
+### Phase 3: MCP Integration ✅ CORE COMPLETE (Config System + Tools)
+- ✅ **MCP Server** (src/mcp-server.ts) - Complete with dynamic config
+- ✅ **Configuration System** (src/config.ts) - Environment-based version management
+  - ZIG_SUPPORTED (comma-separated versions)
+  - ZIG_DEFAULT (single version, validated)
+  - All components read from env vars
+- ✅ **Zig Manager** (src/zig/manager.ts) - Multi-version download/cache system
+- ✅ **Zig Executor** (src/zig/executor.ts) - ast-check + fmt integration
+- ✅ **analyze_zig tool** (src/tools/analyze.ts) - Uses Zig compiler (100% accurate)
+- ✅ **compile_zig tool** (src/tools/compile.ts) - Uses zig fmt (official formatter)
 - ⏳ **get_zig_docs tool** (waiting for fine-tuned model)
 - ⏳ **suggest_fix tool** (waiting for fine-tuned model)
 

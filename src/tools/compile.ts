@@ -1,35 +1,22 @@
 /**
- * compile_zig MCP Tool Implementation
+ * compile_zig tool implementation
  *
- * Purpose: Compile/format Zig code using ZigNet's compiler pipeline
- *
- * Pipeline:
- * 1. Lexer: Tokenize input code
- * 2. Parser: Build AST
- * 3. CodeGen: Generate formatted Zig code
- *
- * This tool does NOT perform type checking (use analyze_zig for that).
- * It focuses on syntax validation and code formatting.
+ * Formats Zig code using the official Zig compiler.
+ * Supports multiple Zig versions for consistent formatting.
  */
 
-import { Lexer } from "../lexer.js";
-import { Parser } from "../parser.js";
-import { CodeGenerator } from "../codegen.js";
+import { zigFormat } from "../zig/executor.js";
+import { type ZigVersion } from "../zig/manager.js";
+import { DEFAULT_ZIG_VERSION } from "../config.js";
 
-/**
- * Input for compile_zig tool
- */
 export interface CompileInput {
     code: string;
-    output_format?: "zig" | "json"; // Default: zig
+    zig_version?: ZigVersion;
 }
 
-/**
- * Result from compile_zig tool
- */
 export interface CompileResult {
     success: boolean;
-    output?: string; // Formatted Zig code
+    output?: string;
     errors: Array<{
         message: string;
         line?: number;
@@ -37,101 +24,77 @@ export interface CompileResult {
         severity: "error" | "warning";
     }>;
     summary: string;
+    zig_version: string;
 }
 
 /**
- * Compile Zig code (syntax validation + formatting)
- *
- * @param input - Code to compile and formatting options
- * @returns CompileResult with formatted code or errors
+ * Format Zig code using official Zig formatter
  */
-export function compileZig(input: CompileInput): CompileResult {
-    const result: CompileResult = {
-        success: false,
-        errors: [],
-        summary: "",
-    };
-
-    const { code, output_format = "zig" } = input;
+export async function compileZig(input: CompileInput): Promise<CompileResult> {
+    const { code, zig_version = DEFAULT_ZIG_VERSION } = input;
 
     // Validate input
     if (!code || code.trim().length === 0) {
-        result.errors.push({
-            message: "Input code cannot be empty",
-            severity: "error",
-        });
-        result.summary = "❌ Empty input";
-        return result;
+        return {
+            success: false,
+            errors: [{ message: "Input code cannot be empty", severity: "error" }],
+            summary: "❌ Empty input",
+            zig_version,
+        };
     }
 
-    // Step 1: Tokenize
-    let tokens;
     try {
-        const lexer = new Lexer(code);
-        tokens = lexer.tokenize();
+        // Run Zig fmt
+        const result = await zigFormat(code, zig_version);
+
+        if (result.success) {
+            return {
+                success: true,
+                output: result.output,
+                errors: [],
+                summary: `✅ Formatted successfully (Zig ${zig_version})`,
+                zig_version,
+            };
+        } else {
+            // Format failed
+            const errors = result.diagnostics.map((d) => ({
+                message: d.message,
+                line: d.line,
+                column: d.column,
+                severity: "error" as const,
+            }));
+
+            return {
+                success: false,
+                errors,
+                summary: `❌ Format failed (Zig ${zig_version})`,
+                zig_version,
+            };
+        }
     } catch (error) {
-        result.errors.push({
-            message: `Lexer error: ${error instanceof Error ? error.message : String(error)}`,
-            severity: "error",
-        });
-        result.summary = "❌ Lexer failed";
-        return result;
-    }
-
-    // Step 2: Parse
-    let ast;
-    try {
-        const parser = new Parser(tokens);
-        ast = parser.parse();
-    } catch (error) {
-        // Try to extract location from parser error
-        const errorMessage = error instanceof Error ? error.message : String(error);
-        const locationMatch = errorMessage.match(/at (\d+):(\d+)/);
-
-        result.errors.push({
-            message: `Parse error: ${errorMessage}`,
-            line: locationMatch ? parseInt(locationMatch[1], 10) : undefined,
-            column: locationMatch ? parseInt(locationMatch[2], 10) : undefined,
-            severity: "error",
-        });
-        result.summary = "❌ Parse failed";
-        return result;
-    }
-
-    // Step 3: Generate code
-    try {
-        const codegen = new CodeGenerator();
-        const formattedCode = codegen.generate(ast);
-
-        result.success = true;
-        result.output = formattedCode;
-        result.summary = "✅ Compiled successfully";
-
-        return result;
-    } catch (error) {
-        result.errors.push({
-            message: `Code generation error: ${error instanceof Error ? error.message : String(error)}`,
-            severity: "error",
-        });
-        result.summary = "❌ Code generation failed";
-        return result;
+        return {
+            success: false,
+            errors: [
+                {
+                    message: `Failed to run Zig formatter: ${error instanceof Error ? error.message : String(error)}`,
+                    severity: "error",
+                },
+            ],
+            summary: `❌ Format failed: Could not execute Zig ${zig_version}`,
+            zig_version,
+        };
     }
 }
 
 /**
  * Format compile result for MCP response
- *
- * @param result - CompileResult from compileZig
- * @returns Formatted string for Claude
  */
 export function formatCompileResult(result: CompileResult): string {
     const lines: string[] = [];
 
-    // Summary
     lines.push(result.summary);
     lines.push("");
 
-    // Success case: show formatted code
     if (result.success && result.output) {
         lines.push("**Formatted Zig Code:**");
         lines.push("```zig");
@@ -140,7 +103,6 @@ export function formatCompileResult(result: CompileResult): string {
         return lines.join("\n");
     }
 
-    // Error case: show all errors
     if (result.errors.length > 0) {
         lines.push("**Errors:**");
         result.errors.forEach((error, index) => {
