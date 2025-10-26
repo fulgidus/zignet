@@ -11,6 +11,7 @@
         "download-model": "node scripts/download-model.js",
         "scrape-docs": "node scripts/scrape-zig-docs.js",
         "scrape-repos": "node scripts/scrape-zig-repos.js",
+        "prepare-dataset": "node scripts/prepare-training-dataset.js",
         "compare-models": "node scripts/compare-models.js",
         "build": "tsc",
         "build:watch": "tsc --watch",
