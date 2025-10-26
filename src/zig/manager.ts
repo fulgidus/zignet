@@ -39,7 +39,9 @@ export function detectSystemZig(): string | null {
  */
 export function getSystemZigPath(): string | null {
     try {
-        const output = execSync('which zig', { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] });
+        const platform = process.platform;
+        const command = platform === 'win32' ? 'where zig' : 'which zig';
+        const output = execSync(command, { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] });
         return output.trim();
     } catch {
         return null;
@@ -190,24 +192,35 @@ export function installZig(version: ZigVersion): void {
     }
 
     try {
-        // Download and extract using curl + tar
-        // This is more reliable than Node.js streams for large files
-        const { platform } = detectPlatform();
+        // Download and extract using platform-appropriate tools
+        const { platform, ext } = detectPlatform();
 
         if (platform === 'windows') {
-            throw new Error('Windows installation not yet implemented. Please install Zig manually.');
+            // Windows: Download .zip and extract with PowerShell
+            const tempFile = join(installPath, `zig-${version}.zip`);
+            
+            // Download using PowerShell (more reliable than curl on Windows)
+            console.log(`📥 Downloading ${url}...`);
+            execSync(`powershell -Command "(New-Object System.Net.WebClient).DownloadFile('${url}', '${tempFile}')"`, { stdio: 'inherit' });
+
+            // Extract using PowerShell
+            console.log(`📦 Extracting Zig ${version}...`);
+            execSync(`powershell -Command "Expand-Archive -Path '${tempFile}' -DestinationPath '${installPath}' -Force"`, { stdio: 'inherit' });
+
+            // Remove temp file
+            execSync(`del "${tempFile}"`, { stdio: 'inherit' });
+        } else {
+            // Unix-like: Download .tar.xz and extract with curl + tar
+            const tempFile = join(installPath, `zig-${version}.tar.xz`);
+            execSync(`curl -fSL "${url}" -o "${tempFile}"`, { stdio: 'inherit' });
+
+            // Extract
+            console.log(`📦 Extracting Zig ${version}...`);
+            execSync(`tar -xJf "${tempFile}" -C "${installPath}"`, { stdio: 'inherit' });
+
+            // Remove temp file
+            execSync(`rm "${tempFile}"`);
         }
-
-        // Download to temp file
-        const tempFile = join(installPath, `zig-${version}.tar.xz`);
-        execSync(`curl -fSL "${url}" -o "${tempFile}"`, { stdio: 'inherit' });
-
-        // Extract
-        console.log(`📦 Extracting Zig ${version}...`);
-        execSync(`tar -xJf "${tempFile}" -C "${installPath}"`, { stdio: 'inherit' });
-
-        // Remove temp file
-        execSync(`rm "${tempFile}"`);
 
         // Verify installation
         const binaryPath = getZigBinaryPath(version);
