@@ -11,9 +11,13 @@ import https from 'https';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { config } from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Load .env file (if needed in future)
+config({ path: path.join(__dirname, '..', '.env') });
 
 // Configuration
 const ZIG_VERSIONS = ['0.15.1', '0.14.1', '0.13.0']; // Support last 4 versions
