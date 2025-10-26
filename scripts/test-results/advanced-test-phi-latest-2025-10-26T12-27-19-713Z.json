@@ -1,0 +1,63 @@
+{
+  "model": "phi:latest",
+  "timestamp": "2025-10-26T12:24:18.733Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": " #include <iostream>\n \nint add(int num1, int num2) {\n    return num1 + num2;\n}\n\nint main() {\n    std::cout << \"The sum of 3 and 4 is: \" << add(3, 4) << std::endl;\n    return 0;\n}\n",
+      "duration": 6017,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": " ```zig\ntype myType = (int, byte*)\n\nfunction allocate(myType m) : myType\n    return (m[1], 1), 1\nend function\n\nfunction release(myType m, n) : (int, byte*):\n    if m[0] == 0 then {\n        return (int(), nil), n\n    }\nend function\n```\n\nHere's how to use it:\n```zig\nfunction main() : void\n    var i, s\n    myType m = allocate((0, \"hello\"))\n    fprintln(\"m: (integer, byte*) =\", m)\n\n    for i in 1..5 do {\n        m, n = release(m, 2)\n        if n == 0 then {\n            fprintln(\"error: out of memory",
+      "duration": 14183,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": " Here's an example of a Zig function, called 'divideByTwo', which returns a Success type if the argument is even, and an Error type if it's odd:\n\n```zig\nResult divideByTwo(int num) {\n    if (num % 2 == 0) {\n        return Success(num / 2);\n    } else {\n        return Error(\"Cannot divide by an odd number\");\n    }\n}\n```\n\nIn the caller code, you can use `handleError()` to catch any errors that might occur:\n\n```zig\nlet result = divideByTwo(4); // success\nprintln!(\"{}\", result.value);\n\ntry {\n    let",
+      "duration": 33023,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": " Here is an example of how you could define a Zig struct for a point in C#:\n\n```csharp\nusing System;\n\n[Flags]\npublic enum PointFlags {\n    Present = 1 << 0,\n    Absent = 1 << 1\n};\n\nclass Point : IClonable, IEquatable<Point>\n{\n \n \n public readonly double x; //x coordinate of the point\n \n public readonly double y; //y coordinate of the point\n\n public override string ToString() { return \"(\" + x + \", \" + y + \")\"; }\n \n public Point(double x, double y) : this((int?)GetType().GetValueOf(x), (int?)GetTy",
+      "duration": 32503,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": " Sure, here is a basic implementation for you to understand how it works: \n\n```javascript\nfunction zig(a, b) {\n  if (isNaN(a)) {\n    return Math.max(b);\n  } else {\n    return Math.max(a, b);\n  }\n}\n```\n\nThis function takes two arguments `a` and `b`, which can be any numeric type such as integers, floating-point numbers, or strings that are valid numbers. It then checks if `a` is a NaN value using the `isNaN()` method. If it is, it returns the maximum of `b`. Otherwise, it returns the maximum of b",
+      "duration": 24965,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": " I don't have access to zig or any programming environment to execute it, but i can provide you with an example of using comptime for computing a factorial.\n\nin general, the syntax for a function that computes the factorial is as follows:\n\n```z3\nfunction ivector<T> f(z3::vector<T>) : T {\n    return 1 / (1 - z3::iota(0, n))}\n```\n\nwhere `n` is a constant that represents the number of terms in the factorial, and `f(x) = x * (x-1) * (x-2) ... * 1`. \n\nyou can use this function by replacing `ivector<T",
+      "duration": 43347,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 25673
+}

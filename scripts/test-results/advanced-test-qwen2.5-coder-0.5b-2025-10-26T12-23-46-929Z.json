@@ -1,0 +1,63 @@
+{
+  "model": "qwen2.5-coder:0.5b",
+  "timestamp": "2025-10-26T12:22:58.268Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": "```zig\nfn add(a, b: i32) i32 {\n    return a + b;\n}\n```\n\nThis code snippet defines a simple function `add` in Zig that takes two integer arguments (`a` and `b`) and returns their sum as an integer. The function is defined with the appropriate signature, which is `fn add(a: i32, b: i32) i32`. This means the function will take any two integers as input and return a single integer representing the sum of those integers.",
+      "duration": 2251,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": "To allocate memory using an allocator in Zig and store an integer, you can use the `alloc` and `free` functions provided by the standard library. Here's an example of how to do this:\n\n```zig\nimport std.io;\n\nfn main() {\n    // Create a new buffer with a specific size\n    const buf = try std.io.newBuffer(1024);\n\n    // Write some data to the buffer\n    for i in 0..buf.len() {\n        buf[i] = 'a';\n    }\n\n    // Print the contents of the buffer\n    std.debug.printf(\"Buffer contents: %s\\n\", std.stri",
+      "duration": 4025,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": "Certainly! Below is a Zig program that defines a `Result` type using Zig's syntax. The `Result` type can hold either a success value or an error, and it includes error handling to manage exceptions.\n\n```zig\n// Define the Result type with either a success value or an error\ntype Result<T, E> = struct {\n    isOk: bool,\n    value: T | E,\n};\n\nfn main() {\n    // Function that returns a Result containing a success value\n    fn getSuccessValue(value: i32) -> Result<i32, String> {\n        if value >= 0 {",
+      "duration": 7008,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": "Certainly! Below is a Zig struct named `Point` that represents a point with both `x` and `y` coordinates and includes a method to calculate the distance from the origin `(0, 0)`.\n\n```zig\npub struct Point {\n    pub x: i32,\n    pub y: i32,\n}\n\nimpl Point {\n    /// Calculates the distance from the origin (0, 0) to this point.\n    pub fn distance(&self) -> i32 {\n        let dx = self.x.abs();\n        let dy = self.y.abs();\n        return (dx * dx + dy * dy).sqrt();\n    }\n}\n\nfn main() {\n    // Create ",
+      "duration": 3514,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": "Certainly! Below is a generic Zig function `max` that takes two values as input and returns their maximum value:\n\n```zig\nfn max(a: anytype, b: anytype): anytype {\n    // Use the `std.math.max` function to find the maximum value between the two inputs\n    return std.math.max(a, b);\n}\n```\n\n### Explanation:\n- The function `max` takes two arguments of type `anytype`, which allows it to handle various numeric types including integers, floats, and complex numbers.\n- The `std.math.max` function is used",
+      "duration": 2454,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": "To compute a factorial using Comptime in Zig, you can define a macro that takes an integer as an argument and returns the factorial of that number. We'll also demonstrate how to utilize Comptime to perform type-checking on the input.\n\n```zig\n// Define a macro to compute the factorial of a given integer\nmacro @factorial(n: int) {\n    // Factorial definition using Comptime\n    return @compile_function(n, |args| {\n        let mut result = 1;\n        for (i in args) {\n            result *= i;\n      ",
+      "duration": 4399,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 3941.8333333333335
+}

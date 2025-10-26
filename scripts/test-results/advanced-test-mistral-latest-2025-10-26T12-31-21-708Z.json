@@ -1,0 +1,63 @@
+{
+  "model": "mistral:latest",
+  "timestamp": "2025-10-26T12:27:49.756Z",
+  "tests": [
+    {
+      "id": 1,
+      "name": "Basic Zig Syntax",
+      "difficulty": "EASY",
+      "prompt": "Generate a simple Zig function that returns the sum of two integers. Include the function signature and implementation only.",
+      "response": " Here is a simple Zig function in Zig language that calculates the sum of two integers:\n\n```zig\npub fn main() !void {\n    const a = 5;\n    const b = 10;\n    const sum = add(a, b);\n    std.debug.print(\"The sum is: {}\", .{sum});\n}\n\npub u64 add(u64 a, u64 b) !u64 {\n    return a + b;\n}\n```\n\nIn this code, the `main` function initializes two constants named `a` and `b`, then calls the `add` function to compute their sum. The `add` function takes two unsigned 64-bit integers as arguments and returns th",
+      "duration": 25821,
+      "success": true
+    },
+    {
+      "id": 2,
+      "name": "Memory Allocation",
+      "difficulty": "EASY",
+      "prompt": "Write Zig code that allocates memory using an allocator and stores an integer. Show how to free it.",
+      "response": " In Zig, you can use the `std` library to allocate and manage memory dynamically. Here's a simple example of how to allocate memory for an integer, store a value, and free it.\n\n```zig\nconst std = @import(\"std\");\n\npub fn main() !void {\n    var heap_allocated_int: *u64;\n    try _ = std.heap.alloc(ref heap_allocated_int);\n\n    // Store an integer in the allocated memory\n    try _ = heap_allocated_int.init(123);\n\n    // Use the stored integer\n    var my_integer: u64 = cast![*u64; heap_allocated_int]",
+      "duration": 26209,
+      "success": true
+    },
+    {
+      "id": 3,
+      "name": "Error Handling",
+      "difficulty": "MEDIUM",
+      "prompt": "Show a Zig function that returns a Result type with either a success value or an error. Include error handling in the caller.",
+      "response": " In Zig, the `Result` type is not built-in but can be easily defined using an enum and a struct. Here's an example of how you could create a simple `Result` type and a function that returns a `Result`. The error handling in the caller will be demonstrated as well.\n\n```zig\nconst std = @import(\"std\");\n\npub enum Result {\n    Ok(anything),\n    Err(err: &str),\n}\n\npub fn myFunction(input: u8) !Result {\n    if input > 10 {\n        return .Ok(format!(\"Success with input {}\", input));\n    }\n    return .E",
+      "duration": 28599,
+      "success": true
+    },
+    {
+      "id": 4,
+      "name": "Structs & Methods",
+      "difficulty": "MEDIUM",
+      "prompt": "Create a Zig struct for a Point with x,y coordinates and a method to calculate distance from origin.",
+      "response": " In Zig language, I'll create a struct for a Point with `x` and `y` coordinates, and also include a function to calculate the distance from the origin (0, 0).\n\n```zig\nconst Point = struct {\n    x: f64,\n    y: f64,\n};\n\nfn distFromOrigin(point: const *Point) f64 {\n    var distance = point.x*point.x + point.y*point.y;\n    return Math.sqrt(distance);\n}\n```\n\nHere's how you can use the Point struct and the `distFromOrigin` function in your code:\n\n```zig\nconst myPoint = Point{ 3.0, 4.0 };\nprint(\"Distan",
+      "duration": 19032,
+      "success": true
+    },
+    {
+      "id": 5,
+      "name": "Generics",
+      "difficulty": "HARD",
+      "prompt": "Write a generic Zig function that works with any numeric type and returns the maximum of two values.",
+      "response": " In Zig, you can create a generic function for finding the maximum of two values using templates. Here's an example of how to write such a function:\n\n```zig\nconst fn max = template <typ T> func (a: T, b: T) -> T {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\n```\n\nIn this example, the `max` function is defined as a generic function with the template parameter `T`, which represents the numeric type. The function takes two arguments of type `T` and returns their maximum value.\n\nYou can ",
+      "duration": 43352,
+      "success": true
+    },
+    {
+      "id": 6,
+      "name": "Comptime Magic",
+      "difficulty": "HARD",
+      "prompt": "Show how to use comptime in Zig to compute a factorial at compile time. Include the function and its usage.",
+      "response": " To implement a compile-time factorial computation using `comptime` in Zig, you can follow the steps below:\n\n1. First, make sure you have Zig installed on your system. If not, you can find installation instructions here: https://ziglang.org/install/\n\n2. Create a new Zig project by running the following command:\n\n```sh\nzig init --lang=Zig factorial_ct\ncd factorial_ct\n```\n\n3. Next, open the main source file `src/main.zig`. Then, add the required header and dependencies for `comptime`:\n\n```zig\ncons",
+      "duration": 43921,
+      "success": true
+    }
+  ],
+  "passed": 6,
+  "failed": 0,
+  "avgResponseTime": 31155.666666666668
+}

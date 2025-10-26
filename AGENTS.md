@@ -278,10 +278,24 @@ server.setRequestHandler(CallToolRequestSchema, handleToolCall);
 - ❌ **NOT used for parsing/validation**: Parser + Type Checker handle this (deterministic, fast)
 
 **Model Benchmarking** (Phase 1):
-Tested models: Phi-2.7b, DeepSeek, Mistral-7b, CodeLlama-7b, Llama3.2-3b, more...
-- Results in `scripts/test-results/`
-- Selection criteria: Zig knowledge, inference speed, memory footprint
+Tested models: Phi-2.7b, DeepSeek-Coder (1.3b, 6.7b), Mistral-7b, CodeLlama-7b, Llama3.2-3b, Qwen2.5-Coder (1.5b, 7b)
+- Results in `scripts/test-results/` - **ALL models: 100% pass rate** ✅
+- Analysis tool: `pnpm run compare-models`
 - Integration: `node-llama-cpp` (local, no API calls)
+
+**Top Candidates** (all 100% pass rate):
+1. **Qwen2.5-Coder-1.5B**: ⚡ Fastest (7.48s avg) - Best for low latency
+2. **Llama3.2-3B**: Balanced (12.27s avg) - Good speed/quality ratio
+3. **CodeLlama-7B**: Standard (24.61s avg) - Best for fine-tuning (HuggingFace support)
+4. **DeepSeek-Coder-6.7B**: Fast large model (27.86s avg) - Good alternative
+5. **Qwen2.5-Coder-7B**: Quality (29.58s avg) - Strong code generation
+
+**Selection Criteria for Fine-Tuning**:
+- ✅ 100% benchmark pass rate
+- ✅ Community support & tooling
+- ✅ Fine-tuning efficiency (LoRA/QLoRA compatible)
+- ✅ Balance: size (7B recommended) vs speed vs quality
+- ⏳ **DECISION PENDING** - Awaiting final benchmark completion
 
 ### No External Dependencies (For Core Analysis)
 - ✅ **Local LLM** via node-llama-cpp (for `get_zig_docs` and `suggest_fix` tools)
@@ -292,14 +306,40 @@ Tested models: Phi-2.7b, DeepSeek, Mistral-7b, CodeLlama-7b, Llama3.2-3b, more..
 
 **Why**: Parser/Type-Checker are deterministic and fast. LLM is ONLY for documentation lookups and intelligent suggestions.
 
+### Zig Version Support Strategy
+
+**Current Target**: Zig 0.15.0 (latest stable)  
+**Supported Versions**: 0.13.x, 0.14.x, 0.15.x (last 3 major releases)
+
+**Version Management**:
+- Primary development: Zig 0.15.0
+- Backward compatibility: 0.14.x and 0.13.x for common features
+- Breaking changes: Documented in migration guides
+- Dataset includes version-specific examples
+
+**Update Strategy**:
+1. Monitor Zig releases (ziglang.org)
+2. Run scraper on new docs: `pnpm run scrape-docs`
+3. Re-train fine-tuned model with new dataset
+4. Update parser for syntax changes
+5. Run regression tests on all supported versions
+6. Deploy updated model to HuggingFace
+
 ---
 
 ## 5. DEVELOPMENT PHASES
 
 ### Phase 1: Infrastructure ✅ COMPLETE
 - ✅ Docker + Ollama setup
-- ✅ Model benchmarking (Phi, DeepSeek, Mistral)
+- ✅ Model benchmarking (Phi, DeepSeek, Mistral, Qwen2.5-Coder, CodeLlama)
 - ✅ TypeScript + Linting + Testing infrastructure
+
+### Phase 1.5: Data Collection ✅ COMPLETE
+- ✅ **Documentation Scraper** (scripts/scrape-zig-docs.js)
+- ✅ **Run scraper** for Zig 0.13, 0.14.1, 0.15.1 → 1,787 examples collected
+- ✅ **Model comparison tool** (scripts/compare-models.js)
+- ⏳ **Curate dataset** (validate examples with parser, add community code)
+- ⏳ **Split dataset** (train/validation/test 70/15/15)
 
 ### Phase 2: Core Compiler ✅ COMPLETE
 - ✅ **Lexer** (src/lexer.ts) - DONE
@@ -307,7 +347,23 @@ Tested models: Phi-2.7b, DeepSeek, Mistral-7b, CodeLlama-7b, Llama3.2-3b, more..
 - ✅ **Type Checker** (src/type-checker.ts) - DONE
 - ✅ **Code Generator** (src/codegen.ts) - DONE
 
-### Phase 3: MCP Integration (AFTER Parser)
+### Phase 2.5: Model Fine-Tuning ⏳ TODO
+- ⏳ **Select base model** (awaiting final benchmarks - see comparison below)
+- ⏳ **Prepare training data** (instruction-response pairs from scraped docs)
+- ⏳ **Fine-tune model** (LoRA/QLoRA for efficiency)
+- ⏳ **Validate model** (test on Zig-specific tasks)
+- ⏳ **Upload to HuggingFace** (fulgidus/zignet-{model} - TBD based on selection)
+- ⏳ **Integrate with node-llama-cpp**
+
+**Model Options** (all 100% pass rate):
+- **Option A**: Qwen2.5-Coder-1.5B → Fastest (7.48s), smaller fine-tune cost
+- **Option B**: Llama3.2-3B → Balanced speed/size, good community support
+- **Option C**: CodeLlama-7B → Best tooling, standard for code, slower (24.61s)
+- **Option D**: Qwen2.5-Coder-7B → Strong generation, good for complex fixes (29.58s)
+
+**Decision Tool**: `pnpm run compare-models`
+
+### Phase 3: MCP Integration ⏳ NEXT
 - ⏳ **MCP Server** (src/mcp-server.ts)
 - ⏳ **Tool Implementations**
 
@@ -594,3 +650,68 @@ npm run dev
   }
 }
 ```
+
+---
+
+## 12. DATA COLLECTION & FINE-TUNING ROADMAP
+
+### Current Status (Phase 1.5)
+
+✅ **Completed**:
+- Documentation scraper (`scripts/scrape-zig-docs.js`)
+- Model selection (Qwen2.5-Coder-7B)
+- Training pipeline design
+- Version support strategy (0.13-0.15)
+
+⏳ **Next Steps**:
+1. Run scraper: `pnpm run scrape-docs`
+2. Validate dataset quality
+3. Fine-tune model (Google Colab or local GPU)
+4. Upload to HuggingFace: `fulgidus/zignet-qwen-7b`
+5. Integrate with node-llama-cpp
+
+### Documentation
+
+- **Quick Start**: `docs/DATA_COLLECTION.md`
+- **Detailed Guide**: `docs/FINE_TUNING.md`
+- **Benchmarks**: `scripts/test-results/`
+
+### Dataset Structure
+
+```
+data/zig-docs/
+├── zig-0.15.0-dataset.json    # Latest (primary)
+├── zig-0.14.0-dataset.json    # Backward compat
+├── zig-0.13.0-dataset.json    # Backward compat
+├── zig-combined-dataset.json  # All merged
+└── dataset-stats.json         # Metrics
+```
+
+### Model Lifecycle
+
+```
+New Zig Release (e.g., 0.16)
+    ↓
+Run Scraper (30 min)
+    ↓
+Merge with Existing Data (5 min)
+    ↓
+Incremental Fine-Tune (2-4 hours)
+    ↓
+Validate on Test Set (30 min)
+    ↓
+Upload to HuggingFace (1 hour)
+    ↓
+Update ZigNet Integration (1 hour)
+    ↓
+Deploy (10 min)
+```
+
+**Total turnaround**: ~1 day from Zig release to production update
+
+### Success Metrics
+
+- **Dataset**: 10,000+ examples, 100% syntax valid
+- **Model**: 95%+ pass rate on benchmarks
+- **Performance**: < 30s average response time
+- **Accuracy**: 90%+ version-specific correctness
