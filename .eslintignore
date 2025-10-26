@@ -1,0 +1,11 @@
+dist/
+node_modules/
+coverage/
+data/
+models/
+scripts/**/*.js
+scripts/**/*.cjs
+tests/
+*.config.js
+*.config.cjs
+!eslint.config.js
