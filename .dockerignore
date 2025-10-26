@@ -1,0 +1,62 @@
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build artifacts
+dist
+*.tsbuildinfo
+
+# Tests
+coverage
+.nyc_output
+tests/__snapshots__
+
+# Training artifacts (LARGE - don't include in Docker)
+models/
+data/training/
+*.pth
+*.safetensors
+*.gguf
+training.log
+
+# Development
+.git
+.github
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Temporary
+tmp/
+temp/
+.cache/
+
+# Scripts not needed in container
+scripts/train-qwen-standard.py
+scripts/scrape-*.js
+scripts/compare-models.js
+scripts/download-model.js
+scripts/test-*.js
+scripts/test-*.cjs

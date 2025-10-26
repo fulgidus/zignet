@@ -1,0 +1,203 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Cache pnpm store
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint code
+        run: pnpm run lint
+
+      - name: Type check
+        run: pnpm run typecheck
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Test config system
+        run: pnpm run test-config
+
+      - name: Upload coverage (Ubuntu only)
+        if: matrix.os == 'ubuntu-latest'
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  test-zig-integration:
+    name: Test Zig Integration on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        zig-version: ['0.13.0', '0.14.0', '0.15.0']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Install Zig ${{ matrix.zig-version }}
+        run: node scripts/install-zig.js ${{ matrix.zig-version }}
+
+      - name: Test analyze tool with Zig ${{ matrix.zig-version }}
+        run: |
+          export ZIG_DEFAULT="${{ matrix.zig-version }}"
+          node -e "
+          const { analyzeZig } = require('./dist/compile-C1_SCOrq.cjs');
+          const code = 'fn main() void { const x: i32 = 42; }';
+          analyzeZig({ code, zig_version: '${{ matrix.zig-version }}' })
+            .then(result => {
+              console.log('Result:', result);
+              if (!result.success) process.exit(1);
+            })
+            .catch(err => {
+              console.error('Error:', err);
+              process.exit(1);
+            });
+          "
+
+      - name: Test compile tool with Zig ${{ matrix.zig-version }}
+        run: |
+          export ZIG_DEFAULT="${{ matrix.zig-version }}"
+          node -e "
+          const { compileZig } = require('./dist/compile-C1_SCOrq.cjs');
+          const code = 'fn add(a:i32,b:i32)i32{return a+b;}';
+          compileZig({ code, zig_version: '${{ matrix.zig-version }}' })
+            .then(result => {
+              console.log('Result:', result);
+              if (!result.success) process.exit(1);
+            })
+            .catch(err => {
+              console.error('Error:', err);
+              process.exit(1);
+            });
+          "
+
+  test-system-zig-detection:
+    name: Test System Zig Detection
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Install Zig 0.15.0 in system PATH
+        run: |
+          wget https://ziglang.org/download/0.15.0/zig-linux-x86_64-0.15.0.tar.xz
+          tar -xf zig-linux-x86_64-0.15.0.tar.xz
+          echo "$PWD/zig-linux-x86_64-0.15.0" >> $GITHUB_PATH
+
+      - name: Verify system Zig
+        run: zig version
+
+      - name: Test system Zig detection
+        run: |
+          node -e "
+          const { detectSystemZig, getSystemZigPath } = require('./dist/compile-C1_SCOrq.cjs');
+          const version = detectSystemZig();
+          const path = getSystemZigPath();
+          console.log('Detected version:', version);
+          console.log('Detected path:', path);
+          if (!version || !version.includes('0.15.0')) {
+            console.error('Failed to detect system Zig');
+            process.exit(1);
+          }
+          "
+
+  docker-build:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: zignet:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

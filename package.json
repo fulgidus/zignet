@@ -20,14 +20,21 @@
         "build:watch": "tsdown --watch",
         "build:prod": "NODE_ENV=production tsdown",
         "test": "jest",
+        "test:unit": "jest --testPathIgnorePatterns=e2e",
+        "test:e2e": "jest tests/e2e",
+        "test:e2e:install": "ZIGNET_TEST_INSTALL=1 jest tests/e2e",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage",
+        "test:all": "pnpm run test:unit && pnpm run test:e2e",
         "lint": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
         "format": "prettier --write \"src/**/*.ts\"",
         "format:check": "prettier --check \"src/**/*.ts\"",
         "typecheck": "tsc --noEmit",
-        "clean": "rm -rf dist"
+        "clean": "rm -rf dist",
+        "docker:build": "docker build -t zignet:latest .",
+        "docker:run": "docker run --rm -it zignet:latest",
+        "ci": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test"
     },
     "keywords": [
         "mcp",
