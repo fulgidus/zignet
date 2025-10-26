@@ -77,7 +77,8 @@
         "ollama:stop": "bash scripts/stop-ollama.sh",
         "docker:build": "docker build -t zignet:latest .",
         "docker:run": "docker run --rm -it zignet:latest",
-        "prepublishOnly": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test"
+        "prepublishOnly": "pnpm run lint && pnpm run typecheck && pnpm run build && pnpm run test",
+        "publishNpm": "pnpm publish --access public --tag latest"
     },
     "keywords": [
         "mcp",
