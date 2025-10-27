@@ -196,16 +196,22 @@ export function installZig(version: ZigVersion): void {
         const { platform, ext } = detectPlatform();
 
         if (platform === 'windows') {
-            // Windows: Download .zip and extract with PowerShell
+            // Windows: Download .zip and extract with tar.exe (much faster than Expand-Archive)
             const tempFile = join(installPath, `zig-${version}.zip`);
 
             // Download using PowerShell (more reliable than curl on Windows)
             console.log(`📥 Downloading ${url}...`);
             execSync(`powershell -Command "(New-Object System.Net.WebClient).DownloadFile('${url}', '${tempFile}')"`, { stdio: 'inherit' });
 
-            // Extract using PowerShell
+            // Extract using tar.exe (available in Windows 10+ 1803, 5-10x faster than Expand-Archive)
             console.log(`📦 Extracting Zig ${version}...`);
-            execSync(`powershell -Command "Expand-Archive -Path '${tempFile}' -DestinationPath '${installPath}' -Force"`, { stdio: 'inherit' });
+            try {
+                execSync(`tar -xf "${tempFile}" -C "${installPath}"`, { stdio: 'inherit' });
+            } catch (tarError) {
+                // Fallback to PowerShell if tar is not available (Windows 7/8)
+                console.warn('⚠️  tar.exe not found, falling back to Expand-Archive (slower)...');
+                execSync(`powershell -Command "Expand-Archive -Path '${tempFile}' -DestinationPath '${installPath}' -Force"`, { stdio: 'inherit' });
+            }
 
             // Remove temp file
             execSync(`del "${tempFile}"`, { stdio: 'inherit' });
