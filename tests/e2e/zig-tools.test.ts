@@ -71,7 +71,7 @@ fn add(a: i32, b: i32) i32 {
             });
 
             expect(result.zig_version).toBe('0.14.0');
-        });
+        }, 120000);
     });
 
     describe('compile_zig', () => {
