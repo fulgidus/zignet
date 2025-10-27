@@ -39,15 +39,32 @@ console.log("   ZIG_DEFAULT:", process.env.ZIG_DEFAULT);
 
 // Test 3: Invalid configuration (DEFAULT not in SUPPORTED)
 console.log("\n=== Test 3: Invalid Configuration (should fail) ===");
-process.env.ZIG_SUPPORTED = "0.14.0,0.15.0";
-process.env.ZIG_DEFAULT = "0.13.0"; // Not in SUPPORTED
-try {
-    clearConfigCache();
-    const config3 = require("../dist/config.cjs");
+// Run in a child process since the error is thrown at module load time
+const { spawnSync } = require("child_process");
+const result = spawnSync(
+    process.execPath,
+    [
+        "-e",
+        `
+        process.env.ZIG_SUPPORTED = "0.14.0,0.15.0";
+        process.env.ZIG_DEFAULT = "0.13.0";
+        require("./dist/config.cjs");
+        `
+    ],
+    {
+        cwd: __dirname + "/..",
+        encoding: "utf8",
+        shell: false
+    }
+);
+
+if (result.status !== 0 && result.stderr.includes("ZIG_DEFAULT")) {
+    console.log("✅ Correctly rejected invalid config");
+} else {
     console.log("❌ FAILED: Should have thrown error");
+    console.log("   Status:", result.status);
+    console.log("   Stderr:", result.stderr);
     process.exit(1);
-} catch (err) {
-    console.log("✅ Correctly rejected invalid config:", err.message);
 }
 
 console.log("\n=== All Tests Passed ===");
