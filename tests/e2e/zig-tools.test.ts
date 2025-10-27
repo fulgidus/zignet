@@ -67,10 +67,10 @@ fn add(a: i32, b: i32) i32 {
             // Test with explicit version (if installed)
             const result = await analyzeZig({
                 code,
-                zig_version: '0.15.0',
+                zig_version: '0.14.0',
             });
 
-            expect(result.zig_version).toBe('0.15.0');
+            expect(result.zig_version).toBe('0.14.0');
         });
     });
 
