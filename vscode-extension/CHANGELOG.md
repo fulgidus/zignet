@@ -2,6 +2,17 @@
 
 All notable changes to the "zignet" extension will be documented in this file.
 
+## [0.15.3] - 2025-11-08
+
+### Fixed
+- **Critical**: Fixed "Please open a Zig file first" error when commands are run on open .zig files
+- Added native Zig language support configuration to properly register `.zig` file extension
+- Extension now works standalone without requiring other Zig extensions
+
+### Added
+- Language configuration for Zig files (bracket matching, auto-closing pairs, comment tokens)
+- Improved documentation with troubleshooting guide for language detection issues
+
 ## [0.15.2] - 2025-10-26
 
 ### Added

@@ -2,7 +2,7 @@
     "name": "zignet",
     "displayName": "ZigNet - AI-Powered Zig Assistant",
     "description": "MCP server for Zig code analysis, validation, and documentation with fine-tuned LLM",
-    "version": "0.15.2",
+    "version": "0.15.3",
     "publisher": "fulgidus",
     "icon": "icon.png",
     "engines": {
@@ -27,6 +27,19 @@
     ],
     "main": "./extension.js",
     "contributes": {
+        "languages": [
+            {
+                "id": "zig",
+                "aliases": [
+                    "Zig",
+                    "zig"
+                ],
+                "extensions": [
+                    ".zig"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
         "configuration": {
             "title": "ZigNet",
             "properties": {
