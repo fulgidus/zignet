@@ -171,6 +171,107 @@ Claude: [uses analyze_zig tool]
 
 ---
 
+## ⚙️ Configuration
+
+### GPU Selection (Multi-GPU Systems)
+
+If you have multiple GPUs (e.g., AMD + NVIDIA), you can control which GPU ZigNet uses via environment variables.
+
+**Windows (PowerShell):**
+```powershell
+$env:ZIGNET_GPU_DEVICE="0"
+npx -y zignet
+```
+
+**macOS/Linux:**
+```bash
+export ZIGNET_GPU_DEVICE="0"
+npx -y zignet
+```
+
+**VS Code MCP Configuration with GPU selection:**
+```json
+{
+  "mcpServers": {
+    "zignet": {
+      "command": "npx",
+      "args": ["-y", "zignet"],
+      "env": {
+        "ZIGNET_GPU_DEVICE": "0"
+      }
+    }
+  }
+}
+```
+
+**Claude Desktop configuration with GPU selection:**
+
+**macOS/Linux** (`~/.config/Claude/claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "zignet": {
+      "command": "npx",
+      "args": ["-y", "zignet"],
+      "env": {
+        "ZIGNET_GPU_DEVICE": "0"
+      }
+    }
+  }
+}
+```
+
+**Windows** (`%APPDATA%\Claude\claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "zignet": {
+      "command": "npx",
+      "args": ["-y", "zignet"],
+      "env": {
+        "ZIGNET_GPU_DEVICE": "0"
+      }
+    }
+  }
+}
+```
+
+**GPU Device Values:**
+- `"0"` - Use first GPU only (e.g., RTX 4090)
+- `"1"` - Use second GPU only
+- `"0,1"` - Use both GPUs
+- Not set - Use all available GPUs (default)
+
+**Identify your GPUs:**
+```bash
+# NVIDIA GPUs
+nvidia-smi
+
+# Output shows GPU indices:
+# GPU 0: NVIDIA RTX 4090
+# GPU 1: AMD Radeon 6950XT (won't be used by CUDA anyway)
+```
+
+### Advanced Configuration
+
+All configuration options can be set via environment variables:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ZIGNET_GPU_DEVICE` | auto | GPU device selection (CUDA_VISIBLE_DEVICES) |
+| `ZIGNET_GPU_LAYERS` | 35 | Number of model layers on GPU (0=CPU only) |
+| `ZIGNET_MODEL_PATH` | `~/.zignet/models/...` | Custom model path |
+| `ZIGNET_MODEL_AUTO_DOWNLOAD` | true | Auto-download model from HuggingFace |
+| `ZIGNET_CONTEXT_SIZE` | 4096 | LLM context window size |
+| `ZIGNET_TEMPERATURE` | 0.7 | LLM creativity (0.0-1.0) |
+| `ZIGNET_TOP_P` | 0.9 | LLM sampling parameter |
+| `ZIG_SUPPORTED` | 0.13.0,0.14.0,0.15.2 | Supported Zig versions |
+| `ZIG_DEFAULT` | 0.15.2 | Default Zig version |
+
+See [.env.example](./.env.example) for detailed examples.
+
+---
+
 ## 🏗️ Architecture
 
 ```

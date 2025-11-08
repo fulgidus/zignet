@@ -8,6 +8,7 @@ import { modelDownloader } from "./model-downloader.js";
 
 export interface LLMConfig {
     modelPath?: string;
+    gpuDevice?: string;
     gpuLayers?: number;
     contextSize?: number;
     temperature?: number;
@@ -18,11 +19,14 @@ export class ZigNetLLM {
     private model: LlamaModel | null = null;
     private context: LlamaContext | null = null;
     private session: LlamaChatSession | null = null;
-    private config: Required<LLMConfig>;
+    private config: Required<Omit<LLMConfig, "gpuDevice">> & {
+        gpuDevice?: string;
+    };
 
     constructor(config: LLMConfig = {}) {
         this.config = {
             modelPath: config.modelPath || "",
+            gpuDevice: config.gpuDevice,
             gpuLayers: config.gpuLayers ?? 35, // RTX 3090 can handle all layers
             contextSize: config.contextSize ?? 4096,
             temperature: config.temperature ?? 0.7,
@@ -40,6 +44,12 @@ export class ZigNetLLM {
         }
 
         console.log("🚀 Initializing ZigNet LLM...");
+
+        // Set GPU device if specified (applies CUDA_VISIBLE_DEVICES)
+        if (this.config.gpuDevice !== undefined) {
+            process.env.CUDA_VISIBLE_DEVICES = this.config.gpuDevice;
+            console.log(`🎯 GPU device selection: ${this.config.gpuDevice}`);
+        }
 
         // Get model path (download if needed)
         const modelPath =
@@ -142,6 +152,25 @@ let globalLLM: ZigNetLLM | null = null;
  */
 export async function getLLM(config?: LLMConfig): Promise<ZigNetLLM> {
     if (!globalLLM) {
+        // If no config provided, load from environment
+        if (!config) {
+            const {
+                MODEL_PATH,
+                GPU_DEVICE,
+                GPU_LAYERS,
+                CONTEXT_SIZE,
+                TEMPERATURE,
+                TOP_P,
+            } = await import("../config.js");
+            config = {
+                modelPath: MODEL_PATH,
+                gpuDevice: GPU_DEVICE,
+                gpuLayers: GPU_LAYERS,
+                contextSize: CONTEXT_SIZE,
+                temperature: TEMPERATURE,
+                topP: TOP_P,
+            };
+        }
         globalLLM = new ZigNetLLM(config);
         await globalLLM.initialize();
     }

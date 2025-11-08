@@ -69,6 +69,7 @@ ZigNet Configuration:
   LLM Model:
     MODEL_PATH: ${MODEL_PATH}
     MODEL_AUTO_DOWNLOAD: ${MODEL_AUTO_DOWNLOAD}
+    GPU_DEVICE: ${GPU_DEVICE || "auto (all available GPUs)"}
     GPU_LAYERS: ${GPU_LAYERS}
     CONTEXT_SIZE: ${CONTEXT_SIZE}
     TEMPERATURE: ${TEMPERATURE}
@@ -122,6 +123,21 @@ export const MODEL_PATH =
  *   export ZIGNET_MODEL_AUTO_DOWNLOAD="false"
  */
 export const MODEL_AUTO_DOWNLOAD = process.env.ZIGNET_MODEL_AUTO_DOWNLOAD !== "false";
+
+/**
+ * GPU device selection (CUDA_VISIBLE_DEVICES)
+ * Specify which GPU(s) to use for CUDA inference
+ * Default: undefined (use all available GPUs)
+ *
+ * Examples:
+ *   export ZIGNET_GPU_DEVICE="0"     # Use first GPU only (e.g., RTX 4090)
+ *   export ZIGNET_GPU_DEVICE="1"     # Use second GPU only
+ *   export ZIGNET_GPU_DEVICE="0,1"   # Use first and second GPUs
+ *
+ * Note: GPU indices are system-dependent. Use `nvidia-smi` to list available GPUs.
+ * This sets CUDA_VISIBLE_DEVICES before loading the model.
+ */
+export const GPU_DEVICE = process.env.ZIGNET_GPU_DEVICE;
 
 /**
  * Number of layers to offload to GPU
