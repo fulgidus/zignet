@@ -6,11 +6,10 @@ All notable changes to the "zignet" extension will be documented in this file.
 
 ### Fixed
 - **Critical**: Fixed "Please open a Zig file first" error when commands are run on open .zig files
-- Added native Zig language support configuration to properly register `.zig` file extension
-- Extension now works standalone without requiring other Zig extensions
+- Added minimal language registration to ensure VSCode assigns languageId "zig" to .zig files
+- Works with or without the official Zig extension (ziglang.vscode-zig)
 
 ### Added
-- Language configuration for Zig files (bracket matching, auto-closing pairs, comment tokens)
 - Improved documentation with troubleshooting guide for language detection issues
 
 ## [0.15.2] - 2025-10-26

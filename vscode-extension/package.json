@@ -36,8 +36,7 @@
                 ],
                 "extensions": [
                     ".zig"
-                ],
-                "configuration": "./language-configuration.json"
+                ]
             }
         ],
         "configuration": {

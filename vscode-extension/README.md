@@ -29,8 +29,6 @@
 - **Node.js** 20.x or higher (for running the MCP server)
 - **Zig** (optional - auto-downloaded if not found)
 
-> **Note**: This extension provides native Zig language support. You don't need to install any other Zig extension (though they can coexist if desired).
-
 ## ⚙️ Configuration
 
 Access settings via `File > Preferences > Settings` and search for "ZigNet":
