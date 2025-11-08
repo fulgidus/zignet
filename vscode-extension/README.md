@@ -93,9 +93,16 @@ The model is 4.4GB. You can:
 
 ### Commands not working
 Make sure:
-1. You're editing a `.zig` file
+1. You're editing a `.zig` file (check the language mode in the bottom-right corner of VSCode)
 2. The extension is enabled (`zignet.enable: true`)
 3. Check the Output panel for server status
+
+### "Please open a Zig file first" error
+If you see this error even with a `.zig` file open:
+1. Check the language mode indicator in the bottom-right corner of VSCode
+2. It should show "Zig" - if it shows "Plain Text" or something else, click it and select "Zig"
+3. Try reloading VSCode (`Developer: Reload Window` from Command Palette)
+4. If the issue persists after upgrading from an older version, reinstall the extension
 
 ## 📚 Documentation
 
