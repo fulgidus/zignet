@@ -198,7 +198,7 @@ export function installZig(version: ZigVersion): void {
 
     try {
         // Download and extract using platform-appropriate tools
-        const { platform, ext } = detectPlatform();
+        const { platform } = detectPlatform();
 
         if (platform === "windows") {
             // Windows: Download .zip and extract with tar.exe (much faster than Expand-Archive)
@@ -217,7 +217,7 @@ export function installZig(version: ZigVersion): void {
                 execSync(`tar -xf "${tempFile}" -C "${installPath}"`, {
                     stdio: "inherit",
                 });
-            } catch (tarError) {
+            } catch {
                 // Fallback to PowerShell if tar is not available (Windows 7/8)
                 console.warn(
                     "⚠️  tar.exe not found, falling back to Expand-Archive (slower)...",
