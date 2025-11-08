@@ -16,3 +16,7 @@ coverage/
 venv*
 
 llama.cpp
+
+# VSCode extension build artifacts
+vscode-extension/node_modules/
+vscode-extension/*.vsix
