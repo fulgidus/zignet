@@ -2,7 +2,7 @@
  * LLM Session GPU device selection tests
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { ZigNetLLM } from "../src/llm/session.js";
 
 describe("ZigNetLLM GPU Device Selection", () => {
