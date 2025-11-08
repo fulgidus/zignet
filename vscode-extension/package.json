@@ -107,7 +107,7 @@
         "publish": "vsce publish"
     },
     "dependencies": {
-        "zignet": "^0.15.2-g"
+        "zignet": "^0.15.2-i"
     },
     "devDependencies": {
         "@types/vscode": "^1.80.0",
